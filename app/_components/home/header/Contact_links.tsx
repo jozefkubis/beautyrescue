@@ -51,11 +51,11 @@ export default function Contact_links() {
       <div className="flex items-center gap-1">
         <FaFacebookSquare
           size={48}
-          className="text-redMain hover:cursor-pointer"
+          className="text-redMain hover:cursor-pointer hover:scale-98 transition-transform duration-200 hover:text-redMain/80"
         />
         <FaInstagramSquare
           size={48}
-          className="text-redMain hover:cursor-pointer"
+          className="text-redMain hover:cursor-pointer hover:scale-98 transition-transform duration-200 hover:text-redMain/80"
         />
       </div>
     </div>
