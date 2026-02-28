@@ -1,0 +1,61 @@
+import {
+  FaFacebookSquare,
+  FaInstagramSquare,
+  FaMapMarkerAlt,
+} from "react-icons/fa"
+import { MdEmail, MdPhone } from "react-icons/md"
+
+export default function Contact_links() {
+  const contactLinks = [
+    {
+      type: "Email",
+      value: "info@beautyrescue.sk",
+      icon: (
+        <MdEmail
+          size={36}
+          className="text-redMain p-2 ring-2 ring-redMain rounded-full"
+        />
+      ),
+    },
+    {
+      type: "Telefón",
+      value: "0907 81 65 37",
+      icon: (
+        <MdPhone
+          size={36}
+          className="text-redMain  rounded-full p-2 ring-2 ring-redMain"
+        />
+      ),
+    },
+    {
+      type: "Adresa",
+      value: "Korzo 8708/8 010 15 Žilina",
+      icon: (
+        <FaMapMarkerAlt
+          size={36}
+          className="text-redMain  rounded-full p-2 ring-2 ring-redMain"
+        />
+      ),
+    },
+  ]
+
+  return (
+    <div className="flex items-center gap-11">
+      {contactLinks.map((link, index) => (
+        <div key={index} className="flex items-center gap-3">
+          {link.icon}
+          <div className="flex flex-col items-start justify-center">
+            <h4 className="text-redMain font-semibold text-md">{link.type}</h4>
+            <p className="font-medium text-gray-700 text-[14px]">
+              {link.value}
+            </p>
+          </div>
+        </div>
+      ))}
+      <div className="flex items-center gap-1">
+        <FaFacebookSquare size={48} className="text-redMain" />
+        <FaInstagramSquare size={48} className="text-redMain" />
+      </div>
+    </div>
+  )
+}
