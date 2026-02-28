@@ -13,7 +13,7 @@ export default function Contact_links() {
       icon: (
         <MdEmail
           size={36}
-          className="text-redMain p-2 ring-2 ring-redMain rounded-full"
+          className="text-redMain p-2 ring-2 ring-redMain rounded-full hover:cursor-pointer"
         />
       ),
     },
@@ -23,7 +23,7 @@ export default function Contact_links() {
       icon: (
         <MdPhone
           size={36}
-          className="text-redMain  rounded-full p-2 ring-2 ring-redMain"
+          className="text-redMain  rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer"
         />
       ),
     },
@@ -33,19 +33,24 @@ export default function Contact_links() {
       icon: (
         <FaMapMarkerAlt
           size={36}
-          className="text-redMain  rounded-full p-2 ring-2 ring-redMain"
+          className="text-redMain  rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer"
         />
       ),
     },
   ]
 
   return (
-    <div className="flex items-center gap-11">
+    <div className="flex items-center gap-10">
       {contactLinks.map((link, index) => (
-        <div key={index} className="flex items-center gap-3">
+        <div
+          key={index}
+          className="flex items-center gap-3 hover:bg-gray-100 rounded-lg p-2 transition-colors duration-300"
+        >
           {link.icon}
           <div className="flex flex-col items-start justify-center">
-            <h4 className="text-redMain font-semibold text-md">{link.type}</h4>
+            <h4 className="text-redMain font-semibold text-md hover:cursor-pointer">
+              {link.type}
+            </h4>
             <p className="font-medium text-gray-700 text-[14px]">
               {link.value}
             </p>
@@ -53,8 +58,14 @@ export default function Contact_links() {
         </div>
       ))}
       <div className="flex items-center gap-1">
-        <FaFacebookSquare size={48} className="text-redMain" />
-        <FaInstagramSquare size={48} className="text-redMain" />
+        <FaFacebookSquare
+          size={48}
+          className="text-redMain hover:cursor-pointer"
+        />
+        <FaInstagramSquare
+          size={48}
+          className="text-redMain hover:cursor-pointer"
+        />
       </div>
     </div>
   )
