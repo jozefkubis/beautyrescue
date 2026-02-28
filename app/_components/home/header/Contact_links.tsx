@@ -11,30 +11,21 @@ export default function Contact_links() {
       type: "Email",
       value: "info@beautyrescue.sk",
       icon: (
-        <MdEmail
-          size={36}
-          className="text-redMain p-2 ring-2 ring-redMain rounded-full hover:cursor-pointer"
-        />
+        <MdEmail className="text-redMain text-4xl rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer" />
       ),
     },
     {
       type: "Telefón",
       value: "0907 81 65 37",
       icon: (
-        <MdPhone
-          size={36}
-          className="text-redMain  rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer"
-        />
+        <MdPhone className="text-redMain text-4xl rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer" />
       ),
     },
     {
       type: "Adresa",
       value: "Korzo 8708/8 010 15 Žilina",
       icon: (
-        <FaMapMarkerAlt
-          size={36}
-          className="text-redMain  rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer"
-        />
+        <FaMapMarkerAlt className="text-redMain text-4xl rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer" />
       ),
     },
   ]
