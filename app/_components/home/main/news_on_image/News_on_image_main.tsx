@@ -40,9 +40,15 @@ export default function News_on_image_main() {
         initial="hidden" // štart – hidden
         animate="visible" // cieľ – visible (spustí animáciu po mountnutí)
       >
-        <h1 className="text-white text-5xl font-bold mb-6">Novinky</h1>
-        <h1 className="text-white text-5xl font-bold mb-6">Novinky</h1>
-        <h1 className="text-white text-5xl font-bold">Novinky</h1>
+        <h1 className="text-white text-5xl font-semibold italic mb-6">
+          Novinky
+        </h1>
+        <h1 className="text-white text-5xl font-semibold italic mb-6">
+          Novinky
+        </h1>
+        <h1 className="text-white text-5xl font-semibold italic mb-6">
+          Novinky
+        </h1>
       </motion.div>
     </section>
   )
