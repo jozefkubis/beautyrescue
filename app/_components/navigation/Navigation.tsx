@@ -24,6 +24,7 @@ export default function Navigation() {
           href: "/cosmetics/oxygeneo",
         },
         { name: "Mezoterapia", href: "/cosmetics/mezoterapia" },
+        { name: "Microneedling/dermapen", href: "/cosmetics/microneedling" },
       ],
     },
     {
@@ -55,12 +56,16 @@ export default function Navigation() {
       name: "Cenník",
       href: "/pricing",
     },
+    {
+      name: "Akcia",
+      href: "/promotion",
+    },
   ]
 
   return (
-    <div className="flex justify-center absolute top-34 mx-auto w-full z-10">
+    <div className="flex justify-center absolute top-34 left-1/2 -translate-x-1/2 z-10 w-full xl:px-20">
       <div
-        className={`${robotoCondensed.className} flex items-center bg-redMain gap-8 pr-30 pl-10 py-7 rounded-l-md text-base tracking-wide`}
+        className={`${robotoCondensed.className} flex items-center bg-redMain gap-8 pr-30 2xl:pr-120 pl-10 py-7 rounded-l-md text-base tracking-wide`}
       >
         {navigationLinks.map((link, index) => (
           // každý nav item je relatívny a group kvôli hoveru
