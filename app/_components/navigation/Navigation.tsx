@@ -63,7 +63,7 @@ export default function Navigation() {
   ]
 
   return (
-    <div className="absolute top-34 left-1/2 -translate-x-1/2 z-10 w-full px-20 xl:px-20 2xl:px-44">
+    <div className="absolute top-31 left-1/2 -translate-x-1/2 z-10 w-full px-20 xl:px-20 2xl:px-44">
       <div className={`${robotoCondensed.className} w-full flex items-stretch`}>
         <div className="flex flex-1 items-center bg-redMain gap-8 pl-10 pr-16 xl:pr-24 2xl:pr-32 py-7 rounded-l-md text-base tracking-wide">
           {navigationLinks.map((link, index) => (
