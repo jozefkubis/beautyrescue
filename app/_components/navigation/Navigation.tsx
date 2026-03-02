@@ -102,11 +102,7 @@ export default function Navigation() {
                       <Link
                         key={i}
                         href={item.href}
-                        className={`
-    block px-6 py-3 text-base text-background
-    hover:bg-greyMain/20 transition-colors duration-200
-    ${i !== 0 ? "border-t border-greyMain/20" : ""}
-  `}
+                        className={`block px-6 py-3 text-base text-background hover:bg-greyMain/20 transition-colors duration-200 ${i !== 0 ? "border-t border-greyMain/20" : ""}`}
                       >
                         {item.name}
                       </Link>
