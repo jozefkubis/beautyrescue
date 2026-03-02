@@ -93,16 +93,20 @@ export default function Navigation() {
                 <div className="absolute left-1/2 top-full z-20 hidden -translate-x-1/2 pt-3 group-hover:block">
                   {/* biely „trojuholník“ */}
                   <div className="flex justify-center">
-                    <IoTriangle className="text-background mt-1" />
+                    <IoTriangle className="text-background mt-1.5" />
                   </div>
 
                   {/* samotné menu */}
-                  <div className="w-60 text-left overflow-hidden rounded-md bg-neutral-700 shadow-lg">
+                  <div className="w-60 text-left overflow-hidden rounded-md bg-neutral-700 shadow-lg z-50 border border-greyMain/20 -mt-0.5">
                     {link.dropdown.map((item, i) => (
                       <Link
                         key={i}
                         href={item.href}
-                        className="block px-6 py-3 border-t-[0.5px] border-background/30 text-base text-background hover:bg-greyMain transition-colors duration-200"
+                        className={`
+    block px-6 py-3 text-base text-background
+    hover:bg-greyMain/20 transition-colors duration-200
+    ${i !== 0 ? "border-t border-greyMain/20" : ""}
+  `}
                       >
                         {item.name}
                       </Link>
