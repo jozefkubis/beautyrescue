@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion" // import z framer-motion
 import Image from "next/image"
+import { useState } from "react"
+import EcgLine from "./EcgLine"
 
 // definujeme "stavy" animácie
 const textVariants = {
@@ -19,9 +21,11 @@ const textVariants = {
 }
 
 export default function News_on_image_main() {
+  const [showEcg, setShowEcg] = useState(false)
+
   return (
-    <section className="relative w-full h-110 xl:h-150 overflow-hidden">
-      {/* Obrázok na pozadí */}
+    <section className="relative w-full aspect-16/6 overflow-hidden">
+      {/* Pozadie */}
       <Image
         src="/images/imageHome.jpg"
         alt="Beauty Rescue"
@@ -33,12 +37,13 @@ export default function News_on_image_main() {
       {/* Tmavý overlay */}
       <div className="absolute inset-0 bg-black/40" />
 
-      {/* Text s animáciou zľava */}
+      {/* Text – ostáva tak ako máš */}
       <motion.div
         className="absolute inset-0 flex flex-col justify-center items-center text-center px-4"
-        variants={textVariants} // povieme, aké stavy animácie používame
-        initial="hidden" // štart – hidden
-        animate="visible" // cieľ – visible (spustí animáciu po mountnutí)
+        variants={textVariants}
+        initial="hidden"
+        animate="visible"
+        onAnimationComplete={() => setShowEcg(true)}
       >
         <h1 className="text-white text-3xl xl:text-5xl font-semibold italic mb-6">
           Novinky
@@ -50,6 +55,18 @@ export default function News_on_image_main() {
           Novinky
         </h1>
       </motion.div>
+
+      {/* EKG – cez celú šírku, fixne nad spodkom */}
+      <div
+        className="
+    pointer-events-none
+    absolute
+    inset-x-0
+    bottom-[8%]   
+  "
+      >
+        {showEcg && <EcgLine />}
+      </div>
     </section>
   )
 }
