@@ -11,21 +11,21 @@ export default function Contact_links() {
       type: "Email",
       value: "info@beautyrescue.sk",
       icon: (
-        <MdEmail className="text-redMain text-4xl rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer" />
+        <MdEmail className="text-redMain text-3xl xl:text-4xl rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer" />
       ),
     },
     {
       type: "Telefón",
       value: "0907 81 65 37",
       icon: (
-        <MdPhone className="text-redMain text-4xl rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer" />
+        <MdPhone className="text-redMain text-3xl xl:text-4xl rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer" />
       ),
     },
     {
       type: "Adresa",
       value: "Korzo 8708/8 010 15 Žilina",
       icon: (
-        <FaMapMarkerAlt className="text-redMain text-4xl rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer" />
+        <FaMapMarkerAlt className="text-redMain text-3xl xl:text-4xl rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer" />
       ),
     },
   ]
@@ -39,10 +39,10 @@ export default function Contact_links() {
         >
           {link.icon}
           <div className="flex flex-col items-start justify-center">
-            <h4 className="text-redMain font-semibold text-md hover:cursor-pointer">
+            <h4 className="text-redMain font-semibold text-sm xl:text-md hover:cursor-pointer">
               {link.type}
             </h4>
-            <p className="font-medium text-gray-700 text-[14px]">
+            <p className="font-medium text-gray-700 text-xs xl:text-[14px]">
               {link.value}
             </p>
           </div>
