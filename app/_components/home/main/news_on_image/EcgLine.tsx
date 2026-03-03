@@ -1,7 +1,9 @@
 export default function EcgLine() {
+  const butterflyPath = "/images/butterfly.png" // cesta k obrázku motýľa
+
   // FARBA ČIARY/TEXTU
-  const strokeColorClass = "stroke-white"
-  const textColorClass = "fill-white"
+  const strokeColorClass = "stroke-[#C6A25A]"
+  const textColorClass = "fill-[#C6A25A]"
 
   // HRÚBKA ČIARY (Tailwind class)
   const strokeWidthClass = "stroke-[0.8]"
@@ -11,10 +13,10 @@ export default function EcgLine() {
 
   // NÁPIS SA ODKRÝVA PO PÍSMENÁCH
   const brandText = "BEAUTY RESCUE".split("")
-  const textStart = 0.32
-  const textStep = 0.025
+  const textStart = 0.2
+  const textStep = 0.03
   const letterFadeDuration = 0.03
-  const textStartX = 180
+  const textStartX = 178
 
   return (
     <div className="relative mx-auto h-40 w-full">
@@ -48,11 +50,27 @@ export default function EcgLine() {
             const keyTimes = `0;${revealAt.toFixed(3)};${revealEnd.toFixed(3)};1`
 
             return (
-              <tspan key={`${char}-${index}`} opacity="0">
+              <tspan
+                key={`${char}-${index}`}
+                opacity="0"
+                y="75" // začína vyššie nad baseline
+              >
                 {char === " " ? "\u00A0" : char}
+
+                {/* Fade in */}
                 <animate
                   attributeName="opacity"
                   values="0;0;1;1"
+                  keyTimes={keyTimes}
+                  dur={cycleDuration}
+                  repeatCount="1"
+                  fill="freeze"
+                />
+
+                {/* Jemný pád zhora pomocou y */}
+                <animate
+                  attributeName="y"
+                  values="75;75;100;100"
                   keyTimes={keyTimes}
                   dur={cycleDuration}
                   repeatCount="1"
@@ -63,12 +81,41 @@ export default function EcgLine() {
           })}
         </text>
 
+        {/* MOTÝĽ ZA POSLEDNÝM "E" */}
+        <image
+          href={butterflyPath}
+          x="354"
+          y="84" // začiatočná pozícia (môže byť 70–75)
+          width="32"
+          height="32"
+          opacity="0"
+        >
+          <animate
+            attributeName="opacity"
+            values="0;0;1;1"
+            keyTimes="0;0.55;0.58;1"
+            dur={cycleDuration}
+            repeatCount="1"
+            fill="freeze"
+          />
+
+          {/* pad zhora na Y=88 */}
+          <animate
+            attributeName="y"
+            values="84;84;74;74"
+            keyTimes="0;0.55;0.58;1"
+            dur={cycleDuration}
+            repeatCount="1"
+            fill="freeze"
+          />
+        </image>
+
         {/* 3) PRAVÁ EKG ČASŤ – POSUNUTÁ DOĽAVA, ZA „U“ */}
         <path
           pathLength={700}
           className={`fill-none ${strokeColorClass} ${strokeWidthClass} [stroke-dasharray:700] [stroke-dashoffset:700]`}
           d="
-  M355,100
+  M376,100
   L450,100
   L470,100
   C478,100 485,92 492,92

@@ -57,14 +57,7 @@ export default function News_on_image_main() {
       </motion.div>
 
       {/* EKG – cez celú šírku, fixne nad spodkom */}
-      <div
-        className="
-    pointer-events-none
-    absolute
-    inset-x-0
-    bottom-[8%]   
-  "
-      >
+      <div className="pointer-events-none absolute inset-x-0 bottom-[8%]">
         {showEcg && <EcgLine />}
       </div>
     </section>
