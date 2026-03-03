@@ -20,7 +20,7 @@ const textVariants = {
 
 export default function News_on_image_main() {
   return (
-    <section className="relative w-full h-150 overflow-hidden">
+    <section className="relative w-full h-110 xl:h-150 overflow-hidden">
       {/* Obrázok na pozadí */}
       <Image
         src="/images/imageHome.jpg"
@@ -40,13 +40,13 @@ export default function News_on_image_main() {
         initial="hidden" // štart – hidden
         animate="visible" // cieľ – visible (spustí animáciu po mountnutí)
       >
-        <h1 className="text-white text-5xl font-semibold italic mb-6">
+        <h1 className="text-white text-3xl xl:text-5xl font-semibold italic mb-6">
           Novinky
         </h1>
-        <h1 className="text-white text-5xl font-semibold italic mb-6">
+        <h1 className="text-white text-3xl xl:text-5xl font-semibold italic mb-6">
           Novinky
         </h1>
-        <h1 className="text-white text-5xl font-semibold italic mb-6">
+        <h1 className="text-white text-3xl xl:text-5xl font-semibold italic mb-6">
           Novinky
         </h1>
       </motion.div>
