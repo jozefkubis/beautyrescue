@@ -3,7 +3,7 @@ import Image from "next/image"
 export default function Logo() {
   return (
     <div className="flex items-center gap-1 hover:cursor-pointer hover:bg-gray-100 rounded-lg p-2 transition-colors duration-300">
-      <div>
+      <div className="mb-2">
         <Image src="/images/butterfly.png" alt="logo" width={88} height={88} />
       </div>
       <div className="flex flex-col -space-y-2 mt-2">
