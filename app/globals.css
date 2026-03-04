@@ -10,6 +10,8 @@
 
   --redMain: #ed0000; /* červená farba */
   --greyMain: #858585; /* šedá farba */
+  --goldLight: #c6a25a; /* zlatá svetlá */
+  --goldDark: #b9800d; /* zlatá tmavá */
 }
 
 /* 2. NAPOJENIE NA TAILWIND TÉMU
@@ -21,7 +23,8 @@
 
   --color-redMain: var(--redMain);
   --color-greyMain: var(--greyMain);
-
+  --color-goldLight: var(--goldLight);
+  --color-goldDark: var(--goldDark);
   --font-sans: var(--font-poppins);
   --font-mono: var(--font-open-sans);
 }

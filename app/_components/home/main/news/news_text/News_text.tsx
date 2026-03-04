@@ -4,7 +4,7 @@ export default function News_text() {
   return (
     <div className="flex flex-col items-center px-20 2xl:px-44 text-center">
       <h1
-        className={`italic text-5xl 2xl:text-6xl py-18 font-semibold text-[#b9800d] ${brandFont.className}`}
+        className={`italic text-5xl 2xl:text-6xl py-18 font-semibold text-goldDark ${brandFont.className}`}
       >
         <span className="italic">
           <span className="text-6xl 2xl:text-7xl">N</span>ovinka!

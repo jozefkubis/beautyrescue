@@ -35,7 +35,10 @@ export default function News_on_image_main() {
       />
 
       {/* Tmavý overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-background via-transparent to-background" />
+      {/* Prechod dole */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
+      <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-transparent to-background" />
 
       {/* Text – ostáva tak ako máš */}
       <motion.div
@@ -45,13 +48,13 @@ export default function News_on_image_main() {
         animate="visible"
         onAnimationComplete={() => setShowEcg(true)}
       >
-        <h1 className="text-white text-3xl xl:text-5xl font-semibold italic mb-6">
+        <h1 className="text-goldDark text-3xl xl:text-5xl font-semibold italic mb-6">
           Novinky
         </h1>
-        <h1 className="text-white text-3xl xl:text-5xl font-semibold italic mb-6">
+        <h1 className="text-goldDark text-3xl xl:text-5xl font-semibold italic mb-6">
           Novinky
         </h1>
-        <h1 className="text-white text-3xl xl:text-5xl font-semibold italic mb-6">
+        <h1 className="text-goldDark text-3xl xl:text-5xl font-semibold italic mb-6">
           Novinky
         </h1>
       </motion.div>

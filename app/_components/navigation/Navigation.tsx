@@ -67,7 +67,7 @@ export default function Navigation() {
       <div className={`${robotoCondensed.className} w-full flex items-stretch`}>
         {/* <div className="flex flex-1 items-center bg-redMain gap-8 pl-10 pr-16 xl:pr-24 2xl:pr-32 xl:py-7 py-5 rounded-l-md text-sm xl:text-base tracking-wide"> */}
         <div
-          className="flex flex-1 items-center bg-gradient-to-r from-[#b9800d] via-redMain/90 to-redMain gap-8 pl-10 pr-16 xl:pr-24 2xl:pr-32 
+          className="flex flex-1 items-center bg-goldDark gap-8 pl-10 pr-16 xl:pr-24 2xl:pr-32 
            xl:py-7 py-5 rounded-l-md text-sm xl:text-base tracking-wide"
         >
           {navigationLinks.map((link, index) => (
@@ -119,7 +119,7 @@ export default function Navigation() {
         </div>
 
         {/* pravé tlačidlo Kontakt */}
-        <div className="bg-greyMain text-background flex items-center justify-center px-12 py-4 rounded-r-md text-xl tracking-wide font-medium hover:bg-gray-300 transition-colors duration-300 hover:cursor-pointer hover:text-redMain">
+        <div className="bg-greyMain text-background flex items-center justify-center px-12 py-4 rounded-r-md text-xl tracking-wide font-medium hover:bg-gray-300 transition-colors duration-300 hover:cursor-pointer hover:text-goldDark">
           <h4>Kontakt</h4>
         </div>
       </div>

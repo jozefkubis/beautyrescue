@@ -2,12 +2,12 @@ export default function EcgLine() {
   const butterflyPath = "/images/butterfly.png" // cesta k obrázku motýľa
 
   // FARBA ČIARY/TEXTU
-  const strokeColorHex = "#C6A25A"
-  const strokeColorClass = "stroke-[#C6A25A]"
-  const textColorClass = "fill-[#C6A25A]"
+  const strokeColorHex = "var(--color-goldDark)"
+  const strokeColorClass = "stroke-[var(--color-goldDark)]"
+  const textColorClass = "fill-[var(--color-goldDark)]"
 
   // HRÚBKA ČIARY (Tailwind class)
-  const strokeWidthClass = "stroke-[0.8]"
+  const strokeWidthClass = "stroke-[1]"
 
   // CELKOVÝ ČAS JEDNEJ SLUČKY ANIMÁCIE
   const cycleDuration = "8s"
