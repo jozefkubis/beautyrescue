@@ -66,7 +66,7 @@ export default function Location() {
               </p>
 
               <div className="mt-5 grid gap-4 sm:mt-6 sm:grid-cols-2">
-                <div className="relative overflow-hidden rounded-2xl border border-[#b9800d]/30 bg-white shadow-md shadow-[#b9800d]/10">
+                <div className="relative overflow-hidden rounded-2xl border border-goldDark/30 bg-white shadow-md shadow-goldDark/10">
                   <Image
                     src="/images/studio_location1.jpeg"
                     alt="Studio location 1"
@@ -77,7 +77,7 @@ export default function Location() {
                   />
                 </div>
 
-                <div className="relative overflow-hidden rounded-2xl border border-[#b9800d]/30 bg-white shadow-md shadow-[#b9800d]/10">
+                <div className="relative overflow-hidden rounded-2xl border border-goldDark/30 bg-white shadow-md shadow-goldDark/10">
                   <Image
                     src="/images/studio_location2.jpeg"
                     alt="Studio location 2"
@@ -90,7 +90,7 @@ export default function Location() {
               </div>
 
               {/* Optional: little footer line */}
-              <div className="mt-5 rounded-xl bg-white/70 px-4 py-3 text-xs text-zinc-600 border border-[#b9800d]/25">
+              <div className="mt-5 rounded-xl bg-white/70 px-4 py-3 text-xs text-zinc-600 border border-goldDark/25">
                 Tip: Ak ideš prvýkrát, zadaj do navigácie „Korzo, Hájik, Žilina“
                 a hľadaj panelák <span className="font-semibold">E6</span>.
               </div>
