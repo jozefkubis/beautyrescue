@@ -3,7 +3,7 @@
 import { motion } from "framer-motion" // import z framer-motion
 import Image from "next/image"
 import { useState } from "react"
-import EcgLine from "./EcgLine"
+import EcgLine from "../ecg_effect/EcgLine"
 
 // definujeme "stavy" animácie
 const textVariants = {
