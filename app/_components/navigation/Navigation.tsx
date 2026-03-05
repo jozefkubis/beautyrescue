@@ -77,7 +77,7 @@ export default function Navigation() {
               {!link.dropdown && (
                 <Link
                   href={link.href}
-                  className="text-background hover:text-gray-300 transition-colors duration-300"
+                  className="text-background hover:text-greyMain/90 transition-colors duration-300"
                 >
                   {link.name}
                 </Link>
@@ -87,7 +87,7 @@ export default function Navigation() {
               {link.dropdown && (
                 <>
                   {/* label + šípka hneď vedľa seba */}
-                  <div className="flex items-center text-background hover:text-gray-300 transition-colors duration-300 cursor-pointer">
+                  <div className="flex items-center text-background hover:text-greyMain/90 transition-colors duration-300 cursor-pointer">
                     <span>{link.name}</span>
                     <span className="ml-1 text-xs leading-none">▾</span>
                   </div>
@@ -100,12 +100,12 @@ export default function Navigation() {
                     </div>
 
                     {/* samotné menu */}
-                    <div className="w-60 text-left overflow-hidden rounded-md bg-neutral-700 shadow-lg z-50 border border-greyMain/20 -mt-0.5">
+                    <div className="w-60 text-left overflow-hidden rounded-md bg-greyMain shadow-lg z-50 border border-goldLight/20 -mt-0.5">
                       {link.dropdown.map((item, i) => (
                         <Link
                           key={i}
                           href={item.href}
-                          className={`block px-6 py-3 text-base text-background hover:bg-greyMain/20 transition-colors duration-200 ${i !== 0 ? "border-t border-greyMain/20" : ""}`}
+                          className={`block px-6 py-3 text-base text-background hover:bg-[#3f4752] transition-colors duration-200 ${i !== 0 ? "border-t border-goldLight/10" : ""}`}
                         >
                           {item.name}
                         </Link>
@@ -119,8 +119,8 @@ export default function Navigation() {
         </div>
 
         {/* pravé tlačidlo Kontakt */}
-        <div className="bg-greyMain text-background flex items-center justify-center px-12 py-4 rounded-r-md text-xl tracking-wide font-medium hover:bg-gray-300 transition-colors duration-300 hover:cursor-pointer hover:text-goldDark">
-          <h4>Kontakt</h4>
+        <div className="bg-greyMain text-background flex items-center justify-center px-12 py-4 rounded-r-md text-xl tracking-wide font-medium hover:bg-[#3f4752] transition-colors duration-300 hover:cursor-pointer">
+          <h4 className="hover:scale-102">Kontakt</h4>
         </div>
       </div>
     </div>
