@@ -5,6 +5,7 @@ import {
   Roboto,
   Roboto_Condensed,
 } from "next/font/google"
+import Footer from "./_components/home/footer/Footer"
 import Header from "./_components/home/header/Header"
 import Navigation from "./_components/navigation/Navigation"
 import "./globals.css"
@@ -52,6 +53,7 @@ export default function RootLayout({
         <Navigation />
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   )

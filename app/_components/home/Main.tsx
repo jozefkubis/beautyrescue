@@ -1,4 +1,3 @@
-import Footer from "./footer/Footer"
 import Interior from "./main/interior/Interior"
 import Location from "./main/location/Location"
 import News_on_image_main from "./main/news/news_on_image/News_on_image_main"
@@ -11,7 +10,7 @@ export default function Main() {
       <News_text />
       <Location />
       <Interior />
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }
