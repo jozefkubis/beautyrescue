@@ -10,25 +10,25 @@ export default function News_text() {
           <span className="text-6xl 2xl:text-7xl">N</span>ovinka!
         </span>
       </h1>
-      <p className="text-grey-700 line leading-8">
+      <p className="text-grey-700 line leading-8 text-sm xl:text-base 2xl:text-lg">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor odit
         soluta tempora repellendus magnam ut incidunt vitae, deleniti nobis
         veniam quidem debitis, enim, fugiat molestias. Doloremque cum provident
         rem facere.
       </p>
-      <p className="text-grey-700 leading-8">
+      <p className="text-grey-700 leading-8 text-sm xl:text-base 2xl:text-lg">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor odit
         soluta tempora repellendus magnam ut incidunt vitae, deleniti nobis
         veniam quidem debitis, enim, fugiat molestias. Doloremque cum provident
         rem facere.
       </p>
-      <p className="text-grey-700 leading-8">
+      <p className="text-grey-700 leading-8 text-sm xl:text-base 2xl:text-lg">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor odit
         soluta tempora repellendus magnam ut incidunt vitae, deleniti nobis
         veniam quidem debitis, enim, fugiat molestias. Doloremque cum provident
         rem facere.
       </p>
-      <p className="text-grey-700 leading-8">
+      <p className="text-grey-700 leading-8 text-sm xl:text-base 2xl:text-lg">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor odit
         soluta tempora repellendus magnam ut incidunt vitae, deleniti nobis
         veniam quidem debitis, enim, fugiat molestias. Doloremque cum provident

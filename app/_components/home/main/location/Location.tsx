@@ -8,8 +8,8 @@ export default function Location() {
   const [openBox, setOpenBox] = useState(false)
 
   return (
-    <section className="flex flex-col items-center px-6 py-16 sm:px-10 2xl:px-44">
-      <div className="w-full max-w-5xl">
+    <section className="flex flex-col items-center px-6 py-16 sm:px-44">
+      <div className="w-full max-w-3xl xl:max-w-4xl">
         <div
           className="
             rounded-2xl border border-[#b9800d]/40 bg-gradient-to-b from-white to-[#fff7e6]
@@ -24,10 +24,10 @@ export default function Location() {
             // aria-expanded={openBox}
           >
             <div>
-              <h3 className="text-base sm:text-lg font-semibold tracking-tight text-zinc-900">
+              <h3 className="text-sm xl:text-base font-semibold tracking-tight text-zinc-900">
                 Ako sa k nám dostanete?
               </h3>
-              <p className="mt-1 text-sm text-zinc-600">
+              <p className="mt-1 text-xs xl:text-sm text-zinc-600">
                 Presná adresa + parkovanie + fotky miesta
               </p>
             </div>
@@ -54,36 +54,34 @@ export default function Location() {
             className={`
               overflow-hidden px-5 sm:px-6
               transition-[max-height,opacity] duration-1500 ease-in-out
-              ${openBox ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}
+              ${openBox ? "max-h-250 opacity-100" : "max-h-0 opacity-0"}
             `}
           >
             <div className="pb-6 pt-1">
-              <p className="text-sm leading-relaxed text-zinc-700">
+              <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
                 Štúdio Beauty Rescue sa nachádza na žilinskom sídlisku Hájik, v
                 jeho novšej štvrti nad zastávkou M. Bela – na ulici Korzo. Korzo
                 je slepá ulica pri panelovom dome s označením E6. Parkovať
                 môžete kdekoľvek.
               </p>
 
-              <div className="mt-5 grid gap-4 sm:mt-6 sm:grid-cols-2">
-                <div className="relative overflow-hidden rounded-2xl border border-goldDark/30 bg-white shadow-md shadow-goldDark/10">
+              <div className="mt-5 flex justify-around gap-4 sm:mt-6 sm:grid-cols-2">
+                <div className="relative h-56 lg:h-60 xl:h-64 aspect-4/3 overflow-hidden rounded-2xl border border-goldDark/30 bg-white shadow-md shadow-goldDark/10">
                   <Image
                     src="/images/studio_location1.jpeg"
                     alt="Studio location 1"
-                    width={800}
-                    height={600}
-                    className="hover:cursor-pointer h-56 w-full object-cover hover:scale-105 transition-transform duration-300 ease-out sm:h-64"
+                    fill
+                    className="hover:cursor-pointer h-56 lg:h-60 xl:h-64 w-full object-cover hover:scale-105 transition-transform duration-300 ease-out"
                     priority={false}
                   />
                 </div>
 
-                <div className="relative overflow-hidden rounded-2xl border border-goldDark/30 bg-white shadow-md shadow-goldDark/10">
+                <div className="relative h-56 lg:h-60 xl:h-64 aspect-4/3 overflow-hidden rounded-2xl border border-goldDark/30 bg-white shadow-md shadow-goldDark/10">
                   <Image
                     src="/images/studio_location2.jpeg"
                     alt="Studio location 2"
-                    width={800}
-                    height={600}
-                    className="hover:cursor-pointer h-56 w-full object-cover hover:scale-105 transition-transform duration-300 ease-out sm:h-64"
+                    fill
+                    className="hover:cursor-pointer h-56 lg:h-60 xl:h-64 w-full object-cover hover:scale-105 transition-transform duration-300 ease-out"
                     priority={false}
                   />
                 </div>
