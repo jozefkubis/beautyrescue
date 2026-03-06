@@ -1,8 +1,12 @@
 import Image from "next/image"
+import Link from "next/link"
 
 export default function Logo() {
   return (
-    <div className="flex items-center gap-1 hover:cursor-pointer hover:bg-gray-100 rounded-lg p-2 transition-colors duration-300">
+    <Link
+      href="/"
+      className="flex items-center gap-1 hover:cursor-pointer hover:bg-gray-100 rounded-lg p-2 transition-colors duration-300"
+    >
       <div className="mb-2">
         <Image
           src="/images/butterflyGoldDark.png"
@@ -15,6 +19,6 @@ export default function Logo() {
         <h1 className="text-3xl font-semibold text-goldDark">BEAUTY</h1>
         <h1 className="text-3xl font-semibold text-goldDark">RESCUE</h1>
       </div>
-    </div>
+    </Link>
   )
 }
