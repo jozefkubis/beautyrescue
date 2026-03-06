@@ -5,6 +5,8 @@ import {
   Roboto,
   Roboto_Condensed,
 } from "next/font/google"
+import Header from "./_components/home/header/Header"
+import Navigation from "./_components/navigation/Navigation"
 import "./globals.css"
 
 const poppins = Poppins({
@@ -47,6 +49,8 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${openSans.variable} ${robotoCondensed.variable} ${roboto.variable} ${playfairDisplaySC.variable}`}
       >
+        <Navigation />
+        <Header />
         {children}
       </body>
     </html>
