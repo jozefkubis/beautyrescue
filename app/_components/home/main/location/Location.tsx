@@ -65,7 +65,7 @@ export default function Location() {
                 môžete kdekoľvek.
               </p>
 
-              <div className="mt-5 flex justify-around gap-4 sm:mt-6 sm:grid-cols-2">
+              <div className="mt-5 flex flex-col lg:flex-row justify-around gap-4 sm:mt-6 sm:grid-cols-2">
                 <div className="relative h-56 lg:h-60 xl:h-64 aspect-4/3 overflow-hidden rounded-2xl border border-goldDark/30 bg-white shadow-md shadow-goldDark/10">
                   <Image
                     src="/images/studio_location1.jpeg"

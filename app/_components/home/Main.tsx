@@ -6,7 +6,9 @@ import News_text from "./main/news/news_text/News_text"
 export default function Main() {
   return (
     <>
-      <News_on_image_main />
+      <div className="lg:block hidden">
+        <News_on_image_main />
+      </div>
       <News_text />
       <Location />
       <Interior />

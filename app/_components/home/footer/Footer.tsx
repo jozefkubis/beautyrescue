@@ -5,9 +5,9 @@ import ContactForm from "../../forms/ContactForm"
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-greyMain text-background mt-30">
+    <footer className="w-full bg-greyMain text-background mt-15 lg:mt-30">
       {/* container */}
-      <div className="max-w-6xl mx-auto px-6 lg:px-30 py-20 grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div className="max-w-6xl mx-auto px-6 lg:px-30 py-6 lg:py-20 grid md:grid-cols-2 lg:grid-cols-3 gap-10">
         {/* Kontakt */}
         <div className="flex flex-col gap-4">
           <h2 className="text-xl xl:text-2xl font-semibold tracking-wide">

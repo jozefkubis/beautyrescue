@@ -16,7 +16,7 @@ type ModalProps = {
 
 const OVERLAY_STYLE =
   "fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs"
-const PANEL_BASE_STYLE = "mx-auto rounded-xl bg-transparent"
+const PANEL_BASE_STYLE = "mx-auto rounded-xl bg-transparent px-6 lg:px-0"
 
 export default function Modal({
   isOpen,

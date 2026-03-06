@@ -31,11 +31,11 @@ export default function Interior() {
 
   return (
     <>
-      <div className="flex flex-wrap justify-around gap-4 px-6 text-center sm:px-20 2xl:px-44">
+      <div className="flex flex-wrap justify-around gap-4 px-6 lg:px-20 text-center sm:px-0 2xl:px-44">
         {INTERIOR_IMAGES.map((image) => (
           <div
             key={image.id}
-            className="relative aspect-4/3 w-[48%] overflow-hidden rounded-2xl border border-goldDark/30 bg-white shadow-md shadow-goldDark/10 lg:w-[30%]"
+            className="relative aspect-4/3 w-[90%] overflow-hidden rounded-2xl border border-goldDark/30 bg-white shadow-md shadow-goldDark/10 lg:w-[30%]"
           >
             <button
               type="button"

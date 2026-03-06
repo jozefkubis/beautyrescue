@@ -7,6 +7,7 @@ import {
 } from "next/font/google"
 import Footer from "./_components/home/footer/Footer"
 import Header from "./_components/home/header/Header"
+import MobileHeader from "./_components/home/header/MobileHeader"
 import Navigation from "./_components/navigation/Navigation"
 import "./globals.css"
 
@@ -40,6 +41,8 @@ const playfairDisplaySC = Playfair_Display_SC({
   weight: ["400", "700", "900"],
 })
 
+const isMobile = typeof window !== "undefined" && window.innerWidth < 1024
+
 export default function RootLayout({
   children,
 }: {
@@ -50,8 +53,11 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${openSans.variable} ${robotoCondensed.variable} ${roboto.variable} ${playfairDisplaySC.variable}`}
       >
-        <Navigation />
-        <Header />
+        <MobileHeader />
+        <div className="hidden lg:block">
+          <Navigation />
+          <Header />
+        </div>
         {children}
         <Footer />
       </body>
