@@ -36,7 +36,7 @@ export default function Page() {
 
           <div
             className={`overflow-hidden transition-all duration-800 ease-in-out ${
-              onExpand ? "max-h-250 opacity-100 mt-2" : "max-h-0 opacity-0"
+              onExpand ? "max-h-[1000px] opacity-100 mt-2" : "max-h-0 opacity-0"
             } md:max-h-none md:opacity-100`}
           >
             <p className="text-gray-700 leading-8 text-sm xl:text-base 2xl:text-lg whitespace-pre-wrap">
