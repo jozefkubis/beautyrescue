@@ -1,9 +1,10 @@
 export default function Page() {
   return (
-    <div className="grid grid-cols-2 w-full h-screen justify-center items-center px-6 lg:px-20 2xl:px-44 py-8 lg:py-10">
+    <div className="grid grid-cols-2 w-full justify-center items-center px-6 lg:px-20 2xl:px-44 py-8 lg:py-10">
       <div>
-        <h1 className="italic py-8 lg:py-10">
-          <span className="text-6xl 2xl:text-7xl">O</span>nás
+        <h1 className="italic py-8 lg:py-10 text-goldDark">
+          <span className="text-6xl 2xl:text-7xl">O</span>
+          nás
         </h1>
         <p className="text-grey-700 line leading-8 text-sm xl:text-base 2xl:text-lg">
           „Krása je vonkajší manifest vnútorného zdravia.“ (Katie Brindle,
