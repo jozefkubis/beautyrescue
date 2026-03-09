@@ -96,7 +96,7 @@ export default function Navigation() {
                   <div className="absolute left-1/2 top-full z-20 hidden -translate-x-1/2 pt-3 group-hover:block">
                     {/* biely „trojuholník“ */}
                     <div className="flex justify-center">
-                      <IoTriangle className="text-background mt-1.5" />
+                      <IoTriangle className="text-background -mt-0.5 2xl:mt-1.5" />
                     </div>
 
                     {/* samotné menu */}
