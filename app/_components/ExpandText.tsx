@@ -24,7 +24,7 @@ export default function ExpandText({ children }: ExpandTextProps) {
         onClick={() => setExpanded((prev) => !prev)}
         className="md:hidden mt-3 font-semibold text-goldDark cursor-pointer text-sm italic"
       >
-        {expanded ? "Späť" : "Čítať viac"}
+        {expanded ? "Späť" : "Čítať viac..."}
       </button>
     </div>
   )
