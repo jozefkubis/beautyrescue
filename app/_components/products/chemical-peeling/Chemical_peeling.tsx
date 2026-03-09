@@ -3,6 +3,7 @@
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
+import Chem_peeling_pricing_form from "./Chem_peeling_pricing_form"
 import Chemical_peeling_text from "./Chemical_peeling_text"
 
 export default function Chemical_peeling() {
@@ -32,6 +33,10 @@ export default function Chemical_peeling() {
             className="object-cover"
           />
         </div>
+      </div>
+
+      <div className="mt-20">
+        <Chem_peeling_pricing_form />
       </div>
     </div>
   )

@@ -4,6 +4,7 @@ import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
 import Diamond_microdermabrasion_text from "./Diamond_microdermabrasion_text"
+import Dimond_micro_pricing_form from "./Dimond_micro_pricing_form"
 
 export default function Diamond_microdermabrasion() {
   return (
@@ -33,6 +34,10 @@ export default function Diamond_microdermabrasion() {
             className="object-cover"
           />
         </div>
+      </div>
+
+      <div className="mt-20">
+        <Dimond_micro_pricing_form />
       </div>
     </div>
   )
