@@ -1,7 +1,7 @@
 "use client"
 
-import { aboutText } from "../_components/about/AboutText"
-import ExpandText from "../_components/about/ExpandText"
+import AboutText from "../_components/about/AboutText"
+import ExpandText from "../_components/ExpandText"
 import { brandFont } from "../_components/fonts"
 
 export default function Page() {
@@ -26,7 +26,9 @@ export default function Page() {
             </span>
             <br />
           </p>
-          <ExpandText text={aboutText} />
+          <ExpandText>
+            <AboutText />
+          </ExpandText>
         </div>
 
         <div className="flex items-center justify-center bg-gray-200 rounded-lg h-full">

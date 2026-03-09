@@ -1,3 +1,5 @@
+import Diamond_microdermabrasion from "@/app/_components/products/diamond-microdermabrasion/Diamond_microdermabrasion"
+
 export default function Page() {
-  return <div>diamond-microdermabrasion</div>
+  return <Diamond_microdermabrasion />
 }

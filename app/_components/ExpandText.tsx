@@ -3,10 +3,10 @@
 import { useState } from "react"
 
 type ExpandTextProps = {
-  text: string
+  children: React.ReactNode
 }
 
-export default function ExpandText({ text }: ExpandTextProps) {
+export default function ExpandText({ children }: ExpandTextProps) {
   const [expanded, setExpanded] = useState(false)
 
   return (
@@ -16,9 +16,7 @@ export default function ExpandText({ text }: ExpandTextProps) {
           expanded ? "max-h-[2000px] opacity-100" : "max-h-40 opacity-90"
         }`}
       >
-        <p className="text-gray-700 leading-8 text-sm xl:text-base 2xl:text-lg whitespace-pre-wrap">
-          {text}
-        </p>
+        {children}
       </div>
 
       <button
