@@ -1,5 +1,6 @@
 "use client" // musí byť, lebo používame animácie na klientovi
 
+import { luxuriousScript } from "@/app/_components/fonts"
 import { motion } from "framer-motion" // import z framer-motion
 import Image from "next/image"
 import { useState } from "react"
@@ -48,15 +49,14 @@ export default function News_on_image_main() {
         animate="visible"
         onAnimationComplete={() => setShowEcg(true)}
       >
-        <h1 className="text-goldDark text-3xl xl:text-5xl font-semibold italic mb-6">
-          Novinky
+        <h1
+          className={`text-goldDark text-3xl xl:text-[9rem] font-bold mb-1 ${luxuriousScript.className}`}
+        >
+          <span className="text-[15rem]">N</span>ovinky
         </h1>
-        <h1 className="text-goldDark text-3xl xl:text-5xl font-semibold italic mb-6">
-          Novinky
-        </h1>
-        <h1 className="text-goldDark text-3xl xl:text-5xl font-semibold italic mb-6">
-          Novinky
-        </h1>
+        <p className="text-goldDark text-3xl italic mb-6 font-semibold whitespace-pre-wrap">
+          ...Lorem ipsum dolor sit amet consectetur adipisicing elit!
+        </p>
       </motion.div>
 
       {/* EKG – cez celú šírku, fixne nad spodkom */}

@@ -63,12 +63,14 @@ export default function Navigation() {
   ]
 
   return (
-    <div className="absolute top-33 xl:top-32 left-1/2 -translate-x-1/2 z-10 w-full px-20 xl:px-20 2xl:px-44">
-      <div className={`${robotoCondensed.className} w-full flex items-stretch`}>
+    <div className="absolute top-33 xl:top-32 left-1/2 -translate-x-1/2 z-10 w-full px-20 xl:px-20 2xl:px-44 ">
+      <div
+        className={`${robotoCondensed.className} w-full flex items-stretch ring-3 ring-goldDark rounded-md`}
+      >
         {/* <div className="flex flex-1 items-center bg-redMain gap-8 pl-10 pr-16 xl:pr-24 2xl:pr-32 xl:py-7 py-5 rounded-l-md text-sm xl:text-base tracking-wide"> */}
         <div
-          className="flex flex-1 items-center bg-goldDark gap-8 pl-10 pr-16 xl:pr-24 2xl:pr-32 
-           xl:py-7 py-5 rounded-l-md text-sm xl:text-base tracking-wide"
+          className="flex flex-1 items-center bg-redDark gap-8 pl-10 pr-16 xl:pr-24 2xl:pr-32 
+           xl:py-7 py-5 rounded-l-md text-sm xl:text-base tracking-wide "
         >
           {navigationLinks.map((link, index) => (
             // každý nav item je relatívny a group kvôli hoveru

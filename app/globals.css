@@ -5,12 +5,12 @@
 */
 :root {
   --background: #ededed; /* pozadie */
-  /* --background: #F3E5C8;  */
   --foreground: #171717; /* text */
 
   --redMain: #ed0000; /* červená farba */
+  --redDark: #da0303; /* tmavá červená farba */
   --greyMain: #353b48; /* šedá farba */
-  --goldLight: #c6a25a; /* zlatá svetlá */
+  --goldLight: #e6a714; /* zlatá svetlá */
   --goldDark: #b9800d; /* zlatá tmavá */
 }
 
@@ -22,6 +22,7 @@
   --color-foreground: var(--foreground);
 
   --color-redMain: var(--redMain);
+  --color-redDark: var(--redDark);
   --color-greyMain: var(--greyMain);
   --color-goldLight: var(--goldLight);
   --color-goldDark: var(--goldDark);

@@ -1,6 +1,7 @@
 // fonts.ts
 
 import {
+  Luxurious_Script,
   Open_Sans,
   Playfair_Display_SC,
   Poppins,
@@ -16,6 +17,15 @@ import {
 export const brandFont = Playfair_Display_SC({
   subsets: ["latin"],
   weight: ["400", "700", "900"],
+  display: "swap",
+})
+
+/*
+Luxurious Script – pre špeciálne akcenty, napríklad v logu alebo nadpisoch
+*/
+export const luxuriousScript = Luxurious_Script({
+  subsets: ["latin"],
+  weight: ["400"],
   display: "swap",
 })
 
