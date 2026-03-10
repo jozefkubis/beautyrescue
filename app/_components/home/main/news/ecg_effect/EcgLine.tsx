@@ -1,10 +1,10 @@
 export default function EcgLine() {
-  const butterflyPath = "/images/butterflyGoldDark.png" // cesta k obrázku motýľa
+  const butterflyPath = "/images/butterfly_RedDark.png" // cesta k obrázku motýľa
 
   // FARBA ČIARY/TEXTU
-  const strokeColorHex = "var(--color-goldDark)"
-  const strokeColorClass = "stroke-[var(--color-goldDark)]"
-  const textColorClass = "fill-[var(--color-goldDark)]"
+  const strokeColorHex = "var(--color-goldDark)" // použijeme CSS proměnnú pre červenú farbu
+  const strokeColorClass = "stroke-[var(--color-redDark)]" // Tailwind class pro nastavení barvy čáry pomocí CSS proměnné
+  const textColorClass = "fill-[var(--color-redDark)]"
 
   // HRÚBKA ČIARY (Tailwind class)
   const strokeWidthClass = "stroke-[1]"
@@ -136,6 +136,7 @@ export default function EcgLine() {
           width="32"
           height="32"
           opacity="0"
+          filter="url(#text-glow)"
         >
           {/* tvoje pôvodné časovanie fade-in */}
           <animate

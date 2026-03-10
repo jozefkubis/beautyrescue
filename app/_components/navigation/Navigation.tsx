@@ -65,7 +65,7 @@ export default function Navigation() {
   return (
     <div className="absolute top-33 xl:top-32 left-1/2 -translate-x-1/2 z-10 w-full px-20 xl:px-20 2xl:px-44 ">
       <div
-        className={`${robotoCondensed.className} w-full flex items-stretch ring-3 ring-goldDark rounded-md`}
+        className={`${robotoCondensed.className} w-full flex items-stretch ring-3 ring-goldLight rounded-md relative`}
       >
         {/* <div className="flex flex-1 items-center bg-redMain gap-8 pl-10 pr-16 xl:pr-24 2xl:pr-32 xl:py-7 py-5 rounded-l-md text-sm xl:text-base tracking-wide"> */}
         <div
@@ -121,7 +121,7 @@ export default function Navigation() {
         </div>
 
         {/* pravé tlačidlo Kontakt */}
-        <div className="bg-greyMain text-background flex items-center justify-center px-12 py-4 rounded-r-md text-xl tracking-wide font-medium hover:bg-[#3f4752] transition-colors duration-300 hover:cursor-pointer">
+        <div className="bg-goldDark text-background flex items-center justify-center px-12 py-4 rounded-r-md text-xl tracking-wide font-medium hover:bg-goldLight transition-colors duration-300 hover:cursor-pointer">
           <h4 className="hover:scale-102">Kontakt</h4>
         </div>
       </div>

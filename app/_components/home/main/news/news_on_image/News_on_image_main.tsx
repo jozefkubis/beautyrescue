@@ -50,11 +50,11 @@ export default function News_on_image_main() {
         onAnimationComplete={() => setShowEcg(true)}
       >
         <h1
-          className={`text-goldDark text-3xl xl:text-[9rem] font-bold mb-1 ${luxuriousScript.className}`}
+          className={`text-gray-700 text-3xl lg:text-7xl xl:text-[9rem] font-bold mb-1 ${luxuriousScript.className}`}
         >
-          <span className="text-[15rem]">N</span>ovinky
+          <span className="text-[8rem] xl:text-[15rem]">N</span>ovinky
         </h1>
-        <p className="text-goldDark text-3xl italic mb-6 font-semibold whitespace-pre-wrap">
+        <p className="text-gray-600 text-lg xl:text-3xl italic mb-6 whitespace-pre-wrap">
           ...Lorem ipsum dolor sit amet consectetur adipisicing elit!
         </p>
       </motion.div>

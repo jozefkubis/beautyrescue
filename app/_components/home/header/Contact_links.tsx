@@ -11,21 +11,21 @@ export default function Contact_links() {
       type: "Email",
       value: "info@beautyrescue.sk",
       icon: (
-        <MdEmail className="text-redMain text-3xl xl:text-4xl rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer" />
+        <MdEmail className="text-redDark text-3xl xl:text-4xl rounded-full p-2 ring-2 ring-goldLight bg-goldLight/20 hover:cursor-pointer" />
       ),
     },
     {
       type: "Telefón",
       value: "0907 81 65 37",
       icon: (
-        <MdPhone className="text-redMain text-3xl xl:text-4xl rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer" />
+        <MdPhone className="text-redDark bg-goldLight/20 text-3xl xl:text-4xl rounded-full p-2 ring-2 ring-goldLight hover:cursor-pointer" />
       ),
     },
     {
       type: "Adresa",
       value: "Korzo 8708/8 010 15 Žilina",
       icon: (
-        <FaMapMarkerAlt className="text-redMain text-3xl xl:text-4xl rounded-full p-2 ring-2 ring-redMain hover:cursor-pointer" />
+        <FaMapMarkerAlt className="text-redDark text-3xl xl:text-4xl rounded-full p-2 ring-2 ring-goldLight hover:cursor-pointer bg-goldLight/20" />
       ),
     },
   ]
@@ -50,11 +50,11 @@ export default function Contact_links() {
       ))}
       <div className="flex items-center gap-1">
         <FaFacebookSquare
-          size={48}
+          size={38}
           className="text-redDark hover:cursor-pointer hover:scale-102 transition-transform duration-200 hover:text-blue-500 active:scale-98"
         />
         <FaInstagramSquare
-          size={48}
+          size={38}
           className="text-redDark hover:cursor-pointer hover:scale-102 transition-transform duration-200 hover:text-orange-600 active:scale-98"
         />
       </div>

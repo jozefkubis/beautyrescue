@@ -13,13 +13,14 @@ export default function Logo() {
           alt="logo_br.png"
           width={88}
           height={88}
+          className="ring-3 ring-goldLight rounded-full"
         />
       </div>
       <div className="flex flex-col -space-y-2">
         <h1 className="text-3xl lg:text-4xl font-semibold bg-clip-text text-redDark">
           BEAUTY
         </h1>
-        <h1 className="text-3xl lg:text-4xl font-semibold bg-clip-text text-redDark">
+        <h1 className="text-3xl lg:text-4xl font-semibold bg-clip-text text-goldLight">
           RESCUE
         </h1>
       </div>
