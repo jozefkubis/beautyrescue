@@ -15,7 +15,7 @@ type ModalProps = {
 }
 
 const OVERLAY_STYLE =
-  "fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs"
+  "fixed inset-0 z-50 flex items-center justify-center bg-[#1c1214]/70 backdrop-blur-sm"
 const PANEL_BASE_STYLE = "mx-auto rounded-xl bg-transparent px-6 lg:px-0"
 
 export default function Modal({
@@ -72,7 +72,7 @@ export default function Modal({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-md text-sm text-goldDark"
+                className="rounded-full border border-goldDark/35 bg-white/90 text-sm text-goldDark shadow-sm shadow-goldDark/20"
                 aria-label="Close modal"
               >
                 <IoIosClose

@@ -25,7 +25,7 @@ export default function News_on_image_main() {
   const [showEcg, setShowEcg] = useState(false)
 
   return (
-    <section className="relative w-full aspect-16/6 overflow-hidden">
+    <section className="relative w-full aspect-16/6 overflow-hidden rounded-b-4xl">
       {/* Pozadie */}
       <Image
         src="/images/imageHome.jpg"
@@ -36,25 +36,25 @@ export default function News_on_image_main() {
       />
 
       {/* Tmavý overlay */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-background via-transparent to-background" />
+      <div className="absolute inset-0 bg-linear-to-tr from-background/95 via-transparent to-background/90" />
       {/* Prechod dole */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
-      <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-transparent to-background" />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-background/95" />
+      <div className="absolute inset-0 bg-linear-to-tl from-transparent via-transparent to-background/70" />
 
       {/* Text – ostáva tak ako máš */}
       <motion.div
-        className="absolute inset-0 flex flex-col justify-center items-center text-center px-4"
+        className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center"
         variants={textVariants}
         initial="hidden"
         animate="visible"
         onAnimationComplete={() => setShowEcg(true)}
       >
         <h1
-          className={`text-gray-700 text-3xl lg:text-7xl xl:text-[9rem] font-bold mb-1 ${luxuriousScript.className}`}
+          className={`mb-1 text-3xl font-bold text-redDark drop-shadow-[0_6px_22px_rgba(141,10,45,0.24)] lg:text-7xl xl:text-[9rem] ${luxuriousScript.className}`}
         >
           <span className="text-[8rem] xl:text-[15rem]">N</span>ovinky
         </h1>
-        <p className="text-gray-600 text-lg xl:text-3xl italic mb-6 whitespace-pre-wrap">
+        <p className="mb-6 max-w-4xl whitespace-pre-wrap rounded-full border border-goldDark/20 bg-white/60 px-6 py-2 text-lg italic text-greyMain/80 shadow-sm shadow-goldDark/15 xl:text-3xl">
           ...Lorem ipsum dolor sit amet consectetur adipisicing elit!
         </p>
       </motion.div>

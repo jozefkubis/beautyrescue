@@ -6,9 +6,9 @@ import { brandFont } from "../_components/fonts"
 
 export default function Page() {
   return (
-    <div className="w-full justify-center items-center px-6 lg:px-20 2xl:px-44 py-8 lg:py-10">
+    <div className="w-full items-center justify-center px-6 py-8 lg:px-20 lg:py-10 2xl:px-44">
       <h1
-        className={`italic text-2xl 2xl:text-5xl py-8 lg:py-14 font-semibold text-goldDark ${brandFont.className}`}
+        className={`premium-title py-8 text-2xl font-semibold italic 2xl:text-5xl lg:py-14 ${brandFont.className}`}
       >
         <span className="italic">
           <span className="text-3xl 2xl:text-6xl">
@@ -17,9 +17,9 @@ export default function Page() {
           nás
         </span>
       </h1>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
+      <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:p-7">
         <div>
-          <p className="text-gray-700 leading-8 text-sm xl:text-base 2xl:text-lg whitespace-pre-wrap">
+          <p className="whitespace-pre-wrap text-sm leading-8 text-greyMain/85 xl:text-base 2xl:text-lg">
             <span className="italic">
               „Krása je vonkajší manifest vnútorného zdravia.“
               <span className="text-xs">
@@ -34,8 +34,8 @@ export default function Page() {
           </ExpandText>
         </div>
 
-        <div className="flex items-center justify-center bg-gray-200 rounded-lg h-full">
-          <h1 className="text-4xl font-semibold text-gray-300">Foto</h1>
+        <div className="flex h-full items-center justify-center rounded-lg border border-goldDark/25 bg-linear-to-br from-[#fff7ea] to-[#ffeed9]">
+          <h1 className="text-4xl font-semibold text-goldDark/45">Foto</h1>
         </div>
       </div>
     </div>

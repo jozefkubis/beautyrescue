@@ -4,14 +4,23 @@
    Svetlé pozadie, tmavý text
 */
 :root {
-  --background: #ededed; /* pozadie */
-  --foreground: #171717; /* text */
+  --background: #fff8f2; /* hlavne pozadie */
+  --foreground: #2f2321; /* hlavny text */
 
-  --redMain: #ed0000; /* červená farba */
-  --redDark: #da0303; /* tmavá červená farba */
-  --greyMain: #353b48; /* šedá farba */
-  --goldLight: #e6a714; /* zlatá svetlá */
-  --goldDark: #b9800d; /* zlatá tmavá */
+  --redMain: #be123c; /* hlavna cervena */
+  --redDark: #8d0a2d; /* tmava cervena */
+  --greyMain: #2d2425; /* tmavy neutral */
+  --goldLight: #d4af37; /* svetle zlato */
+  --goldDark: #9d7410; /* tmave zlato */
+
+  --surface: #fffdf8;
+  --surface-soft: #fff4ea;
+  --line-soft: rgba(157, 116, 16, 0.24);
+  --hero-glow: radial-gradient(
+    circle at 10% 10%,
+    rgba(212, 175, 55, 0.2),
+    transparent 45%
+  );
 }
 
 /* 2. NAPOJENIE NA TAILWIND TÉMU
@@ -46,7 +55,80 @@
    Použijeme naše premenné a fallback fonty
 */
 body {
-  background: var(--background);
+  background:
+    var(--hero-glow),
+    radial-gradient(
+      circle at 88% 14%,
+      rgba(190, 18, 60, 0.08),
+      transparent 34%
+    ),
+    linear-gradient(155deg, #fffdf9 0%, #fff7ef 45%, #fff4ea 100%);
   color: var(--foreground);
-  font-family: var(--font-poppins, Arial, Helvetica, sans-serif);
+  font-family: var(--font-poppins, "Segoe UI", sans-serif);
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.2;
+  background-image:
+    linear-gradient(to right, rgba(157, 116, 16, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(157, 116, 16, 0.08) 1px, transparent 1px);
+  background-size: 42px 42px;
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    black 22%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(circle at center, black 22%, transparent 100%);
+  z-index: -1;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--goldLight) 35%, white);
+  color: var(--greyMain);
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: 0.01em;
+}
+
+.section-shell {
+  border: 1px solid var(--line-soft);
+  border-radius: 1.25rem;
+  background: linear-gradient(
+    165deg,
+    rgba(255, 255, 255, 0.94),
+    rgba(255, 248, 240, 0.88)
+  );
+  box-shadow:
+    0 14px 35px rgba(157, 116, 16, 0.08),
+    0 4px 12px rgba(141, 10, 45, 0.06);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.premium-title {
+  color: var(--goldDark);
+  text-shadow: 0 2px 16px rgba(157, 116, 16, 0.2);
+}
+
+.fade-up {
+  animation: fadeUp 0.65s ease-out both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

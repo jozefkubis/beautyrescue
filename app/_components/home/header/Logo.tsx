@@ -5,7 +5,7 @@ export default function Logo() {
   return (
     <Link
       href="/"
-      className="flex items-center gap-2 hover:cursor-pointer hover:bg-gray-100 rounded-lg p-2 transition-colors duration-300"
+      className="group flex items-center gap-2 rounded-xl border border-goldDark/20 bg-white/70 p-2.5 shadow-sm shadow-goldDark/10 transition-all duration-300 hover:-translate-y-0.5 hover:cursor-pointer hover:border-goldDark/35 hover:shadow-md hover:shadow-goldDark/20"
     >
       <div className="">
         <Image
@@ -13,14 +13,14 @@ export default function Logo() {
           alt="logo_br.png"
           width={88}
           height={88}
-          className="ring-3 ring-goldLight rounded-full"
+          className="rounded-full ring-2 ring-goldLight/70"
         />
       </div>
       <div className="flex flex-col -space-y-2">
-        <h1 className="text-3xl lg:text-4xl font-semibold bg-clip-text text-redDark">
+        <h1 className="text-3xl lg:text-4xl font-semibold tracking-tight text-redDark transition-colors duration-300 group-hover:text-redMain">
           BEAUTY
         </h1>
-        <h1 className="text-3xl lg:text-4xl font-semibold bg-clip-text text-goldLight">
+        <h1 className="text-3xl lg:text-4xl font-semibold tracking-tight text-goldDark transition-colors duration-300 group-hover:text-goldLight">
           RESCUE
         </h1>
       </div>

@@ -35,9 +35,9 @@ export default function Dimond_micro_pricing_form() {
   return (
     <section className="w-full px-4 py-10">
       <div className="mx-auto w-full max-w-5xl">
-        <div className="overflow-hidden rounded-[28px] border border-goldDark/40 bg-gradient-to-br from-greyMain via-[#151515] to-[#0f0f0f] shadow-[0_20px_70px_rgba(0,0,0,0.45)]">
+        <div className="overflow-hidden rounded-[28px] border border-goldDark/40 bg-linear-to-br from-greyMain via-[#151515] to-[#0f0f0f] shadow-[0_20px_70px_rgba(0,0,0,0.45)]">
           {/* Header */}
-          <div className="border-b border-goldDark/20 bg-gradient-to-r from-goldDark/10 via-transparent to-goldLight/10 px-6 py-6 md:px-8">
+          <div className="border-b border-goldDark/20 bg-linear-to-r from-goldDark/10 via-transparent to-goldLight/10 px-6 py-6 md:px-8">
             <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="mb-2 inline-flex w-fit rounded-full border border-goldDark/30 bg-goldDark/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-goldLight">
@@ -68,7 +68,7 @@ export default function Dimond_micro_pricing_form() {
 
           <form className="p-4 md:p-6">
             {/* Table Head */}
-            <div className="mb-3 hidden grid-cols-[1.8fr_0.6fr_0.5fr] gap-3 rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-3 md:grid">
+            <div className="mb-3 hidden grid-cols-[1.8fr_0.6fr_0.5fr] gap-3 rounded-2xl border border-white/5 bg-white/3 px-4 py-3 md:grid">
               <span className="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">
                 Ošetrenie
               </span>
@@ -85,7 +85,7 @@ export default function Dimond_micro_pricing_form() {
               {treatments.map((item) => (
                 <div
                   key={item.id}
-                  className="group rounded-2xl border border-white/6 bg-white/[0.025] p-3 transition-all duration-300 hover:border-goldDark/30 hover:bg-white/[0.045] hover:shadow-[0_8px_30px_rgba(0,0,0,0.22)]"
+                  className="group rounded-2xl border border-white/6 bg-white/2.5 p-3 transition-all duration-300 hover:border-goldDark/30 hover:bg-white/4.5 hover:shadow-[0_8px_30px_rgba(0,0,0,0.22)]"
                 >
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.8fr_0.6fr_0.5fr]">
                     {/* Ošetrenie */}
@@ -113,7 +113,7 @@ export default function Dimond_micro_pricing_form() {
                           value={item.price}
                           disabled
                           placeholder="Cena"
-                          className="h-14 w-full rounded-2xl border border-goldDark/15 bg-gradient-to-b from-[#171717] to-[#111111] px-4 text-sm font-semibold text-goldLight outline-none disabled:cursor-not-allowed disabled:opacity-100 disabled:text-goldLight"
+                          className="h-14 w-full rounded-2xl border border-goldDark/15 bg-linear-to-b from-[#171717] to-[#111111] px-4 text-sm font-semibold text-goldLight outline-none disabled:cursor-not-allowed disabled:opacity-100 disabled:text-goldLight"
                         />
                       </div>
                     </div>
@@ -151,7 +151,7 @@ export default function Dimond_micro_pricing_form() {
 
               <button
                 type="submit"
-                className="inline-flex h-12 items-center justify-center rounded-2xl border border-goldDark/40 bg-gradient-to-r from-goldDark via-goldLight to-goldDark px-6 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(212,175,55,0.25)] transition duration-300 hover:scale-[1.02] hover:shadow-[0_12px_30px_rgba(212,175,55,0.35)] active:scale-[0.99] hover:cursor-pointer"
+                className="inline-flex h-12 items-center justify-center rounded-2xl border border-goldDark/40 bg-linear-to-r from-goldDark via-goldLight to-goldDark px-6 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(212,175,55,0.25)] transition duration-300 hover:scale-[1.02] hover:shadow-[0_12px_30px_rgba(212,175,55,0.35)] active:scale-[0.99] hover:cursor-pointer"
               >
                 Uložiť dizajn
               </button>

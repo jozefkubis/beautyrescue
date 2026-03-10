@@ -8,26 +8,26 @@ export default function Location() {
   const [openBox, setOpenBox] = useState(false)
 
   return (
-    <section className="flex flex-col items-center px-6 py-16 sm:px-44">
+    <section className="fade-up flex flex-col items-center px-4 py-12 sm:px-8 sm:py-14 lg:px-44 lg:py-16">
       <div className="w-full max-w-3xl xl:max-w-4xl">
         <div
           className="
-            rounded-2xl border border-[#b9800d]/40 bg-gradient-to-b from-white to-[#fff7e6]
-            shadow-lg shadow-[#b9800d]/15 
+            rounded-2xl border border-goldDark/35 bg-linear-to-b from-white to-[#fff3e4]
+            shadow-[0_18px_40px_rgba(157,116,16,0.14)]
           "
         >
           {/* Header */}
           <button
             type="button"
             onClick={() => setOpenBox((v) => !v)}
-            className="group flex w-full items-center justify-between gap-4 p-5 sm:p-6 text-left hover:cursor-pointer"
+            className="group flex w-full items-center justify-between gap-4 p-4 text-left hover:cursor-pointer sm:p-5 lg:p-6"
             // aria-expanded={openBox}
           >
             <div>
-              <h3 className="text-sm xl:text-base font-semibold tracking-tight text-zinc-900">
+              <h3 className="text-sm font-semibold tracking-tight text-zinc-900 xl:text-base">
                 Ako sa k nám dostanete?
               </h3>
-              <p className="mt-1 text-xs xl:text-sm text-zinc-600">
+              <p className="mt-1 text-xs text-zinc-600 xl:text-sm">
                 Presná adresa + parkovanie + fotky miesta
               </p>
             </div>
@@ -35,14 +35,14 @@ export default function Location() {
             <span
               className="
                 inline-flex h-10 w-10 items-center justify-center rounded-full
-                border border-[#b9800d]/40 bg-white/70
-                shadow-sm shadow-[#b9800d]/10
+                border border-goldDark/35 bg-white/75
+                shadow-sm shadow-goldDark/15
                 transition-transform duration-300 ease-out
                 group-hover:scale-105
               "
             >
               <MdKeyboardArrowDown
-                className={`text-2xl text-[#b9800d] transition-transform duration-300 ease-out ${
+                className={`text-2xl text-goldDark transition-transform duration-300 ease-out ${
                   openBox ? "rotate-180" : "rotate-0"
                 }`}
               />
@@ -52,7 +52,7 @@ export default function Location() {
           {/* Animated content */}
           <div
             className={`
-              overflow-hidden px-5 sm:px-6
+              overflow-hidden px-4 sm:px-5 lg:px-6
               transition-[max-height,opacity] duration-1500 ease-in-out
               ${openBox ? "max-h-250 opacity-100" : "max-h-0 opacity-0"}
             `}
@@ -65,30 +65,30 @@ export default function Location() {
                 môžete kdekoľvek.
               </p>
 
-              <div className="mt-5 flex flex-col lg:flex-row justify-around gap-4 sm:mt-6 sm:grid-cols-2">
-                <div className="relative h-56 lg:h-60 xl:h-64 aspect-4/3 overflow-hidden rounded-2xl border border-goldDark/30 bg-white shadow-md shadow-goldDark/10">
+              <div className="mt-5 flex flex-col justify-around gap-4 sm:mt-6 lg:flex-row sm:grid-cols-2">
+                <div className="relative h-52 aspect-4/3 overflow-hidden rounded-2xl border border-goldDark/25 bg-white shadow-md shadow-goldDark/15 sm:h-56 lg:h-60 xl:h-64">
                   <Image
                     src="/images/studio_location1.jpeg"
                     alt="Studio location 1"
                     fill
-                    className="hover:cursor-pointer h-56 lg:h-60 xl:h-64 w-full object-cover hover:scale-105 transition-transform duration-300 ease-out"
+                    className="h-52 w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer sm:h-56 lg:h-60 xl:h-64"
                     priority={false}
                   />
                 </div>
 
-                <div className="relative h-56 lg:h-60 xl:h-64 aspect-4/3 overflow-hidden rounded-2xl border border-goldDark/30 bg-white shadow-md shadow-goldDark/10">
+                <div className="relative h-52 aspect-4/3 overflow-hidden rounded-2xl border border-goldDark/25 bg-white shadow-md shadow-goldDark/15 sm:h-56 lg:h-60 xl:h-64">
                   <Image
                     src="/images/studio_location2.jpeg"
                     alt="Studio location 2"
                     fill
-                    className="hover:cursor-pointer h-56 lg:h-60 xl:h-64 w-full object-cover hover:scale-105 transition-transform duration-300 ease-out"
+                    className="h-52 w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer sm:h-56 lg:h-60 xl:h-64"
                     priority={false}
                   />
                 </div>
               </div>
 
               {/* Optional: little footer line */}
-              <div className="mt-5 rounded-xl bg-white/70 px-4 py-3 text-xs text-zinc-600 border border-goldDark/25">
+              <div className="mt-5 rounded-xl border border-goldDark/25 bg-white/75 px-4 py-3 text-xs text-zinc-600 shadow-sm shadow-goldDark/10">
                 Tip: Ak ideš prvýkrát, zadaj do navigácie „Korzo, Hájik, Žilina“
                 a hľadaj panelák <span className="font-semibold">E6</span>.
               </div>

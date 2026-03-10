@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { FiChevronDown, FiMenu, FiX } from "react-icons/fi"
 import { robotoCondensed } from "../../fonts"
@@ -70,6 +71,7 @@ const navigationLinks: MobileNavItem[] = [
 ]
 
 export default function MobileHeader() {
+  const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
 
@@ -77,11 +79,19 @@ export default function MobileHeader() {
     setOpenDropdown((prev) => (prev === name ? null : name))
   }
 
+  const isLinkActive = (href: string, hasDropdown: boolean) => {
+    if (hasDropdown) {
+      return pathname === href || pathname.startsWith(`${href}/`)
+    }
+
+    return pathname === href
+  }
+
   return (
     <header className="relative z-40 lg:hidden">
-      <div className="flex items-center justify-between bg-goldDark px-4 py-3">
+      <div className="flex items-center justify-between border-b border-goldLight/30 bg-linear-to-r from-redDark via-redMain to-redDark px-4 py-3 shadow-lg shadow-redDark/30">
         <Link href="/" className="flex items-center gap-2">
-          <div className="rounded-full bg-background p-1.5">
+          <div className="rounded-full bg-white/90 p-1.5 shadow-sm shadow-black/15">
             <Image
               src="/images/butterflyGoldDark.png"
               alt="Beauty Rescue logo"
@@ -90,10 +100,10 @@ export default function MobileHeader() {
             />
           </div>
           <div className="flex flex-col leading-none">
-            <span className="text-background text-lg font-semibold">
+            <span className="text-lg font-semibold tracking-tight text-background">
               BEAUTY
             </span>
-            <span className="text-background text-lg font-semibold">
+            <span className="text-lg font-semibold tracking-tight text-[#ffe2a5]">
               RESCUE
             </span>
           </div>
@@ -103,7 +113,7 @@ export default function MobileHeader() {
           type="button"
           aria-label={isMenuOpen ? "Zavrieť menu" : "Otvoriť menu"}
           onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="rounded-md p-2 text-background"
+          className="rounded-md border border-goldLight/40 bg-white/10 p-2 text-background"
         >
           {isMenuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
         </button>
@@ -113,7 +123,7 @@ export default function MobileHeader() {
         className={`absolute inset-x-0 top-full z-40 grid transition-[grid-template-rows,opacity] duration-300 ease-out ${isMenuOpen ? "pointer-events-auto grid-rows-[1fr] opacity-100" : "pointer-events-none grid-rows-[0fr] opacity-0"}`}
       >
         <nav
-          className={`${robotoCondensed.className} overflow-hidden border-b border-goldLight/20 bg-greyMain px-4 py-3 shadow-lg shadow-black/20`}
+          className={`${robotoCondensed.className} overflow-hidden border-b border-goldLight/25 bg-linear-to-b from-[#372628] to-[#2b1e20] px-4 py-4 shadow-lg shadow-black/25`}
         >
           <ul>
             {navigationLinks.map((link, index) => (
@@ -124,7 +134,11 @@ export default function MobileHeader() {
                 {!link.dropdown ? (
                   <Link
                     href={link.href}
-                    className="block px-3 py-2 text-background"
+                    className={`block rounded-lg px-3 py-2.5 text-base transition-colors duration-200 hover:bg-white/8 hover:text-[#ffe09d] ${
+                      isLinkActive(link.href, false)
+                        ? "bg-white/8 text-[#ffe09d]"
+                        : "text-background/95"
+                    }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {link.name}
@@ -133,7 +147,11 @@ export default function MobileHeader() {
                   <div>
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between px-3 py-2 text-left text-background"
+                      className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-base transition-colors duration-200 hover:bg-white/8 hover:text-[#ffe09d] ${
+                        isLinkActive(link.href, true)
+                          ? "bg-white/8 text-[#ffe09d]"
+                          : "text-background/95"
+                      }`}
                       onClick={() => toggleDropdown(link.name)}
                     >
                       <span>{link.name}</span>
@@ -157,7 +175,11 @@ export default function MobileHeader() {
                           >
                             <Link
                               href={item.href}
-                              className="block px-3 py-2 text-sm text-background/90"
+                              className={`block rounded-md px-3 py-2.5 text-sm transition-colors duration-200 hover:bg-white/8 hover:text-[#ffe09d] ${
+                                pathname === item.href
+                                  ? "text-[#ffe09d]"
+                                  : "text-background/85"
+                              }`}
                               onClick={() => setIsMenuOpen(false)}
                             >
                               {item.name}
