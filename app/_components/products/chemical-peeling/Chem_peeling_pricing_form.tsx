@@ -40,5 +40,5 @@ const treatments = [
 ]
 
 export default function Chem_peeling_pricing_form() {
-  return <PricingForm title="Chemicky peeling" treatments={treatments} />
+  return <PricingForm title="Chemický peeling" treatments={treatments} />
 }
