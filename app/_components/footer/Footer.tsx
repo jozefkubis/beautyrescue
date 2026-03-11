@@ -1,13 +1,13 @@
 "use client"
 
 import { FaFacebookSquare, FaInstagramSquare } from "react-icons/fa"
-import ContactForm from "../../forms/ContactForm"
+import ContactForm from "../forms/ContactForm"
 
 export default function Footer() {
   return (
     <footer className="mt-15 w-full border-t border-goldLight/25 bg-linear-to-b from-[#2f2321] via-[#2b1f1f] to-[#201616] text-background lg:mt-30">
       {/* container */}
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-8 md:grid-cols-2 lg:grid-cols-[1fr_1fr_2fr] lg:px-30 lg:py-20">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-8 md:grid-cols-2 lg:grid-cols-[1fr_1fr_2fr] lg:px-30 lg:py-20">
         {/* Kontakt */}
         <div className="flex flex-col gap-4">
           <h2 className="text-xl font-semibold tracking-wide text-[#ffe2a5] xl:text-2xl">
@@ -54,7 +54,7 @@ export default function Footer() {
 
       {/* bottom */}
       <div className="border-t border-goldLight/20">
-        <div className="mx-auto max-w-6xl px-6 py-6 text-xs opacity-70 xl:text-sm">
+        <div className="mx-auto max-w-7xl px-6 py-6 text-xs opacity-70 xl:text-sm">
           © 2021 BEAUTY RESCUE, s. r. o. Všetky práva vyhradené
         </div>
       </div>

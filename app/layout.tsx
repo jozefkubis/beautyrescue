@@ -5,7 +5,7 @@ import {
   Roboto,
   Roboto_Condensed,
 } from "next/font/google"
-import Footer from "./_components/home/footer/Footer"
+import Footer from "./_components/footer/Footer"
 import Header from "./_components/home/header/Header"
 import MobileHeader from "./_components/home/header/MobileHeader"
 import Navigation from "./_components/navigation/Navigation"
