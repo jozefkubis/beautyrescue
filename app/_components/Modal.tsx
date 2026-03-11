@@ -61,7 +61,7 @@ export default function Modal({
         aria-label={title ?? "Modal"}
       >
         {(title || showCloseButton) && (
-          <div className="w-full flex justify-end">
+          <div className="w-full flex justify-end pb-2">
             {/* {title ? (
               <h2 className="text-lg font-semibold leading-tight">{title}</h2>
             ) : (
@@ -72,12 +72,12 @@ export default function Modal({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-full border border-goldDark/35 bg-white/90 text-sm text-goldDark shadow-sm shadow-goldDark/20"
+                className="rounded-full border border-goldDark/35 bg-goldLight/80 text-sm text-goldDark shadow-sm shadow-goldDark/20 hover:bg-goldLight focus:outline-none focus:ring-2 focus:ring-goldDark focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-300"
                 aria-label="Close modal"
               >
                 <IoIosClose
                   size={40}
-                  className="hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-out"
+                  className="hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-out text-goldDark"
                 />
               </button>
             )}
