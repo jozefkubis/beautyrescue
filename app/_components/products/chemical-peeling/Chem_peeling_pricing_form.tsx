@@ -53,21 +53,6 @@ export default function Chem_peeling_pricing_form() {
                 <h2 className="text-2xl font-semibold tracking-tight text-white md:text-3xl">
                   Chemický peeling
                 </h2>
-
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-white/60">
-                  Náhľad formulára v štýle appky. Verejne môže pôsobiť ako
-                  luxusná tabuľka, admin režim neskôr len prepneš na
-                  editovateľné polia.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-goldDark/20 bg-white/5 px-4 py-3 text-right backdrop-blur-sm">
-                <p className="text-xs uppercase tracking-[0.18em] text-white/40">
-                  Status
-                </p>
-                <p className="text-sm font-medium text-goldLight">
-                  Design preview
-                </p>
               </div>
             </div>
           </div>
@@ -144,17 +129,7 @@ export default function Chem_peeling_pricing_form() {
             </div>
 
             {/* Footer */}
-            <div className="mt-6 flex flex-col gap-4 border-t border-white/6 pt-5 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="text-sm font-medium text-white/75">
-                  Spolu pripravených položiek:{" "}
-                  <span className="text-goldLight">{treatments.length}</span>
-                </p>
-                <p className="mt-1 text-xs text-white/40">
-                  Zatiaľ len vizuálny návrh bez logiky a bez napojenia.
-                </p>
-              </div>
-
+            <div className="mt-6 flex gap-4 border-t border-white/6 pt-5 md:flex-row md:items-center w-full justify-end">
               <button
                 type="submit"
                 className="inline-flex h-12 items-center justify-center rounded-2xl border border-goldDark/40 bg-linear-to-r from-goldDark via-goldLight to-goldDark px-6 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(212,175,55,0.25)] transition duration-300 hover:scale-[1.02] hover:shadow-[0_12px_30px_rgba(212,175,55,0.35)] active:scale-[0.99] hover:cursor-pointer"
