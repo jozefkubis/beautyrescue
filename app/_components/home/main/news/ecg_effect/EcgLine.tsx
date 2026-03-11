@@ -1,5 +1,5 @@
 export default function EcgLine() {
-  const butterflyPath = "/images/butterfly_RedDark.png" // cesta k obrázku motýľa
+  const butterflyPath = "/images/butterfly_redDark.png" // cesta k obrázku motýľa
 
   // FARBA ČIARY/TEXTU
   const strokeColorHex = "var(--color-goldDark)" // použijeme CSS proměnnú pre červenú farbu
