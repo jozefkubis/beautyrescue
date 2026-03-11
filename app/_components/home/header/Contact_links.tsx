@@ -35,7 +35,7 @@ export default function Contact_links() {
       {contactLinks.map((link, index) => (
         <div
           key={index}
-          className="flex items-center gap-3 rounded-xl border border-goldDark/15 bg-white/70 px-3 py-2 shadow-sm shadow-goldDark/10 transition-all duration-300 hover:-translate-y-0.5 hover:border-goldDark/35 hover:bg-white"
+          className="flex items-center gap-3 rounded-xl border border-goldDark/15 bg-white/70 px-3 py-2 shadow-sm shadow-goldDark/10 transition-all duration-300 hover:-translate-y-0.5 hover:border-goldDark/35 hover:bg-white hover:cursor-pointer active:translate-y-0.5 active:border-goldDark/15 active:bg-white/90"
         >
           {link.icon}
           <div className="flex flex-col items-start justify-center">
