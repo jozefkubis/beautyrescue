@@ -49,7 +49,7 @@ export default function Navigation() {
     },
     {
       name: "Kozmetika",
-      href: "/cosmetics",
+      href: "/cosmetics/chemical-peeling",
       dropdown: [
         { name: "Chemický peeling", href: "/cosmetics/chemical-peeling" },
         {
@@ -66,7 +66,7 @@ export default function Navigation() {
     },
     {
       name: "Lekárska kozmetika",
-      href: "/medical-cosmetics",
+      href: "/medical-cosmetics/botulotoxin",
       dropdown: [
         { name: "Botulotoxín", href: "/medical-cosmetics/botulotoxin" },
         {
@@ -100,7 +100,7 @@ export default function Navigation() {
   ]
 
   return (
-    <div className="absolute top-33 left-1/2 z-30 w-full -translate-x-1/2 px-20 xl:top-32 xl:px-20 2xl:px-44">
+    <div className="absolute top-33 left-1/2 z-30 w-full -translate-x-1/2 px-20 xl:top-35 xl:px-20 2xl:px-44">
       <div
         ref={navRef}
         className={`${robotoCondensed.className} fade-up relative flex w-full items-stretch overflow-visible rounded-xl border border-goldLight bg-redDark/95 shadow-[0_16px_36px_rgba(20,10,10,0.36)]`}
