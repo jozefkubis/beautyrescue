@@ -5,14 +5,14 @@ export default function Oxygeneo() {
     <div>
       <div className="space-y-4">
         <ExpandTextLG>
-          <div className="space-y-3">
-            <p className="text-gray-700 leading-8 text-sm xl:text-base 2xl:text-lg">
+          <div className="space-y-3 text-sm 2xl:text-lg">
+            <p className="text-gray-700 leading-8">
               Okysličenie pleti zlepšuje bunkový rast a bunkovú biosyntézu,
               stimuluje proliferáciu fibroblastov a diferenciáciu
               keratinocytov.. osvieži/oživí 🙂
             </p>
 
-            <p className="text-gray-700 leading-8 text-sm xl:text-base 2xl:text-lg">
+            <p className="text-gray-700 leading-8">
               Oxygeneo je neinvazívne kozmetické ošetrenie, ktoré dodá pleti
               kyslík jedinečným spôsobom, využíva totiž Bohrov efekt (závislosť
               saturácie hemoglobínu kyslíkom od koncentrácie CO2 , pH a teploty
@@ -20,10 +20,10 @@ export default function Oxygeneo() {
             </p>
 
             <div>
-              <p className="text-gray-700 leading-8 text-sm xl:text-base 2xl:text-lg">
+              <p className="text-gray-700 leading-8">
                 Ošetrenie prebieha v niekoľkých náväzných krokoch:
               </p>
-              <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm xl:text-base 2xl:text-lg">
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
                 <li>
                   <strong>-exfoliácia odumretých buniek,</strong>
                 </li>
@@ -52,7 +52,7 @@ export default function Oxygeneo() {
               </p>
             </div>
 
-            <p className="text-gray-700 leading-8 text-sm xl:text-base 2xl:text-lg">
+            <p className="text-gray-700 leading-8">
               Výsledkom je jemnejšia a svieža dokysličená dovýživená pleť,
               zmiernenie unavených vačkov pod očami, redukcia farebných
               nejednotností a rozšírených pórov.

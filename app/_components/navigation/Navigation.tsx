@@ -105,7 +105,7 @@ export default function Navigation() {
         ref={navRef}
         className={`${robotoCondensed.className} fade-up relative flex w-full items-stretch overflow-visible rounded-xl border border-goldLight bg-redDark/95 shadow-[0_16px_36px_rgba(20,10,10,0.36)]`}
       >
-        <div className="flex flex-1 items-center gap-8 rounded-l-xl bg-linear-to-r from-redDark via-redMain to-redDark pl-10 py-5 pr-16 text-sm tracking-wide text-background xl:py-7 xl:pr-24 xl:text-base 2xl:pr-32">
+        <div className="flex flex-1 items-center gap-8 rounded-l-xl bg-linear-to-r from-redDark via-redMain to-redDark pl-10 py-5 pr-16 text-sm tracking-wide text-background xl:py-7 xl:pr-24 2xl:text-lg 2xl:pr-32">
           {navigationLinks.map((link) => (
             // každý nav item je relatívny a group kvôli hoveru
             <div key={link.name} className="relative group flex items-center">

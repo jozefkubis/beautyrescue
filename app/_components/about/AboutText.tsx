@@ -1,7 +1,7 @@
 export default function AboutText() {
   return (
     <div>
-      <p className="text-gray-700 leading-8 text-sm xl:text-base 2xl:text-lg whitespace-pre-wrap">
+      <p className="text-gray-700 leading-8 text-sm 2xl:text-lg whitespace-pre-wrap">
         Beauty Rescue je štúdio profesionálnej kozmetiky na oživenie či
         ozdravenie Vašej krásy. Náš tím pozostávajúci zo zdravotníkov- lekára,
         záchranárov a maséra svoje medicínske znalosti a zdravotnícke zručnosti

@@ -32,7 +32,7 @@ export default function PricingForm({
                 <p className="mb-2 inline-flex w-fit rounded-full border border-redMain/25 bg-redMain/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-redDark">
                   Cenník procedúr
                 </p>
-                <h2 className="text-2xl font-semibold tracking-tight text-gray-700 md:text-3xl">
+                <h2 className="text-2xl font-semibold tracking-tight text-gray-700 2xl:text-3xl">
                   {title}
                 </h2>
               </div>
@@ -52,7 +52,7 @@ export default function PricingForm({
               </span>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-3 text-sm 2xl:text-lg">
               {treatments.map((item) => (
                 <div
                   key={item.id}
@@ -60,7 +60,7 @@ export default function PricingForm({
                 >
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.8fr_0.6fr_0.5fr]">
                     <div className="flex flex-col gap-1">
-                      <label className="text-lg font-semibold uppercase tracking-[0.14em] text-gray-500/50 md:hidden">
+                      <label className="font-semibold uppercase tracking-[0.14em] text-gray-500/50 md:hidden">
                         Ošetrenie
                       </label>
                       <input
@@ -68,12 +68,12 @@ export default function PricingForm({
                         value={item.treatment}
                         readOnly
                         aria-label="Ošetrenie"
-                        className="h-14 w-full rounded-2xl border border-goldDark/20 bg-[#fffaf5] px-4 text-base 2xl:text-lg text-gray-700 outline-none"
+                        className="h-12 2xl:h-14 w-full rounded-2xl border border-goldDark/20 bg-[#fffaf5] px-4  text-gray-700 outline-none"
                       />
                     </div>
 
                     <div className="flex flex-col gap-1">
-                      <label className="text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-500/50 md:hidden">
+                      <label className="font-semibold uppercase tracking-[0.14em] text-gray-500/50 md:hidden">
                         Cena
                       </label>
                       <input
@@ -81,12 +81,12 @@ export default function PricingForm({
                         value={item.price}
                         readOnly
                         aria-label="Cena"
-                        className="h-14 w-full rounded-2xl border border-goldDark/30 bg-linear-to-b from-[#fff7e8] to-[#fff1d4] px-4 text-base 2xl:text-lg font-semibold text-goldDark outline-none"
+                        className="h-12 2xl:h-14 w-full rounded-2xl border border-goldDark/30 bg-linear-to-b from-[#fff7e8] to-[#fff1d4] px-4 font-semibold text-goldDark outline-none"
                       />
                     </div>
 
                     <div className="flex flex-col gap-1">
-                      <label className="text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-500/50 md:hidden">
+                      <label className="font-semibold uppercase tracking-[0.14em] text-gray-500/50 md:hidden">
                         Akcia
                       </label>
                       <input
@@ -94,7 +94,7 @@ export default function PricingForm({
                         value={item.sale}
                         readOnly
                         aria-label="Akcia"
-                        className="h-14 w-full rounded-2xl border border-redMain/25 bg-[#fff5f6] px-4 text-base 2xl:text-lg font-semibold text-redDark outline-none"
+                        className="h-12 2xl:h-14 w-full rounded-2xl border border-redMain/25 bg-[#fff5f6] px-4 font-semibold text-redDark outline-none"
                       />
                     </div>
                   </div>

@@ -5,8 +5,8 @@ export default function Microneedling_text() {
     <div>
       <div className="space-y-4">
         <ExpandTextLG>
-          <div className="space-y-3">
-            <p className="text-gray-700 leading-8 text-sm xl:text-base 2xl:text-lg">
+          <div className="space-y-3 text-sm 2xl:text-lg">
+            <p className="text-gray-700 leading-8">
               <strong>Microneedling</strong> je zákrok/ošetrenie pleti, ktoré sa
               vykonáva v lokálnej anestézii (krém alebo lok.inj.), vykonáva sa
               prístojom DermaPen, ktorý vpichuje do pokožky 9 – 42 superostrých
@@ -23,13 +23,13 @@ export default function Microneedling_text() {
               tváre..
             </p>
 
-            <p className="text-gray-700 leading-8 text-sm xl:text-base 2xl:text-lg">
+            <p className="text-gray-700 leading-8">
               Microneedling je ideálne ošetrenie pleti pre klientky vo veku 30+
               pre zjemnenie línií a vráskok, rozšírených pórov a pod.
               pigmentácií dľa genetickej predisp.
             </p>
 
-            <p className="text-gray-700 leading-8 text-sm xl:text-base 2xl:text-lg">
+            <p className="text-gray-700 leading-8">
               Ide o pohodlný a bezbolestný rýchly zákrok, trvá približne 30-40
               min. Po ošetrení môže byť pleť začervenaná 12-48 hod., na
               ošetrovanú oblasť sa pokladá upokojujúca sterilná maska, pri veľmi
@@ -43,10 +43,10 @@ export default function Microneedling_text() {
             </p>
 
             <div>
-              <p className="text-gray-700 leading-8 text-sm xl:text-base 2xl:text-lg mb-2">
+              <p className="text-gray-700 leading-8 mb-2">
                 <strong>Kontraindikácie:</strong>
               </p>
-              <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm xl:text-base 2xl:text-lg">
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
                 <li>Dermatóza</li>
                 <li>Onkologické ochorenie kože</li>
                 <li>Hemofília</li>
