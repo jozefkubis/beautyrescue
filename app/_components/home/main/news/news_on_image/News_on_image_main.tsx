@@ -25,7 +25,7 @@ export default function News_on_image_main() {
   const [showEcg, setShowEcg] = useState(false)
 
   return (
-    <section className="relative w-full aspect-16/6 overflow-hidden rounded-b-4xl">
+    <section className="relative w-full aspect-16/6 overflow-hidden">
       {/* Pozadie */}
       <Image
         src="/images/imageHome.jpg"
@@ -39,7 +39,7 @@ export default function News_on_image_main() {
       <div className="absolute inset-0 bg-linear-to-tr from-background/95 via-transparent to-background/90" />
       {/* Prechod dole */}
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-background/95" />
-      <div className="absolute inset-0 bg-linear-to-tl from-transparent via-transparent to-background/70" />
+      <div className="absolute inset-0 bg-linear-to-tl from-transparent via-transparent to-background/90" />
 
       {/* Text – ostáva tak ako máš */}
       <motion.div

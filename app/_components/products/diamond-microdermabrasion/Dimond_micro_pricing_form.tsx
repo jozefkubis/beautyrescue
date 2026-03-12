@@ -35,6 +35,6 @@ const treatments = [
 
 export default function Dimond_micro_pricing_form() {
   return (
-    <PricingForm title="Diamantova mikrodermabrazia" treatments={treatments} />
+    <PricingForm title="Diamantová mikrodermabrázia" treatments={treatments} />
   )
 }
