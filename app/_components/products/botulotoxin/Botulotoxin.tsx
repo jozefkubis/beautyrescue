@@ -25,12 +25,12 @@ export default function Botulotoxin() {
           </div>
         </div>
 
-        <div className="relative mt-10 h-56 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 md:h-125 lg:h-[90%] lg:w-full">
+        <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <Image
             src="/images/botulotoxin.jpg"
             alt="Botulotoxín"
             fill
-            className="object-cover object-left"
+            className="object-cover"
           />
         </div>
       </div>
