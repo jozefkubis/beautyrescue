@@ -1,7 +1,5 @@
 "use client"
 
-import { useState } from "react"
-
 type Treatment = {
   id: number
   treatment: string
@@ -20,10 +18,10 @@ export default function PricingForm({
   treatments,
   isAdmin: initialIsAdmin = false,
 }: PricingFormProps) {
-  const [isAdmin, setIsAdmin] = useState(initialIsAdmin)
+  const isAdmin = initialIsAdmin
 
   return (
-    <section className="w-full px-4 py-10">
+    <section className="w-full px-4">
       <div className="mx-auto w-full max-w-5xl">
         <div className="overflow-hidden rounded-[30px] border border-goldDark/35 bg-linear-to-br from-white via-[#fff8f1] to-[#fff2e5] section-shell">
           <div className="border-b border-goldDark/20 bg-linear-to-r from-goldLight/18 via-transparent to-redMain/10 px-6 py-6 md:px-8">
