@@ -23,13 +23,13 @@ const treatments = [
     id: 4,
     treatment: "Rádiofrekvencia - tvár",
     price: "25,- €",
-    sale: "0 %",
+    sale: "",
   },
   {
     id: 5,
     treatment: "Vstupná konzultácia",
     price: "15,- €",
-    sale: "0 %",
+    sale: "",
   },
 ]
 
