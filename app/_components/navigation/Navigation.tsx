@@ -85,10 +85,10 @@ export default function Navigation() {
       name: "Lekárska akupunktúra",
       href: "/acupuncture",
     },
-    {
-      name: "Masáže a Saunový detox",
-      href: "/massage-and-sauna-detox",
-    },
+    // {
+    //   name: "Masáže a Saunový detox",
+    //   href: "/massage-and-sauna-detox",
+    // },
     {
       name: "Cenník",
       href: "/pricing",
