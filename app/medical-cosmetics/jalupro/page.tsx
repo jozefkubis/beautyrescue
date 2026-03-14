@@ -1,3 +1,5 @@
+import Jalupro from "@/app/_components/products/jalupro/Jalupro"
+
 export default function Page() {
-  return <div>Jalupro</div>
+  return <Jalupro />
 }
