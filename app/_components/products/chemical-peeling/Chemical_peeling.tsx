@@ -8,7 +8,7 @@ import Chemical_peeling_text from "./Chemical_peeling_text"
 
 export default function Chemical_peeling() {
   return (
-    <div className="w-full items-center justify-center px-6 lg:px-20 lg:pt-30 2xl:px-44">
+    <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
         <div className="flex flex-col py-10">
           <h1

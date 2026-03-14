@@ -40,7 +40,7 @@ export default function Jalupro() {
       </div>
 
       <div className="fade-up mt-10 lg:mt-12">
-        <div className="grid grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
           {[
             { src: "/images/jalupro-1.jpeg", alt: "Jalupro aplikácia" },
             { src: "/images/jalupro-2.jpeg", alt: "Jalupro výsledok" },
