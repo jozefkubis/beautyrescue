@@ -4,7 +4,6 @@ import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
 import About_jalupro from "./About_jalupro"
-import Jalupro_pricing_form from "./Jalupro_pricing_form"
 import Jalupro_text from "./Jalupro_text"
 
 export default function Jalupro() {
@@ -63,9 +62,9 @@ export default function Jalupro() {
         </div>
       </div>
 
-      <div className="mt-10 lg:mt-12">
+      {/* <div className="mt-10 lg:mt-12">
         <Jalupro_pricing_form />
-      </div>
+      </div> */}
     </div>
   )
 }

@@ -36,25 +36,31 @@ export default function Kyselina_hyaluronova() {
         </div>
       </div>
 
-      <div className="mt-5 grid grid-cols-1 gap-4 sm:mt-6 md:grid-cols-2 lg:gap-8 p-6">
-        <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-goldDark/25 bg-white shadow-md shadow-goldDark/15">
-          <Image
-            src="/images/kyselina_hyaluronova1.jpeg"
-            alt="Kyselina hyaluronová 1"
-            fill
-            className="h-full w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
-            priority={false}
-          />
-        </div>
-
-        <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-goldDark/25 bg-white shadow-md shadow-goldDark/15">
-          <Image
-            src="/images/kyselina_hyaluronova2.jpeg"
-            alt="Kyselina hyaluronová 2"
-            fill
-            className="h-full w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
-            priority={false}
-          />
+      <div className="fade-up mt-5 sm:mt-6">
+        <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
+          {[
+            {
+              src: "/images/kyselina_hyaluronova1.jpeg",
+              alt: "Kyselina hyaluronová 1",
+            },
+            {
+              src: "/images/kyselina_hyaluronova2.jpeg",
+              alt: "Kyselina hyaluronová 2",
+            },
+          ].map(({ src, alt }) => (
+            <div
+              key={src}
+              className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
+            >
+              <Image
+                src={src}
+                alt={alt}
+                fill
+                className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
+                priority={false}
+              />
+            </div>
+          ))}
         </div>
       </div>
 

@@ -3,11 +3,9 @@
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
-import About_botulotoxin from "./About_botulotoxin"
-import Botulotoxin_pricing_form from "./Botulotoxin_pricing_form"
-import Botulotoxin_text from "./Botulotoxin_text"
+import Profhilo_text from "./Profhilo_text"
 
-export default function Botulotoxin() {
+export default function Profhilo() {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -16,35 +14,31 @@ export default function Botulotoxin() {
             className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
           >
             <span className="italic">
-              <span className="text-3xl 2xl:text-6xl">B</span>otulotoxín
+              <span className="text-3xl 2xl:text-6xl">P</span>rofhilo
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Botulotoxin_text />
+              <Profhilo_text />
             </ExpandText>
           </div>
         </div>
 
         <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <Image
-            src="/images/botulotoxin.jpg"
-            alt="Botulotoxín"
+            src="/images/profhilo_main.jpeg"
+            alt="Profhilo"
             fill
             className="object-cover"
           />
         </div>
       </div>
 
-      <div className="mt-10 lg:mt-12">
-        <About_botulotoxin />
-      </div>
-
       <div className="fade-up mt-10 lg:mt-12">
         <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
           {[
-            { src: "/images/botulotoxin1.jpeg", alt: "Botulotoxín 1" },
-            { src: "/images/botulotoxin2.jpeg", alt: "Botulotoxín 2" },
+            { src: "/images/profhilo-1.jpeg", alt: "Profhilo aplikácia" },
+            { src: "/images/profhilo-2.jpeg", alt: "Profhilo výsledok" },
           ].map(({ src, alt }) => (
             <div
               key={src}
@@ -61,9 +55,9 @@ export default function Botulotoxin() {
         </div>
       </div>
 
-      <div className="mt-10 lg:mt-12">
-        <Botulotoxin_pricing_form />
-      </div>
+      {/* <div className="mt-10 lg:mt-12">
+        <Profhilo_pricing_form />
+      </div> */}
     </div>
   )
 }

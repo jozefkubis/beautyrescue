@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { useState } from "react"
 import { MdKeyboardArrowDown } from "react-icons/md"
 
@@ -78,28 +77,6 @@ export default function About_botulotoxin() {
                 Skúsený aplikátor však vie, že sa s ním dá urobiť oveľa oveľa
                 viac..
               </p>
-
-              <div className="mt-5 grid grid-cols-1 gap-4 sm:mt-6 md:grid-cols-2 lg:gap-5">
-                <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-goldDark/25 bg-white shadow-md shadow-goldDark/15">
-                  <Image
-                    src="/images/botulotoxin1.jpeg"
-                    alt="Botulotoxín 1"
-                    fill
-                    className="h-full w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
-                    priority={false}
-                  />
-                </div>
-
-                <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-goldDark/25 bg-white shadow-md shadow-goldDark/15">
-                  <Image
-                    src="/images/botulotoxin2.jpeg"
-                    alt="Botulotoxín 2"
-                    fill
-                    className="h-full w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
-                    priority={false}
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>
