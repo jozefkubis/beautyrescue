@@ -25,14 +25,14 @@ export default function PricingForm({
       <div className="mx-auto w-full max-w-5xl">
         <div className="overflow-hidden rounded-[30px] border border-goldDark/35 bg-linear-to-br from-white via-[#fff8f1] to-[#fff2e5] section-shell">
           <div className="border-b border-goldDark/20 bg-linear-to-r from-goldLight/18 via-transparent to-redMain/10 px-6 py-6 md:px-8">
-            <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div className="flex items-center justify-center">
               <div>
-                <p className="mb-2 inline-flex w-fit rounded-full border border-redMain/25 bg-redMain/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-redDark">
+                <p className="inline-flex w-fit rounded-full border border-redMain/25 bg-redMain/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-redDark">
                   Cenník procedúr
                 </p>
-                <h2 className="text-2xl font-semibold tracking-tight text-gray-700 2xl:text-3xl">
+                {/* <h2 className="text-2xl font-semibold tracking-tight text-gray-700 2xl:text-3xl">
                   {title}
-                </h2>
+                </h2> */}
               </div>
             </div>
           </div>

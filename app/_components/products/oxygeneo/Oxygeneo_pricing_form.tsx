@@ -35,6 +35,6 @@ const treatments = [
 
 export default function Oxygeneo_pricing_form() {
   return (
-    <PricingForm title="Oxygeneo - okyslicenie pleti" treatments={treatments} />
+    <PricingForm title="Oxygeneo - okysličenie pleti" treatments={treatments} />
   )
 }
