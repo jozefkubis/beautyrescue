@@ -9,7 +9,7 @@ export default function Location() {
 
   return (
     <section className="fade-up flex flex-col items-center px-4 py-12 sm:px-8 sm:py-14 lg:px-44 lg:py-16">
-      <div className="w-full max-w-3xl xl:max-w-4xl">
+      <div className="w-full max-w-3xl xl:max-w-6xl">
         <div
           className="
             rounded-2xl border border-goldDark/35 bg-linear-to-b from-white to-[#fff3e4]
@@ -85,12 +85,23 @@ export default function Location() {
                     priority={false}
                   />
                 </div>
+
+                <div className="relative h-52 aspect-4/3 overflow-hidden rounded-2xl border border-goldDark/25 bg-white shadow-md shadow-goldDark/15 sm:h-56 lg:h-60 xl:h-64">
+                  <Image
+                    src="/images/studio_location3.jpeg"
+                    alt="Studio location 3"
+                    fill
+                    className="h-52 w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer sm:h-56 lg:h-60 xl:h-64"
+                    priority={false}
+                  />
+                </div>
               </div>
 
               {/* Optional: little footer line */}
               <div className="mt-5 rounded-xl border border-goldDark/25 bg-white/75 px-4 py-3 text-xs text-zinc-600 shadow-sm shadow-goldDark/10">
                 Tip: Ak ideš prvýkrát, zadaj do navigácie „Korzo, Hájik, Žilina“
-                a hľadaj panelák <span className="font-semibold">E6</span>.
+                a hľadaj panelák <span className="font-semibold">E6</span>,
+                alebo klikni na mapu vyššie.
               </div>
             </div>
           </div>

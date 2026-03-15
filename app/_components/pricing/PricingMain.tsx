@@ -62,7 +62,7 @@ const pricingFormData: PricingFormItem[] = [
 ]
 
 export default function PricingMain() {
-  const [openBox, setOpenBox] = useState<number | null>(1)
+  const [openBox, setOpenBox] = useState<number | null>(null)
 
   function handleClick(id: number) {
     setOpenBox((currentId) => (currentId === id ? null : id))
