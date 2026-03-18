@@ -37,8 +37,8 @@ export default function Profhilo() {
       </div>
 
       <div className="fade-up mt-10 lg:mt-12">
-        <didataProfhilo.gallery { src: "/images/profhilo-2.jpeg", alt: "Profhilo výsledok" },
-          ].map(({ src, alt }) => (
+        <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
+          {dataProfhilo.gallery.map(({ src, alt }) => (
             <div
               key={src}
               className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"

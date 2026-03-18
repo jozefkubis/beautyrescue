@@ -39,9 +39,9 @@ export default function Kyselina_hyaluronova() {
         </div>
       </div>
 
-      <div dataKyselinaHyaluronova.gallery   alt: "Kyselina hyaluronová 2",
-            },
-          ].map(({ src, alt }) => (
+      <div className="fade-up mt-10 lg:mt-12">
+        <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
+          {dataKyselinaHyaluronova.gallery.map(({ src, alt }) => (
             <div
               key={src}
               className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
