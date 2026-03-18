@@ -5,7 +5,7 @@ export default function Microneedling_text() {
     <div>
       <div className="space-y-4">
         <ExpandTextLG>
-          <div className="space-y-3 text-sm 2xl:text-lg">
+          <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
             <p className="text-gray-700 leading-8">
               <strong>Microneedling</strong> je zákrok/ošetrenie pleti, ktoré sa
               vykonáva v lokálnej anestézii (krém alebo lok.inj.), vykonáva sa

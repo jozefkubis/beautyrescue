@@ -1,6 +1,6 @@
 export default function Mezoterapia_text() {
   return (
-    <div className="space-y-3 text-sm 2xl:text-lg">
+    <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
       <p className="text-gray-700 leading-8 whitespace-pre-wrap">
         Mezoterapia je kozmetické ošetrenie/ procedúra, pri ktorej sa účinné
         látky vpravujú do pokožky a podkožia transparentnými tunelmi vytvorenými

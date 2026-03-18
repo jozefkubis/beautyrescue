@@ -1,6 +1,6 @@
 export default function Chemical_peeling_text() {
   return (
-    <div className="space-y-3 text-sm 2xl:text-lg">
+    <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
       <p className="text-gray-700 leading-8 whitespace-pre-wrap">
         Chemický peeling – chemoexfoliácia, je kozmetický postup, pri ktorom sa
         na pleť nanáša chemická látka, ktorá spôsobuje kontrolovanú deštrukciu

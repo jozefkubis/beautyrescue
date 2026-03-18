@@ -45,7 +45,7 @@ export default function About_profhilo() {
               ${openBox ? "max-h-350 opacity-100" : "max-h-0 opacity-0"}
             `}
           >
-            <div className="pb-6 pt-1 flex flex-col gap-3">
+            <div className="pb-6 pt-1 flex flex-col gap-3 [&_p]:text-justify">
               <div className="space-y-1">
                 <h4 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
                   Účinky

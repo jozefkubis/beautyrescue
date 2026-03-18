@@ -54,7 +54,7 @@ export default function PricingForm({
               {treatments.map((item) => (
                 <div
                   key={item.id}
-                  className="group rounded-2xl border border-goldDark/20 bg-white/82 p-3 transition-all duration-300 hover:border-redMain/35 hover:shadow-lg"
+                  className="group bg-white/82 py-2 transition-all duration-300 hover:border-redMain/35 hover:shadow-lg"
                 >
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-[1.8fr_0.6fr_0.5fr]">
                     <div className="flex flex-col gap-1">

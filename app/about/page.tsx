@@ -18,7 +18,7 @@ export default function Page() {
         </span>
       </h1>
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:p-7">
-        <div>
+        <div className="[&_p]:text-justify">
           <p className="whitespace-pre-wrap text-sm leading-8 text-greyMain/85 xl:text-base 2xl:text-lg">
             <span className="italic">
               „Krása je vonkajší manifest vnútorného zdravia.“

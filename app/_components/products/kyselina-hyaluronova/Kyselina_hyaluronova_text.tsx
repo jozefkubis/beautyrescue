@@ -1,6 +1,6 @@
 export default function Kyselina_hyaluronova_text() {
   return (
-    <div className="space-y-3 text-sm 2xl:text-lg">
+    <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
       <p className="text-gray-700 leading-8 whitespace-pre-wrap">
         Kyselina hyaluronová je dlhý nerozvetvený polysacharid prítomný v
         extracelulárnej matrix kože, najväčšom orgáne ľudského tela, ktorému

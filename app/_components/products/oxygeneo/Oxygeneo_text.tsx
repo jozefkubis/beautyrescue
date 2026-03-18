@@ -5,7 +5,7 @@ export default function Oxygeneo() {
     <div>
       <div className="space-y-4">
         <ExpandTextLG>
-          <div className="space-y-3 text-sm 2xl:text-lg">
+          <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
             <p className="text-gray-700 leading-8">
               Okysličenie pleti zlepšuje bunkový rast a bunkovú biosyntézu,
               stimuluje proliferáciu fibroblastov a diferenciáciu

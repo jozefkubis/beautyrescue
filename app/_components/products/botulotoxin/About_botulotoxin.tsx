@@ -48,7 +48,7 @@ export default function About_botulotoxin() {
               ${openBox ? "max-h-250 opacity-100" : "max-h-0 opacity-0"}
             `}
           >
-            <div className="pb-6 pt-1 flex flex-col gap-2">
+            <div className="pb-6 pt-1 flex flex-col gap-2 [&_p]:text-justify">
               <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
                 Botulotoxín, ľud. „klobásový jed“, je neurotoxín produkovaný
                 anaeróbnou grampozitívnou tyčinkou Clostridium botulinum. Jeho
