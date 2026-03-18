@@ -1,5 +1,6 @@
 "use client"
 
+import { dataKyselinaHyaluronova } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
@@ -15,8 +16,10 @@ export default function Kyselina_hyaluronova() {
             className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
           >
             <span className="italic">
-              <span className="text-3xl 2xl:text-6xl">K</span>yselina
-              hyaluronová
+              <span className="text-3xl 2xl:text-6xl">
+                {dataKyselinaHyaluronova.pageTitle[0]}
+              </span>
+              {dataKyselinaHyaluronova.pageTitle.slice(1)}
             </span>
           </h1>
           <div>
@@ -36,16 +39,7 @@ export default function Kyselina_hyaluronova() {
         </div>
       </div>
 
-      <div className="fade-up mt-5 sm:mt-6">
-        <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
-          {[
-            {
-              src: "/images/kyselina_hyaluronova1.jpeg",
-              alt: "Kyselina hyaluronová 1",
-            },
-            {
-              src: "/images/kyselina_hyaluronova2.jpeg",
-              alt: "Kyselina hyaluronová 2",
+      <div dataKyselinaHyaluronova.gallery   alt: "Kyselina hyaluronová 2",
             },
           ].map(({ src, alt }) => (
             <div

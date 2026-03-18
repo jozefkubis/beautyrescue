@@ -1,3 +1,4 @@
+import { dataDiamondMicrodermabrasion } from "@/app/_lib/data_services/data_diamond_microdermabrasion"
 import ExpandTextLG from "../../ExpandTextLG"
 
 export default function Diamond_microdermabrasion_text() {
@@ -7,46 +8,22 @@ export default function Diamond_microdermabrasion_text() {
         <ExpandTextLG>
           <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
             <p className="text-gray-700 leading-8">
-              Diamantová mikrodermabrázia je kozmetická minimálne invazívna
-              nebolestivá procedúra, pri ktorej je zbrusovaná zrohovatená vrchná
-              vrstva pokožky hlavicou s diamantovými mikrokryštálmi pod
-              regulovateľným podtlakom až vákuom. Tento resurfaceing
+              {dataDiamondMicrodermabrasion.text.intro}
             </p>
 
             <ul className="list-disc list-inside space-y-2 text-gray-700">
-              <li>odstraňuje odumreté bunky pokožky,</li>
-              <li>redukuje póry a odstraňuje ich obsah,</li>
-              <li>používa sa najmä na akné poškodenú pleť,</li>
-              <li>
-                odstraňuje stopy po akné, farebné nejednostnosti, jazvy a aj
-                strie.
-              </li>
+              {dataDiamondMicrodermabrasion.text.benefits.map((benefit) => (
+                <li key={benefit}>{benefit}</li>
+              ))}
             </ul>
 
-            <p className="text-gray-700 leading-8">
-              Odstraňuje dôsledky fotoagingu – s vekom súvisiace farebné a
-              povrchové nerovnomernosti,{" "}
-              <strong>
-                zjednocuje nejednotnú textúru a odtieň pleti, odstraňuje
-                pigmentácie a melasmu.
-              </strong>
-            </p>
-
-            <p className="text-gray-700 leading-8">
-              Toto ošetrenie nielen odstráni Stratum corneum ale ovplyvňuje aj
-              hlbšie vrstvy pokožky aj kože, spôsobuje premiestnenie a
-              rovnomernejšiu organizáciu melanozómov v Stratum basale –
-              najhlbšej vrstve pokožy, splošťuje hrebienky v epidermo-dermálnom
-              spojení, <strong>zvyšuje hustotu kolagénových vlákien</strong> a
-              rozširuje cievky v tejto hlbšej oblasti, čím{" "}
-              <strong>zvýši jej výživu a zrýchly regeneráciu.</strong>
-            </p>
-
-            <p className="text-gray-700 leading-8">
-              <strong>Procedúra sa končí upokojujúcou výživnou maskou,</strong>{" "}
-              čiže výsledkom je jemnejšia, odľahčená a záverečnou maskou
-              rozjasnená a vyživená pleť.
-            </p>
+            {dataDiamondMicrodermabrasion.text.paragraphs.map(
+              (paragraph, index) => (
+                <p key={index} className="text-gray-700 leading-8">
+                  {paragraph}
+                </p>
+              ),
+            )}
           </div>
         </ExpandTextLG>
       </div>

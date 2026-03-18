@@ -1,23 +1,10 @@
+import { dataAboutUs } from "@/app/_lib/data_services/data_about_us"
+
 export default function AboutText() {
   return (
     <div>
       <p className="text-gray-700 leading-8 text-sm 2xl:text-lg whitespace-pre-wrap text-justify">
-        Beauty Rescue je štúdio profesionálnej kozmetiky na oživenie či
-        ozdravenie Vašej krásy. Náš tím pozostávajúci zo zdravotníkov- lekára,
-        záchranárov a maséra svoje medicínske znalosti a zdravotnícke zručnosti
-        už dlhé roky využíva v oblasti kozmetiky a ozdravovania. Z portfólia
-        našich služieb si môžete vybrať od profesionálnej kozmetiky, a síce
-        najširšieho spektra mezoterapeutickej chémie, jej aplikačných spôsobov a
-        iných profesionálnych kozmetických prístrojových ošetrení, pokračujúc
-        lekárskou kozmetikou- botulotoxínom, kyselinou hyalurónovou,
-        biokompatibilnými niťami, ďalej relaxom v podobe masáží, ku ktorým máme
-        ako bonus fínsku saunu, základ pre náš detoxprogram, alebo je príčinou
-        prečo sa v sebe necítite dobre nejaký zdravotný problém prinášajúci
-        dyskomfort? Nech sa páči, lekárska akupunktúra. Cieľom i filozofiou
-        &ldquo;Záchranky krásy&rdquo; nie je pretvoriť Vás podľa najnovších
-        estetických trendov v niečiu kópiu, ale odkryť Vašu unikátnu krásu,
-        zakryť Vaše nedostatky, spomaliť progresiu starnutia, oživiť a zachrániť
-        originál vo Vás, posilniť a podporiť Vaše zdravie – Vašu krásu.
+        {dataAboutUs.body}
       </p>
     </div>
   )

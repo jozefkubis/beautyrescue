@@ -1,5 +1,6 @@
 "use client"
 
+import { dataDiamondMicrodermabrasion } from "@/app/_lib/data_services/data_diamond_microdermabrasion"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
@@ -15,8 +16,10 @@ export default function Diamond_microdermabrasion() {
             className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
           >
             <span className="italic">
-              <span className="text-3xl 2xl:text-6xl">D</span>iamantová
-              mikrodermabrázia
+              <span className="text-3xl 2xl:text-6xl">
+                {dataDiamondMicrodermabrasion.pageTitle[0]}
+              </span>
+              {dataDiamondMicrodermabrasion.pageTitle.slice(1)}
             </span>
           </h1>
           <div>

@@ -1,26 +1,13 @@
+import { dataKyselinaHyaluronova } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
+
 export default function Kyselina_hyaluronova_text() {
   return (
     <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-      <p className="text-gray-700 leading-8 whitespace-pre-wrap">
-        Kyselina hyaluronová je dlhý nerozvetvený polysacharid prítomný v
-        extracelulárnej matrix kože, najväčšom orgáne ľudského tela, ktorému
-        dodáva hydroskopické a viskoelastické vlastnosti. Pre svoju schopnosť
-        opravy tkaniva a biokompatibilitu, biologickú odbúrateľnosť, trvanlivosť
-        a absenciu toxicity sa stala špičkou v estetickej a regeneračnej
-        medicíne.
-      </p>
-
-      <p className="text-gray-700 leading-8 whitespace-pre-wrap">
-        V Beauty Rescue pracujeme s kyselinou hyaluronovou kv. triedy A – gél s
-        mnohopočetnými denzitami v jednom prípravku, ktorý je monofázický, je
-        optimálnou dermálnou výplňou, nakoľko zachováva rovnováhu medzi tromi
-        svojimi vlastnosťami elasticitou pre optimálnu podporu tkaniva,
-        kohezivitou pre jeho dokonalú integráciu, plasticitu pre excelentnú
-        tvárnosť a vymodelovanie tvaru. Z aplikačných spôsobov preferujeme
-        aplikáciu kanylou v závislosti od vypĺňanej lokality, kyselina
-        hyaluronová môže/nemusí byť s lidokaínom podľa alergickej anamnézy
-        klienta/tky.
-      </p>
+      {dataKyselinaHyaluronova.text.paragraphs.map((paragraph, index) => (
+        <p key={index} className="text-gray-700 leading-8 whitespace-pre-wrap">
+          {paragraph}
+        </p>
+      ))}
     </div>
   )
 }

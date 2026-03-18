@@ -1,4 +1,5 @@
 import { brandFont } from "@/app/_components/fonts"
+import { dataDashboard } from "@/app/_lib/data_services/data_dashboard"
 import {
   getTknProduct,
   tknCategories,
@@ -34,7 +35,7 @@ export default async function Page({ params }: ProductPageProps) {
     <div className="w-full px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <section className="section-shell fade-up p-5 lg:p-8">
         <p className="text-xs uppercase tracking-[0.16em] text-goldDark/70">
-          TKN Produkt
+          {dataDashboard.tknProduct.pageBadge}
         </p>
         <h1
           className={`premium-title mt-2 text-2xl font-semibold italic lg:text-5xl ${brandFont.className}`}
@@ -50,10 +51,10 @@ export default async function Page({ params }: ProductPageProps) {
           </Link>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-[1.6fr_1fr] lg:gap-8">
+        <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-6 lg:gap-8">
           <div>
             <h2 className="text-lg font-semibold text-greyMain lg:text-xl">
-              Opis ošetrenia
+              {dataDashboard.tknProduct.treatmentHeading}
             </h2>
             <p className="mt-3 text-sm leading-6 text-greyMain/80 lg:text-base">
               {detail.product.summary}
@@ -63,7 +64,7 @@ export default async function Page({ params }: ProductPageProps) {
             </p>
 
             <h3 className="mt-6 text-base font-semibold text-greyMain lg:text-lg">
-              Indikácie
+              {dataDashboard.tknProduct.indicationsHeading}
             </h3>
             <ul className="mt-3 space-y-2 text-sm text-greyMain/85 lg:text-base">
               {detail.product.indications.map((indication) => (
@@ -79,19 +80,35 @@ export default async function Page({ params }: ProductPageProps) {
           </div>
 
           {imageSrc ? (
-            <div className="relative min-h-64 overflow-hidden rounded-xl border border-goldDark/25">
-              <Image
-                src={imageSrc}
-                alt={detail.product.name}
-                fill
-                className="object-cover"
-              />
+            <div className="flex justify-center md:justify-end">
+              <div className="relative isolate">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -inset-4 rounded-full bg-linear-to-br from-goldLight/50 via-goldLight/20 to-goldDark/35 blur-2xl"
+                />
+                <div className="relative aspect-square w-76 overflow-hidden rounded-full border-4 border-goldDark/40 bg-white shadow-[0_10px_30px_rgba(0,0,0,0.08)] sm:w-84 lg:w-[24rem]">
+                  <Image
+                    src={imageSrc}
+                    alt={detail.product.name}
+                    fill
+                    className="object-contain p-3"
+                  />
+                </div>
+              </div>
             </div>
           ) : (
-            <div className="relative flex min-h-64 items-center justify-center rounded-xl border border-dashed border-goldDark/35 bg-slate-100/70 p-5">
-              <span className="text-center text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
-                Image placeholder
-              </span>
+            <div className="flex justify-center md:justify-end">
+              <div className="relative isolate">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -inset-4 rounded-full bg-linear-to-br from-goldLight/35 via-goldLight/10 to-goldDark/25 blur-2xl"
+                />
+                <div className="relative flex aspect-square w-76 items-center justify-center rounded-full border-2 border-dashed border-goldDark/35 bg-slate-100/70 p-5 text-center sm:w-84 lg:w-[24rem]">
+                  <span className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    {dataDashboard.tknProduct.imagePlaceholder}
+                  </span>
+                </div>
+              </div>
             </div>
           )}
         </div>

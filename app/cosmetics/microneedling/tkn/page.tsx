@@ -1,4 +1,5 @@
 import { brandFont } from "@/app/_components/fonts"
+import { dataDashboard } from "@/app/_lib/data_services/data_dashboard"
 import { tknCategories } from "@/app/_lib/data_services/tkn_catalog"
 import Link from "next/link"
 
@@ -9,11 +10,10 @@ export default function Page() {
         <h1
           className={`premium-title text-2xl font-semibold italic lg:text-5xl ${brandFont.className}`}
         >
-          TKN Advanced Katalog
+          {dataDashboard.tknLanding.title}
         </h1>
         <p className="mt-4 max-w-4xl text-sm leading-6 text-greyMain/80 lg:text-base">
-          Vyber kategóriu a otvor produkty. Ku každému produktu máš pripravený
-          detail v jednotnom štýle appky.
+          {dataDashboard.tknLanding.description}
         </p>
       </section>
 
@@ -25,7 +25,7 @@ export default function Page() {
             className="group section-shell fade-up block p-5 transition-transform duration-300 hover:-translate-y-0.5 lg:p-8"
           >
             <p className="text-xs uppercase tracking-[0.16em] text-goldDark/70">
-              Kategória
+              {dataDashboard.tknLanding.categoryBadge}
             </p>
             <h2 className="mt-2 text-lg font-semibold text-greyMain lg:text-2xl">
               {category.name}
@@ -34,7 +34,8 @@ export default function Page() {
               {category.description}
             </p>
             <span className="mt-5 inline-flex rounded-full border border-goldDark/25 px-3 py-1 text-sm text-goldDark">
-              {category.products.length} produktov
+              {category.products.length}{" "}
+              {dataDashboard.tknLanding.productsSuffix}
             </span>
           </Link>
         ))}

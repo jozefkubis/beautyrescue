@@ -1,5 +1,6 @@
 "use client"
 
+import { dataMezoterapia } from "@/app/_lib/data_services/data_mezoterapia"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
@@ -14,7 +15,10 @@ export default function Mezoterapia() {
             className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
           >
             <span className="italic">
-              <span className="text-3xl 2xl:text-6xl">M</span>ezoterapia
+              <span className="text-3xl 2xl:text-6xl">
+                {dataMezoterapia.pageTitle[0]}
+              </span>
+              {dataMezoterapia.pageTitle.slice(1)}
             </span>
           </h1>
           <div>
@@ -28,8 +32,8 @@ export default function Mezoterapia() {
           {/* vpravo hore */}
           <div className="md:col-start-2 md:row-start-1 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square">
             <Image
-              src="/images/mezoterapia1.jpeg"
-              alt="Mezoterapia1"
+              src={dataMezoterapia.collage[0].src}
+              alt={dataMezoterapia.collage[0].alt}
               fill
               className="object-fit"
             />
@@ -38,8 +42,8 @@ export default function Mezoterapia() {
           {/* vlavo dole */}
           <div className="md:col-start-1 md:row-start-2 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square">
             <Image
-              src="/images/mezoterapia2.jpeg"
-              alt="Mezoterapia2"
+              src={dataMezoterapia.collage[1].src}
+              alt={dataMezoterapia.collage[1].alt}
               fill
               className="object-fit"
             />

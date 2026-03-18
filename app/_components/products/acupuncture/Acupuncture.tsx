@@ -1,5 +1,6 @@
 "use client"
 
+import { dataAcupuncture } from "@/app/_lib/data_services/data_acupuncture"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
@@ -15,8 +16,10 @@ export default function Acupuncture() {
             className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
           >
             <span className="italic">
-              <span className="text-3xl 2xl:text-6xl">L</span>ekárska
-              akupunktúra
+              <span className="text-3xl 2xl:text-6xl">
+                {dataAcupuncture.pageTitle[0]}
+              </span>
+              {dataAcupuncture.pageTitle.slice(1)}
             </span>
           </h1>
           <div>

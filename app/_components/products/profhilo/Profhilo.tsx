@@ -1,5 +1,6 @@
 "use client"
 
+import { dataProfhilo } from "@/app/_lib/data_services/data_profhilo"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
@@ -14,7 +15,8 @@ export default function Profhilo() {
             className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
           >
             <span className="italic">
-              <span className="text-3xl 2xl:text-6xl">P</span>rofhilo
+              <span className="text-3xl 2xl:text-6xl">{dataProfhilo.pageTitle[0]}</span>
+              {dataProfhilo.pageTitle.slice(1)}
             </span>
           </h1>
           <div>
@@ -35,10 +37,7 @@ export default function Profhilo() {
       </div>
 
       <div className="fade-up mt-10 lg:mt-12">
-        <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
-          {[
-            { src: "/images/profhilo-1.jpeg", alt: "Profhilo aplikácia" },
-            { src: "/images/profhilo-2.jpeg", alt: "Profhilo výsledok" },
+        <didataProfhilo.gallery { src: "/images/profhilo-2.jpeg", alt: "Profhilo výsledok" },
           ].map(({ src, alt }) => (
             <div
               key={src}

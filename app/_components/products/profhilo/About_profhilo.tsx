@@ -1,5 +1,6 @@
 "use client"
 
+import { dataProfhilo } from "@/app/_lib/data_services/data_profhilo"
 import { useState } from "react"
 import { MdKeyboardArrowDown } from "react-icons/md"
 
@@ -17,7 +18,7 @@ export default function About_profhilo() {
           >
             <div>
               <h3 className="text-sm font-semibold tracking-tight text-zinc-900 xl:text-base">
-                Viac informácií o Profhilo
+                {dataProfhilo.about.title}
               </h3>
             </div>
 
@@ -48,87 +49,50 @@ export default function About_profhilo() {
             <div className="pb-6 pt-1 flex flex-col gap-3 [&_p]:text-justify">
               <div className="space-y-1">
                 <h4 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
-                  Účinky
+                  {dataProfhilo.about.effectsTitle}
                 </h4>
                 <ul className="list-disc pl-5 space-y-1 text-xs xl:text-sm leading-relaxed text-zinc-700">
-                  <li>Rýchla a účinná hydratácia</li>
-                  <li>Stimulácia tvorby kolagénu a elastínu</li>
-                  <li>Spevnenie a vypnutie pokožky</li>
-                  <li>Zlepšenie elasticity a pevnosti pleti</li>
-                  <li>Bioremodelácia pokožky zvnútra</li>
-                  <li>Výrazný antioxidačný účinok</li>
-                  <li>Prevencia starnutia</li>
-                  <li>Prevencia ochabnutia pokožky</li>
+                  {dataProfhilo.about.effects.map((effect) => (
+                    <li key={effect}>{effect}</li>
+                  ))}
                 </ul>
               </div>
 
               <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                <strong>Efekt:</strong> nastupuje postupne - výsledky sú
-                viditeľné po 2. aplikácii, pričom celý regeneračný proces
-                prebieha niekoľko týždňov. Pokožka je pevnejšia, hydratovanejšia
-                a viditeľne omladená.
+                <strong>Efekt:</strong> {dataProfhilo.about.effectSummary}
               </p>
 
               <div className="space-y-2">
                 <h4 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
-                  Priebeh ošetrenia
+                  {dataProfhilo.about.treatmentTitle}
                 </h4>
-                <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                  Aplikácia Profhilo nie je neznesiteľne bolestivá, avšak pre
-                  diskomfort spojený s inj. aplikáciou (vpichy) sa pred zákrokom
-                  aplikuje anestetický krém.
-                </p>
-                <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                  Profhilo sa aplikuje do 5 anatomicky definovaných bodov na
-                  každej strane tváre (tzv. BAP technika – Bio Aesthetic
-                  Points). Po injekcii pokračujeme ľahkou masážou, aby sme
-                  liečivo rozdistribuovali čo najrovnomernejšie v aplikovanej
-                  zóne.
-                </p>
-                <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                  Na záver ošetrenia je potrebné pokožku dezinfekčne vyčistiť a
-                  upokojiť maskou podľa typu pleti, ktorá navyše dodá ďalšie
-                  výživné látky.
-                </p>
+                {dataProfhilo.about.treatmentParagraphs.map((paragraph) => (
+                  <p
+                    key={paragraph}
+                    className="text-xs xl:text-sm leading-relaxed text-zinc-700"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
               </div>
 
               <div className="space-y-2">
                 <h4 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
-                  Po ošetrení
+                  {dataProfhilo.about.aftercareTitle}
                 </h4>
-                <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                  Bezprostredne po ošetrení je potrebné vystríhať sa akéhokoľvek
-                  kontaktu ošetrovanej oblasti a potencionálneho rizika infekcie
-                  - dotyky rukami, bozkávanie.
-                </p>
-                <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                  Do 24 hodín po aplikácii nepoužívajte žiadny krém, make-up,
-                  púder a vyhnite sa intenzívnemu cvičeniu alebo stavom, ktoré
-                  môžu spôsobiť nadmerné potenie.
-                </p>
-                <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                  72 hodín po aplikácii sa vyhnite infekčnému prostrediu
-                  (vírivky, bazény, sauny, deti a pod.), oxidačnému stresu
-                  (fajčenie, vlhké a nedobre odvetrané verejné prevádzky, napr.
-                  telocvične a pod.). Po aplikácii Profhilo je potrebné 7 dní sa
-                  vyhýbať slnku.
-                </p>
-                <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                  Počas nasledujúcich 24 hodín sa vyhnite intenzívnemu cvičeniu
-                  alebo stavom, ktoré môžu spôsobiť nadmerné potenie. Prvú noc
-                  spite vo zvýšenej polohe, ak ste si aplikovali terapiu na
-                  oblasť pokožky a krku.
-                </p>
-                <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                  Cez tvár by malo prejsť čo najviac vzduchu. Pite veľa vody a
-                  vyhýbajte sa alkoholu. To vás udrží hydratované a umožní
-                  epidermálnemu roztoku účinne pôsobiť na vašu pokožku.
-                </p>
+                {dataProfhilo.about.aftercareParagraphs.map((paragraph) => (
+                  <p
+                    key={paragraph}
+                    className="text-xs xl:text-sm leading-relaxed text-zinc-700"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
               </div>
 
               <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                <strong>Varianty Profhilo:</strong> Profhilo, Profhilo
-                Structura.
+                <strong>Varianty Profhilo:</strong>{" "}
+                {dataProfhilo.about.variants}
               </p>
             </div>
           </div>

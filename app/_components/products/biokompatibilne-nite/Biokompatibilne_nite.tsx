@@ -1,5 +1,6 @@
 "use client"
 
+import { dataBiokompatibilneNite } from "@/app/_lib/data_services/data_biokompatibilne_nite"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
@@ -15,8 +16,10 @@ export default function Biokompatibilne_nite() {
             className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
           >
             <span className="italic">
-              <span className="text-3xl 2xl:text-6xl">B</span>iokompatibilné
-              nite
+              <span className="text-3xl 2xl:text-6xl">
+                {dataBiokompatibilneNite.pageTitle[0]}
+              </span>
+              {dataBiokompatibilneNite.pageTitle.slice(1)}
             </span>
           </h1>
           <div>

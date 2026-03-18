@@ -1,5 +1,6 @@
 "use client"
 
+import { dataJalupro } from "@/app/_lib/data_services/data_jalupro"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
@@ -15,7 +16,10 @@ export default function Jalupro() {
             className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
           >
             <span className="italic">
-              <span className="text-3xl 2xl:text-6xl">J</span>alupro
+              <span className="text-3xl 2xl:text-6xl">
+                {dataJalupro.pageTitle[0]}
+              </span>
+              {dataJalupro.pageTitle.slice(1)}
             </span>
           </h1>
           <div>
@@ -41,12 +45,7 @@ export default function Jalupro() {
 
       <div className="fade-up mt-10 lg:mt-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-          {[
-            { src: "/images/jalupro-1.jpeg", alt: "Jalupro aplikácia" },
-            { src: "/images/jalupro-2.jpeg", alt: "Jalupro výsledok" },
-            { src: "/images/jalupro-3.jpeg", alt: "Jalupro detail 3" },
-            { src: "/images/jalupro-4.jpeg", alt: "Jalupro detail 4" },
-          ].map(({ src, alt }) => (
+          {dataJalupro.gallery.map(({ src, alt }) => (
             <div
               key={src}
               className="relative aspect-square w-full overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"

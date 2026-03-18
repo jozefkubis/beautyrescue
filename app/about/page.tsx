@@ -3,6 +3,7 @@
 import AboutText from "../_components/about/AboutText"
 import ExpandText from "../_components/ExpandText"
 import { brandFont } from "../_components/fonts"
+import { dataAboutUs } from "../_lib/data_services/data_about_us"
 
 export default function Page() {
   return (
@@ -10,22 +11,14 @@ export default function Page() {
       <h1
         className={`premium-title py-8 text-2xl font-semibold italic 2xl:text-5xl lg:py-14 ${brandFont.className}`}
       >
-        <span className="italic">
-          <span className="text-3xl 2xl:text-6xl">
-            <span className="text-sm">...</span>O
-          </span>{" "}
-          nás
-        </span>
+        <span className="italic">{dataAboutUs.sectionTitle}</span>
       </h1>
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:p-7">
         <div className="[&_p]:text-justify">
           <p className="whitespace-pre-wrap text-sm leading-8 text-greyMain/85 xl:text-base 2xl:text-lg">
             <span className="italic">
-              „Krása je vonkajší manifest vnútorného zdravia.“
-              <span className="text-xs">
-                {" "}
-                (Katie Brindle, expertka v čínskej medicíne)
-              </span>
+              „{dataAboutUs.quote}“
+              <span className="text-xs"> {dataAboutUs.quoteAuthor}</span>
             </span>
             <br />
           </p>

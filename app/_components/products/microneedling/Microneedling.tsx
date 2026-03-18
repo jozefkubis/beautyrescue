@@ -1,5 +1,7 @@
 "use client"
 
+import { dataDashboard } from "@/app/_lib/data_services/data_dashboard"
+import { dataMicroneedling } from "@/app/_lib/data_services/data_microneedling"
 import { tknCategories } from "@/app/_lib/data_services/tkn_catalog"
 import Image from "next/image"
 import Link from "next/link"
@@ -17,7 +19,10 @@ export default function Microneedling() {
             className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
           >
             <span className="italic">
-              <span className="text-3xl 2xl:text-6xl">M</span>icroneedling
+              <span className="text-3xl 2xl:text-6xl">
+                {dataMicroneedling.pageTitle[0]}
+              </span>
+              {dataMicroneedling.pageTitle.slice(1)}
             </span>
           </h1>
           <div>
@@ -42,11 +47,10 @@ export default function Microneedling() {
         <h2
           className={`premium-title text-xl font-semibold italic lg:text-3xl ${brandFont.className}`}
         >
-          TKN Advanced Kategórie
+          {dataDashboard.microneedling.tknTitle}
         </h2>
         <p className="mt-3 text-sm leading-6 text-greyMain/80 lg:max-w-4xl lg:text-base">
-          Vyber kategóriu a otvorí sa podstránka s konkrétnymi produktmi. Každý
-          produkt má vlastný detail s popisom a miestom pre obrázok.
+          {dataDashboard.microneedling.tknDescription}
         </p>
 
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -58,7 +62,7 @@ export default function Microneedling() {
             >
               <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-goldLight/15 blur-2xl transition-opacity duration-300 group-hover:opacity-90" />
               <p className="text-xs uppercase tracking-[0.16em] text-goldDark/70">
-                Kategória
+                {dataDashboard.microneedling.categoryBadge}
               </p>
               <h3 className="mt-2 text-lg font-semibold text-greyMain">
                 {category.name}
@@ -68,10 +72,11 @@ export default function Microneedling() {
               </p>
               <div className="mt-4 flex items-center justify-between text-sm">
                 <span className="rounded-full border border-goldDark/25 px-3 py-1 text-goldDark">
-                  {category.products.length} produktov
+                  {category.products.length}{" "}
+                  {dataDashboard.microneedling.productsSuffix}
                 </span>
                 <span className="font-semibold text-redDark transition-transform duration-300 group-hover:translate-x-1">
-                  Otvoriť
+                  {dataDashboard.microneedling.openCta}
                 </span>
               </div>
             </Link>

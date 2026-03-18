@@ -1,5 +1,6 @@
 "use client"
 
+import { dataBotulotoxin } from "@/app/_lib/data_services/data_botulotoxin"
 import { useState } from "react"
 import { MdKeyboardArrowDown } from "react-icons/md"
 
@@ -19,7 +20,7 @@ export default function About_botulotoxin() {
           >
             <div>
               <h3 className="text-sm font-semibold tracking-tight text-zinc-900 xl:text-base">
-                Viac informácií o Botulotoxíne
+                {dataBotulotoxin.about.title}
               </h3>
             </div>
 
@@ -49,34 +50,14 @@ export default function About_botulotoxin() {
             `}
           >
             <div className="pb-6 pt-1 flex flex-col gap-2 [&_p]:text-justify">
-              <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                Botulotoxín, ľud. „klobásový jed“, je neurotoxín produkovaný
-                anaeróbnou grampozitívnou tyčinkou Clostridium botulinum. Jeho
-                letálna dávka sa pohybuje v závislosti od sérotypu od 0,1-1
-                ng/kg. Tento polypeptid obsahujúci proteínovú molekulu s ťažkým
-                a ľahkým reťazcom, ktoré sú držané pohromade tepelne labilnou
-                disulfidovou väzbou, štiepi dokovací proteín (synaptozomálne
-                asociovaný proteín 25 kDA – [SNAP-25]) na vnútornom povrchu
-                neurónonálnych membrán, čím inhibuje fúziu vezikúl acetylcholínu
-                do synaptickej štrbiny neuromuskulárneho spojenia, blokuje
-                cholínergickú inerváciu medzi nervom a priečne pruhovaným aj
-                hladkým svalom, a tiež autonómnu inerváciu potných, slinných a
-                slzných žliaz. Touto chemickou denerváciou spôsobuje(me) dočasnú
-                paralýzu..
-              </p>
-              <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                Prvýkrát bol botulotoxín na použitie pre kozmetické účely
-                schválený americkou FDA v roku 2002 na liečbu komplexu
-                glabelárnych svalov (m.procerus, m. corrugator supercilii a
-                depresor supercilii alebo inak medziobočie, a tiež m.frontalis),
-                ktoré svojou hyperfunkciou tvoria horizontálne i vertikálne
-                vrásky na čele, neskôr 2013 na kozmetickú terapiu „kohútich
-                stôp“ (m.orbicularis oculi)..
-              </p>
-              <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                Skúsený aplikátor však vie, že sa s ním dá urobiť oveľa oveľa
-                viac..
-              </p>
+              {dataBotulotoxin.about.paragraphs.map((paragraph, index) => (
+                <p
+                  key={index}
+                  className="text-xs xl:text-sm leading-relaxed text-zinc-700"
+                >
+                  {paragraph}
+                </p>
+              ))}
             </div>
           </div>
         </div>

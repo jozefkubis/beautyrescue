@@ -1,5 +1,6 @@
 "use client"
 
+import { dataChemicalPeeling } from "@/app/_lib/data_services/data_chemical_peeling"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
@@ -15,7 +16,10 @@ export default function Chemical_peeling() {
             className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
           >
             <span className="italic">
-              <span className="text-3xl 2xl:text-6xl">C</span>hemický peeling
+              <span className="text-3xl 2xl:text-6xl">
+                {dataChemicalPeeling.pageTitle[0]}
+              </span>
+              {dataChemicalPeeling.pageTitle.slice(1)}
             </span>
           </h1>
           <div>
