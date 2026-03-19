@@ -2,6 +2,7 @@
 
 import { dataKyselinaHyaluronova } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
 import Image from "next/image"
+import Link from "next/link"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
 import Kyselina_hyaluronova_pricing_form from "./Kyselina_hyaluronova_pricing_form"
@@ -41,20 +42,28 @@ export default function Kyselina_hyaluronova() {
 
       <div className="fade-up mt-10 lg:mt-12">
         <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
-          {dataKyselinaHyaluronova.gallery.map(({ src, alt }) => (
-            <div
-              key={src}
-              className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
-            >
-              <Image
-                src={src}
-                alt={alt}
-                fill
-                className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
-                priority={false}
-              />
-            </div>
-          ))}
+          {dataKyselinaHyaluronova.gallery.map(({ src, alt }) => {
+            const isFace = src.includes("kyselina_hyaluronova2")
+            const linkHref = isFace
+              ? "/medical-cosmetics/kyselina-hyaluronova/face"
+              : "/medical-cosmetics/kyselina-hyaluronova/lips"
+
+            return (
+              <Link
+                href={linkHref}
+                key={src}
+                className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
+              >
+                <Image
+                  src={src}
+                  alt={alt}
+                  fill
+                  className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
+                  priority={false}
+                />
+              </Link>
+            )
+          })}
         </div>
       </div>
 
