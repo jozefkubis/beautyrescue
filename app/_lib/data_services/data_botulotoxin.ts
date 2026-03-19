@@ -21,3 +21,38 @@ export const dataBotulotoxin = {
     { src: "/images/botulotoxin2.jpeg", alt: "Botulotoxín 2" },
   ],
 }
+
+export const dataBotulotoxinPotenie = {
+  pageTitle: "Nadmerné potenie",
+  text: {
+    sourceUrl:
+      "https://www.lekarsky.herba.sk/lekarsky-obzor-2009/55-lekarsky-obzor-2-2009/145-hyperhidroza-a-jej-priciny.html",
+    paragraphs: [
+      "Nadmerné potenie - hyperhidrosis je nadmerné vylučovanie potu ekrinnými potnými žľazami buď lokálne, alebo generalizovane v dôsledku poruchy regulácie sekrécie potu. Hyperhidrôza je dermatologický stav definovaný nadmerným potením nad rámec termoregulačných potrieb s významným vplyvom na kvalitu života pacientov, okrem toho, že predstavuje spoločensky hendikepujúci problém pre pacienta, môže mať negatívny vplyv nielen na psychické ale i na celkové zdravie človeka.",
+      "Potenie je fyziologický proces potrebný pre termoreguláciu, riadený z termoregulačného centra v preoptickej oblasti hypotalamu v kooperácii s kortexom, neurovegetatívnym systémom a hormónmi.",
+      "Potné žľazy (merokrinné), ktoré sa delia sa na ekrinné (pokrývajú takmer celý povrch tela) a apokrinné (predovšetkým v axilách a v intímnych oblastiach) vylučujú odpadové produkty látkovej výmeny (sodík, draslík, chlór, vápnik, horčík, celkový dusík, kyselinu mliečnu, močovinu, aminokyseliny a iné) a vzhľadom na ich kyslé pH vytvárajú určitú ochranu pred vstupom baktérií do organizmu.",
+      "Podnet na sekréciu potu je sprostredkovaný cez cholinergické vlákna sympatikového nervového systému. Sudomotorické neuróny uvoľňujú na svojich zakončeniach acetylcholin, ktorý interferuje s nikotínovým cholinergným receptorom potnej žľazy.",
+      "Botulotoxínové injekcie sú jedna z najúčinnejších metód liečby hyperhidrózy. Botulotoxín blokuje cholinergnú inerváciu nielen na neuromuskulárnych spojeniach hladkého a priečne pruhovaného svalstva, ale aj autonómnu inerváciu exokrinných žliaz. Okrem tejto inhibície znižuje citlivosť potných žliaz na acetylcholin. Inhibícia potenia môže trvať alebo 6-8 mesiacov a pri opakovaných injekciách 2-3 krát za rok, ktoré predlžujú takúto symptomatickú úľavu je účinok takmer trvalý.",
+    ],
+  },
+  gallery: [
+    { src: "/images/botulotoxin_potenie1.jpeg", alt: "Botulotoxín potenie 1" },
+    { src: "/images/botulotoxin_potenie2.jpeg", alt: "Botulotoxín potenie 2" },
+  ],
+}
+
+export const dataBotulotoxinVrasky = {
+  pageTitle: "Botulotoxín - vrásky",
+  text: {
+    quote: "Tvár je index mysle.",
+    paragraphs: [
+      "Vrásky, mimické, neskôr starecké sú tvorené dermálnou atrofiou v kožných zlomoch kolmých na kontrakciu hyperfunkčných mimických svalov, jedinečných vo svojom spôsobe prichytenia sa o kožu (superficial musculoaponeurotic system - SMAS).",
+      "Správna injektáž malého, pre zdravie nevýznamného množstva botulotoxínu do presne definovaných bodov mimických svalov svalovú skupinu spôsobujúcu nežiadúcu kontrakciu dočasne denervuje.",
+      "Výsledkom je relaxovaná tvár, resp. mladistvý vzhľad.",
+    ],
+  },
+  gallery: [
+    { src: "/images/botulotoxin_vrasky1.jpeg", alt: "Botulotoxín vrásky 1" },
+    { src: "/images/botulotoxin_vrasky2.jpeg", alt: "Botulotoxín vrásky 2" },
+  ],
+}

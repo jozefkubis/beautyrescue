@@ -2,6 +2,7 @@
 
 import { dataBotulotoxin } from "@/app/_lib/data_services/data_botulotoxin"
 import Image from "next/image"
+import Link from "next/link"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
 import About_botulotoxin from "./About_botulotoxin"
@@ -46,9 +47,14 @@ export default function Botulotoxin() {
 
       <div className="fade-up mt-10 lg:mt-12">
         <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
-          {dataBotulotoxin.gallery.map(({ src, alt }) => (
-            <div
+          {dataBotulotoxin.gallery.map(({ src, alt }, index) => (
+            <Link
               key={src}
+              href={
+                index === 0
+                  ? "/medical-cosmetics/botulotoxin/vrasky"
+                  : "/medical-cosmetics/botulotoxin/potenie"
+              }
               className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
             >
               <Image
@@ -57,7 +63,7 @@ export default function Botulotoxin() {
                 fill
                 className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
               />
-            </div>
+            </Link>
           ))}
         </div>
       </div>
