@@ -7,6 +7,8 @@ import Biokompatibilne_nite_pricing_form from "../products/biokompatibilne-nite/
 import Botulotoxin_pricing_form from "../products/botulotoxin/Botulotoxin_pricing_form"
 import Chem_peeling_pricing_form from "../products/chemical-peeling/Chem_peeling_pricing_form"
 import Kyselina_hyaluronova_pricing_form from "../products/kyselina-hyaluronova/Kyselina_hyaluronova_pricing_form"
+import Mezoterapia_pricing_form_invasive from "../products/mezoterapia/invasive/Mezoterapia_pricing_form_invasive"
+import Mezoterapia_pricing_form_non_invasive from "../products/mezoterapia/non-invasive/mezoterapia_pricing_form_non_invasive"
 import Oxygeneo_pricing_form from "../products/oxygeneo/Oxygeneo_pricing_form"
 
 type PricingFormItem = {
@@ -36,25 +38,37 @@ const pricingFormData: PricingFormItem[] = [
     value: <Oxygeneo_pricing_form />,
   },
   {
+    id: 4,
+    title: "Mezoterapia - neinvazívna",
+    description: "Bezihlová mezoterapia pre hydratáciu a regeneráciu pleti.",
+    value: <Mezoterapia_pricing_form_non_invasive />,
+  },
+  {
     id: 5,
+    title: "Mezoterapia - invazívna",
+    description: "Hĺbková mezoterapia Vitalinjector pre intenzívny efekt.",
+    value: <Mezoterapia_pricing_form_invasive />,
+  },
+  {
+    id: 6,
     title: "Botulotoxín",
     description: "Vyhladenie mimických vrások s prirodzeným výsledkom.",
     value: <Botulotoxin_pricing_form />,
   },
   {
-    id: 6,
+    id: 7,
     title: "Kyselina hyalurónová",
     description: "Hydratácia, objem a jemné kontúrovanie tváre.",
     value: <Kyselina_hyaluronova_pricing_form />,
   },
   {
-    id: 7,
+    id: 8,
     title: "Biokompatibilné nite",
     description: "Spevnenie kontúr a liftingový efekt bez chirurgie.",
     value: <Biokompatibilne_nite_pricing_form />,
   },
   {
-    id: 8,
+    id: 9,
     title: "Lekárska akupunktúra",
     description: "Podpora regenerácie a harmonizácie organizmu.",
     value: <Acupuncture_pricing_form />,
@@ -69,7 +83,7 @@ export default function PricingMain() {
   }
 
   return (
-    <section className="mx-auto w-full max-w-[1400px] px-5 pt-10 lg:px-40 lg:pt-20 2xl:px-20">
+    <section className="mx-auto w-full max-w-350 px-5 pt-10 lg:px-40 lg:pt-20 2xl:px-20">
       <div className="mb-10 text-center lg:mb-14">
         <p className="mx-auto mb-3 inline-flex rounded-full border border-redMain/20 bg-redMain/8 px-4 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-redDark">
           Cenník služieb

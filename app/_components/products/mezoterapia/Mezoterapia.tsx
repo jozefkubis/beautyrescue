@@ -2,6 +2,7 @@
 
 import { dataMezoterapia } from "@/app/_lib/data_services/data_mezoterapia"
 import Image from "next/image"
+import Link from "next/link"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
 import Mezoterapia_text from "./Mezoterapia_text"
@@ -30,30 +31,32 @@ export default function Mezoterapia() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 relative p-12">
           {/* vpravo hore */}
-          <div className="md:col-start-2 md:row-start-1 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square">
+          <Link
+            href="/cosmetics/mezoterapia/invasive"
+            className="md:col-start-2 md:row-start-1 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square"
+          >
             <Image
               src={dataMezoterapia.collage[0].src}
               alt={dataMezoterapia.collage[0].alt}
               fill
-              className="object-fit"
+              className="object-fit hover:cursor-pointer hover:scale-105 transition-transform duration-300"
             />
-          </div>
+          </Link>
 
           {/* vlavo dole */}
-          <div className="md:col-start-1 md:row-start-2 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square">
+          <Link
+            href="/cosmetics/mezoterapia/non-invasive"
+            className="md:col-start-1 md:row-start-2 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square"
+          >
             <Image
               src={dataMezoterapia.collage[1].src}
               alt={dataMezoterapia.collage[1].alt}
               fill
-              className="object-fit"
+              className="object-fit hover:cursor-pointer hover:scale-105 transition-transform duration-300"
             />
-          </div>
+          </Link>
         </div>
       </div>
-
-      {/* <div className="mt-20">
-        <Mezoterapia_pricing_form />
-      </div> */}
     </div>
   )
 }
