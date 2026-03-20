@@ -79,7 +79,7 @@ export default function PricingForm({
                         value={item.price}
                         readOnly
                         aria-label="Cena"
-                        className="h-12 2xl:h-14 w-full rounded-2xl border border-goldDark/30 bg-linear-to-b from-[#fff7e8] to-[#fff1d4] px-4 font-semibold text-goldDark outline-none"
+                        className={`h-12 2xl:h-14 w-full rounded-2xl border border-goldDark/30 bg-linear-to-b from-[#fff7e8] to-[#fff1d4] px-4 font-semibold text-goldDark outline-none ${item.sale ? "line-through decoration-2" : ""}`}
                       />
                     </div>
 
