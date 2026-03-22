@@ -47,3 +47,73 @@ export const dataJalupro = {
     { src: "/images/jalupro-4.jpeg", alt: "Jalupro detail 4" },
   ],
 }
+
+export const dataJaluproClassic = {
+  pageTitle: "Jalupro classic (3ml)",
+  text: {
+    paragraphs: [
+      "pre mladšiu pokožku",
+      "cieľová oblasť: tvár, krk, dekolt, okolie očí a telo",
+      "zameriava sa na povrchovú vrstvu pokožky – epidermis",
+      "rýchla hydratácia, prevencia stárnutia",
+      "zloženie: aminokyseliny  (glycín, L-prolín, L-lyzín, L-leucín), kyselina hyalurónová 30 mg (nízkomolekulová)",
+    ],
+  },
+  gallery: [
+    { src: "/images/jalupro_classic.jpeg", alt: "Jalupro Classic aplikácia" },
+  ],
+}
+
+export const dataJaluproHMW = {
+  pageTitle: "Jalupro HMW",
+  text: {
+    paragraphs: [
+      "pre zrelšiu pleť",
+      "cieľová oblasť oše pery, okolie pier, tvár, krk a dekolt",
+      "zameriava sa na strednú vrstvu pokožky – dermis",
+      "zloženie:  aminokyseliny (glycín, L-prolín, L-lyzín, L-leucín), kyselina hyalurónová 20 mg (vysokomolekulová)",
+    ],
+  },
+  gallery: [{ src: "/images/jalupro_hmw.jpeg", alt: "Jalupro HMW aplikácia" }],
+}
+
+export const dataJaluproSuperHydro = {
+  pageTitle: "Jalupro SuperHydro",
+  text: {
+    topBullets: [
+      "cieľová oblasť",
+      "zabezpečuje aj povrchovú aj hĺbkovú hydratáciu, vyživuje až väzivové štruktúry",
+      "aplikácia do tváre, krku, dekoltu, tela a chrbtov rúk.",
+      "aplikuje sa injekčne do presne definovaných bodov na tvári alebo tele, z ktorých sa rovnomerne rozptýli do okolia",
+    ],
+    summary:
+      "Kolagén booster – bezkonkurenčné zloženie, tento produkt získal množstvo svetových ocenení",
+    bottomBullets: [
+      "až 80 mg kyseliny hyalurónovej – len v tomto výnimočnom produkte",
+      "7 aminokyselín pre podporu tvorby kolagénu (glycín, prolín, lyzín, leucín, valín, alanín, arginín) a 3 peptidy pre obnovu buniek (acetyl decapeptid, oligopeptid 24, acetyl tetrapeptid 5)",
+    ],
+  },
+  gallery: [
+    {
+      src: "/images/jalupro_super_hydro.jpeg",
+      alt: "Jalupro Super Hydro aplikácia",
+    },
+  ],
+}
+
+export const dataJaluproYoungEye = {
+  pageTitle: "Jalupro Young eye",
+  text: {
+    paragraphs: [
+      "výnimočný kolagénový booster len na hydratáciu a spevnenie očného okolia",
+      "zloženie: 7 aminokyselín, 3 peptidy a nízkomolekulová kyselina hyalurónová",
+      "môže vzniknúť mierny edém po ošetrení, do 2 dní zmizne",
+    ],
+  },
+  gallery: [
+    {
+      src: "/images/jalupro_young_eye.jpeg",
+      alt: "Jalupro Young Eye aplikácia",
+    },
+  ],
+}

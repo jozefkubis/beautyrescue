@@ -2,12 +2,20 @@
 
 import { dataJalupro } from "@/app/_lib/data_services/data_jalupro"
 import Image from "next/image"
+import Link from "next/link"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
 import About_jalupro from "./About_jalupro"
 import Jalupro_text from "./Jalupro_text"
 
 export default function Jalupro() {
+  const jaluproLinks = [
+    "/medical-cosmetics/jalupro/classic",
+    "/medical-cosmetics/jalupro/hmw",
+    "/medical-cosmetics/jalupro/super_hydro",
+    "/medical-cosmetics/jalupro/young_eye",
+  ]
+
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -45,8 +53,9 @@ export default function Jalupro() {
 
       <div className="fade-up mt-10 lg:mt-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-          {dataJalupro.gallery.map(({ src, alt }) => (
-            <div
+          {dataJalupro.gallery.map(({ src, alt }, index) => (
+            <Link
+              href={jaluproLinks[index] ?? "/medical-cosmetics/jalupro/classic"}
               key={src}
               className="relative aspect-square w-full overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
             >
@@ -56,7 +65,7 @@ export default function Jalupro() {
                 fill
                 className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
               />
-            </div>
+            </Link>
           ))}
         </div>
       </div>
