@@ -10,7 +10,7 @@ export default function Botulotoxin_potenie() {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
-        <div className="relative mt-2 aspect-4/3 w-full overflow-hidden rounded-sm border border-goldDark/10 lg:mt-0">
+        <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <Image
             src="/images/botulotoxin_potenie.jpeg"
             alt="Botulotoxín nadmerné potenie"

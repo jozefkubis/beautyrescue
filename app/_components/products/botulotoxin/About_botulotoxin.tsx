@@ -19,9 +19,9 @@ export default function About_botulotoxin() {
             // aria-expanded={openBox}
           >
             <div>
-              <h3 className="text-sm font-semibold tracking-tight text-zinc-900 xl:text-base">
+              <h4 className="text-lg font-semibold italic tracking-tight text-goldDark sm:text-xl lg:text-[1.75rem]">
                 {dataBotulotoxin.about.title}
-              </h3>
+              </h4>
             </div>
 
             <span

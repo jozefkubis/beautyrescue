@@ -4,6 +4,8 @@ import { dataProfhilo } from "@/app/_lib/data_services/data_profhilo"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
+import About_profhilo from "./About_profhilo"
+import Profhilo_pricing_form from "./Profhilo_pricing_form"
 import Profhilo_text from "./Profhilo_text"
 
 export default function Profhilo() {
@@ -15,7 +17,9 @@ export default function Profhilo() {
             className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
           >
             <span className="italic">
-              <span className="text-3xl 2xl:text-6xl">{dataProfhilo.pageTitle[0]}</span>
+              <span className="text-3xl 2xl:text-6xl">
+                {dataProfhilo.pageTitle[0]}
+              </span>
               {dataProfhilo.pageTitle.slice(1)}
             </span>
           </h1>
@@ -36,7 +40,11 @@ export default function Profhilo() {
         </div>
       </div>
 
-      <div className="fade-up mt-10 lg:mt-12">
+      <div className="mt-10 lg:mt-12">
+        <About_profhilo />
+      </div>
+
+      {/* <div className="fade-up mt-10 lg:mt-12">
         <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
           {dataProfhilo.gallery.map(({ src, alt }) => (
             <div
@@ -52,11 +60,11 @@ export default function Profhilo() {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* <div className="mt-10 lg:mt-12">
-        <Profhilo_pricing_form />
       </div> */}
+
+      <div className="mt-10 lg:mt-12">
+        <Profhilo_pricing_form />
+      </div>
     </div>
   )
 }

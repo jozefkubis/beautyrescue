@@ -8,35 +8,65 @@ export const dataProfhilo = {
     ],
   },
   about: {
-    title: "Viac informácií o Profhilo",
-    effectsTitle: "Účinky",
-    effects: [
-      "Rýchla a účinná hydratácia",
-      "Stimulácia tvorby kolagénu a elastínu",
-      "Spevnenie a vypnutie pokožky",
-      "Zlepšenie elasticity a pevnosti pleti",
-      "Bioremodelácia pokožky zvnútra",
-      "Výrazný antioxidačný účinok",
-      "Prevencia starnutia",
-      "Prevencia ochabnutia pokožky",
+    title: "Viac o Profhilo a Profhilo Structura",
+    sections: [
+      {
+        product: "Profhilo",
+        whatTitle: "Čo je Profhilo?",
+        whatItems: [
+          "Profhilo je produkt, ktorý obsahuje vysoko koncentrovanú stabilizovanú kyselinu hyalurónovú (HA).",
+          "Neobsahuje chemické zosieťovacie prostriedky, čo ho robí bezpečným a prirodzeným riešením pre omladenie pleti.",
+        ],
+        howTitle: "Ako Profhilo funguje?",
+        howItems: [
+          "Bioremodelácia: Profhilo pôsobí ako booster, ktorý stimuluje prirodzenú produkciu kolagénu a elastínu v pokožke.",
+          "Hydratácia: Kyselina hyalurónová v Profhilo viaže vodu, čím zlepšuje hydratáciu pokožky a redukuje jemné vrásky.",
+          "BAP technika: Aplikácia Profhilo sa často vykonáva pomocou špeciálnej techniky piatich bodov na tvári (Bio Aesthetic Points), ktorá minimalizuje riziko a zabezpečuje rovnomernú distribúciu prípravku.",
+        ],
+        benefitsTitle: "Aké sú výhody Profhilo?",
+        benefitsItems: [
+          "Zlepšenie hydratácie: Pokožka je hĺbkovo hydratovaná a vyzerá sviežejšie.",
+          "Zvýšenie elasticity a pevnosti: Profhilo pomáha obnoviť elasticitu a pevnosť pokožky, čím redukuje ochabnutosť a vrásky.",
+          "Prirodzený vzhľad: Výsledky sú prirodzené a nevedú k zmenám objemu.",
+          "Dlhotrvajúci účinok: Účinok Profhilo môže trvať až 6 až 12 mesiacov, v závislosti od individuálnych faktorov.",
+          "Minimálne invazívne: Procedúra je menej invazívna v porovnaní s inými estetickými zákrokmi.",
+        ],
+        suitableTitle: "Pre koho je Profhilo vhodné?",
+        suitableItems: [
+          "Chcú zlepšiť kvalitu svojej pleti.",
+          "Trpia ochabnutou pokožkou na tvári, krku, dekolte alebo rukách.",
+          "Hľadajú prirodzené a dlhotrvajúce riešenie pre omladenie pleti.",
+          "Chcú minimalizovať vrásky a zlepšiť hydratáciu pokožky.",
+        ],
+      },
+      {
+        product: "Profhilo Structura",
+        whatTitle: "Čo je Profhilo Structura?",
+        whatItems: [
+          "Je to injekčný produkt na báze kyseliny hyalurónovej, ktorý je špeciálne navrhnutý pre obnovu štruktúry tváre a podkožného tuku.",
+          "Obsahuje vysokú koncentráciu kyseliny hyalurónovej, ktorá prináša dlhodobejší efekt.",
+          "Ošetrenie je minimálne invazívne a pôsobí do hĺbky pleti, čím stimuluje tvorbu kolagénu a elastínu.",
+        ],
+        howTitle: "Ako Profhilo Structura funguje?",
+        howItems: [
+          "Aplikuje sa do hlbších vrstiev pokožky, kde stimuluje regeneráciu tukových buniek a obnovuje ich funkciu.",
+          "Tým dochádza k obnoveniu strateného objemu, spevneniu pleti a zlepšeniu kontúr tváre.",
+          "Výsledkom je prirodzený liftingový efekt a mladistvejší vzhľad pleti.",
+        ],
+        benefitsTitle: "Ošetrenie Profhilo Structura",
+        benefitsItems: [
+          "Zvyčajne sa odporúčajú dve ošetrenia s odstupom 30 dní.",
+          "Aplikácia je pomerne rýchla a s minimálnym diskomfortom.",
+          "Výsledky sú viditeľné a dlhodobé, s možnosťou opakovať ošetrenie pre udržanie efektu.",
+        ],
+        suitableTitle: "Pre koho je Profhilo Structura vhodné?",
+        suitableItems: [
+          "Pre ľudí, ktorí si všímajú stratu objemu v tvári, prepadnuté líca, povolené kontúry tváre a celkovú ochabnutosť pleti.",
+          "Je vhodné pre pacientov, ktorí chcú dosiahnuť prirodzený lifting a spevnenie pleti bez nutnosti invazívnych zákrokov.",
+          "Môže byť použité aj ako prevencia prejavov starnutia pleti.",
+        ],
+      },
     ],
-    effectSummary:
-      "nastupuje postupne - výsledky sú viditeľné po 2. aplikácii, pričom celý regeneračný proces prebieha niekoľko týždňov. Pokožka je pevnejšia, hydratovanejšia a viditeľne omladená.",
-    treatmentTitle: "Priebeh ošetrenia",
-    treatmentParagraphs: [
-      "Aplikácia Profhilo nie je neznesiteľne bolestivá, avšak pre diskomfort spojený s inj. aplikáciou (vpichy) sa pred zákrokom aplikuje anestetický krém.",
-      "Profhilo sa aplikuje do 5 anatomicky definovaných bodov na každej strane tváre (tzv. BAP technika – Bio Aesthetic Points). Po injekcii pokračujeme ľahkou masážou, aby sme liečivo rozdistribuovali čo najrovnomernejšie v aplikovanej zóne.",
-      "Na záver ošetrenia je potrebné pokožku dezinfekčne vyčistiť a upokojiť maskou podľa typu pleti, ktorá navyše dodá ďalšie výživné látky.",
-    ],
-    aftercareTitle: "Po ošetrení",
-    aftercareParagraphs: [
-      "Bezprostredne po ošetrení je potrebné vystríhať sa akéhokoľvek kontaktu ošetrovanej oblasti a potencionálneho rizika infekcie - dotyky rukami, bozkávanie.",
-      "Do 24 hodín po aplikácii nepoužívajte žiadny krém, make-up, púder a vyhnite sa intenzívnemu cvičeniu alebo stavom, ktoré môžu spôsobiť nadmerné potenie.",
-      "72 hodín po aplikácii sa vyhnite infekčnému prostrediu (vírivky, bazény, sauny, deti a pod.), oxidačnému stresu (fajčenie, vlhké a nedobre odvetrané verejné prevádzky, napr. telocvične a pod.). Po aplikácii Profhilo je potrebné 7 dní sa vyhýbať slnku.",
-      "Počas nasledujúcich 24 hodín sa vyhnite intenzívnemu cvičeniu alebo stavom, ktoré môžu spôsobiť nadmerné potenie. Prvú noc spite vo zvýšenej polohe, ak ste si aplikovali terapiu na oblasť pokožky a krku.",
-      "Cez tvár by malo prejsť čo najviac vzduchu. Pite veľa vody a vyhýbajte sa alkoholu. To vás udrží hydratované a umožní epidermálnemu roztoku účinne pôsobiť na vašu pokožku.",
-    ],
-    variants: "Profhilo, Profhilo Structura.",
   },
   gallery: [
     { src: "/images/profhilo-1.jpeg", alt: "Profhilo aplikácia" },

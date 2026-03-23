@@ -10,6 +10,7 @@ import Kyselina_hyaluronova_pricing_form from "../products/kyselina-hyaluronova/
 import Mezoterapia_pricing_form_invasive from "../products/mezoterapia/invasive/Mezoterapia_pricing_form_invasive"
 import Mezoterapia_pricing_form_non_invasive from "../products/mezoterapia/non-invasive/mezoterapia_pricing_form_non_invasive"
 import Oxygeneo_pricing_form from "../products/oxygeneo/Oxygeneo_pricing_form"
+import Profhilo_pricing_form from "../products/profhilo/Profhilo_pricing_form"
 
 type PricingFormItem = {
   id: number
@@ -69,6 +70,12 @@ const pricingFormData: PricingFormItem[] = [
   },
   {
     id: 9,
+    title: "Profhilo",
+    description: "Hydratácia a regenerácia pleti pre mladistvý vzhľad.",
+    value: <Profhilo_pricing_form />,
+  },
+  {
+    id: 10,
     title: "Lekárska akupunktúra",
     description: "Podpora regenerácie a harmonizácie organizmu.",
     value: <Acupuncture_pricing_form />,

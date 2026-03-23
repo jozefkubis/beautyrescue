@@ -17,9 +17,9 @@ export default function About_jalupro() {
             className="group flex w-full items-center justify-between gap-2 p-4 text-left hover:cursor-pointer sm:p-5 lg:p-6"
           >
             <div>
-              <h3 className="text-sm font-semibold tracking-tight text-zinc-900 xl:text-base">
+              <h4 className="text-lg font-semibold italic tracking-tight text-goldDark sm:text-xl lg:text-[1.75rem]">
                 {dataJalupro.about.title}
-              </h3>
+              </h4>
             </div>
 
             <span

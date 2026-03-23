@@ -10,7 +10,7 @@ const treatments = [
   {
     id: 2,
     treatment: "Profhilo Structura",
-    price: "320,- €",
+    price: "250,- €",
     sale: "",
   },
   {
