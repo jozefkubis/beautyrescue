@@ -38,7 +38,7 @@ export default function Jalupro_young_eye() {
           />
         </div>
 
-        <div className="mt-10 lg:mt-12 lg:col-span-2">
+        <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Jalupro_young_eye_pricing_form />
         </div>
       </div>

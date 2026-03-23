@@ -76,7 +76,7 @@ export default function Mezoterapia_non_invasive() {
           </div>
         </div>
 
-        <div className="mt-20">
+        <div className="mt-10 2xl:mt-20">
           <Mezoterapia_pricing_form_non_invasive />
         </div>
       </div>

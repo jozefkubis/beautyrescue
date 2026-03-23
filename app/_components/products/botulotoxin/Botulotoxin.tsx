@@ -67,7 +67,7 @@ export default function Botulotoxin() {
           </div>
         </div>
 
-        <div className="mt-10 lg:mt-12 lg:col-span-2">
+        <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Botulotoxin_pricing_form />
         </div>
       </div>

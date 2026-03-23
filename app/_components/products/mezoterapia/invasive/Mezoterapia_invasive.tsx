@@ -29,7 +29,7 @@ export default function Mezoterapia_invasive() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-5 relative p-6 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-5 relative px-6 gap-3">
           <div className="relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md h-full aspect-4/3 ring-2 ring-goldDark/80 shadow-goldDark/30">
             <Image
               src={dataMezoterapiaInvasive.collage[0].src}
@@ -73,7 +73,7 @@ export default function Mezoterapia_invasive() {
           </div>
         </div>
 
-        <div className="mt-12 flex justify-center lg:mt-16">
+        <div className="mt-10 2xl:mt-20 flex justify-center lg:mt-16">
           <div className="w-full max-w-3xl overflow-hidden border border-neutral-300/80 bg-white shadow-lg shadow-neutral-500/10">
             <div className="aspect-video w-full">
               <iframe
@@ -88,7 +88,7 @@ export default function Mezoterapia_invasive() {
           </div>
         </div>
 
-        <div className="mt-20">
+        <div className="mt-10 2xl:mt-20">
           <Mezoterapia_pricing_form_invasive />
         </div>
       </div>

@@ -32,13 +32,13 @@ export default function Jalupro_hmw() {
         <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <Image
             src="/images/jalupro_hmw.jpeg"
-            alt="Jalupro"
+            alt="Jalupro HMW"
             fill
             className="object-cover"
           />
         </div>
 
-        <div className="mt-10 lg:mt-12 lg:col-span-2">
+        <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Jalupro_hmw_pricing_form />
         </div>
       </div>

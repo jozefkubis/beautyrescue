@@ -38,7 +38,7 @@ export default function Biokompatibilne_nite() {
           />
         </div>
 
-        <div className="mt-20 lg:col-span-2">
+        <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Biokompatibilne_nite_pricing_form />
         </div>
       </div>

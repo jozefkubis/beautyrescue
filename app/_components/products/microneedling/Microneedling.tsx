@@ -42,7 +42,7 @@ export default function Microneedling() {
           />
         </div>
 
-        <div className="mt-10 p-5 lg:mt-14 lg:p-8 lg:col-span-2">
+        <div className="2xl:mt-2 p-5 lg:p-8 lg:col-span-2">
           <h2
             className={`premium-title text-xl font-semibold italic lg:text-3xl ${brandFont.className}`}
           >
@@ -83,7 +83,7 @@ export default function Microneedling() {
           </div>
         </div>
 
-        <div className="mt-20 lg:col-span-2">
+        <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Microneedling_pricing_form />
         </div>
       </div>

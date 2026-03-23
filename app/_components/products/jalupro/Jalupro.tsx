@@ -46,11 +46,11 @@ export default function Jalupro() {
           />
         </div>
 
-        <div className="mt-10 lg:mt-12 lg:col-span-2">
+        <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <About_jalupro />
         </div>
 
-        <div className="fade-up mt-10 lg:mt-12 lg:col-span-2">
+        <div className="fade-up mt-10 2xl:mt-20 lg:col-span-2">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
             {dataJalupro.gallery.map(({ src, alt }, index) => (
               <Link
