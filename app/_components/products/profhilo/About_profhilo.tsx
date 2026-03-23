@@ -9,8 +9,8 @@ export default function About_profhilo() {
   const [openBox, setOpenBox] = useState<number | null>(null)
 
   const sectionDescriptions = [
-    "Hydratacia, spevnenie a prirodzene omladenie pleti.",
-    "Obnova strateneho objemu a spevnenie kontur tvare.",
+    "Hydratácia, spevnenie a prirodzené omladenie pleti.",
+    "Obnova strateného objemu a spevnenie kontúr tváre.",
   ]
 
   const sectionImages = [
