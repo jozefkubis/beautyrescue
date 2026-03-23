@@ -38,13 +38,12 @@ export default function Profhilo() {
             className="object-cover"
           />
         </div>
-      </div>
 
-      <div className="mt-10 lg:mt-12">
-        <About_profhilo />
-      </div>
+        <div className="mt-10 lg:mt-12 lg:col-span-2">
+          <About_profhilo />
+        </div>
 
-      {/* <div className="fade-up mt-10 lg:mt-12">
+        {/* <div className="fade-up mt-10 lg:mt-12">
         <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
           {dataProfhilo.gallery.map(({ src, alt }) => (
             <div
@@ -62,8 +61,9 @@ export default function Profhilo() {
         </div>
       </div> */}
 
-      <div className="mt-10 lg:mt-12">
-        <Profhilo_pricing_form />
+        <div className="mt-10 lg:mt-12 lg:col-span-2">
+          <Profhilo_pricing_form />
+        </div>
       </div>
     </div>
   )

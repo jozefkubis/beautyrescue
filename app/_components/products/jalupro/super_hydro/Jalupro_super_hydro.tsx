@@ -37,10 +37,10 @@ export default function Jalupro_super_hydro() {
             className="object-cover"
           />
         </div>
-      </div>
 
-      <div className="mt-10 lg:mt-12">
-        <Jalupro_super_hydro_pricing_form />
+        <div className="mt-10 lg:mt-12 lg:col-span-2">
+          <Jalupro_super_hydro_pricing_form />
+        </div>
       </div>
     </div>
   )

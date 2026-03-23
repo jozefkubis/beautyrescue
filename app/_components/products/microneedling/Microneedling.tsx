@@ -41,51 +41,51 @@ export default function Microneedling() {
             className="object-cover"
           />
         </div>
-      </div>
 
-      <div className="section-shell fade-up mt-10 p-5 lg:mt-14 lg:p-8">
-        <h2
-          className={`premium-title text-xl font-semibold italic lg:text-3xl ${brandFont.className}`}
-        >
-          {dataDashboard.microneedling.tknTitle}
-        </h2>
-        <p className="mt-3 text-sm leading-6 text-greyMain/80 lg:max-w-4xl lg:text-base">
-          {dataDashboard.microneedling.tknDescription}
-        </p>
+        <div className="mt-10 p-5 lg:mt-14 lg:p-8 lg:col-span-2">
+          <h2
+            className={`premium-title text-xl font-semibold italic lg:text-3xl ${brandFont.className}`}
+          >
+            {dataDashboard.microneedling.tknTitle}
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-greyMain/80 lg:max-w-4xl lg:text-base">
+            {dataDashboard.microneedling.tknDescription}
+          </p>
 
-        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {tknCategories.map((category) => (
-            <Link
-              key={category.slug}
-              href={`/cosmetics/microneedling/tkn/${category.slug}`}
-              className="group relative overflow-hidden rounded-xl border border-goldDark/20 bg-linear-to-br from-white to-[#f8f1e8] p-5 shadow-sm transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-goldLight/15 blur-2xl transition-opacity duration-300 group-hover:opacity-90" />
-              <p className="text-xs uppercase tracking-[0.16em] text-goldDark/70">
-                {dataDashboard.microneedling.categoryBadge}
-              </p>
-              <h3 className="mt-2 text-lg font-semibold text-greyMain">
-                {category.name}
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-greyMain/80">
-                {category.description}
-              </p>
-              <div className="mt-4 flex items-center justify-between text-sm">
-                <span className="rounded-full border border-goldDark/25 px-3 py-1 text-goldDark">
-                  {category.products.length}{" "}
-                  {dataDashboard.microneedling.productsSuffix}
-                </span>
-                <span className="font-semibold text-redDark transition-transform duration-300 group-hover:translate-x-1">
-                  {dataDashboard.microneedling.openCta}
-                </span>
-              </div>
-            </Link>
-          ))}
+          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+            {tknCategories.map((category) => (
+              <Link
+                key={category.slug}
+                href={`/cosmetics/microneedling/tkn/${category.slug}`}
+                className="group relative overflow-hidden rounded-xl border border-goldDark/20 bg-linear-to-br from-white to-[#f8f1e8] p-5 shadow-sm transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-goldLight/15 blur-2xl transition-opacity duration-300 group-hover:opacity-90" />
+                <p className="text-xs uppercase tracking-[0.16em] text-goldDark/70">
+                  {dataDashboard.microneedling.categoryBadge}
+                </p>
+                <h3 className="mt-2 text-lg font-semibold text-greyMain">
+                  {category.name}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-greyMain/80">
+                  {category.description}
+                </p>
+                <div className="mt-4 flex items-center justify-between text-sm">
+                  <span className="rounded-full border border-goldDark/25 px-3 py-1 text-goldDark">
+                    {category.products.length}{" "}
+                    {dataDashboard.microneedling.productsSuffix}
+                  </span>
+                  <span className="font-semibold text-redDark transition-transform duration-300 group-hover:translate-x-1">
+                    {dataDashboard.microneedling.openCta}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <div className="mt-20">
-        <Microneedling_pricing_form />
+        <div className="mt-20 lg:col-span-2">
+          <Microneedling_pricing_form />
+        </div>
       </div>
     </div>
   )

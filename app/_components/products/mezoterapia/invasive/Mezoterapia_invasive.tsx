@@ -72,25 +72,25 @@ export default function Mezoterapia_invasive() {
             />
           </div>
         </div>
-      </div>
 
-      <div className="mt-12 flex justify-center lg:mt-16">
-        <div className="w-full max-w-3xl overflow-hidden border border-neutral-300/80 bg-white shadow-lg shadow-neutral-500/10">
-          <div className="aspect-video w-full">
-            <iframe
-              src="https://www.youtube.com/embed/6z9qoQVEFO8?start=1"
-              title="Vitalinjector video"
-              className="h-full w-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            />
+        <div className="mt-12 flex justify-center lg:mt-16">
+          <div className="w-full max-w-3xl overflow-hidden border border-neutral-300/80 bg-white shadow-lg shadow-neutral-500/10">
+            <div className="aspect-video w-full">
+              <iframe
+                src="https://www.youtube.com/embed/6z9qoQVEFO8?start=1"
+                title="Vitalinjector video"
+                className="h-full w-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="mt-20">
-        <Mezoterapia_pricing_form_invasive />
+        <div className="mt-20">
+          <Mezoterapia_pricing_form_invasive />
+        </div>
       </div>
     </div>
   )

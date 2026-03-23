@@ -38,37 +38,37 @@ export default function Kyselina_hyaluronova() {
             className="object-cover"
           />
         </div>
-      </div>
 
-      <div className="fade-up mt-10 lg:mt-12">
-        <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
-          {dataKyselinaHyaluronova.gallery.map(({ src, alt }) => {
-            const isFace = src.includes("kyselina_hyaluronova2")
-            const linkHref = isFace
-              ? "/medical-cosmetics/kyselina-hyaluronova/face"
-              : "/medical-cosmetics/kyselina-hyaluronova/lips"
+        <div className="fade-up mt-10 lg:mt-12 lg:col-span-2">
+          <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
+            {dataKyselinaHyaluronova.gallery.map(({ src, alt }) => {
+              const isFace = src.includes("kyselina_hyaluronova2")
+              const linkHref = isFace
+                ? "/medical-cosmetics/kyselina-hyaluronova/face"
+                : "/medical-cosmetics/kyselina-hyaluronova/lips"
 
-            return (
-              <Link
-                href={linkHref}
-                key={src}
-                className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
-              >
-                <Image
-                  src={src}
-                  alt={alt}
-                  fill
-                  className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
-                  priority={false}
-                />
-              </Link>
-            )
-          })}
+              return (
+                <Link
+                  href={linkHref}
+                  key={src}
+                  className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
+                >
+                  <Image
+                    src={src}
+                    alt={alt}
+                    fill
+                    className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
+                    priority={false}
+                  />
+                </Link>
+              )
+            })}
+          </div>
         </div>
-      </div>
 
-      <div className="mt-20">
-        <Kyselina_hyaluronova_pricing_form />
+        <div className="mt-20 lg:col-span-2">
+          <Kyselina_hyaluronova_pricing_form />
+        </div>
       </div>
     </div>
   )

@@ -37,10 +37,10 @@ export default function Chemical_peeling() {
             className="object-cover"
           />
         </div>
-      </div>
 
-      <div className="mt-20">
-        <Chem_peeling_pricing_form />
+        <div className="mt-20 lg:col-span-2">
+          <Chem_peeling_pricing_form />
+        </div>
       </div>
     </div>
   )

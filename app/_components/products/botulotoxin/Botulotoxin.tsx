@@ -39,37 +39,37 @@ export default function Botulotoxin() {
             className="object-cover"
           />
         </div>
-      </div>
 
-      <div className="mt-10 lg:mt-12">
-        <About_botulotoxin />
-      </div>
-
-      <div className="fade-up mt-10 lg:mt-12">
-        <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
-          {dataBotulotoxin.gallery.map(({ src, alt }, index) => (
-            <Link
-              key={src}
-              href={
-                index === 0
-                  ? "/medical-cosmetics/botulotoxin/vrasky"
-                  : "/medical-cosmetics/botulotoxin/potenie"
-              }
-              className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
-            >
-              <Image
-                src={src}
-                alt={alt}
-                fill
-                className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
-              />
-            </Link>
-          ))}
+        <div className="mt-10 lg:mt-12 lg:col-span-2">
+          <About_botulotoxin />
         </div>
-      </div>
 
-      <div className="mt-10 lg:mt-12">
-        <Botulotoxin_pricing_form />
+        <div className="fade-up mt-10 lg:mt-12 lg:col-span-2">
+          <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
+            {dataBotulotoxin.gallery.map(({ src, alt }, index) => (
+              <Link
+                key={src}
+                href={
+                  index === 0
+                    ? "/medical-cosmetics/botulotoxin/vrasky"
+                    : "/medical-cosmetics/botulotoxin/potenie"
+                }
+                className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
+              >
+                <Image
+                  src={src}
+                  alt={alt}
+                  fill
+                  className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
+                />
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10 lg:mt-12 lg:col-span-2">
+          <Botulotoxin_pricing_form />
+        </div>
       </div>
     </div>
   )

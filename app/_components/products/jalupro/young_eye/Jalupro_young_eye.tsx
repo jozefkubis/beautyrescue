@@ -32,15 +32,15 @@ export default function Jalupro_young_eye() {
         <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <Image
             src="/images/jalupro_young_eye.jpeg"
-            alt="Jalupro"
+            alt="Jalupro Young Eye"
             fill
             className="object-cover"
           />
         </div>
-      </div>
 
-      <div className="mt-10 lg:mt-12">
-        <Jalupro_young_eye_pricing_form />
+        <div className="mt-10 lg:mt-12 lg:col-span-2">
+          <Jalupro_young_eye_pricing_form />
+        </div>
       </div>
     </div>
   )

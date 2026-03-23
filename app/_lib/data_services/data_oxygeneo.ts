@@ -2,7 +2,7 @@ export const dataOxygeneo = {
   pageTitle: "Oxygeneo – okysličenie pleti",
   text: {
     intro:
-      "Okysličenie pleti zlepšuje bunkový rast a bunkovú biosyntézu, stimuluje proliferáciu fibroblastov a diferenciáciu keratinocytov.. osvieži/oživí 🙂",
+      "Okysličenie pleti zlepšuje bunkový rast a bunkovú biosyntézu, stimuluje proliferáciu fibroblastov a diferenciáciu keratinocytov.. osvieži/oživí",
     description:
       "Oxygeneo je neinvazívne kozmetické ošetrenie, ktoré dodá pleti kyslík jedinečným spôsobom, využíva totiž Bohrov efekt (závislosť saturácie hemoglobínu kyslíkom od koncentrácie CO2 , pH a teploty tkanív) – prekysličuje pleť zvnútra.",
     stepsTitle: "Ošetrenie prebieha v niekoľkých náväzných krokoch:",

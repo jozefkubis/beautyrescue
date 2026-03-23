@@ -37,10 +37,10 @@ export default function Oxygeneo() {
             className="object-cover"
           />
         </div>
-      </div>
 
-      <div className="mt-20">
-        <Oxygeneo_pricing_form />
+        <div className="mt-20 lg:col-span-2">
+          <Oxygeneo_pricing_form />
+        </div>
       </div>
     </div>
   )

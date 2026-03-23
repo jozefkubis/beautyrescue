@@ -45,34 +45,36 @@ export default function Jalupro() {
             className="object-cover"
           />
         </div>
-      </div>
 
-      <div className="mt-10 lg:mt-12">
-        <About_jalupro />
-      </div>
-
-      <div className="fade-up mt-10 lg:mt-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-          {dataJalupro.gallery.map(({ src, alt }, index) => (
-            <Link
-              href={jaluproLinks[index] ?? "/medical-cosmetics/jalupro/classic"}
-              key={src}
-              className="relative aspect-square w-full overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
-            >
-              <Image
-                src={src}
-                alt={alt}
-                fill
-                className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
-              />
-            </Link>
-          ))}
+        <div className="mt-10 lg:mt-12 lg:col-span-2">
+          <About_jalupro />
         </div>
-      </div>
 
-      {/* <div className="mt-10 lg:mt-12">
+        <div className="fade-up mt-10 lg:mt-12 lg:col-span-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+            {dataJalupro.gallery.map(({ src, alt }, index) => (
+              <Link
+                href={
+                  jaluproLinks[index] ?? "/medical-cosmetics/jalupro/classic"
+                }
+                key={src}
+                className="relative aspect-square w-full overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
+              >
+                <Image
+                  src={src}
+                  alt={alt}
+                  fill
+                  className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
+                />
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* <div className="mt-10 lg:mt-12 lg:col-span-2">
         <Jalupro_pricing_form />
-      </div> */}
+        </div> */}
+      </div>
     </div>
   )
 }
