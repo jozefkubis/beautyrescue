@@ -15,7 +15,7 @@ export default function ExpandTextLG({ children }: ExpandTextProps) {
       <div
         className={`
           overflow-hidden transition-all duration-1000 ease-in-out
-          ${expanded ? "lg:max-h-500" : "lg:max-h-100"}
+          ${expanded ? "2xl:max-h-500 lg:max-h-500" : "2xl:max-h-100 lg:max-h-74"}
         `}
       >
         {children}
