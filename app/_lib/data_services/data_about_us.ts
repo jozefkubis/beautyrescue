@@ -25,3 +25,20 @@ export const dataAboutUs: ServiceItem = {
     quoteAuthor: "(Katie Brindle, expertka v čínskej medicíne)",
   },
 }
+
+// export async function getAboutUs(slug: string) {
+//   const supabase = await getSupabaseServerClient()
+
+//   const { data, error } = await supabase
+//     .from("service_items")
+//     .select("*")
+//     .eq("slug", slug)
+//     .single()
+
+//   if (error) {
+//     console.error("Error fetching about us data:", error)
+//     return null
+//   }
+
+//   return data
+// }
