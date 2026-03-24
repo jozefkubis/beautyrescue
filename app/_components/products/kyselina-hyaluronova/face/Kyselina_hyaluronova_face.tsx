@@ -16,7 +16,7 @@ export default function Kyselina_hyaluronova_face() {
             className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
           >
             <span className="italic uppercase">
-              {dataKyselinaHyaluronovaFace.pageTitle}
+              {dataKyselinaHyaluronovaFace.name}
             </span>
           </h1>
           <div>

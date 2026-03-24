@@ -6,6 +6,9 @@ import { MdKeyboardArrowDown } from "react-icons/md"
 
 export default function About_botulotoxin() {
   const [openBox, setOpenBox] = useState(false)
+  const about =
+    (dataBotulotoxin.content.about as Record<string, string | string[]>) ?? {}
+  const paragraphs = (about.paragraphs as string[]) ?? []
 
   return (
     <section className="w-full items-center justify-center">
@@ -20,7 +23,7 @@ export default function About_botulotoxin() {
           >
             <div>
               <h4 className="text-lg font-semibold italic tracking-tight text-goldDark sm:text-xl lg:text-[1.75rem]">
-                {dataBotulotoxin.about.title}
+                {about.title}
               </h4>
             </div>
 
@@ -50,7 +53,7 @@ export default function About_botulotoxin() {
             `}
           >
             <div className="pb-6 pt-1 flex flex-col gap-2 [&_p]:text-justify">
-              {dataBotulotoxin.about.paragraphs.map((paragraph, index) => (
+              {paragraphs.map((paragraph, index) => (
                 <p
                   key={index}
                   className="text-xs xl:text-sm leading-relaxed text-zinc-700"

@@ -25,9 +25,9 @@ export default function Botulotoxin_vrasky() {
           >
             <span className="italic text-goldDark">
               <span className="text-3xl 2xl:text-6xl">
-                {dataBotulotoxinVrasky.pageTitle[0]}
+                {dataBotulotoxinVrasky.name[0]}
               </span>
-              {dataBotulotoxinVrasky.pageTitle.slice(1)}
+              {dataBotulotoxinVrasky.name.slice(1)}
             </span>
           </h1>
 

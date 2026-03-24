@@ -17,9 +17,9 @@ export default function Jalupro_classic() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataJaluproClassic.pageTitle[0]}
+                {dataJaluproClassic.name[0]}
               </span>
-              {dataJaluproClassic.pageTitle.slice(1)}
+              {dataJaluproClassic.name.slice(1)}
             </span>
           </h1>
           <div>

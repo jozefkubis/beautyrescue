@@ -17,9 +17,9 @@ export default function Acupuncture() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataAcupuncture.pageTitle[0]}
+                {dataAcupuncture.name[0]}
               </span>
-              {dataAcupuncture.pageTitle.slice(1)}
+              {dataAcupuncture.name.slice(1)}
             </span>
           </h1>
           <div>

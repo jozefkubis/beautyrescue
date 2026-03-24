@@ -4,16 +4,16 @@ export default function AboutText() {
   return (
     <div className="flex flex-col gap-4">
       <p className="text-gray-700 leading-8 text-sm 2xl:text-lg text-justify">
-        {dataAboutUs.bodyIntro}
+        {dataAboutUs.content.bodyIntro as string}
       </p>
       <p className="text-gray-700 leading-8 text-sm 2xl:text-lg text-justify">
-        {dataAboutUs.bodyTeam}
+        {dataAboutUs.content.bodyTeam as string}
       </p>
       <p className="text-gray-700 leading-8 text-sm 2xl:text-lg text-justify">
-        {dataAboutUs.bodyServices}
+        {dataAboutUs.content.bodyServices as string}
       </p>
       <p className="text-gray-700 leading-8 text-sm 2xl:text-lg text-justify">
-        {dataAboutUs.bodyPhilosophy}
+        {dataAboutUs.content.bodyPhilosophy as string}
       </p>
     </div>
   )

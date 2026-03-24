@@ -17,9 +17,9 @@ export default function Jalupro_young_eye() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataJaluproYoungEye.pageTitle[0]}
+                {dataJaluproYoungEye.name[0]}
               </span>
-              {dataJaluproYoungEye.pageTitle.slice(1)}
+              {dataJaluproYoungEye.name.slice(1)}
             </span>
           </h1>
           <div>

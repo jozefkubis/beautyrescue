@@ -7,25 +7,35 @@ export default function Microneedling_text() {
       <div className="space-y-4">
         <ExpandTextLG>
           <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-            {dataMicroneedling.text.paragraphs.map((paragraph, index) => (
-              <p key={index} className="text-gray-700 leading-8">
-                {index === 0 ? (
-                  <>
-                    <strong>{dataMicroneedling.pageTitle}</strong>{" "}
-                    {paragraph.replace(/^Microneedling\s+/, "")}
-                  </>
-                ) : (
-                  paragraph
-                )}
-              </p>
-            ))}
+            {((dataMicroneedling.content.paragraphs as string[]) ?? []).map(
+              (paragraph, index) => (
+                <p key={index} className="text-gray-700 leading-8">
+                  {index === 0 ? (
+                    <>
+                      <strong>{dataMicroneedling.name}</strong>{" "}
+                      {paragraph.replace(/^Microneedling\s+/, "")}
+                    </>
+                  ) : (
+                    paragraph
+                  )}
+                </p>
+              ),
+            )}
 
             <div>
               <p className="text-gray-700 leading-8 mb-2">
-                <strong>{dataMicroneedling.text.contraindicationsTitle}</strong>
+                <strong>
+                  {
+                    dataMicroneedling.attributes
+                      .contraindicationsTitle as string
+                  }
+                </strong>
               </p>
               <ul className="list-disc list-inside space-y-2 text-gray-700">
-                {dataMicroneedling.text.contraindications.map((item) => (
+                {(
+                  (dataMicroneedling.attributes
+                    .contraindications as string[]) ?? []
+                ).map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>

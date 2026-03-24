@@ -17,9 +17,9 @@ export default function Oxygeneo() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataOxygeneo.pageTitle[0]}
+                {dataOxygeneo.name[0]}
               </span>
-              {dataOxygeneo.pageTitle.slice(1)}
+              {dataOxygeneo.name.slice(1)}
             </span>
           </h1>
           <div>

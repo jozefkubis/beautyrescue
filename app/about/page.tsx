@@ -14,15 +14,15 @@ export default function Page() {
           <h1
             className={`premium-title py-8 text-2xl font-semibold italic 2xl:text-5xl lg:py-14 ${brandFont.className}`}
           >
-            <span className="italic">{dataAboutUs.sectionTitle}</span>
+            <span className="italic">{dataAboutUs.name}</span>
           </h1>
           <div className="[&_p]:text-justify">
             <p className="whitespace-pre-wrap text-sm leading-8 text-greyMain/85 xl:text-base 2xl:text-lg">
               <span className="italic">
-                <strong>&ldquo;{dataAboutUs.quote}&rdquo;</strong>
+                <strong>&ldquo;{dataAboutUs.summary}&rdquo;</strong>
                 <span className="text-xs">
                   {" "}
-                  <strong>{dataAboutUs.quoteAuthor}</strong>
+                  <strong>{dataAboutUs.metadata.quoteAuthor as string}</strong>
                 </span>
               </span>
               <br />

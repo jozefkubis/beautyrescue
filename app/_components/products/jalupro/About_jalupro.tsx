@@ -6,6 +6,14 @@ import { MdKeyboardArrowDown } from "react-icons/md"
 
 export default function About_jalupro() {
   const [openBox, setOpenBox] = useState(false)
+  const about =
+    (dataJalupro.content.about as Record<string, string | string[]>) ?? {}
+  const effects = (dataJalupro.attributes.effects as string[]) ?? []
+  const effectSummary = (dataJalupro.attributes.effectSummary as string) ?? ""
+  const treatmentParagraphs =
+    (dataJalupro.attributes.treatmentParagraphs as string[]) ?? []
+  const aftercareParagraphs =
+    (dataJalupro.attributes.aftercareParagraphs as string[]) ?? []
 
   return (
     <section className="w-full items-center justify-center">
@@ -18,7 +26,7 @@ export default function About_jalupro() {
           >
             <div>
               <h4 className="text-lg font-semibold italic tracking-tight text-goldDark sm:text-xl lg:text-[1.75rem]">
-                {dataJalupro.about.title}
+                {about.title}
               </h4>
             </div>
 
@@ -49,24 +57,24 @@ export default function About_jalupro() {
             <div className="pb-6 pt-1 flex flex-col gap-3 [&_p]:text-justify">
               <div className="space-y-1">
                 <h4 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
-                  {dataJalupro.about.effectsTitle}
+                  {about.effectsTitle}
                 </h4>
                 <ul className="list-disc pl-5 space-y-1 text-xs xl:text-sm leading-relaxed text-zinc-700">
-                  {dataJalupro.about.effects.map((effect) => (
+                  {effects.map((effect) => (
                     <li key={effect}>{effect}</li>
                   ))}
                 </ul>
               </div>
 
               <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                <strong>Efekt:</strong> {dataJalupro.about.effectSummary}
+                <strong>Efekt:</strong> {effectSummary}
               </p>
 
               <div className="space-y-2">
                 <h4 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
-                  {dataJalupro.about.treatmentTitle}
+                  {about.treatmentTitle}
                 </h4>
-                {dataJalupro.about.treatmentParagraphs.map((paragraph) => (
+                {treatmentParagraphs.map((paragraph) => (
                   <p
                     key={paragraph}
                     className="text-xs xl:text-sm leading-relaxed text-zinc-700"
@@ -78,9 +86,9 @@ export default function About_jalupro() {
 
               <div className="space-y-2">
                 <h4 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
-                  {dataJalupro.about.aftercareTitle}
+                  {about.aftercareTitle}
                 </h4>
-                {dataJalupro.about.aftercareParagraphs.map((paragraph) => (
+                {aftercareParagraphs.map((paragraph) => (
                   <p
                     key={paragraph}
                     className="text-xs xl:text-sm leading-relaxed text-zinc-700"
@@ -91,7 +99,7 @@ export default function About_jalupro() {
               </div>
 
               <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                <strong>Varianty Jalupro:</strong> {dataJalupro.about.variants}
+                <strong>Varianty Jalupro:</strong> {about.variants}
               </p>
             </div>
           </div>

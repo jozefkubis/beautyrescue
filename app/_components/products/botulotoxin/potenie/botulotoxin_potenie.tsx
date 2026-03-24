@@ -25,9 +25,9 @@ export default function Botulotoxin_potenie() {
           >
             <span className="italic text-goldDark">
               <span className="text-3xl 2xl:text-6xl">
-                {dataBotulotoxinPotenie.pageTitle[0]}
+                {dataBotulotoxinPotenie.name[0]}
               </span>
-              {dataBotulotoxinPotenie.pageTitle.slice(1)}
+              {dataBotulotoxinPotenie.name.slice(1)}
             </span>
           </h1>
 

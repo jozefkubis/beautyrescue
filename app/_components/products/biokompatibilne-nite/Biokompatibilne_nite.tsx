@@ -17,9 +17,9 @@ export default function Biokompatibilne_nite() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataBiokompatibilneNite.pageTitle[0]}
+                {dataBiokompatibilneNite.name[0]}
               </span>
-              {dataBiokompatibilneNite.pageTitle.slice(1)}
+              {dataBiokompatibilneNite.name.slice(1)}
             </span>
           </h1>
           <div>

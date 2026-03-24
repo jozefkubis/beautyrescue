@@ -17,9 +17,9 @@ export default function Diamond_microdermabrasion() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataDiamondMicrodermabrasion.pageTitle[0]}
+                {dataDiamondMicrodermabrasion.name[0]}
               </span>
-              {dataDiamondMicrodermabrasion.pageTitle.slice(1)}
+              {dataDiamondMicrodermabrasion.name.slice(1)}
             </span>
           </h1>
           <div>

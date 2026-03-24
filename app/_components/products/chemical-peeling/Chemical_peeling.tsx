@@ -17,9 +17,9 @@ export default function Chemical_peeling() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataChemicalPeeling.pageTitle[0]}
+                {dataChemicalPeeling.name[0]}
               </span>
-              {dataChemicalPeeling.pageTitle.slice(1)}
+              {dataChemicalPeeling.name.slice(1)}
             </span>
           </h1>
           <div>

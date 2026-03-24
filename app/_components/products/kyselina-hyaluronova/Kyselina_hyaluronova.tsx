@@ -18,9 +18,9 @@ export default function Kyselina_hyaluronova() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataKyselinaHyaluronova.pageTitle[0]}
+                {dataKyselinaHyaluronova.name[0]}
               </span>
-              {dataKyselinaHyaluronova.pageTitle.slice(1)}
+              {dataKyselinaHyaluronova.name.slice(1)}
             </span>
           </h1>
           <div>
@@ -55,7 +55,7 @@ export default function Kyselina_hyaluronova() {
                 >
                   <Image
                     src={src}
-                    alt={alt}
+                    alt={alt ?? ""}
                     fill
                     className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
                     priority={false}

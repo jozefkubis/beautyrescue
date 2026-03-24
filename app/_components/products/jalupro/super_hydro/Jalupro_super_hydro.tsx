@@ -17,9 +17,9 @@ export default function Jalupro_super_hydro() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataJaluproSuperHydro.pageTitle[0]}
+                {dataJaluproSuperHydro.name[0]}
               </span>
-              {dataJaluproSuperHydro.pageTitle.slice(1)}
+              {dataJaluproSuperHydro.name.slice(1)}
             </span>
           </h1>
           <div>

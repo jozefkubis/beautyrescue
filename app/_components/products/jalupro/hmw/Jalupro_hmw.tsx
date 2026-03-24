@@ -17,9 +17,9 @@ export default function Jalupro_hmw() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataJaluproHMW.pageTitle[0]}
+                {dataJaluproHMW.name[0]}
               </span>
-              {dataJaluproHMW.pageTitle.slice(1)}
+              {dataJaluproHMW.name.slice(1)}
             </span>
           </h1>
           <div>

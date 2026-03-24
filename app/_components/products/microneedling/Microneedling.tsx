@@ -20,9 +20,9 @@ export default function Microneedling() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataMicroneedling.pageTitle[0]}
+                {dataMicroneedling.name[0]}
               </span>
-              {dataMicroneedling.pageTitle.slice(1)}
+              {dataMicroneedling.name.slice(1)}
             </span>
           </h1>
           <div>

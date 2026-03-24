@@ -5,6 +5,18 @@ import Image from "next/image"
 import { useState } from "react"
 import { MdKeyboardArrowDown } from "react-icons/md"
 
+type ProfhiloSection = {
+  product: string
+  whatTitle: string
+  whatItems: string[]
+  howTitle: string
+  howItems: string[]
+  benefitsTitle: string
+  benefitsItems: string[]
+  suitableTitle: string
+  suitableItems: string[]
+}
+
 export default function About_profhilo() {
   const [openBox, setOpenBox] = useState<number | null>(null)
 
@@ -22,10 +34,14 @@ export default function About_profhilo() {
     setOpenBox((current) => (current === index ? null : index))
   }
 
+  const sections =
+    (dataProfhilo.content.about as unknown as { sections?: ProfhiloSection[] })
+      ?.sections ?? []
+
   return (
     <section className="w-full items-center justify-center">
       <div className="w-full space-y-4 lg:space-y-5">
-        {dataProfhilo.about.sections.map((section, index) => {
+        {sections.map((section, index) => {
           const isOpen = openBox === index
 
           return (

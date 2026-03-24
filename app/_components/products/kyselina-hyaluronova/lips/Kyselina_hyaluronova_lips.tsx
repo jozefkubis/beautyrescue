@@ -2,7 +2,7 @@
 
 import ExpandText from "@/app/_components/ExpandText"
 import { brandFont } from "@/app/_components/fonts"
-import { dataKyselinaHyaluronova } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
+import { dataKyselinaHyaluronovaLips } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
 import Image from "next/image"
 import Kyselina_hyaluronova_pricing_form_lips from "./Kyselina_hyaluronova_pricing_form_lips"
 import Kyselina_hyaluronova_lips_text from "./Kyselina_hyaluronova_text_lips"
@@ -17,9 +17,9 @@ export default function Kyselina_hyaluronova_lips() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataKyselinaHyaluronova.pageTitle[0]}
+                {dataKyselinaHyaluronovaLips.name[0]}
               </span>
-              {dataKyselinaHyaluronova.pageTitle.slice(1)}
+              {dataKyselinaHyaluronovaLips.name.slice(1)}
             </span>
           </h1>
           <div>

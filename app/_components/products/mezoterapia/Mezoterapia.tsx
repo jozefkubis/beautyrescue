@@ -17,9 +17,9 @@ export default function Mezoterapia() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataMezoterapia.pageTitle[0]}
+                {dataMezoterapia.name[0]}
               </span>
-              {dataMezoterapia.pageTitle.slice(1)}
+              {dataMezoterapia.name.slice(1)}
             </span>
           </h1>
           <div>
@@ -36,8 +36,8 @@ export default function Mezoterapia() {
             className="md:col-start-2 md:row-start-1 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square"
           >
             <Image
-              src={dataMezoterapia.collage[0].src}
-              alt={dataMezoterapia.collage[0].alt}
+              src={dataMezoterapia.gallery[0].src}
+              alt={dataMezoterapia.gallery[0].alt ?? ""}
               fill
               className="object-fit hover:cursor-pointer hover:scale-105 transition-transform duration-300"
             />
@@ -49,8 +49,8 @@ export default function Mezoterapia() {
             className="md:col-start-1 md:row-start-2 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square"
           >
             <Image
-              src={dataMezoterapia.collage[1].src}
-              alt={dataMezoterapia.collage[1].alt}
+              src={dataMezoterapia.gallery[1].src}
+              alt={dataMezoterapia.gallery[1].alt ?? ""}
               fill
               className="object-fit hover:cursor-pointer hover:scale-105 transition-transform duration-300"
             />

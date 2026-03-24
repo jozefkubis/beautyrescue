@@ -1,6 +1,16 @@
-export const dataBiokompatibilneNite = {
-  pageTitle: "Biokompatibilné nite",
-  text: {
+import type { ServiceItem } from "./data_services.types"
+
+export const dataBiokompatibilneNite: ServiceItem = {
+  slug: "biokompatibilne-nite",
+  name: "Biokompatibilné nite",
+  summary: null,
+  description: null,
+  imageUrl: null,
+  gallery: [],
+  itemType: "service",
+  category: "medical-cosmetics",
+  subcategory: "biokompatibilne-nite",
+  content: {
     paragraphs: [
       "Minimálne invazívny zákrok, ktorý okamžite nadvihne a napne kožu, ihneď vyprovokuje aktiváciu fibroblastov a produkciu kolagénu?",
       "Niťový lifting..",
@@ -9,4 +19,6 @@ export const dataBiokompatibilneNite = {
       "Výsledky sú viditeľné ihneď počas a po zákroku, diskomfort ošetrovanej oblasti môže pretrvávať cca 2 týždne..",
     ],
   },
+  attributes: {},
+  metadata: {},
 }
