@@ -1,6 +1,6 @@
 "use client"
 
-import { dataProfhilo } from "@/app/_lib/data_services/data_profhilo"
+import type { ProfhiloMainProps } from "@/app/_lib/data_services/data_profhilo"
 import Image from "next/image"
 import { useState } from "react"
 import { MdKeyboardArrowDown } from "react-icons/md"
@@ -17,7 +17,7 @@ type ProfhiloSection = {
   suitableItems: string[]
 }
 
-export default function About_profhilo() {
+export default function About_profhilo({ profhiloData }: ProfhiloMainProps) {
   const [openBox, setOpenBox] = useState<number | null>(null)
 
   const sectionDescriptions = [
@@ -35,7 +35,7 @@ export default function About_profhilo() {
   }
 
   const sections =
-    (dataProfhilo.content.about as unknown as { sections?: ProfhiloSection[] })
+    (profhiloData.content.about as unknown as { sections?: ProfhiloSection[] })
       ?.sections ?? []
 
   return (

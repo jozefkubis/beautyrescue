@@ -1,13 +1,13 @@
 "use client"
 
-import { dataMezoterapia } from "@/app/_lib/data_services/data_mezoterapia"
+import type { MezoterapiaMainProps } from "@/app/_lib/data_services/data_mezoterapia"
 import Image from "next/image"
 import Link from "next/link"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
 import Mezoterapia_text from "./Mezoterapia_text"
 
-export default function Mezoterapia() {
+export default function Mezoterapia({ mezoterapiaData }: MezoterapiaMainProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
@@ -17,14 +17,14 @@ export default function Mezoterapia() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataMezoterapia.name[0]}
+                {mezoterapiaData.name[0]}
               </span>
-              {dataMezoterapia.name.slice(1)}
+              {mezoterapiaData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Mezoterapia_text />
+              <Mezoterapia_text mezoterapiaData={mezoterapiaData} />
             </ExpandText>
           </div>
         </div>
@@ -36,8 +36,8 @@ export default function Mezoterapia() {
             className="md:col-start-2 md:row-start-1 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square"
           >
             <Image
-              src={dataMezoterapia.gallery[0].src}
-              alt={dataMezoterapia.gallery[0].alt ?? ""}
+              src={mezoterapiaData.gallery[0].src}
+              alt={mezoterapiaData.gallery[0].alt ?? ""}
               fill
               className="object-fit hover:cursor-pointer hover:scale-105 transition-transform duration-300"
             />
@@ -49,8 +49,8 @@ export default function Mezoterapia() {
             className="md:col-start-1 md:row-start-2 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square"
           >
             <Image
-              src={dataMezoterapia.gallery[1].src}
-              alt={dataMezoterapia.gallery[1].alt ?? ""}
+              src={mezoterapiaData.gallery[1].src}
+              alt={mezoterapiaData.gallery[1].alt ?? ""}
               fill
               className="object-fit hover:cursor-pointer hover:scale-105 transition-transform duration-300"
             />

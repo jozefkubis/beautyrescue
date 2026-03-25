@@ -1,11 +1,12 @@
 "use client"
 
-import { dataAboutUs } from "@/app/_lib/data_services/data_about_us"
+// import { dataAboutUs } from "@/app/_lib/data_services/data_about_us"
+import type { AboutMainProps } from "@/app/_lib/data_services/data_about_us"
 import ExpandText from "../ExpandText"
 import { brandFont } from "../fonts"
 import AboutText from "./AboutText"
 
-export default function AboutMain() {
+export default function AboutMain({ aboutUsData }: AboutMainProps) {
   return (
     <div className="w-full items-center justify-center px-6 py-8 lg:px-20 lg:py-10 2xl:px-44">
       <div className="section-shell fade-up grid grid-cols-1 gap-6 p-5 lg:grid-cols-2 lg:p-7">
@@ -14,21 +15,21 @@ export default function AboutMain() {
           <h1
             className={`premium-title py-8 text-2xl font-semibold italic 2xl:text-5xl lg:py-14 ${brandFont.className}`}
           >
-            <span className="italic">{dataAboutUs.name}</span>
+            <span className="italic">{aboutUsData.name}</span>
           </h1>
           <div className="[&_p]:text-justify">
             <p className="whitespace-pre-wrap text-sm leading-8 text-greyMain/85 xl:text-base 2xl:text-lg">
               <span className="italic">
-                <strong>&ldquo;{dataAboutUs.summary}&rdquo;</strong>
+                <strong>&ldquo;{aboutUsData.summary}&rdquo;</strong>
                 <span className="text-xs">
                   {" "}
-                  <strong>{dataAboutUs.metadata.quoteAuthor as string}</strong>
+                  <strong>{aboutUsData.metadata.quoteAuthor as string}</strong>
                 </span>
               </span>
               <br />
             </p>
             <ExpandText>
-              <AboutText />
+              <AboutText aboutUsData={aboutUsData} />
             </ExpandText>
           </div>
         </div>

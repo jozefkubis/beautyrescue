@@ -2,12 +2,14 @@
 
 import ExpandText from "@/app/_components/ExpandText"
 import { brandFont } from "@/app/_components/fonts"
-import { dataMezoterapiaNonInvasive } from "@/app/_lib/data_services/data_mezoterapia"
+import type { MezoterapiaNonInvasiveProps } from "@/app/_lib/data_services/data_mezoterapia"
 import Image from "next/image"
 import Mezoterapia_pricing_form_non_invasive from "./mezoterapia_pricing_form_non_invasive"
 import Mezoterapia_text_non_invasive from "./mezoterapia_text_non_invasive"
 
-export default function Mezoterapia_non_invasive() {
+export default function Mezoterapia_non_invasive({
+  mezoterapiaNonInvasiveData,
+}: MezoterapiaNonInvasiveProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:gap-8 lg:p-8">
@@ -17,14 +19,16 @@ export default function Mezoterapia_non_invasive() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataMezoterapiaNonInvasive.name[0]}
+                {mezoterapiaNonInvasiveData.name[0]}
               </span>
-              {dataMezoterapiaNonInvasive.name.slice(1)}
+              {mezoterapiaNonInvasiveData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Mezoterapia_text_non_invasive />
+              <Mezoterapia_text_non_invasive
+                data={mezoterapiaNonInvasiveData}
+              />
             </ExpandText>
           </div>
         </div>
@@ -41,8 +45,8 @@ export default function Mezoterapia_non_invasive() {
 
           <div className="relative aspect-square w-full max-w-75 overflow-hidden rounded-lg border border-goldDark/25 ring-2 ring-goldDark/80 shadow-md shadow-goldDark/30">
             <Image
-              src={dataMezoterapiaNonInvasive.gallery[1].src}
-              alt={dataMezoterapiaNonInvasive.gallery[1].alt ?? ""}
+              src={mezoterapiaNonInvasiveData.gallery[1].src}
+              alt={mezoterapiaNonInvasiveData.gallery[1].alt ?? ""}
               fill
               className="object-fit"
             />
@@ -50,8 +54,8 @@ export default function Mezoterapia_non_invasive() {
 
           <div className="relative aspect-square w-full max-w-75 overflow-hidden rounded-lg border border-goldDark/25 ring-2 ring-goldDark/80 shadow-md shadow-goldDark/30">
             <Image
-              src={dataMezoterapiaNonInvasive.gallery[2].src}
-              alt={dataMezoterapiaNonInvasive.gallery[2].alt ?? ""}
+              src={mezoterapiaNonInvasiveData.gallery[2].src}
+              alt={mezoterapiaNonInvasiveData.gallery[2].alt ?? ""}
               fill
               className="object-fit"
             />
@@ -59,8 +63,8 @@ export default function Mezoterapia_non_invasive() {
 
           <div className="relative aspect-square w-full max-w-75 overflow-hidden rounded-lg border border-goldDark/25 ring-2 ring-goldDark/80 shadow-md shadow-goldDark/30">
             <Image
-              src={dataMezoterapiaNonInvasive.gallery[3].src}
-              alt={dataMezoterapiaNonInvasive.gallery[3].alt ?? ""}
+              src={mezoterapiaNonInvasiveData.gallery[3].src}
+              alt={mezoterapiaNonInvasiveData.gallery[3].alt ?? ""}
               fill
               className="object-fit"
             />
@@ -68,8 +72,8 @@ export default function Mezoterapia_non_invasive() {
 
           <div className="relative aspect-square w-full max-w-75 overflow-hidden rounded-lg border border-goldDark/25 ring-2 ring-goldDark/80 shadow-md shadow-goldDark/30">
             <Image
-              src={dataMezoterapiaNonInvasive.gallery[4].src}
-              alt={dataMezoterapiaNonInvasive.gallery[4].alt ?? ""}
+              src={mezoterapiaNonInvasiveData.gallery[4].src}
+              alt={mezoterapiaNonInvasiveData.gallery[4].alt ?? ""}
               fill
               className="object-fit"
             />

@@ -2,12 +2,14 @@
 
 import ExpandText from "@/app/_components/ExpandText"
 import { brandFont } from "@/app/_components/fonts"
-import { dataJaluproClassic } from "@/app/_lib/data_services/data_jalupro"
+import type { JaluproClassicProps } from "@/app/_lib/data_services/data_jalupro"
 import Image from "next/image"
 import Jalupro_classic_pricing_form from "./Jalupro_classic_pricing_form"
 import Jalupro_classic_text from "./Jalupro_classic_text"
 
-export default function Jalupro_classic() {
+export default function Jalupro_classic({
+  jaluproClassicData,
+}: JaluproClassicProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -17,14 +19,14 @@ export default function Jalupro_classic() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataJaluproClassic.name[0]}
+                {jaluproClassicData.name[0]}
               </span>
-              {dataJaluproClassic.name.slice(1)}
+              {jaluproClassicData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Jalupro_classic_text />
+              <Jalupro_classic_text jaluproClassicData={jaluproClassicData} />
             </ExpandText>
           </div>
         </div>

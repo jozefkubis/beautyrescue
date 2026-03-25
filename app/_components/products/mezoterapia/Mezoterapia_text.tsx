@@ -1,9 +1,11 @@
-import { dataMezoterapia } from "@/app/_lib/data_services/data_mezoterapia"
+import type { MezoterapiaMainProps } from "@/app/_lib/data_services/data_mezoterapia"
 
-export default function Mezoterapia_text() {
+export default function Mezoterapia_text({
+  mezoterapiaData,
+}: MezoterapiaMainProps) {
   return (
     <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-      {(dataMezoterapia.content.paragraphs as string[]).map(
+      {(mezoterapiaData.content.paragraphs as string[]).map(
         (paragraph, index) => (
           <p
             key={index}

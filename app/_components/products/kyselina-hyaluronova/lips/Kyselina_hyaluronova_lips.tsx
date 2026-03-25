@@ -2,12 +2,14 @@
 
 import ExpandText from "@/app/_components/ExpandText"
 import { brandFont } from "@/app/_components/fonts"
-import { dataKyselinaHyaluronovaLips } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
+import type { KyselinaHyaluronovaLipsProps } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
 import Image from "next/image"
 import Kyselina_hyaluronova_pricing_form_lips from "./Kyselina_hyaluronova_pricing_form_lips"
 import Kyselina_hyaluronova_lips_text from "./Kyselina_hyaluronova_text_lips"
 
-export default function Kyselina_hyaluronova_lips() {
+export default function Kyselina_hyaluronova_lips({
+  kyselinaHyaluronovaLipsData,
+}: KyselinaHyaluronovaLipsProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
@@ -17,14 +19,16 @@ export default function Kyselina_hyaluronova_lips() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataKyselinaHyaluronovaLips.name[0]}
+                {kyselinaHyaluronovaLipsData.name[0]}
               </span>
-              {dataKyselinaHyaluronovaLips.name.slice(1)}
+              {kyselinaHyaluronovaLipsData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Kyselina_hyaluronova_lips_text />
+              <Kyselina_hyaluronova_lips_text
+                kyselinaHyaluronovaLipsData={kyselinaHyaluronovaLipsData}
+              />
             </ExpandText>
           </div>
         </div>
@@ -37,10 +41,10 @@ export default function Kyselina_hyaluronova_lips() {
             className="object-cover"
           />
         </div>
-      </div>
 
-      <div className="mt-20">
-        <Kyselina_hyaluronova_pricing_form_lips />
+        <div className="mt-10 2xl:mt-20 col-span-2">
+          <Kyselina_hyaluronova_pricing_form_lips />
+        </div>
       </div>
     </div>
   )

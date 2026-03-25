@@ -1,12 +1,12 @@
-import { dataBotulotoxin } from "@/app/_lib/data_services/data_botulotoxin"
+import type { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulotoxin"
 import ExpandTextLG from "../../ExpandTextLG"
 
-export default function Botulotoxin_text() {
-  const intro = (dataBotulotoxin.attributes.intro as string) ?? ""
-  const contraindications =
-    (dataBotulotoxin.attributes.contraindications as string) ?? ""
-  const complications =
-    (dataBotulotoxin.attributes.complications as string) ?? ""
+export default function Botulotoxin_text({
+  botulotoxinData,
+}: BotulotoxinMainProps) {
+  const intro = botulotoxinData.attributes.intro ?? ""
+  const contraindications = botulotoxinData.attributes.contraindications ?? ""
+  const complications = botulotoxinData.attributes.complications ?? ""
 
   return (
     <>

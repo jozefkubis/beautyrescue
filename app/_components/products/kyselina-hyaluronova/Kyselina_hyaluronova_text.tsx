@@ -1,9 +1,11 @@
-import { dataKyselinaHyaluronova } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
+import type { KyselinaHyaluronovaMainProps } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
 
-export default function Kyselina_hyaluronova_text() {
+export default function Kyselina_hyaluronova_text({
+  kyselinaHyaluronovaData,
+}: KyselinaHyaluronovaMainProps) {
   return (
     <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-      {(dataKyselinaHyaluronova.content.paragraphs as string[]).map(
+      {(kyselinaHyaluronovaData.content.paragraphs as string[]).map(
         (paragraph, index) => (
           <p
             key={index}

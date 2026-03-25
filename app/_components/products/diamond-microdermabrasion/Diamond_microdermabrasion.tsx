@@ -1,13 +1,15 @@
 "use client"
 
-import { dataDiamondMicrodermabrasion } from "@/app/_lib/data_services/data_diamond_microdermabrasion"
+import type { DiamondMicrodermabrasionMainProps } from "@/app/_lib/data_services/data_diamond_microdermabrasion"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
 import Diamond_microdermabrasion_text from "./Diamond_microdermabrasion_text"
 import Dimond_micro_pricing_form from "./Dimond_micro_pricing_form"
 
-export default function Diamond_microdermabrasion() {
+export default function Diamond_microdermabrasion({
+  diamondMicrodermabrasionData,
+}: DiamondMicrodermabrasionMainProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
@@ -17,14 +19,16 @@ export default function Diamond_microdermabrasion() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataDiamondMicrodermabrasion.name[0]}
+                {diamondMicrodermabrasionData.name[0]}
               </span>
-              {dataDiamondMicrodermabrasion.name.slice(1)}
+              {diamondMicrodermabrasionData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Diamond_microdermabrasion_text />
+              <Diamond_microdermabrasion_text
+                diamondMicrodermabrasionData={diamondMicrodermabrasionData}
+              />
             </ExpandText>
           </div>
         </div>

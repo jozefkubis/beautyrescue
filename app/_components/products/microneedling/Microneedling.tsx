@@ -1,7 +1,7 @@
 "use client"
 
 import { dataDashboard } from "@/app/_lib/data_services/data_dashboard"
-import { dataMicroneedling } from "@/app/_lib/data_services/data_microneedling"
+import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling"
 import { tknCategories } from "@/app/_lib/data_services/tkn_catalog"
 import Image from "next/image"
 import Link from "next/link"
@@ -10,7 +10,9 @@ import { brandFont } from "../../fonts"
 import Microneedling_pricing_form from "./Microneedling_pricing_form"
 import Microneedling_text from "./Microneedling_text"
 
-export default function Microneedling() {
+export default function Microneedling({
+  microneedlingData,
+}: MicroneedlingMainProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
@@ -20,14 +22,14 @@ export default function Microneedling() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataMicroneedling.name[0]}
+                {microneedlingData.name[0]}
               </span>
-              {dataMicroneedling.name.slice(1)}
+              {microneedlingData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Microneedling_text />
+              <Microneedling_text microneedlingData={microneedlingData} />
             </ExpandText>
           </div>
         </div>

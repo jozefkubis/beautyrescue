@@ -1,13 +1,13 @@
 "use client"
 
-import { dataAcupuncture } from "@/app/_lib/data_services/data_acupuncture"
+import { AcupunctureMainProps } from "@/app/_lib/data_services/data_acupuncture"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
 import Acupuncture_pricing_form from "./Acupuncture_pricing_form"
 import Acupuncture_text from "./Acupuncture_text"
 
-export default function Acupuncture() {
+export default function Acupuncture({ acupunctureData }: AcupunctureMainProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -17,14 +17,14 @@ export default function Acupuncture() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataAcupuncture.name[0]}
+                {acupunctureData.name[0]}
               </span>
-              {dataAcupuncture.name.slice(1)}
+              {acupunctureData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Acupuncture_text />
+              <Acupuncture_text acupunctureData={acupunctureData} />
             </ExpandText>
           </div>
         </div>

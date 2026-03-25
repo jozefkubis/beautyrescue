@@ -2,12 +2,14 @@
 
 import ExpandText from "@/app/_components/ExpandText"
 import { brandFont } from "@/app/_components/fonts"
-import { dataJaluproSuperHydro } from "@/app/_lib/data_services/data_jalupro"
+import type { JaluproSuperHydroProps } from "@/app/_lib/data_services/data_jalupro"
 import Image from "next/image"
 import Jalupro_super_hydro_pricing_form from "./Jalupro_super_hydro_pricing_form"
 import Jalupro_super_hydro_text from "./Jalupro_super_hydro_text"
 
-export default function Jalupro_super_hydro() {
+export default function Jalupro_super_hydro({
+  jaluproSuperHydroData,
+}: JaluproSuperHydroProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -17,14 +19,14 @@ export default function Jalupro_super_hydro() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataJaluproSuperHydro.name[0]}
+                {jaluproSuperHydroData.name[0]}
               </span>
-              {dataJaluproSuperHydro.name.slice(1)}
+              {jaluproSuperHydroData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Jalupro_super_hydro_text />
+              <Jalupro_super_hydro_text data={jaluproSuperHydroData} />
             </ExpandText>
           </div>
         </div>

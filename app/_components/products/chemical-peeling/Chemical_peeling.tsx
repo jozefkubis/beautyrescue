@@ -1,13 +1,15 @@
 "use client"
 
-import { dataChemicalPeeling } from "@/app/_lib/data_services/data_chemical_peeling"
+import type { ChemicalPeelingMainProps } from "@/app/_lib/data_services/data_chemical_peeling"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
 import Chem_peeling_pricing_form from "./Chem_peeling_pricing_form"
 import Chemical_peeling_text from "./Chemical_peeling_text"
 
-export default function Chemical_peeling() {
+export default function Chemical_peeling({
+  chemicalPeelingData,
+}: ChemicalPeelingMainProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
@@ -17,14 +19,16 @@ export default function Chemical_peeling() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataChemicalPeeling.name[0]}
+                {chemicalPeelingData.name[0]}
               </span>
-              {dataChemicalPeeling.name.slice(1)}
+              {chemicalPeelingData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Chemical_peeling_text />
+              <Chemical_peeling_text
+                chemicalPeelingData={chemicalPeelingData}
+              />
             </ExpandText>
           </div>
         </div>

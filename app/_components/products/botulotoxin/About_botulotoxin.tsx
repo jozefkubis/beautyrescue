@@ -1,14 +1,15 @@
 "use client"
 
-import { dataBotulotoxin } from "@/app/_lib/data_services/data_botulotoxin"
+import type { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulotoxin"
 import { useState } from "react"
 import { MdKeyboardArrowDown } from "react-icons/md"
 
-export default function About_botulotoxin() {
+export default function About_botulotoxin({
+  botulotoxinData,
+}: BotulotoxinMainProps) {
   const [openBox, setOpenBox] = useState(false)
-  const about =
-    (dataBotulotoxin.content.about as Record<string, string | string[]>) ?? {}
-  const paragraphs = (about.paragraphs as string[]) ?? []
+  const about = botulotoxinData.content.about
+  const paragraphs = about.paragraphs ?? []
 
   return (
     <section className="w-full items-center justify-center">
@@ -23,7 +24,7 @@ export default function About_botulotoxin() {
           >
             <div>
               <h4 className="text-lg font-semibold italic tracking-tight text-goldDark sm:text-xl lg:text-[1.75rem]">
-                {about.title}
+                {about.title as string}
               </h4>
             </div>
 

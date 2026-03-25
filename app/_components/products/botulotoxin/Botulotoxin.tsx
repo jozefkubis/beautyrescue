@@ -1,6 +1,6 @@
 "use client"
 
-import { dataBotulotoxin } from "@/app/_lib/data_services/data_botulotoxin"
+import { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulotoxin"
 import Image from "next/image"
 import Link from "next/link"
 import ExpandText from "../../ExpandText"
@@ -9,7 +9,7 @@ import About_botulotoxin from "./About_botulotoxin"
 import Botulotoxin_pricing_form from "./Botulotoxin_pricing_form"
 import Botulotoxin_text from "./Botulotoxin_text"
 
-export default function Botulotoxin() {
+export default function Botulotoxin({ botulotoxinData }: BotulotoxinMainProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -19,14 +19,14 @@ export default function Botulotoxin() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataBotulotoxin.name[0]}
+                {botulotoxinData.name[0]}
               </span>
-              {dataBotulotoxin.name.slice(1)}
+              {botulotoxinData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Botulotoxin_text />
+              <Botulotoxin_text botulotoxinData={botulotoxinData} />
             </ExpandText>
           </div>
         </div>
@@ -41,29 +41,31 @@ export default function Botulotoxin() {
         </div>
 
         <div className="mt-10 lg:mt-12 lg:col-span-2">
-          <About_botulotoxin />
+          <About_botulotoxin botulotoxinData={botulotoxinData} />
         </div>
 
         <div className="fade-up mt-10 lg:mt-12 lg:col-span-2">
           <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
-            {dataBotulotoxin.gallery.map(({ src, alt }, index) => (
-              <Link
-                key={src}
-                href={
-                  index === 0
-                    ? "/medical-cosmetics/botulotoxin/vrasky"
-                    : "/medical-cosmetics/botulotoxin/potenie"
-                }
-                className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
-              >
-                <Image
-                  src={src}
-                  alt={alt ?? ""}
-                  fill
-                  className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
-                />
-              </Link>
-            ))}
+            {botulotoxinData.gallery.map(
+              ({ src, alt }: { src: string; alt?: string }, index: number) => (
+                <Link
+                  key={src}
+                  href={
+                    index === 0
+                      ? "/medical-cosmetics/botulotoxin/vrasky"
+                      : "/medical-cosmetics/botulotoxin/potenie"
+                  }
+                  className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
+                >
+                  <Image
+                    src={src}
+                    alt={alt ?? ""}
+                    fill
+                    className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
+                  />
+                </Link>
+              ),
+            )}
           </div>
         </div>
 

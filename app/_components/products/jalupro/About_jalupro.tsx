@@ -1,19 +1,20 @@
 "use client"
 
-import { dataJalupro } from "@/app/_lib/data_services/data_jalupro"
+import type { JaluproMainProps } from "@/app/_lib/data_services/data_jalupro"
 import { useState } from "react"
 import { MdKeyboardArrowDown } from "react-icons/md"
 
-export default function About_jalupro() {
+export default function About_jalupro({ jaluproData }: JaluproMainProps) {
   const [openBox, setOpenBox] = useState(false)
   const about =
-    (dataJalupro.content.about as Record<string, string | string[]>) ?? {}
-  const effects = (dataJalupro.attributes.effects as string[]) ?? []
-  const effectSummary = (dataJalupro.attributes.effectSummary as string) ?? ""
+    (jaluproData.content.about as Record<string, string | string[]>) ?? {}
+  const effects = (jaluproData.content.attributes.effects as string[]) ?? []
+  const effectSummary =
+    (jaluproData.content.attributes.effectSummary as string) ?? ""
   const treatmentParagraphs =
-    (dataJalupro.attributes.treatmentParagraphs as string[]) ?? []
+    (jaluproData.content.attributes.treatmentParagraphs as string[]) ?? []
   const aftercareParagraphs =
-    (dataJalupro.attributes.aftercareParagraphs as string[]) ?? []
+    (jaluproData.content.attributes.aftercareParagraphs as string[]) ?? []
 
   return (
     <section className="w-full items-center justify-center">

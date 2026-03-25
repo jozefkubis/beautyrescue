@@ -2,12 +2,14 @@
 
 import ExpandText from "@/app/_components/ExpandText"
 import { brandFont } from "@/app/_components/fonts"
-import { dataMezoterapiaInvasive } from "@/app/_lib/data_services/data_mezoterapia"
+import type { MezoterapiaInvasiveProps } from "@/app/_lib/data_services/data_mezoterapia"
 import Image from "next/image"
 import Mezoterapia_pricing_form_invasive from "./Mezoterapia_pricing_form_invasive"
 import Mezoterapia_text_invasive from "./Mezoterapia_text_invasive"
 
-export default function Mezoterapia_invasive() {
+export default function Mezoterapia_invasive({
+  mezoterapiaInvasiveData,
+}: MezoterapiaInvasiveProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:gap-8 lg:p-8">
@@ -17,14 +19,16 @@ export default function Mezoterapia_invasive() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataMezoterapiaInvasive.name[0]}
+                {mezoterapiaInvasiveData.name[0]}
               </span>
-              {dataMezoterapiaInvasive.name.slice(1)}
+              {mezoterapiaInvasiveData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Mezoterapia_text_invasive />
+              <Mezoterapia_text_invasive
+                mezoterapiaInvasiveData={mezoterapiaInvasiveData}
+              />
             </ExpandText>
           </div>
         </div>
@@ -32,8 +36,8 @@ export default function Mezoterapia_invasive() {
         <div className="grid grid-cols-1 md:grid-cols-5 relative px-6 gap-3">
           <div className="relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md h-full aspect-4/3 ring-2 ring-goldDark/80 shadow-goldDark/30">
             <Image
-              src={dataMezoterapiaInvasive.gallery[0].src}
-              alt={dataMezoterapiaInvasive.gallery[0].alt ?? ""}
+              src={mezoterapiaInvasiveData.gallery[0].src}
+              alt={mezoterapiaInvasiveData.gallery[0].alt ?? ""}
               fill
               className="object-fit"
             />
@@ -41,32 +45,32 @@ export default function Mezoterapia_invasive() {
 
           <div className="relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md h-full aspect-4/3 ring-2 ring-goldDark/80 shadow-goldDark/30">
             <Image
-              src={dataMezoterapiaInvasive.gallery[1].src}
-              alt={dataMezoterapiaInvasive.gallery[1].alt ?? ""}
+              src={mezoterapiaInvasiveData.gallery[1].src}
+              alt={mezoterapiaInvasiveData.gallery[1].alt ?? ""}
               fill
               className="object-fit"
             />
           </div>
           <div className="relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md h-full aspect-4/3 ring-2 ring-goldDark/80 shadow-goldDark/30">
             <Image
-              src={dataMezoterapiaInvasive.gallery[2].src}
-              alt={dataMezoterapiaInvasive.gallery[2].alt ?? ""}
+              src={mezoterapiaInvasiveData.gallery[2].src}
+              alt={mezoterapiaInvasiveData.gallery[2].alt ?? ""}
               fill
               className="object-fit"
             />
           </div>
           <div className="relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md h-full aspect-4/3 ring-2 ring-goldDark/80 shadow-goldDark/30">
             <Image
-              src={dataMezoterapiaInvasive.gallery[3].src}
-              alt={dataMezoterapiaInvasive.gallery[3].alt ?? ""}
+              src={mezoterapiaInvasiveData.gallery[3].src}
+              alt={mezoterapiaInvasiveData.gallery[3].alt ?? ""}
               fill
               className="object-fit"
             />
           </div>
           <div className="relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md h-full aspect-4/3 ring-2 ring-goldDark/80 shadow-goldDark/30">
             <Image
-              src={dataMezoterapiaInvasive.gallery[4].src}
-              alt={dataMezoterapiaInvasive.gallery[4].alt ?? ""}
+              src={mezoterapiaInvasiveData.gallery[4].src}
+              alt={mezoterapiaInvasiveData.gallery[4].alt ?? ""}
               fill
               className="object-fit"
             />

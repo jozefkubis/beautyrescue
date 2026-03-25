@@ -1,9 +1,11 @@
-import { dataMezoterapiaInvasive } from "@/app/_lib/data_services/data_mezoterapia"
+import type { MezoterapiaInvasiveProps } from "@/app/_lib/data_services/data_mezoterapia"
 
-export default function Mezoterapia_text_invasive() {
+export default function Mezoterapia_text_invasive({
+  mezoterapiaInvasiveData,
+}: MezoterapiaInvasiveProps) {
   return (
     <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-      {(dataMezoterapiaInvasive.content.paragraphs as string[]).map(
+      {(mezoterapiaInvasiveData.content.paragraphs as string[]).map(
         (paragraph, index) => (
           <p
             key={index}

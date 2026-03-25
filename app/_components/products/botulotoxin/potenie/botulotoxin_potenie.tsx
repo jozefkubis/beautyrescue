@@ -2,11 +2,13 @@
 
 import ExpandTextLG from "@/app/_components/ExpandTextLG"
 import { brandFont } from "@/app/_components/fonts"
-import { dataBotulotoxinPotenie } from "@/app/_lib/data_services/data_botulotoxin"
+import type { BotulotoxinPotenieMainProps } from "@/app/_lib/data_services/data_botulotoxin"
 import Image from "next/image"
 import Botulotoxin_potenie_text from "./Botulotoxin_potenie_text"
 
-export default function Botulotoxin_potenie() {
+export default function Botulotoxin_potenie({
+  botulotoxinPotenieData,
+}: BotulotoxinPotenieMainProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -25,14 +27,16 @@ export default function Botulotoxin_potenie() {
           >
             <span className="italic text-goldDark">
               <span className="text-3xl 2xl:text-6xl">
-                {dataBotulotoxinPotenie.name[0]}
+                {botulotoxinPotenieData.name[0]}
               </span>
-              {dataBotulotoxinPotenie.name.slice(1)}
+              {botulotoxinPotenieData.name.slice(1)}
             </span>
           </h1>
 
           <ExpandTextLG>
-            <Botulotoxin_potenie_text />
+            <Botulotoxin_potenie_text
+              botulotoxinPotenieData={botulotoxinPotenieData}
+            />
           </ExpandTextLG>
         </div>
       </div>

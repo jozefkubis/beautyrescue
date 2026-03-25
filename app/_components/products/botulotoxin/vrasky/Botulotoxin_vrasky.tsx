@@ -2,11 +2,13 @@
 
 import ExpandText from "@/app/_components/ExpandText"
 import { brandFont } from "@/app/_components/fonts"
-import { dataBotulotoxinVrasky } from "@/app/_lib/data_services/data_botulotoxin"
+import type { BotulotoxinVraskyMainProps } from "@/app/_lib/data_services/data_botulotoxin"
 import Image from "next/image"
 import Botulotoxin_vrasky_text from "./Botulotoxin_vrasky_text"
 
-export default function Botulotoxin_vrasky() {
+export default function Botulotoxin_vrasky({
+  botulotoxinVraskyData,
+}: BotulotoxinVraskyMainProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -25,14 +27,16 @@ export default function Botulotoxin_vrasky() {
           >
             <span className="italic text-goldDark">
               <span className="text-3xl 2xl:text-6xl">
-                {dataBotulotoxinVrasky.name[0]}
+                {botulotoxinVraskyData.name[0]}
               </span>
-              {dataBotulotoxinVrasky.name.slice(1)}
+              {botulotoxinVraskyData.name.slice(1)}
             </span>
           </h1>
 
           <ExpandText>
-            <Botulotoxin_vrasky_text />
+            <Botulotoxin_vrasky_text
+              botulotoxinVraskyData={botulotoxinVraskyData}
+            />
           </ExpandText>
         </div>
       </div>

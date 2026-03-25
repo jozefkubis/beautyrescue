@@ -1,13 +1,13 @@
 "use client"
 
-import { dataOxygeneo } from "@/app/_lib/data_services/data_oxygeneo"
+import type { OxygeneoMainProps } from "@/app/_lib/data_services/data_oxygeneo"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
 import Oxygeneo_pricing_form from "./Oxygeneo_pricing_form"
 import Oxygeneo_text from "./Oxygeneo_text"
 
-export default function Oxygeneo() {
+export default function Oxygeneo({ oxygeneoData }: OxygeneoMainProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
@@ -17,14 +17,14 @@ export default function Oxygeneo() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataOxygeneo.name[0]}
+                {oxygeneoData.name[0]}
               </span>
-              {dataOxygeneo.name.slice(1)}
+              {oxygeneoData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Oxygeneo_text />
+              <Oxygeneo_text oxygeneoData={oxygeneoData} />
             </ExpandText>
           </div>
         </div>

@@ -1,9 +1,11 @@
-import { dataJaluproClassic } from "@/app/_lib/data_services/data_jalupro"
+import type { JaluproClassicProps } from "@/app/_lib/data_services/data_jalupro"
 
-export default function Jalupro_classic_text() {
+export default function Jalupro_classic_text({
+  jaluproClassicData,
+}: JaluproClassicProps) {
   return (
     <ul className="list-disc space-y-2 pl-6 text-sm 2xl:text-lg marker:text-gray-500">
-      {(dataJaluproClassic.content.paragraphs as string[]).map(
+      {(jaluproClassicData.content.paragraphs as string[]).map(
         (paragraph, index) => (
           <li
             key={index}

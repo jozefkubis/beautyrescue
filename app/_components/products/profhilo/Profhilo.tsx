@@ -1,6 +1,6 @@
 "use client"
 
-import { dataProfhilo } from "@/app/_lib/data_services/data_profhilo"
+import type { ProfhiloMainProps } from "@/app/_lib/data_services/data_profhilo"
 import Image from "next/image"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
@@ -8,7 +8,7 @@ import About_profhilo from "./About_profhilo"
 import Profhilo_pricing_form from "./Profhilo_pricing_form"
 import Profhilo_text from "./Profhilo_text"
 
-export default function Profhilo() {
+export default function Profhilo({ profhiloData }: ProfhiloMainProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -18,14 +18,14 @@ export default function Profhilo() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataProfhilo.name[0]}
+                {profhiloData.name[0]}
               </span>
-              {dataProfhilo.name.slice(1)}
+              {profhiloData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Profhilo_text />
+              <Profhilo_text profhiloData={profhiloData} />
             </ExpandText>
           </div>
         </div>
@@ -40,12 +40,12 @@ export default function Profhilo() {
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <About_profhilo />
+          <About_profhilo profhiloData={profhiloData} />
         </div>
 
         {/* <div className="fade-up mt-10 lg:mt-12">
         <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
-          {dataProfhilo.gallery.map(({ src, alt }) => (
+          {profhiloData.gallery.map(({ src, alt }) => (
             <div
               key={src}
               className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"

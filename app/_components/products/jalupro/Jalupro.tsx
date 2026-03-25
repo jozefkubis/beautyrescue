@@ -1,6 +1,6 @@
 "use client"
 
-import { dataJalupro } from "@/app/_lib/data_services/data_jalupro"
+import type { JaluproMainProps } from "@/app/_lib/data_services/data_jalupro"
 import Image from "next/image"
 import Link from "next/link"
 import ExpandText from "../../ExpandText"
@@ -8,7 +8,7 @@ import { brandFont } from "../../fonts"
 import About_jalupro from "./About_jalupro"
 import Jalupro_text from "./Jalupro_text"
 
-export default function Jalupro() {
+export default function Jalupro({ jaluproData }: JaluproMainProps) {
   const jaluproLinks = [
     "/medical-cosmetics/jalupro/classic",
     "/medical-cosmetics/jalupro/hmw",
@@ -25,14 +25,14 @@ export default function Jalupro() {
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {dataJalupro.name[0]}
+                {jaluproData.name[0]}
               </span>
-              {dataJalupro.name.slice(1)}
+              {jaluproData.name.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Jalupro_text />
+              <Jalupro_text jaluproData={jaluproData} />
             </ExpandText>
           </div>
         </div>
@@ -47,27 +47,29 @@ export default function Jalupro() {
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <About_jalupro />
+          <About_jalupro jaluproData={jaluproData} />
         </div>
 
         <div className="fade-up mt-10 2xl:mt-20 lg:col-span-2">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-            {dataJalupro.gallery.map(({ src, alt }, index) => (
-              <Link
-                href={
-                  jaluproLinks[index] ?? "/medical-cosmetics/jalupro/classic"
-                }
-                key={src}
-                className="relative aspect-square w-full overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
-              >
-                <Image
-                  src={src}
-                  alt={alt ?? ""}
-                  fill
-                  className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
-                />
-              </Link>
-            ))}
+            {jaluproData.gallery.map(
+              ({ src, alt }: { src: string; alt?: string }, index: number) => (
+                <Link
+                  href={
+                    jaluproLinks[index] ?? "/medical-cosmetics/jalupro/classic"
+                  }
+                  key={src}
+                  className="relative aspect-square w-full overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
+                >
+                  <Image
+                    src={src}
+                    alt={alt ?? ""}
+                    fill
+                    className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
+                  />
+                </Link>
+              ),
+            )}
           </div>
         </div>
 
