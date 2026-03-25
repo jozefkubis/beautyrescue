@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { IoTriangle } from "react-icons/io5"
+import { RiAdminLine } from "react-icons/ri"
 import { robotoCondensed } from "../fonts"
 
 export default function Navigation() {
@@ -105,7 +106,7 @@ export default function Navigation() {
         ref={navRef}
         className={`${robotoCondensed.className} fade-up relative flex w-full items-stretch overflow-visible rounded-xl border border-goldLight bg-redDark/95 shadow-[0_16px_36px_rgba(20,10,10,0.36)]`}
       >
-        <div className="flex flex-1 items-center gap-8 rounded-l-xl bg-linear-to-r from-redDark via-redMain to-redDark pl-10 py-5 pr-16 text-sm tracking-wide text-background xl:py-7 xl:pr-24 2xl:text-lg 2xl:pr-32">
+        <div className="flex flex-1 items-center gap-8 rounded-l-xl bg-linear-to-r from-redDark via-redMain to-redDark pl-10 py-5 pr-4 text-sm tracking-wide text-background xl:py-7 xl:pr-6 2xl:text-lg 2xl:pr-8">
           {navigationLinks.map((link) => (
             // každý nav item je relatívny a group kvôli hoveru
             <div key={link.name} className="relative group flex items-center">
@@ -198,8 +199,15 @@ export default function Navigation() {
               )}
             </div>
           ))}
+          <Link
+            href="/admin"
+            className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-1 xl:py-7"
+            aria-label="Admin panel"
+            title="Admin panel"
+          >
+            <RiAdminLine />
+          </Link>
         </div>
-
         {/* pravé tlačidlo Kontakt */}
         <div className="flex items-center justify-center rounded-r-xl bg-linear-to-r from-goldDark via-goldLight to-goldDark px-12 py-4 text-xl font-medium tracking-wide text-greyMain transition duration-300 hover:cursor-pointer hover:brightness-110">
           <h4>Kontakt</h4>
