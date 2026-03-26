@@ -1,19 +1,22 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
+import { IoMdLogOut } from "react-icons/io"
 import { IoTriangle } from "react-icons/io5"
 import { RiAdminLine } from "react-icons/ri"
+import handleSubmitLogout from "../admin/handleSubmitLogout"
 import LoginForm from "../admin/LoginForm"
 import { robotoCondensed } from "../fonts"
 import Modal from "../Modal"
 
-export default function Navigation() {
+export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
   const pathname = usePathname()
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [openModal, setOpenModal] = useState(false)
   const navRef = useRef<HTMLDivElement | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
     const handlePointerDown = (event: MouseEvent) => {
@@ -102,6 +105,11 @@ export default function Navigation() {
       href: "/promotion",
     },
   ]
+
+  function handleSubmit() {
+    handleSubmitLogout()
+    router.push("/")
+  }
 
   return (
     <>
@@ -203,15 +211,26 @@ export default function Navigation() {
                 )}
               </div>
             ))}
-            <Link
-              href="/admin"
-              onClick={() => setOpenModal(true)}
-              className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-1 xl:py-7"
-              aria-label="Admin panel"
-              title="Admin panel"
-            >
-              <RiAdminLine />
-            </Link>
+            {!isAdmin ? (
+              <Link
+                href="/admin"
+                onClick={() => setOpenModal(true)}
+                className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-1 xl:py-7"
+                aria-label="Admin panel"
+                title="Admin panel"
+              >
+                <RiAdminLine />
+              </Link>
+            ) : (
+              <div
+                onClick={handleSubmit}
+                className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-1 xl:py-7"
+                aria-label="Logout"
+                title="Logout"
+              >
+                <IoMdLogOut />
+              </div>
+            )}
           </div>
           {/* pravé tlačidlo Kontakt */}
           <div className="flex items-center justify-center rounded-r-xl bg-linear-to-r from-goldDark via-goldLight to-goldDark px-12 py-4 text-xl font-medium tracking-wide text-greyMain transition duration-300 hover:cursor-pointer hover:brightness-110">
@@ -220,13 +239,15 @@ export default function Navigation() {
         </div>
       </div>
 
-      <Modal
-        isOpen={openModal}
-        onClose={() => setOpenModal(false)}
-        maxWidthClass="max-w-4xl"
-      >
-        {openModal && <LoginForm />}
-      </Modal>
+      {!isAdmin && (
+        <Modal
+          isOpen={openModal}
+          onClose={() => setOpenModal(false)}
+          maxWidthClass="max-w-4xl"
+        >
+          {openModal && <LoginForm />}
+        </Modal>
+      )}
     </>
   )
 }

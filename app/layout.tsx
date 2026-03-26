@@ -10,6 +10,7 @@ import Footer from "./_components/footer/Footer"
 import Header from "./_components/home/header/Header"
 import MobileHeader from "./_components/home/header/MobileHeader"
 import Navigation from "./_components/navigation/Navigation"
+import { getCurrentUser } from "./_lib/actions/auth_actions"
 import "./globals.css"
 
 const poppins = Poppins({
@@ -42,13 +43,16 @@ const playfairDisplaySC = Playfair_Display_SC({
   weight: ["400", "700", "900"],
 })
 
-const isMobile = typeof window !== "undefined" && window.innerWidth < 1024
+// const isMobile = typeof window !== "undefined" && window.innerWidth < 1024
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const user = await getCurrentUser()
+  const isAdmin = user?.email === process.env.ADMIN_EMAIL
+
   return (
     <html lang="en">
       <body
@@ -56,7 +60,7 @@ export default function RootLayout({
       >
         <MobileHeader />
         <div className="hidden lg:block">
-          <Navigation />
+          <Navigation isAdmin={isAdmin} />
           <Header />
         </div>
         {children}

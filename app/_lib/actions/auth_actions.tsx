@@ -37,7 +37,7 @@ export async function logOut() {
   }
 
   revalidatePath("/", "layout")
-  redirect("/")
+  return { success: true, message: "Odhlásenie bolo úspešné." }
 }
 
 export async function getCurrentUser() {
