@@ -5,6 +5,7 @@ import {
   Roboto,
   Roboto_Condensed,
 } from "next/font/google"
+import { Toaster } from "react-hot-toast"
 import Footer from "./_components/footer/Footer"
 import Header from "./_components/home/header/Header"
 import MobileHeader from "./_components/home/header/MobileHeader"
@@ -59,6 +60,17 @@ export default function RootLayout({
           <Header />
         </div>
         {children}
+        {/* 🔔 Toasty */}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: "#8b092c",
+              color: "#fff",
+            },
+          }}
+        />
         <Footer />
       </body>
     </html>

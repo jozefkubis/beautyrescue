@@ -1,5 +1,7 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
 import { getSupabaseServerClient } from "../supabase/server"
 
 type SignInParams = {
@@ -20,7 +22,8 @@ export async function logIn({ email, password }: SignInParams) {
     return { success: false, message: error.message }
   }
 
-  return { success: true, message: null }
+  revalidatePath("/", "layout")
+  redirect("/")
 }
 
 export async function logOut() {
@@ -33,7 +36,8 @@ export async function logOut() {
     return { success: false, message: error.message }
   }
 
-  return { success: true, message: null }
+  revalidatePath("/", "layout")
+  redirect("/")
 }
 
 export async function getCurrentUser() {
