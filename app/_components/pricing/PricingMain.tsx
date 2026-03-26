@@ -1,5 +1,16 @@
 "use client"
 
+import type { AcupunctureMainProps } from "@/app/_lib/data_services/data_acupuncture"
+import type { BiokompatibilneNiteMainProps } from "@/app/_lib/data_services/data_biokompatibilne_nite"
+import type { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulotoxin"
+import type { ChemicalPeelingMainProps } from "@/app/_lib/data_services/data_chemical_peeling"
+import type { KyselinaHyaluronovaMainProps } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
+import type {
+  MezoterapiaInvasiveProps,
+  MezoterapiaNonInvasiveProps,
+} from "@/app/_lib/data_services/data_mezoterapia"
+import type { OxygeneoMainProps } from "@/app/_lib/data_services/data_oxygeneo"
+import type { ProfhiloMainProps } from "@/app/_lib/data_services/data_profhilo"
 import { useState } from "react"
 import { MdKeyboardArrowDown } from "react-icons/md"
 import Acupuncture_pricing_form from "../products/acupuncture/Acupuncture_pricing_form"
@@ -19,71 +30,111 @@ type PricingFormItem = {
   value: React.ReactNode
 }
 
-const pricingFormData: PricingFormItem[] = [
-  {
-    id: 1,
-    title: "Chemický peeling",
-    description: "Obnova textúry pleti a jemné rozjasnenie.",
-    value: <Chem_peeling_pricing_form />,
-  },
-  {
-    id: 2,
-    title: "Diamantová mikrodermabrázia",
-    description: "Šetrná exfoliácia pre hladší a sviežejší vzhľad.",
-    value: <Chem_peeling_pricing_form />,
-  },
-  {
-    id: 3,
-    title: "Oxygeneo",
-    description: "Okamžité rozjasnenie, okysličenie a výživa pleti.",
-    value: <Oxygeneo_pricing_form />,
-  },
-  {
-    id: 4,
-    title: "Mezoterapia - neinvazívna",
-    description: "Bezihlová mezoterapia pre hydratáciu a regeneráciu pleti.",
-    value: <Mezoterapia_pricing_form_non_invasive />,
-  },
-  {
-    id: 5,
-    title: "Mezoterapia - invazívna",
-    description: "Hĺbková mezoterapia Vitalinjector pre intenzívny efekt.",
-    value: <Mezoterapia_pricing_form_invasive />,
-  },
-  {
-    id: 6,
-    title: "Botulotoxín",
-    description: "Vyhladenie mimických vrások s prirodzeným výsledkom.",
-    value: <Botulotoxin_pricing_form />,
-  },
-  {
-    id: 7,
-    title: "Kyselina hyalurónová",
-    description: "Hydratácia, objem a jemné kontúrovanie tváre.",
-    value: <Kyselina_hyaluronova_pricing_form />,
-  },
-  {
-    id: 8,
-    title: "Biokompatibilné nite",
-    description: "Spevnenie kontúr a liftingový efekt bez chirurgie.",
-    value: <Biokompatibilne_nite_pricing_form />,
-  },
-  {
-    id: 9,
-    title: "Profhilo",
-    description: "Hydratácia a regenerácia pleti pre mladistvý vzhľad.",
-    value: <Profhilo_pricing_form />,
-  },
-  {
-    id: 10,
-    title: "Lekárska akupunktúra",
-    description: "Podpora regenerácie a harmonizácie organizmu.",
-    value: <Acupuncture_pricing_form />,
-  },
-]
+type PricingMainProps = AcupunctureMainProps &
+  BiokompatibilneNiteMainProps &
+  BotulotoxinMainProps &
+  ChemicalPeelingMainProps &
+  KyselinaHyaluronovaMainProps &
+  MezoterapiaInvasiveProps &
+  MezoterapiaNonInvasiveProps &
+  OxygeneoMainProps &
+  ProfhiloMainProps
 
-export default function PricingMain() {
+export default function PricingMain({
+  acupunctureData,
+  biokompatibilneNiteData,
+  botulotoxinData,
+  chemicalPeelingData,
+  kyselinaHyaluronovaData,
+  mezoterapiaInvasiveData,
+  mezoterapiaNonInvasiveData,
+  oxygeneoData,
+  profhiloData,
+}: PricingMainProps) {
   const [openBox, setOpenBox] = useState<number | null>(null)
+
+  const pricingFormData: PricingFormItem[] = [
+    {
+      id: 1,
+      title: "Chemický peeling",
+      description: "Obnova textúry pleti a jemné rozjasnenie.",
+      value: (
+        <Chem_peeling_pricing_form chemicalPeelingData={chemicalPeelingData} />
+      ),
+    },
+    {
+      id: 2,
+      title: "Diamantová mikrodermabrázia",
+      description: "Šetrná exfoliácia pre hladší a sviežejší vzhľad.",
+      value: (
+        <Chem_peeling_pricing_form chemicalPeelingData={chemicalPeelingData} />
+      ),
+    },
+    {
+      id: 3,
+      title: "Oxygeneo",
+      description: "Okamžité rozjasnenie, okysličenie a výživa pleti.",
+      value: <Oxygeneo_pricing_form oxygeneoData={oxygeneoData} />,
+    },
+    {
+      id: 4,
+      title: "Mezoterapia - neinvazívna",
+      description: "Bezihlová mezoterapia pre hydratáciu a regeneráciu pleti.",
+      value: (
+        <Mezoterapia_pricing_form_non_invasive
+          mezoterapiaNonInvasiveData={mezoterapiaNonInvasiveData}
+        />
+      ),
+    },
+    {
+      id: 5,
+      title: "Mezoterapia - invazívna",
+      description: "Hĺbková mezoterapia Vitalinjector pre intenzívny efekt.",
+      value: (
+        <Mezoterapia_pricing_form_invasive
+          mezoterapiaInvasiveData={mezoterapiaInvasiveData}
+        />
+      ),
+    },
+    {
+      id: 6,
+      title: "Botulotoxín",
+      description: "Vyhladenie mimických vrások s prirodzeným výsledkom.",
+      value: <Botulotoxin_pricing_form botulotoxinData={botulotoxinData} />,
+    },
+    {
+      id: 7,
+      title: "Kyselina hyalurónová",
+      description: "Hydratácia, objem a jemné kontúrovanie tváre.",
+      value: (
+        <Kyselina_hyaluronova_pricing_form
+          kyselinaHyaluronovaData={kyselinaHyaluronovaData}
+        />
+      ),
+    },
+    {
+      id: 8,
+      title: "Biokompatibilné nite",
+      description: "Spevnenie kontúr a liftingový efekt bez chirurgie.",
+      value: (
+        <Biokompatibilne_nite_pricing_form
+          biokompatibilneNiteData={biokompatibilneNiteData}
+        />
+      ),
+    },
+    {
+      id: 9,
+      title: "Profhilo",
+      description: "Hydratácia a regenerácia pleti pre mladistvý vzhľad.",
+      value: <Profhilo_pricing_form profhiloData={profhiloData} />,
+    },
+    {
+      id: 10,
+      title: "Lekárska akupunktúra",
+      description: "Podpora regenerácie a harmonizácie organizmu.",
+      value: <Acupuncture_pricing_form acupunctureData={acupunctureData} />,
+    },
+  ]
 
   function handleClick(id: number) {
     setOpenBox((currentId) => (currentId === id ? null : id))
