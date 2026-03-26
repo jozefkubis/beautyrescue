@@ -4,3 +4,5 @@ npm install @supabase/supabase-js
 npm install @supabase/ssr
 npm install react-hot-toast
 
+ADMIN_EMAIL=kubis.jozef@outlook.com
+
