@@ -6,15 +6,13 @@ import { MdKeyboardArrowDown } from "react-icons/md"
 
 export default function About_jalupro({ jaluproData }: JaluproMainProps) {
   const [openBox, setOpenBox] = useState(false)
-  const about =
-    (jaluproData.content.about as Record<string, string | string[]>) ?? {}
-  const effects = (jaluproData.content.attributes.effects as string[]) ?? []
-  const effectSummary =
-    (jaluproData.content.attributes.effectSummary as string) ?? ""
-  const treatmentParagraphs =
-    (jaluproData.content.attributes.treatmentParagraphs as string[]) ?? []
-  const aftercareParagraphs =
-    (jaluproData.content.attributes.aftercareParagraphs as string[]) ?? []
+  const content = jaluproData.content ?? {}
+  const attributes = jaluproData.attributes ?? {}
+  const about = (content.about as Record<string, string | string[]>) ?? {}
+  const effects = attributes.effects ?? []
+  const effectSummary = attributes.effectSummary ?? ""
+  const treatmentParagraphs = attributes.treatmentParagraphs ?? []
+  const aftercareParagraphs = attributes.aftercareParagraphs ?? []
 
   return (
     <section className="w-full items-center justify-center">

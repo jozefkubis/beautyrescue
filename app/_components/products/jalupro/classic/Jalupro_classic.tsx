@@ -41,7 +41,9 @@ export default function Jalupro_classic({
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <Jalupro_classic_pricing_form />
+          <Jalupro_classic_pricing_form
+            jaluproClassicData={jaluproClassicData}
+          />
         </div>
       </div>
     </div>

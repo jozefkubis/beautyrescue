@@ -1,30 +1,56 @@
 ﻿import { getSupabaseServerClient } from "../supabase/server"
 
+export type PricingProps = {
+  id: string
+  treatment: string
+  price_before_discount: number
+  price_after_discount: number
+  discount: number | null
+}
+
+type JaluproAttributes = {
+  effects?: string[]
+  effectSummary?: string
+  treatmentParagraphs?: string[]
+  aftercareParagraphs?: string[]
+}
+
+type JaluproServiceData = {
+  name: string
+  gallery: { src: string; alt?: string }[]
+  content: Record<string, unknown> & {
+    paragraphs?: string[]
+    about?: Record<string, string | string[]>
+  }
+  attributes?: JaluproAttributes
+  pricing: PricingProps[]
+}
+
 export type JaluproMainProps = {
-  jaluproData: any
+  jaluproData: JaluproServiceData
 }
 
 export type JaluproClassicProps = {
-  jaluproClassicData: any
+  jaluproClassicData: JaluproServiceData
 }
 
 export type JaluproHMWProps = {
-  jaluproHMWData: any
+  jaluproHMWData: JaluproServiceData
 }
 
 export type JaluproSuperHydroProps = {
-  jaluproSuperHydroData: any
+  jaluproSuperHydroData: JaluproServiceData
 }
 
 export type JaluproYoungEyeProps = {
-  jaluproYoungEyeData: any
+  jaluproYoungEyeData: JaluproServiceData
 }
 
 export async function getJalupro(slug: string) {
   const supabase = await getSupabaseServerClient()
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
     .single()
   if (error) {
@@ -38,7 +64,7 @@ export async function getJaluproClassic(slug: string) {
   const supabase = await getSupabaseServerClient()
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
     .single()
   if (error) {
@@ -52,7 +78,7 @@ export async function getJaluproHMW(slug: string) {
   const supabase = await getSupabaseServerClient()
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
     .single()
   if (error) {
@@ -66,7 +92,7 @@ export async function getJaluproSuperHydro(slug: string) {
   const supabase = await getSupabaseServerClient()
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
     .single()
   if (error) {
@@ -80,7 +106,7 @@ export async function getJaluproYoungEye(slug: string) {
   const supabase = await getSupabaseServerClient()
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
     .single()
   if (error) {

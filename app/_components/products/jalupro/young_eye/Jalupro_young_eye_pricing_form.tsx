@@ -1,14 +1,18 @@
+import type { JaluproYoungEyeProps } from "@/app/_lib/data_services/data_jalupro"
 import PricingForm from "../../PricingForm"
 
-const treatments = [
-  {
-    id: 1,
-    treatment: "Jalupro Young eye",
-    price: "220,-",
-    sale: "200,-",
-  },
-]
+export default function Jalupro_young_eye_pricing_form({
+  jaluproYoungEyeData,
+}: JaluproYoungEyeProps) {
+  const treatments = jaluproYoungEyeData.pricing.map((item) => ({
+    id: item.id,
+    treatment: item.treatment,
+    price: `${item.price_before_discount},- €`,
+    sale:
+      item.price_after_discount < item.price_before_discount
+        ? `${item.price_after_discount},- €`
+        : "",
+  }))
 
-export default function Jalupro_young_eye_pricing_form() {
   return <PricingForm title="Jalupro" treatments={treatments} />
 }

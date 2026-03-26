@@ -6,6 +6,7 @@ import Link from "next/link"
 import ExpandText from "../../ExpandText"
 import { brandFont } from "../../fonts"
 import About_jalupro from "./About_jalupro"
+import Jalupro_pricing_form from "./Jalupro_pricing_form"
 import Jalupro_text from "./Jalupro_text"
 
 export default function Jalupro({ jaluproData }: JaluproMainProps) {
@@ -73,9 +74,9 @@ export default function Jalupro({ jaluproData }: JaluproMainProps) {
           </div>
         </div>
 
-        {/* <div className="mt-10 lg:mt-12 lg:col-span-2">
-        <Jalupro_pricing_form />
-        </div> */}
+        <div className="mt-10 lg:mt-12 lg:col-span-2">
+          <Jalupro_pricing_form jaluproData={jaluproData} />
+        </div>
       </div>
     </div>
   )

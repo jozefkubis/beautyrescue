@@ -39,7 +39,7 @@ export default function Jalupro_hmw({ jaluproHMWData }: JaluproHMWProps) {
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <Jalupro_hmw_pricing_form />
+          <Jalupro_hmw_pricing_form jaluproHMWData={jaluproHMWData} />
         </div>
       </div>
     </div>

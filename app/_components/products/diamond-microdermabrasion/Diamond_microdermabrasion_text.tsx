@@ -4,31 +4,26 @@ import ExpandTextLG from "../../ExpandTextLG"
 export default function Diamond_microdermabrasion_text({
   diamondMicrodermabrasionData,
 }: DiamondMicrodermabrasionMainProps) {
+  const intro = diamondMicrodermabrasionData.content.intro ?? ""
+  const paragraphs = diamondMicrodermabrasionData.content.paragraphs ?? []
+  const benefits = diamondMicrodermabrasionData.attributes?.benefits ?? []
+
   return (
     <div>
       <div className="space-y-4">
         <ExpandTextLG>
           <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-            <p className="text-gray-700 leading-8">
-              {diamondMicrodermabrasionData.content.bodyIntro as string}
-            </p>
+            {intro ? <p className="text-gray-700 leading-8">{intro}</p> : null}
 
-            <ul className="list-disc list-inside space-y-2 text-gray-700">
-              {(
-                (diamondMicrodermabrasionData.content.bodyBenefits as string) ??
-                ""
-              )
-                .split("\n")
-                .map((benefit) => (
+            {benefits.length > 0 ? (
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                {benefits.map((benefit) => (
                   <li key={benefit}>{benefit}</li>
                 ))}
-            </ul>
+              </ul>
+            ) : null}
 
-            {(
-              (diamondMicrodermabrasionData.content.bodyProcess as string)
-                ?.split("\n")
-                .filter(Boolean) ?? []
-            ).map((paragraph, index) => (
+            {paragraphs.map((paragraph, index) => (
               <p key={index} className="text-gray-700 leading-8">
                 {paragraph}
               </p>
