@@ -16,12 +16,20 @@ export type AcupunctureMainProps = {
   }
 }
 
+export type AcupuncturePricingProps = {
+  id: number
+  service: string
+  price_before_discount: number
+  price_after_discount: number
+  discount: number
+}
+
 export default async function getAcupuncture(slug: string) {
   const supabase = await getSupabaseServerClient()
 
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
     .single()
 
