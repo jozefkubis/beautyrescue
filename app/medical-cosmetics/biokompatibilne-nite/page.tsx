@@ -6,6 +6,8 @@ export default async function Page() {
     "biokompatibilne-nite",
   )
 
+  console.log("Biokompatibilne nite data:", biokompatibilneNiteData)
+
   return (
     <Biokompatibilne_nite biokompatibilneNiteData={biokompatibilneNiteData} />
   )

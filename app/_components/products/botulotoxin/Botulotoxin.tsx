@@ -70,7 +70,7 @@ export default function Botulotoxin({ botulotoxinData }: BotulotoxinMainProps) {
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <Botulotoxin_pricing_form />
+          <Botulotoxin_pricing_form botulotoxinData={botulotoxinData} />
         </div>
       </div>
     </div>
