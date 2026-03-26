@@ -9,7 +9,9 @@ import Mezoterapia_text_invasive from "./Mezoterapia_text_invasive"
 
 export default function Mezoterapia_invasive({
   mezoterapiaInvasiveData,
-}: MezoterapiaInvasiveProps) {
+  user,
+  isAdmin,
+}: MezoterapiaInvasiveProps & { user?: string | null; isAdmin?: boolean }) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:gap-8 lg:p-8">
@@ -95,6 +97,8 @@ export default function Mezoterapia_invasive({
         <div className="mt-10 2xl:mt-20">
           <Mezoterapia_pricing_form_invasive
             mezoterapiaInvasiveData={mezoterapiaInvasiveData}
+            user={user}
+            isAdmin={isAdmin}
           />
         </div>
       </div>

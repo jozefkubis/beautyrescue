@@ -3,7 +3,9 @@ import PricingForm from "../PricingForm"
 
 export default function Jalupro_pricing_form({
   jaluproData,
-}: JaluproMainProps) {
+  user,
+  isAdmin,
+}: JaluproMainProps & { user?: string | null; isAdmin?: boolean }) {
   const treatments = jaluproData.pricing.map((item) => ({
     id: item.id,
     treatment: item.treatment,
@@ -14,5 +16,12 @@ export default function Jalupro_pricing_form({
         : "",
   }))
 
-  return <PricingForm title="Jalupro" treatments={treatments} />
+  return (
+    <PricingForm
+      title="Jalupro"
+      treatments={treatments}
+      user={user}
+      isAdmin={isAdmin}
+    />
+  )
 }

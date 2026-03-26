@@ -3,7 +3,9 @@ import PricingForm from "../PricingForm"
 
 export default function Oxygeneo_pricing_form({
   oxygeneoData,
-}: OxygeneoMainProps) {
+  user,
+  isAdmin,
+}: OxygeneoMainProps & { user?: string | null; isAdmin?: boolean }) {
   const treatments = (oxygeneoData.pricing ?? []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
@@ -15,6 +17,11 @@ export default function Oxygeneo_pricing_form({
   }))
 
   return (
-    <PricingForm title="Oxygeneo - okysličenie pleti" treatments={treatments} />
+    <PricingForm
+      title="Oxygeneo - okysličenie pleti"
+      treatments={treatments}
+      user={user}
+      isAdmin={isAdmin}
+    />
   )
 }

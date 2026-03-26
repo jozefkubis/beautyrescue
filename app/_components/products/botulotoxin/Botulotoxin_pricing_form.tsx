@@ -96,7 +96,9 @@ import PricingForm from "../PricingForm"
 
 export default function Botulotoxin_pricing_form({
   botulotoxinData,
-}: BotulotoxinMainProps) {
+  user,
+  isAdmin,
+}: BotulotoxinMainProps & { user?: string | null; isAdmin?: boolean }) {
   const treatments = botulotoxinData.pricing.map((item) => ({
     id: item.id,
     treatment: item.treatment,
@@ -107,5 +109,12 @@ export default function Botulotoxin_pricing_form({
         : "",
   }))
 
-  return <PricingForm title="Botulotoxín" treatments={treatments} />
+  return (
+    <PricingForm
+      title="Botulotoxín"
+      treatments={treatments}
+      user={user}
+      isAdmin={isAdmin}
+    />
+  )
 }

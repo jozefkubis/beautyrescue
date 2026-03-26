@@ -9,7 +9,11 @@ import About_jalupro from "./About_jalupro"
 import Jalupro_pricing_form from "./Jalupro_pricing_form"
 import Jalupro_text from "./Jalupro_text"
 
-export default function Jalupro({ jaluproData }: JaluproMainProps) {
+export default function Jalupro({
+  jaluproData,
+  user,
+  isAdmin,
+}: JaluproMainProps & { user?: string | null; isAdmin?: boolean }) {
   const jaluproLinks = [
     "/medical-cosmetics/jalupro/classic",
     "/medical-cosmetics/jalupro/hmw",
@@ -75,7 +79,11 @@ export default function Jalupro({ jaluproData }: JaluproMainProps) {
         </div>
 
         <div className="mt-10 lg:mt-12 lg:col-span-2">
-          <Jalupro_pricing_form jaluproData={jaluproData} />
+          <Jalupro_pricing_form
+            jaluproData={jaluproData}
+            user={user}
+            isAdmin={isAdmin}
+          />
         </div>
       </div>
     </div>

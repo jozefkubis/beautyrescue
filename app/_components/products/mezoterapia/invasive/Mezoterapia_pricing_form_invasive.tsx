@@ -3,7 +3,9 @@ import PricingForm from "../../PricingForm"
 
 export default function Mezoterapia_pricing_form_invasive({
   mezoterapiaInvasiveData,
-}: MezoterapiaInvasiveProps) {
+  user,
+  isAdmin,
+}: MezoterapiaInvasiveProps & { user?: string | null; isAdmin?: boolean }) {
   const treatments = (mezoterapiaInvasiveData.pricing ?? []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
@@ -18,6 +20,8 @@ export default function Mezoterapia_pricing_form_invasive({
     <PricingForm
       title="Invazívna mezoterapia – Vitalinjector"
       treatments={treatments}
+      user={user}
+      isAdmin={isAdmin}
     />
   )
 }

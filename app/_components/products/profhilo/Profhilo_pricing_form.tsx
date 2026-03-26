@@ -3,7 +3,9 @@ import PricingForm from "../PricingForm"
 
 export default function Profhilo_pricing_form({
   profhiloData,
-}: ProfhiloMainProps) {
+  user,
+  isAdmin,
+}: ProfhiloMainProps & { user?: string | null; isAdmin?: boolean }) {
   const treatments = (profhiloData.pricing ?? []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
@@ -14,5 +16,12 @@ export default function Profhilo_pricing_form({
         : "",
   }))
 
-  return <PricingForm title="Profhilo" treatments={treatments} />
+  return (
+    <PricingForm
+      title="Profhilo"
+      treatments={treatments}
+      user={user}
+      isAdmin={isAdmin}
+    />
+  )
 }

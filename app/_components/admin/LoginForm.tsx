@@ -21,7 +21,7 @@ export default function LoginForm() {
   }
 
   return (
-    <section className="mx-auto w-full max-w-md px-5 py-8 sm:py-12">
+    <section className="mx-auto w-full max-w-md px-5">
       <div className="section-shell fade-up rounded-[28px] p-6 sm:p-8">
         <div className="mb-6 text-center sm:mb-8">
           <p className="mx-auto mb-3 inline-flex rounded-full border border-redMain/20 bg-redMain/8 px-4 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-redDark">

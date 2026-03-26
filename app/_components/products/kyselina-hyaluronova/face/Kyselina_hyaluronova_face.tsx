@@ -9,7 +9,9 @@ import Kyselina_hyaluronova_text_face from "./Kyselina_hyaluronova_text_face"
 
 export default function Kyselina_hyaluronova_face({
   kyselinaHyaluronovaFaceData,
-}: KyselinaHyaluronovaFaceProps) {
+  user,
+  isAdmin,
+}: KyselinaHyaluronovaFaceProps & { user?: string | null; isAdmin?: boolean }) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
@@ -42,6 +44,8 @@ export default function Kyselina_hyaluronova_face({
         <div className="mt-10 2xl:mt-20 col-span-2">
           <Kyselina_hyaluronova_pricing_form_face
             kyselinaHyaluronovaFaceData={kyselinaHyaluronovaFaceData}
+            user={user}
+            isAdmin={isAdmin}
           />
         </div>
       </div>

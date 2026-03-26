@@ -7,7 +7,11 @@ import { brandFont } from "../../fonts"
 import Oxygeneo_pricing_form from "./Oxygeneo_pricing_form"
 import Oxygeneo_text from "./Oxygeneo_text"
 
-export default function Oxygeneo({ oxygeneoData }: OxygeneoMainProps) {
+export default function Oxygeneo({
+  oxygeneoData,
+  user,
+  isAdmin,
+}: OxygeneoMainProps & { user?: string | null; isAdmin?: boolean }) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
@@ -39,7 +43,11 @@ export default function Oxygeneo({ oxygeneoData }: OxygeneoMainProps) {
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <Oxygeneo_pricing_form oxygeneoData={oxygeneoData} />
+          <Oxygeneo_pricing_form
+            oxygeneoData={oxygeneoData}
+            user={user}
+            isAdmin={isAdmin}
+          />
         </div>
       </div>
     </div>

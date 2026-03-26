@@ -3,7 +3,9 @@ import PricingForm from "../../PricingForm"
 
 export default function Kyselina_hyaluronova_pricing_form_lips({
   kyselinaHyaluronovaLipsData,
-}: KyselinaHyaluronovaLipsProps) {
+  user,
+  isAdmin,
+}: KyselinaHyaluronovaLipsProps & { user?: string | null; isAdmin?: boolean }) {
   const treatments = (kyselinaHyaluronovaLipsData.pricing ?? []).map(
     (item) => ({
       id: item.id,
@@ -17,6 +19,11 @@ export default function Kyselina_hyaluronova_pricing_form_lips({
   )
 
   return (
-    <PricingForm title="Kyselina hyaluronová - Pery" treatments={treatments} />
+    <PricingForm
+      title="Kyselina hyaluronová - Pery"
+      treatments={treatments}
+      user={user}
+      isAdmin={isAdmin}
+    />
   )
 }

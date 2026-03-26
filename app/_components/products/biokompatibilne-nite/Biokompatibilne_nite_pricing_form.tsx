@@ -48,7 +48,9 @@ import PricingForm from "../PricingForm"
 
 export default function Biokompatibilne_nite_pricing_form({
   biokompatibilneNiteData,
-}: BiokompatibilneNiteMainProps) {
+  user,
+  isAdmin,
+}: BiokompatibilneNiteMainProps & { user?: string | null; isAdmin?: boolean }) {
   const treatments = biokompatibilneNiteData.pricing.map((item) => ({
     id: item.id,
     treatment: item.treatment,
@@ -59,5 +61,12 @@ export default function Biokompatibilne_nite_pricing_form({
         : "",
   }))
 
-  return <PricingForm title="Biokompatibilné nite" treatments={treatments} />
+  return (
+    <PricingForm
+      title="Biokompatibilné nite"
+      treatments={treatments}
+      user={user}
+      isAdmin={isAdmin}
+    />
+  )
 }

@@ -3,8 +3,9 @@ import PricingForm from "../PricingForm"
 
 export default function Chem_peeling_pricing_form({
   chemicalPeelingData,
+  user,
   isAdmin,
-}: ChemicalPeelingMainProps) {
+}: ChemicalPeelingMainProps & { user?: string | null }) {
   const treatments = chemicalPeelingData.pricing.map((item) => ({
     id: item.id,
     treatment: item.treatment,
@@ -19,6 +20,7 @@ export default function Chem_peeling_pricing_form({
     <PricingForm
       title="Chemický peeling"
       treatments={treatments}
+      user={user}
       isAdmin={isAdmin}
     />
   )

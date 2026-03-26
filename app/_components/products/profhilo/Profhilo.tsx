@@ -8,7 +8,11 @@ import About_profhilo from "./About_profhilo"
 import Profhilo_pricing_form from "./Profhilo_pricing_form"
 import Profhilo_text from "./Profhilo_text"
 
-export default function Profhilo({ profhiloData }: ProfhiloMainProps) {
+export default function Profhilo({
+  profhiloData,
+  user,
+  isAdmin,
+}: ProfhiloMainProps & { user?: string | null; isAdmin?: boolean }) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -62,7 +66,11 @@ export default function Profhilo({ profhiloData }: ProfhiloMainProps) {
       </div> */}
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <Profhilo_pricing_form profhiloData={profhiloData} />
+          <Profhilo_pricing_form
+            profhiloData={profhiloData}
+            user={user}
+            isAdmin={isAdmin}
+          />
         </div>
       </div>
     </div>

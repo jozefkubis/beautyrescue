@@ -3,7 +3,9 @@ import PricingForm from "../../PricingForm"
 
 export default function Jalupro_hmw_pricing_form({
   jaluproHMWData,
-}: JaluproHMWProps) {
+  user,
+  isAdmin,
+}: JaluproHMWProps & { user?: string | null; isAdmin?: boolean }) {
   const treatments = jaluproHMWData.pricing.map((item) => ({
     id: item.id,
     treatment: item.treatment,
@@ -14,5 +16,12 @@ export default function Jalupro_hmw_pricing_form({
         : "",
   }))
 
-  return <PricingForm title="Jalupro" treatments={treatments} />
+  return (
+    <PricingForm
+      title="Jalupro"
+      treatments={treatments}
+      user={user}
+      isAdmin={isAdmin}
+    />
+  )
 }

@@ -11,6 +11,7 @@ export default async function Page() {
   return (
     <Chemical_peeling
       chemicalPeelingData={chemicalPeelingData}
+      user={user?.email ?? null}
       isAdmin={isAdmin}
     />
   )

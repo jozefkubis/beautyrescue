@@ -7,7 +7,11 @@ import Image from "next/image"
 import Jalupro_hmw_pricing_form from "./Jalupro_hmw_pricing_form"
 import Jalupro_hmw_text from "./Jalupro_hmw_text"
 
-export default function Jalupro_hmw({ jaluproHMWData }: JaluproHMWProps) {
+export default function Jalupro_hmw({
+  jaluproHMWData,
+  user,
+  isAdmin,
+}: JaluproHMWProps & { user?: string | null; isAdmin?: boolean }) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -39,7 +43,11 @@ export default function Jalupro_hmw({ jaluproHMWData }: JaluproHMWProps) {
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <Jalupro_hmw_pricing_form jaluproHMWData={jaluproHMWData} />
+          <Jalupro_hmw_pricing_form
+            jaluproHMWData={jaluproHMWData}
+            user={user}
+            isAdmin={isAdmin}
+          />
         </div>
       </div>
     </div>

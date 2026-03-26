@@ -10,15 +10,18 @@ type Treatment = {
 type PricingFormProps = {
   title: string
   treatments: Treatment[]
+  user?: string | null
   isAdmin?: boolean
 }
 
 export default function PricingForm({
   // title,
   treatments,
+  user,
   isAdmin,
 }: PricingFormProps) {
   // const isAdmin = initialIsAdmin
+  console.log("user in PricingForm:", user)
   console.log("isAdmin in PricingForm:", isAdmin)
 
   return (

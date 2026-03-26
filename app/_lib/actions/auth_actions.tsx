@@ -23,7 +23,7 @@ export async function logIn({ email, password }: SignInParams) {
   }
 
   revalidatePath("/", "layout")
-  redirect("/")
+  redirect("/admin")
 }
 
 export async function logOut() {

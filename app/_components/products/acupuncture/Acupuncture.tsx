@@ -7,7 +7,11 @@ import { brandFont } from "../../fonts"
 import Acupuncture_pricing_form from "./Acupuncture_pricing_form"
 import Acupuncture_text from "./Acupuncture_text"
 
-export default function Acupuncture({ acupunctureData }: AcupunctureMainProps) {
+export default function Acupuncture({
+  acupunctureData,
+  user,
+  isAdmin,
+}: AcupunctureMainProps & { user?: string | null; isAdmin?: boolean }) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -39,7 +43,11 @@ export default function Acupuncture({ acupunctureData }: AcupunctureMainProps) {
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <Acupuncture_pricing_form acupunctureData={acupunctureData} />
+          <Acupuncture_pricing_form
+            acupunctureData={acupunctureData}
+            user={user}
+            isAdmin={isAdmin}
+          />
         </div>
       </div>
     </div>

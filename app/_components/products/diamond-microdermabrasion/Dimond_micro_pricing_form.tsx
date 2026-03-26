@@ -3,7 +3,12 @@ import PricingForm from "../PricingForm"
 
 export default function Dimond_micro_pricing_form({
   diamondMicrodermabrasionData,
-}: DiamondMicrodermabrasionMainProps) {
+  user,
+  isAdmin,
+}: DiamondMicrodermabrasionMainProps & {
+  user?: string | null
+  isAdmin?: boolean
+}) {
   const treatments = diamondMicrodermabrasionData.pricing.map((item) => ({
     id: item.id,
     treatment: item.treatment,
@@ -15,6 +20,11 @@ export default function Dimond_micro_pricing_form({
   }))
 
   return (
-    <PricingForm title="Diamantová mikrodermabrázia" treatments={treatments} />
+    <PricingForm
+      title="Diamantová mikrodermabrázia"
+      treatments={treatments}
+      user={user}
+      isAdmin={isAdmin}
+    />
   )
 }

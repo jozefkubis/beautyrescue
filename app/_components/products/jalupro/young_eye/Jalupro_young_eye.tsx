@@ -9,7 +9,9 @@ import Jalupro_young_eye_text from "./Jalupro_young_eye_text"
 
 export default function Jalupro_young_eye({
   jaluproYoungEyeData,
-}: JaluproYoungEyeProps) {
+  user,
+  isAdmin,
+}: JaluproYoungEyeProps & { user?: string | null; isAdmin?: boolean }) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -43,6 +45,8 @@ export default function Jalupro_young_eye({
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Jalupro_young_eye_pricing_form
             jaluproYoungEyeData={jaluproYoungEyeData}
+            user={user}
+            isAdmin={isAdmin}
           />
         </div>
       </div>

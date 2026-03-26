@@ -9,7 +9,11 @@ import About_botulotoxin from "./About_botulotoxin"
 import Botulotoxin_pricing_form from "./Botulotoxin_pricing_form"
 import Botulotoxin_text from "./Botulotoxin_text"
 
-export default function Botulotoxin({ botulotoxinData }: BotulotoxinMainProps) {
+export default function Botulotoxin({
+  botulotoxinData,
+  user,
+  isAdmin,
+}: BotulotoxinMainProps & { user?: string | null; isAdmin?: boolean }) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -70,7 +74,11 @@ export default function Botulotoxin({ botulotoxinData }: BotulotoxinMainProps) {
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <Botulotoxin_pricing_form botulotoxinData={botulotoxinData} />
+          <Botulotoxin_pricing_form
+            botulotoxinData={botulotoxinData}
+            user={user}
+            isAdmin={isAdmin}
+          />
         </div>
       </div>
     </div>

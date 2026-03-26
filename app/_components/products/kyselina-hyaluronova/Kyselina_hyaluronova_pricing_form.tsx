@@ -3,7 +3,9 @@ import PricingForm from "../PricingForm"
 
 export default function Kyselina_hyaluronova_pricing_form({
   kyselinaHyaluronovaData,
-}: KyselinaHyaluronovaMainProps) {
+  user,
+  isAdmin,
+}: KyselinaHyaluronovaMainProps & { user?: string | null; isAdmin?: boolean }) {
   const treatments = (kyselinaHyaluronovaData.pricing ?? []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
@@ -14,5 +16,12 @@ export default function Kyselina_hyaluronova_pricing_form({
         : "",
   }))
 
-  return <PricingForm title="Kyselina hyaluronová" treatments={treatments} />
+  return (
+    <PricingForm
+      title="Kyselina hyaluronová"
+      treatments={treatments}
+      user={user}
+      isAdmin={isAdmin}
+    />
+  )
 }

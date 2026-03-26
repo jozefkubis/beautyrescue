@@ -3,7 +3,9 @@ import PricingForm from "../PricingForm"
 
 export default function Acupuncture_pricing_form({
   acupunctureData,
-}: AcupunctureMainProps) {
+  user,
+  isAdmin,
+}: AcupunctureMainProps & { user?: string | null; isAdmin?: boolean }) {
   const treatments = acupunctureData.pricing.map((item) => ({
     id: item.id,
     treatment: item.treatment,
@@ -14,5 +16,12 @@ export default function Acupuncture_pricing_form({
         : "",
   }))
 
-  return <PricingForm title="Lekárska akupunktúra" treatments={treatments} />
+  return (
+    <PricingForm
+      title="Lekárska akupunktúra"
+      treatments={treatments}
+      user={user}
+      isAdmin={isAdmin}
+    />
+  )
 }

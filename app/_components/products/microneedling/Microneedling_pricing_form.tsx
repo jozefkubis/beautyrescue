@@ -3,7 +3,9 @@ import PricingForm from "../PricingForm"
 
 export default function Microneedling_pricing_form({
   microneedlingData,
-}: MicroneedlingMainProps) {
+  user,
+  isAdmin,
+}: MicroneedlingMainProps & { user?: string | null; isAdmin?: boolean }) {
   const treatments = microneedlingData.pricing.map((item) => ({
     id: item.id,
     treatment: item.treatment,
@@ -14,5 +16,12 @@ export default function Microneedling_pricing_form({
         : "",
   }))
 
-  return <PricingForm title="Microneedling" treatments={treatments} />
+  return (
+    <PricingForm
+      title="Microneedling"
+      treatments={treatments}
+      user={user}
+      isAdmin={isAdmin}
+    />
+  )
 }

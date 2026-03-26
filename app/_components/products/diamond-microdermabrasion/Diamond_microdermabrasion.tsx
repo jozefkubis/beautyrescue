@@ -9,7 +9,12 @@ import Dimond_micro_pricing_form from "./Dimond_micro_pricing_form"
 
 export default function Diamond_microdermabrasion({
   diamondMicrodermabrasionData,
-}: DiamondMicrodermabrasionMainProps) {
+  user,
+  isAdmin,
+}: DiamondMicrodermabrasionMainProps & {
+  user?: string | null
+  isAdmin?: boolean
+}) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
@@ -45,6 +50,8 @@ export default function Diamond_microdermabrasion({
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Dimond_micro_pricing_form
             diamondMicrodermabrasionData={diamondMicrodermabrasionData}
+            user={user}
+            isAdmin={isAdmin}
           />
         </div>
       </div>
