@@ -8,12 +8,12 @@ import AboutText from "./AboutText"
 
 export default function AboutMain({ aboutUsData }: AboutMainProps) {
   return (
-    <div className="w-full items-center justify-center px-6 py-8 lg:px-20 lg:py-10 2xl:px-44">
+    <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-6 p-5 lg:grid-cols-2 lg:p-7">
         {/* Ľavý stĺpec – text */}
         <div className="flex flex-col">
           <h1
-            className={`premium-title py-8 text-2xl font-semibold italic 2xl:text-5xl lg:py-14 ${brandFont.className}`}
+            className={`premium-title py-8 text-2xl font-semibold italic 2xl:text-5xl  ${brandFont.className}`}
           >
             <span className="italic">{aboutUsData.name}</span>
           </h1>
