@@ -211,6 +211,18 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
                 )}
               </div>
             ))}
+
+            {isAdmin && (
+              <Link
+                href="/admin"
+                className="flex items-center justify-center p-1 text-sm ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer text-[#ffd982]"
+                aria-label="Admin panel"
+                title="Admin panel"
+              >
+                Admin
+              </Link>
+            )}
+
             {!isAdmin ? (
               <Link
                 href="/admin"
