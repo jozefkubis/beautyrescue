@@ -93,7 +93,7 @@ export default function PricingForm({
                         value={item.sale}
                         readOnly
                         aria-label="Akcia"
-                        placeholder="Bez akcie"
+                        placeholder="-"
                         className="h-12 w-full rounded-xl border border-goldDark/15 bg-[#fff8f3] px-4 text-sm font-semibold text-redDark outline-none transition placeholder:text-redDark/35 focus:border-goldDark/30 2xl:h-14 2xl:text-base hover:cursor-pointer"
                       />
                     </div>

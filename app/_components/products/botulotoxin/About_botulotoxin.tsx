@@ -49,7 +49,7 @@ export default function About_botulotoxin({
           <div
             className={`
               overflow-hidden px-4 sm:px-5 lg:px-6
-              transition-[max-height,opacity] duration-1500 ease-in-out
+              transition-[max-height,opacity] duration-500 ease-in-out
               ${openBox ? "max-h-250 opacity-100" : "max-h-0 opacity-0"}
             `}
           >

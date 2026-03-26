@@ -85,7 +85,7 @@ export default function About_profhilo({ profhiloData }: ProfhiloMainProps) {
 
                       <p
                         className={`
-                          mt-1 max-w-2xl text-sm leading-relaxed transition-colors duration-300 sm:text-[15px]
+                          mt-1 max-w-2xl text-sm leading-relaxed transition-colors duration-500 sm:text-[15px]
                           ${isOpen ? "text-neutral-700" : "text-neutral-500"}
                         `}
                       >
