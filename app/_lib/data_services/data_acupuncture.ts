@@ -1,5 +1,12 @@
 import { getSupabaseServerClient } from "../supabase/server"
 
+export type AcupuncturePricingProps = {
+  id: number
+  treatment: string
+  price_before_discount: number
+  price_after_discount: number
+  discount: number
+}
 export type AcupunctureMainProps = {
   acupunctureData: {
     name: string
@@ -13,15 +20,8 @@ export type AcupunctureMainProps = {
       bodyProcess: string
       bodyAftercare: string
     }
+    pricing: AcupuncturePricingProps[]
   }
-}
-
-export type AcupuncturePricingProps = {
-  id: number
-  service: string
-  price_before_discount: number
-  price_after_discount: number
-  discount: number
 }
 
 export default async function getAcupuncture(slug: string) {

@@ -39,7 +39,7 @@ export default function Acupuncture({ acupunctureData }: AcupunctureMainProps) {
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <Acupuncture_pricing_form />
+          <Acupuncture_pricing_form acupunctureData={acupunctureData} />
         </div>
       </div>
     </div>
