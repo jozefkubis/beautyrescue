@@ -16,6 +16,7 @@ export type ChemicalPeelingMainProps = {
     }
     pricing: PricingProps[]
   }
+  isAdmin?: boolean
 }
 
 export default async function getChemicalPeeling(slug: string) {

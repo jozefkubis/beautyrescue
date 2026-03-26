@@ -9,6 +9,7 @@ import Chemical_peeling_text from "./Chemical_peeling_text"
 
 export default function Chemical_peeling({
   chemicalPeelingData,
+  isAdmin,
 }: ChemicalPeelingMainProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
@@ -45,6 +46,7 @@ export default function Chemical_peeling({
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Chem_peeling_pricing_form
             chemicalPeelingData={chemicalPeelingData}
+            isAdmin={isAdmin}
           />
         </div>
       </div>

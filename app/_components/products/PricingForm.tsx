@@ -1,7 +1,5 @@
 "use client"
 
-import { useState } from "react"
-
 type Treatment = {
   id: number | string
   treatment: string
@@ -18,11 +16,10 @@ type PricingFormProps = {
 export default function PricingForm({
   // title,
   treatments,
-  // isAdmin: initialIsAdmin = false,
+  isAdmin,
 }: PricingFormProps) {
   // const isAdmin = initialIsAdmin
-
-  const [isAdmin] = useState(false)
+  console.log("isAdmin in PricingForm:", isAdmin)
 
   return (
     <section className="w-full px-4">
