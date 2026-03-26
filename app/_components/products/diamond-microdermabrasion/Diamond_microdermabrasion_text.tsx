@@ -10,21 +10,24 @@ export default function Diamond_microdermabrasion_text({
         <ExpandTextLG>
           <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
             <p className="text-gray-700 leading-8">
-              {diamondMicrodermabrasionData.content.intro as string}
+              {diamondMicrodermabrasionData.content.bodyIntro as string}
             </p>
 
             <ul className="list-disc list-inside space-y-2 text-gray-700">
               {(
-                (diamondMicrodermabrasionData.attributes
-                  .benefits as string[]) ?? []
-              ).map((benefit) => (
-                <li key={benefit}>{benefit}</li>
-              ))}
+                (diamondMicrodermabrasionData.content.bodyBenefits as string) ??
+                ""
+              )
+                .split("\n")
+                .map((benefit) => (
+                  <li key={benefit}>{benefit}</li>
+                ))}
             </ul>
 
             {(
-              (diamondMicrodermabrasionData.content.paragraphs as string[]) ??
-              []
+              (diamondMicrodermabrasionData.content.bodyProcess as string)
+                ?.split("\n")
+                .filter(Boolean) ?? []
             ).map((paragraph, index) => (
               <p key={index} className="text-gray-700 leading-8">
                 {paragraph}

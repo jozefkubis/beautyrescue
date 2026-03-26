@@ -86,7 +86,7 @@ export default function Microneedling({
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <Microneedling_pricing_form />
+          <Microneedling_pricing_form microneedlingData={microneedlingData} />
         </div>
       </div>
     </div>

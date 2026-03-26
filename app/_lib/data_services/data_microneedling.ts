@@ -1,5 +1,13 @@
 import { getSupabaseServerClient } from "../supabase/server"
 
+export type PricingProps = {
+  id: string
+  treatment: string
+  price_before_discount: number
+  price_after_discount: number
+  discount: number | null
+}
+
 export type MicroneedlingMainProps = {
   microneedlingData: {
     name: string
@@ -10,6 +18,7 @@ export type MicroneedlingMainProps = {
       contraindicationsTitle: string
       contraindications: string[]
     }
+    pricing: PricingProps[]
   }
 }
 
@@ -18,7 +27,7 @@ export default async function getMicroneedling(slug: string) {
 
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
     .single()
 

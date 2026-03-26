@@ -1,7 +1,28 @@
 ﻿import { getSupabaseServerClient } from "../supabase/server"
 
+export type PricingProps = {
+  id: number
+  treatment: string
+  price_before_discount: number
+  price_after_discount: number
+  discount: number
+}
+
 export type DiamondMicrodermabrasionMainProps = {
-  diamondMicrodermabrasionData: any
+  diamondMicrodermabrasionData: {
+    name: string
+    summary: string
+    metadata: {
+      quoteAuthor: string
+    }
+    content: {
+      bodyIntro: string
+      bodyBenefits: string
+      bodyProcess: string
+      bodyAftercare: string
+    }
+    pricing: PricingProps[]
+  }
 }
 
 export default async function getDiamondMicrodermabrasion(slug: string) {
@@ -9,7 +30,7 @@ export default async function getDiamondMicrodermabrasion(slug: string) {
 
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
     .single()
 
