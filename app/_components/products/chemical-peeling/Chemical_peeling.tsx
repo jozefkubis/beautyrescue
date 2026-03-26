@@ -43,7 +43,9 @@ export default function Chemical_peeling({
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <Chem_peeling_pricing_form />
+          <Chem_peeling_pricing_form
+            chemicalPeelingData={chemicalPeelingData}
+          />
         </div>
       </div>
     </div>

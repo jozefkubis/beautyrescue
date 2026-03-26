@@ -1,44 +1,18 @@
+import type { ChemicalPeelingMainProps } from "@/app/_lib/data_services/data_chemical_peeling"
 import PricingForm from "../PricingForm"
 
-const treatments = [
-  {
-    id: 1,
-    treatment: "Chemický peeling - tvár",
-    price: "40,- €",
-    sale: "",
-  },
-  {
-    id: 2,
-    treatment: "Chemický peeling - tvár a krk",
-    price: "50,- €",
-    sale: "",
-  },
-  {
-    id: 3,
-    treatment: "Chemický peeling - tvár, krk a dekolt",
-    price: "60,- €",
-    sale: "",
-  },
-  {
-    id: 4,
-    treatment: "Chemický peeling 35% TCA – tvár",
-    price: "60,- €",
-    sale: "",
-  },
-  {
-    id: 5,
-    treatment: "Chemický peeling 35% TCA – 1 bod do 1 cm",
-    price: "5,- €",
-    sale: "",
-  },
-  {
-    id: 6,
-    treatment: "Vstupná konzultácia",
-    price: "15,- €",
-    sale: "",
-  },
-]
+export default function Chem_peeling_pricing_form({
+  chemicalPeelingData,
+}: ChemicalPeelingMainProps) {
+  const treatments = chemicalPeelingData.pricing.map((item) => ({
+    id: item.id,
+    treatment: item.treatment,
+    price: `${item.price_before_discount},- €`,
+    sale:
+      item.price_after_discount < item.price_before_discount
+        ? `${item.price_after_discount},- €`
+        : "",
+  }))
 
-export default function Chem_peeling_pricing_form() {
   return <PricingForm title="Chemický peeling" treatments={treatments} />
 }
