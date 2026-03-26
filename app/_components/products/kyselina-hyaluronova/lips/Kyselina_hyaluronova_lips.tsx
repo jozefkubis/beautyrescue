@@ -43,7 +43,9 @@ export default function Kyselina_hyaluronova_lips({
         </div>
 
         <div className="mt-10 2xl:mt-20 col-span-2">
-          <Kyselina_hyaluronova_pricing_form_lips />
+          <Kyselina_hyaluronova_pricing_form_lips
+            kyselinaHyaluronovaLipsData={kyselinaHyaluronovaLipsData}
+          />
         </div>
       </div>
     </div>

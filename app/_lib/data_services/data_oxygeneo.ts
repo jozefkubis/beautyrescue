@@ -1,7 +1,29 @@
 ﻿import { getSupabaseServerClient } from "../supabase/server"
 
+export type PricingProps = {
+  id: string
+  treatment: string
+  price_before_discount: number
+  price_after_discount: number
+  discount: number | null
+}
+
 export type OxygeneoMainProps = {
-  oxygeneoData: any
+  oxygeneoData: {
+    name: string
+    content: {
+      intro?: string
+      description?: string
+      stepsTitle?: string
+      steps?: string[]
+      result?: string
+    }
+    metadata: {
+      citationLabel?: string
+      citationUrl?: string
+    }
+    pricing: PricingProps[]
+  }
 }
 
 export default async function getOxygeneo(slug: string) {
@@ -9,7 +31,7 @@ export default async function getOxygeneo(slug: string) {
 
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
     .single()
 

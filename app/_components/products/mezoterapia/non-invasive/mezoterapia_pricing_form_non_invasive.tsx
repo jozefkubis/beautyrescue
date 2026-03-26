@@ -1,51 +1,19 @@
+﻿import type { MezoterapiaNonInvasiveProps } from "@/app/_lib/data_services/data_mezoterapia"
 import PricingForm from "../../PricingForm"
 
-const treatments = [
-  {
-    id: 1,
-    treatment: "Mesojectgun – tvár",
-    price: "60,- €",
-    sale: "",
-  },
-  {
-    id: 2,
-    treatment: "Mesojectgun – tvár + krk",
-    price: "100,- €",
-    sale: "70,- €",
-  },
-  {
-    id: 3,
-    treatment: "Mesojectgun – tvár+krk+dekolt",
-    price: "130,- €",
-    sale: "80,- €",
-  },
-  {
-    id: 4,
-    treatment: "Mesojectgun – mesohair",
-    price: "60,- €",
-    sale: "",
-  },
-  {
-    id: 5,
-    treatment: "Výživná maska",
-    price: "7,- €",
-    sale: "",
-  },
-  {
-    id: 6,
-    treatment: 'Mezosérum "namieru"',
-    price: "35,- €",
-    sale: "",
-  },
-  {
-    id: 7,
-    treatment: "Vstupná konzultácia",
-    price: "15,- €",
-    sale: "",
-  },
-]
+export default function Mezoterapia_pricing_form_non_invasive({
+  mezoterapiaNonInvasiveData,
+}: MezoterapiaNonInvasiveProps) {
+  const treatments = (mezoterapiaNonInvasiveData.pricing ?? []).map((item) => ({
+    id: item.id,
+    treatment: item.treatment,
+    price: `${item.price_before_discount},- €`,
+    sale:
+      item.price_after_discount < item.price_before_discount
+        ? `${item.price_after_discount},- €`
+        : "",
+  }))
 
-export default function Mezoterapia_pricing_form_non_invasive() {
   return (
     <PricingForm
       title="Neinvazívna mezoterapia – MesojectGun"

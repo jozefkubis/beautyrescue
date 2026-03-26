@@ -39,7 +39,7 @@ export default function Oxygeneo({ oxygeneoData }: OxygeneoMainProps) {
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <Oxygeneo_pricing_form />
+          <Oxygeneo_pricing_form oxygeneoData={oxygeneoData} />
         </div>
       </div>
     </div>

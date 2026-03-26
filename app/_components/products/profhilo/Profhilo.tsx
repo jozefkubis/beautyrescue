@@ -62,7 +62,7 @@ export default function Profhilo({ profhiloData }: ProfhiloMainProps) {
       </div> */}
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <Profhilo_pricing_form />
+          <Profhilo_pricing_form profhiloData={profhiloData} />
         </div>
       </div>
     </div>

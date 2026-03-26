@@ -40,7 +40,9 @@ export default function Kyselina_hyaluronova_face({
         </div>
 
         <div className="mt-10 2xl:mt-20 col-span-2">
-          <Kyselina_hyaluronova_pricing_form_face />
+          <Kyselina_hyaluronova_pricing_form_face
+            kyselinaHyaluronovaFaceData={kyselinaHyaluronovaFaceData}
+          />
         </div>
       </div>
     </div>

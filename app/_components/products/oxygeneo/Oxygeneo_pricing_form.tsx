@@ -1,39 +1,19 @@
+﻿import type { OxygeneoMainProps } from "@/app/_lib/data_services/data_oxygeneo"
 import PricingForm from "../PricingForm"
 
-const treatments = [
-  {
-    id: 1,
-    treatment: "Oxygeneo - tvár + RF",
-    price: "70,- €",
-    sale: "60,- €",
-  },
-  {
-    id: 2,
-    treatment: "Oxygeneo - tvár + krk + RF",
-    price: "80,- €",
-    sale: "70,- €",
-  },
-  {
-    id: 3,
-    treatment: "Oxygeneo - tvár + krk + dekolt + RF",
-    price: "90,- €",
-    sale: "80,- €",
-  },
-  {
-    id: 4,
-    treatment: "Rádiofrekvencia - tvár",
-    price: "25,- €",
-    sale: "",
-  },
-  {
-    id: 5,
-    treatment: "Vstupná konzultácia",
-    price: "15,- €",
-    sale: "",
-  },
-]
+export default function Oxygeneo_pricing_form({
+  oxygeneoData,
+}: OxygeneoMainProps) {
+  const treatments = (oxygeneoData.pricing ?? []).map((item) => ({
+    id: item.id,
+    treatment: item.treatment,
+    price: `${item.price_before_discount},- €`,
+    sale:
+      item.price_after_discount < item.price_before_discount
+        ? `${item.price_after_discount},- €`
+        : "",
+  }))
 
-export default function Oxygeneo_pricing_form() {
   return (
     <PricingForm title="Oxygeneo - okysličenie pleti" treatments={treatments} />
   )

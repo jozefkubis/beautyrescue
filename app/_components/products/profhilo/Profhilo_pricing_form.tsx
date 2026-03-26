@@ -1,26 +1,18 @@
+﻿import type { ProfhiloMainProps } from "@/app/_lib/data_services/data_profhilo"
 import PricingForm from "../PricingForm"
 
-const treatments = [
-  {
-    id: 1,
-    treatment: "Profhilo",
-    price: "270,- €",
-    sale: "250,- €",
-  },
-  {
-    id: 2,
-    treatment: "Profhilo Structura",
-    price: "250,- €",
-    sale: "",
-  },
-  {
-    id: 3,
-    treatment: "Vstupná konzultácia",
-    price: "15,- €",
-    sale: "",
-  },
-]
+export default function Profhilo_pricing_form({
+  profhiloData,
+}: ProfhiloMainProps) {
+  const treatments = (profhiloData.pricing ?? []).map((item) => ({
+    id: item.id,
+    treatment: item.treatment,
+    price: `${item.price_before_discount},- €`,
+    sale:
+      item.price_after_discount < item.price_before_discount
+        ? `${item.price_after_discount},- €`
+        : "",
+  }))
 
-export default function Profhilo_pricing_form() {
   return <PricingForm title="Profhilo" treatments={treatments} />
 }

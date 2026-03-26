@@ -1,22 +1,39 @@
 ﻿import { getSupabaseServerClient } from "../supabase/server"
 
+export type PricingProps = {
+  id: string
+  treatment: string
+  price_before_discount: number
+  price_after_discount: number
+  discount: number | null
+}
+
+type MezoterapiaServiceData = {
+  name: string
+  gallery: { src: string; alt?: string }[]
+  content: {
+    paragraphs?: string[]
+  }
+  pricing: PricingProps[]
+}
+
 export type MezoterapiaMainProps = {
-  mezoterapiaData: any
+  mezoterapiaData: MezoterapiaServiceData
 }
 
 export type MezoterapiaInvasiveProps = {
-  mezoterapiaInvasiveData: any
+  mezoterapiaInvasiveData: MezoterapiaServiceData
 }
 
 export type MezoterapiaNonInvasiveProps = {
-  mezoterapiaNonInvasiveData: any
+  mezoterapiaNonInvasiveData: MezoterapiaServiceData
 }
 
 export async function getMezoterapia(slug: string) {
   const supabase = await getSupabaseServerClient()
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
     .single()
   if (error) {
@@ -30,7 +47,7 @@ export async function getMezoterapiaInvasive(slug: string) {
   const supabase = await getSupabaseServerClient()
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
     .single()
   if (error) {
@@ -44,7 +61,7 @@ export async function getMezoterapiaNonInvasive(slug: string) {
   const supabase = await getSupabaseServerClient()
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
     .single()
   if (error) {

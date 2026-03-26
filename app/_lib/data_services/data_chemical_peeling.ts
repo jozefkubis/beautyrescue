@@ -1,11 +1,11 @@
 import { getSupabaseServerClient } from "../supabase/server"
 
 export type PricingProps = {
-  id: number
+  id: string
   treatment: string
   price_before_discount: number
   price_after_discount: number
-  discount: number
+  discount: number | null
 }
 
 export type ChemicalPeelingMainProps = {
