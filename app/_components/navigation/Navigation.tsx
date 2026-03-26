@@ -215,11 +215,11 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
             {isAdmin && (
               <Link
                 href="/admin"
-                className="flex items-center justify-center p-1 text-sm ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer text-[#ffd982]"
+                className="flex items-center justify-center p-1 text-sm transition-all duration-300 hover:cursor-pointer xl:py-7 xl:pr-6 2xl:text-lg"
                 aria-label="Admin panel"
                 title="Admin panel"
               >
-                Admin
+                <span className="inline-block text-[#ffd982]">Admin</span>
               </Link>
             )}
 
