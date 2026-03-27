@@ -1,7 +1,6 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
 import { getSupabaseServerClient } from "../supabase/server"
 
 type SignInParams = {
@@ -23,7 +22,6 @@ export async function logIn({ email, password }: SignInParams) {
   }
 
   revalidatePath("/", "layout")
-  redirect("/admin")
 }
 
 export async function logOut() {
