@@ -4,8 +4,9 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { IoTriangle } from "react-icons/io5"
-import { RiAdminLine } from "react-icons/ri"
+import AdminLink from "../admin/AdminLink"
 import LoginForm from "../admin/LoginForm"
+import LoginLink from "../admin/LoginLink"
 import LogoutButton from "../admin/LogoutButton"
 import { robotoCondensed } from "../fonts"
 import Modal from "../Modal"
@@ -180,27 +181,10 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
               </div>
             ))}
 
-            {isAdmin && (
-              <Link
-                href="/admin"
-                className="flex items-center justify-center p-1 text-sm transition-all duration-300 hover:cursor-pointer 2xl:text-lg"
-                aria-label="Admin panel"
-                title="Admin panel"
-              >
-                <span className="inline-block text-[#ffd982]">Admin</span>
-              </Link>
-            )}
+            {isAdmin && <AdminLink />}
 
             {!isAdmin ? (
-              <Link
-                href="/admin"
-                onClick={() => setOpenModal(true)}
-                className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-2 font-bold"
-                aria-label="Admin panel"
-                title="Admin panel"
-              >
-                <RiAdminLine />
-              </Link>
+              <LoginLink setOpenModal={setOpenModal} />
             ) : (
               <LogoutButton />
             )}
