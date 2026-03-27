@@ -251,7 +251,6 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
         </div>
       </div>
 
-      {!isAdmin && (
         <Modal
           isOpen={openModal}
           onClose={() => setOpenModal(false)}
@@ -259,7 +258,6 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
         >
           {openModal && <LoginForm />}
         </Modal>
-      )}
     </>
   )
 }
