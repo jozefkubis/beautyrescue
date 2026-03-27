@@ -43,9 +43,32 @@ export async function logOut() {
 export async function getCurrentUser() {
   const supabase = await getSupabaseServerClient()
 
+  const {
+    data: { session },
+    error: sessionError,
+  } = await supabase.auth.getSession()
+
+  if (sessionError) {
+    // Missing session is expected for public users.
+    if (sessionError.message.toLowerCase().includes("auth session missing")) {
+      return null
+    }
+
+    console.error("getCurrentUser session error:", sessionError)
+    return null
+  }
+
+  if (!session) {
+    return null
+  }
+
   const { data, error } = await supabase.auth.getUser()
 
   if (error) {
+    if (error.message.toLowerCase().includes("auth session missing")) {
+      return null
+    }
+
     console.error("getCurrentUser error:", error)
     return null
   }
