@@ -1,10 +1,8 @@
 "use client"
 
-import { logOut } from "@/app/_lib/actions/auth_actions"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
-import toast from "react-hot-toast"
 import { IoTriangle } from "react-icons/io5"
 import { RiAdminLine } from "react-icons/ri"
 import LoginForm from "../admin/LoginForm"
@@ -48,27 +46,6 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
     }
 
     return pathname === href
-  }
-
-  async function handleLogout() {
-    try {
-      const confirmed = window.confirm("Naozaj sa chcete odhlásiť?")
-      if (!confirmed) return
-
-      const result = await logOut()
-
-      if (!result?.success) {
-        toast.error(result?.message || "Odhlásenie nebolo úspešné!")
-        return
-      }
-
-      toast.success("Odhlásenie bolo úspešné!")
-      router.replace("/")
-      router.refresh()
-    } catch (error) {
-      console.error("Logout client error:", error)
-      toast.error("Nastala chyba pri odhlasovaní.")
-    }
   }
 
   const navigationLinks = [
@@ -206,7 +183,7 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
             {isAdmin && (
               <Link
                 href="/admin"
-                className="flex items-center justify-center p-1 text-sm transition-all duration-300 hover:cursor-pointer xl:pr-6 2xl:text-lg"
+                className="flex items-center justify-center p-1 text-sm transition-all duration-300 hover:cursor-pointer 2xl:text-lg"
                 aria-label="Admin panel"
                 title="Admin panel"
               >
@@ -218,7 +195,7 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
               <Link
                 href="/admin"
                 onClick={() => setOpenModal(true)}
-                className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-1"
+                className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-2 font-bold"
                 aria-label="Admin panel"
                 title="Admin panel"
               >

@@ -40,7 +40,7 @@ export default function LogoutButton() {
       type="button"
       onClick={handleLogout}
       disabled={isLoading}
-      className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-1 disabled:cursor-not-allowed disabled:opacity-50"
+      className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-2 disabled:cursor-not-allowed disabled:opacity-50 font-bold"
       aria-label="Logout"
       title="Logout"
     >
