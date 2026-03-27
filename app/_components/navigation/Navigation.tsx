@@ -215,7 +215,7 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
             {isAdmin && (
               <Link
                 href="/admin"
-                className="flex items-center justify-center p-1 text-sm transition-all duration-300 hover:cursor-pointer xl:py-7 xl:pr-6 2xl:text-lg"
+                className="flex items-center justify-center p-1 text-sm transition-all duration-300 hover:cursor-pointer xl:pr-6 2xl:text-lg"
                 aria-label="Admin panel"
                 title="Admin panel"
               >
@@ -227,7 +227,7 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
               <Link
                 href="/admin"
                 onClick={() => setOpenModal(true)}
-                className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-1 xl:py-7"
+                className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-1"
                 aria-label="Admin panel"
                 title="Admin panel"
               >
@@ -236,7 +236,7 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
             ) : (
               <div
                 onClick={handleSubmit}
-                className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-1 xl:py-7"
+                className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-1"
                 aria-label="Logout"
                 title="Logout"
               >
