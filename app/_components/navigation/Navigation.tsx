@@ -1,13 +1,14 @@
 "use client"
 
+import { logOut } from "@/app/_lib/actions/auth_actions"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
-import { IoMdLogOut } from "react-icons/io"
+import toast from "react-hot-toast"
 import { IoTriangle } from "react-icons/io5"
 import { RiAdminLine } from "react-icons/ri"
-import handleSubmitLogout from "../admin/handleSubmitLogout"
 import LoginForm from "../admin/LoginForm"
+import LogoutButton from "../admin/LogoutButton"
 import { robotoCondensed } from "../fonts"
 import Modal from "../Modal"
 
@@ -49,11 +50,29 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
     return pathname === href
   }
 
+  async function handleLogout() {
+    try {
+      const confirmed = window.confirm("Naozaj sa chcete odhlásiť?")
+      if (!confirmed) return
+
+      const result = await logOut()
+
+      if (!result?.success) {
+        toast.error(result?.message || "Odhlásenie nebolo úspešné!")
+        return
+      }
+
+      toast.success("Odhlásenie bolo úspešné!")
+      router.replace("/")
+      router.refresh()
+    } catch (error) {
+      console.error("Logout client error:", error)
+      toast.error("Nastala chyba pri odhlasovaní.")
+    }
+  }
+
   const navigationLinks = [
-    {
-      name: "O nás",
-      href: "/about",
-    },
+    { name: "O nás", href: "/about" },
     {
       name: "Kozmetika",
       href: "/cosmetics/chemical-peeling",
@@ -63,10 +82,7 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
           name: "Diamantová mikrodermabrázia",
           href: "/cosmetics/diamond-microdermabrasion",
         },
-        {
-          name: "Oxygeneo",
-          href: "/cosmetics/oxygeneo",
-        },
+        { name: "Oxygeneo", href: "/cosmetics/oxygeneo" },
         { name: "Mezoterapia", href: "/cosmetics/mezoterapia" },
         { name: "Microneedling/dermapen", href: "/cosmetics/microneedling" },
       ],
@@ -88,28 +104,10 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
         { name: "Profhilo", href: "/medical-cosmetics/profhilo" },
       ],
     },
-    {
-      name: "Lekárska akupunktúra",
-      href: "/acupuncture",
-    },
-    // {
-    //   name: "Masáže a Saunový detox",
-    //   href: "/massage-and-sauna-detox",
-    // },
-    {
-      name: "Cenník",
-      href: "/pricing",
-    },
-    {
-      name: "Akcia",
-      href: "/promotion",
-    },
+    { name: "Lekárska akupunktúra", href: "/acupuncture" },
+    { name: "Cenník", href: "/pricing" },
+    { name: "Akcia", href: "/promotion" },
   ]
-
-  function handleSubmit() {
-    handleSubmitLogout()
-    router.push("/")
-  }
 
   return (
     <>
@@ -120,9 +118,7 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
         >
           <div className="flex flex-1 items-center gap-8 rounded-l-xl bg-linear-to-r from-redDark via-redMain to-redDark pl-10 py-5 pr-4 text-sm tracking-wide text-background xl:py-7 xl:pr-6 2xl:text-lg 2xl:pr-8">
             {navigationLinks.map((link) => (
-              // každý nav item je relatívny a group kvôli hoveru
               <div key={link.name} className="relative group flex items-center">
-                {/* položka bez dropdownu = klasický Link */}
                 {!link.dropdown && (
                   <Link
                     href={link.href}
@@ -136,10 +132,8 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
                   </Link>
                 )}
 
-                {/* položka s dropdownom */}
                 {link.dropdown && (
                   <>
-                    {/* label ako link + šípka na click toggle */}
                     <div className="flex items-center gap-1.5">
                       <Link
                         href={link.href}
@@ -176,7 +170,6 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
                       </button>
                     </div>
 
-                    {/* DROPDOWN MENU – objaví sa pod položkou */}
                     <div
                       className={`absolute left-1/2 top-full z-20 -translate-x-1/2 pt-3 transition-all duration-200 ease-out ${
                         openDropdown === link.name
@@ -184,12 +177,10 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
                           : "pointer-events-none -translate-y-1 opacity-0 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100"
                       }`}
                     >
-                      {/* biely „trojuholník“ */}
                       <div className="flex justify-center">
                         <IoTriangle className="-mt-0.5 text-[#39292b] 2xl:mt-1.5" />
                       </div>
 
-                      {/* samotné menu */}
                       <div className="z-50 -mt-0.5 w-60 overflow-hidden rounded-md border border-goldLight/30 bg-[#39292b] text-left shadow-xl">
                         {link.dropdown.map((item, i) => (
                           <Link
@@ -234,17 +225,10 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
                 <RiAdminLine />
               </Link>
             ) : (
-              <div
-                onClick={handleSubmit}
-                className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-1"
-                aria-label="Logout"
-                title="Logout"
-              >
-                <IoMdLogOut />
-              </div>
+              <LogoutButton />
             )}
           </div>
-          {/* pravé tlačidlo Kontakt */}
+
           <div className="flex items-center justify-center rounded-r-xl bg-linear-to-r from-goldDark via-goldLight to-goldDark px-12 py-4 text-xl font-medium tracking-wide text-greyMain transition duration-300 hover:cursor-pointer hover:brightness-110">
             <h4>Kontakt</h4>
           </div>
