@@ -52,6 +52,7 @@ export async function getJalupro(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
   if (error) {
     console.error("Error fetching jalupro data:", error)
@@ -66,6 +67,7 @@ export async function getJaluproClassic(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
   if (error) {
     console.error("Error fetching jalupro classic data:", error)
@@ -80,6 +82,7 @@ export async function getJaluproHMW(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
   if (error) {
     console.error("Error fetching jalupro hmw data:", error)
@@ -94,6 +97,7 @@ export async function getJaluproSuperHydro(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
   if (error) {
     console.error("Error fetching jalupro super hydro data:", error)
@@ -108,6 +112,7 @@ export async function getJaluproYoungEye(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
   if (error) {
     console.error("Error fetching jalupro young eye data:", error)
@@ -115,3 +120,4 @@ export async function getJaluproYoungEye(slug: string) {
   }
   return data
 }
+

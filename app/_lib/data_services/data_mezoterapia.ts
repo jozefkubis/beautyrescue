@@ -35,6 +35,7 @@ export async function getMezoterapia(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
   if (error) {
     console.error("Error fetching mezoterapia data:", error)
@@ -49,6 +50,7 @@ export async function getMezoterapiaInvasive(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
   if (error) {
     console.error("Error fetching mezoterapia invasive data:", error)
@@ -63,6 +65,7 @@ export async function getMezoterapiaNonInvasive(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
   if (error) {
     console.error("Error fetching mezoterapia non invasive data:", error)
@@ -70,3 +73,4 @@ export async function getMezoterapiaNonInvasive(slug: string) {
   }
   return data
 }
+

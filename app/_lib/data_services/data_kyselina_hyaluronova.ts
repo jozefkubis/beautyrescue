@@ -35,6 +35,7 @@ export async function getKyselinaHyaluronova(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
   if (error) {
     console.error("Error fetching kyselina hyaluronova data:", error)
@@ -49,6 +50,7 @@ export async function getKyselinaHyaluronovaLips(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
   if (error) {
     console.error("Error fetching kyselina hyaluronova lips data:", error)
@@ -63,6 +65,7 @@ export async function getKyselinaHyaluronovaFace(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
   if (error) {
     console.error("Error fetching kyselina hyaluronova face data:", error)
@@ -70,3 +73,4 @@ export async function getKyselinaHyaluronovaFace(slug: string) {
   }
   return data
 }
+

@@ -7,7 +7,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Akupunktúra',
@@ -15,7 +16,12 @@ SELECT
   50,
   40,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'acupuncture';
 
@@ -25,7 +31,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Elektroakupunktúra',
@@ -33,7 +40,12 @@ SELECT
   50,
   40,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'acupuncture';
 
@@ -43,7 +55,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Tuina',
@@ -51,7 +64,12 @@ SELECT
   50,
   40,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'acupuncture';
 
@@ -61,7 +79,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Bankovanie',
@@ -69,7 +88,12 @@ SELECT
   50,
   40,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'acupuncture';
 
@@ -79,7 +103,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Moxovanie',
@@ -87,7 +112,12 @@ SELECT
   50,
   40,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'acupuncture';
 
@@ -97,7 +127,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Kozmetická akupunktúra',
@@ -105,7 +136,12 @@ SELECT
   50,
   40,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'acupuncture';
 
@@ -115,7 +151,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Guasha',
@@ -123,7 +160,12 @@ SELECT
   50,
   40,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'acupuncture';
 
@@ -133,7 +175,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vstupné vyšetrenie',
@@ -141,7 +184,12 @@ SELECT
   50,
   50,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'acupuncture';
 
@@ -151,7 +199,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Niťový lifting čelo',
@@ -159,7 +208,12 @@ SELECT
   250,
   250,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'biokompatibilne-nite';
 
@@ -169,7 +223,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Niťový lifting medziobočie',
@@ -177,7 +232,12 @@ SELECT
   150,
   150,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'biokompatibilne-nite';
 
@@ -187,7 +247,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Niťový lifting tváre (líca, sánka, brada)',
@@ -195,7 +256,12 @@ SELECT
   600,
   600,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'biokompatibilne-nite';
 
@@ -205,7 +271,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Niťový lifting brada',
@@ -213,7 +280,12 @@ SELECT
   250,
   250,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'biokompatibilne-nite';
 
@@ -223,7 +295,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Niťový lifting sánka',
@@ -231,7 +304,12 @@ SELECT
   250,
   250,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'biokompatibilne-nite';
 
@@ -241,7 +319,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Foxy eyes',
@@ -249,7 +328,12 @@ SELECT
   250,
   250,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'biokompatibilne-nite';
 
@@ -259,7 +343,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vstupná konzultácia',
@@ -267,7 +352,12 @@ SELECT
   15,
   15,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'biokompatibilne-nite';
 
@@ -277,7 +367,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín 1 lokalita',
@@ -285,7 +376,12 @@ SELECT
   90,
   80,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -295,7 +391,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín 2 lokality',
@@ -303,7 +400,12 @@ SELECT
   160,
   150,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -313,7 +415,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín 3 lokality',
@@ -321,7 +424,12 @@ SELECT
   240,
   240,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -331,7 +439,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín - bunny lines',
@@ -339,7 +448,12 @@ SELECT
   50,
   50,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -349,7 +463,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín - gummy smile',
@@ -357,7 +472,12 @@ SELECT
   50,
   50,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -367,7 +487,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín - brada',
@@ -375,7 +496,12 @@ SELECT
   50,
   50,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -385,7 +511,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín - m.masseter',
@@ -393,7 +520,12 @@ SELECT
   80,
   80,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -403,7 +535,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín - podpazušie',
@@ -411,7 +544,12 @@ SELECT
   350,
   350,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -421,7 +559,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín - dlane/šlapaje',
@@ -429,7 +568,12 @@ SELECT
   350,
   350,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -439,7 +583,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín - lifting obočia',
@@ -447,7 +592,12 @@ SELECT
   110,
   100,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -457,7 +607,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín - Nefertiti lift',
@@ -465,7 +616,12 @@ SELECT
   330,
   330,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -475,7 +631,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín - zdvihnutie špičky nosa',
@@ -483,7 +640,12 @@ SELECT
   50,
   50,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -493,7 +655,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín - fajčiarske vrásky',
@@ -501,7 +664,12 @@ SELECT
   50,
   50,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -511,7 +679,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Botulotoxín - dvihnutie úst. kútikov',
@@ -519,7 +688,12 @@ SELECT
   50,
   50,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -529,7 +703,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vstupná konzultácia',
@@ -537,7 +712,12 @@ SELECT
   15,
   15,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'botulotoxin';
 
@@ -547,7 +727,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Diamantová mikrodermabrázia – tvár',
@@ -555,7 +736,12 @@ SELECT
   40,
   40,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'diamond-microdermabrasion';
 
@@ -565,7 +751,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Diamantová mikrodermabrázia – tvár+krk',
@@ -573,7 +760,12 @@ SELECT
   50,
   50,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'diamond-microdermabrasion';
 
@@ -583,7 +775,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Diamantová mikrodermabrázia – tvár+krk+dekolt',
@@ -591,7 +784,12 @@ SELECT
   60,
   60,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'diamond-microdermabrasion';
 
@@ -601,7 +799,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Výživná maska',
@@ -609,7 +808,12 @@ SELECT
   7,
   7,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'diamond-microdermabrasion';
 
@@ -619,7 +823,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vstupná konzultácia',
@@ -627,7 +832,12 @@ SELECT
   15,
   15,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'diamond-microdermabrasion';
 
@@ -637,7 +847,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Chemický peeling - tvár',
@@ -645,7 +856,12 @@ SELECT
   40,
   40,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'chemical-peeling';
 
@@ -655,7 +871,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Chemický peeling - tvár a krk',
@@ -663,7 +880,12 @@ SELECT
   50,
   50,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'chemical-peeling';
 
@@ -673,7 +895,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Chemický peeling - tvár, krk a dekolt',
@@ -681,7 +904,12 @@ SELECT
   60,
   60,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'chemical-peeling';
 
@@ -691,7 +919,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Chemický peeling 35% TCA – tvár',
@@ -699,7 +928,12 @@ SELECT
   60,
   60,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'chemical-peeling';
 
@@ -709,7 +943,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Chemický peeling 35% TCA – 1 bod do 1 cm',
@@ -717,7 +952,12 @@ SELECT
   5,
   5,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'chemical-peeling';
 
@@ -727,7 +967,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vstupná konzultácia',
@@ -735,7 +976,12 @@ SELECT
   15,
   15,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'chemical-peeling';
 
@@ -745,7 +991,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Jalupro Classic',
@@ -753,7 +1000,12 @@ SELECT
   240,
   220,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'jalupro-classic';
 
@@ -763,7 +1015,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Jalupro HMW',
@@ -771,7 +1024,12 @@ SELECT
   240,
   220,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'jalupro-hmw';
 
@@ -781,7 +1039,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Jalupro Classic',
@@ -789,7 +1048,12 @@ SELECT
   180,
   180,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'jalupro';
 
@@ -799,7 +1063,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Jalupro HMW',
@@ -807,7 +1072,12 @@ SELECT
   200,
   200,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'jalupro';
 
@@ -817,7 +1087,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Jalupro Super Hydro',
@@ -825,7 +1096,12 @@ SELECT
   250,
   240,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'jalupro';
 
@@ -835,7 +1111,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Jalupro Young Eye',
@@ -843,7 +1120,12 @@ SELECT
   200,
   200,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'jalupro';
 
@@ -853,7 +1135,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vstupna konzultacia',
@@ -861,7 +1144,12 @@ SELECT
   15,
   15,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'jalupro';
 
@@ -871,7 +1159,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Jalupro Superhydro',
@@ -879,7 +1168,12 @@ SELECT
   250,
   220,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'jalupro-super-hydro';
 
@@ -889,7 +1183,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Jalupro Young eye',
@@ -897,7 +1192,12 @@ SELECT
   220,
   200,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'jalupro-young-eye';
 
@@ -907,7 +1207,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Výplň kyselina hyaluronová Juvéderm, Belotero - 1ml',
@@ -915,7 +1216,12 @@ SELECT
   270,
   270,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova-face';
 
@@ -925,7 +1231,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Výplň VOLUME - kyselina hyaluronová - 1ml typu Voluma',
@@ -933,7 +1240,12 @@ SELECT
   350,
   330,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova-face';
 
@@ -943,7 +1255,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'JALUPRO Classic',
@@ -951,7 +1264,12 @@ SELECT
   190,
   175,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova-face';
 
@@ -961,7 +1279,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Jalupro HMW',
@@ -969,7 +1288,12 @@ SELECT
   220,
   210,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova-face';
 
@@ -979,7 +1303,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Kanyla',
@@ -987,7 +1312,12 @@ SELECT
   13,
   13,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova-face';
 
@@ -997,7 +1327,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vstupná konzultácia',
@@ -1005,7 +1336,12 @@ SELECT
   15,
   15,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova-face';
 
@@ -1015,7 +1351,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Kyselina HYA (Juvéderm)',
@@ -1023,7 +1360,12 @@ SELECT
   300,
   300,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova';
 
@@ -1033,7 +1375,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Kyselina hyaluronová (J.Voluma) – tvár.výplň 1ml',
@@ -1041,7 +1384,12 @@ SELECT
   370,
   370,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova';
 
@@ -1051,7 +1399,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Pery 0,5ml (Juvéderm Ultra Smile)',
@@ -1059,7 +1408,12 @@ SELECT
   170,
   170,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova';
 
@@ -1069,7 +1423,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Pery 1ml (Juvéderm Ultra)',
@@ -1077,7 +1432,12 @@ SELECT
   300,
   300,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova';
 
@@ -1087,7 +1447,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Kyselina hyaluronová + Collagen Boosting Classic (Švajčiarko)',
@@ -1095,7 +1456,12 @@ SELECT
   180,
   180,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova';
 
@@ -1105,7 +1471,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Kyselina hyaluronová + Collagen Boosting HMW (Švajčiarsko)',
@@ -1113,7 +1480,12 @@ SELECT
   200,
   200,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova';
 
@@ -1123,7 +1495,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Jalupro Super Hydro',
@@ -1131,7 +1504,12 @@ SELECT
   250,
   240,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova';
 
@@ -1141,7 +1519,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Jalupro Young Eye',
@@ -1149,7 +1528,12 @@ SELECT
   200,
   200,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova';
 
@@ -1159,7 +1543,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vstupná konzultácia',
@@ -1167,7 +1552,12 @@ SELECT
   15,
   15,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova';
 
@@ -1177,7 +1567,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Profhilo',
@@ -1185,7 +1576,12 @@ SELECT
   270,
   250,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova';
 
@@ -1195,7 +1591,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   '0,55 ml HYA',
@@ -1203,7 +1600,12 @@ SELECT
   150,
   150,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova-lips';
 
@@ -1213,7 +1615,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   '1 ml HYA',
@@ -1221,7 +1624,12 @@ SELECT
   270,
   270,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova-lips';
 
@@ -1231,7 +1639,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Kanyla',
@@ -1239,7 +1648,12 @@ SELECT
   13,
   13,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova-lips';
 
@@ -1249,7 +1663,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vstupná konzultácia',
@@ -1257,7 +1672,12 @@ SELECT
   15,
   15,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'kyselina-hyaluronova-lips';
 
@@ -1267,7 +1687,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vitalinjector – tvár',
@@ -1275,7 +1696,12 @@ SELECT
   180,
   160,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-invasive';
 
@@ -1285,7 +1711,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vitalinjector – tvár + krk',
@@ -1293,7 +1720,12 @@ SELECT
   250,
   210,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-invasive';
 
@@ -1303,7 +1735,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vitalinjector – tvár+krk+dekolt',
@@ -1311,7 +1744,12 @@ SELECT
   300,
   260,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-invasive';
 
@@ -1321,7 +1759,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vitalinjector – celulitída',
@@ -1329,7 +1768,12 @@ SELECT
   250,
   250,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-invasive';
 
@@ -1339,7 +1783,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vitalinjector – mesohair',
@@ -1347,7 +1792,12 @@ SELECT
   150,
   150,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-invasive';
 
@@ -1357,7 +1807,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Chemická lypolýza podbradku (2 ošetrenia)',
@@ -1365,7 +1816,12 @@ SELECT
   150,
   150,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-invasive';
 
@@ -1375,7 +1831,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Mezosérum "namieru"',
@@ -1383,7 +1840,12 @@ SELECT
   35,
   35,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-invasive';
 
@@ -1393,7 +1855,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vstupná konzultácia',
@@ -1401,7 +1864,12 @@ SELECT
   15,
   15,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-invasive';
 
@@ -1411,7 +1879,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vitalinjector - ruky',
@@ -1419,7 +1888,12 @@ SELECT
   50,
   50,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-invasive';
 
@@ -1429,7 +1903,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Mesojectgun – tvár',
@@ -1437,7 +1912,12 @@ SELECT
   60,
   60,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-non-invasive';
 
@@ -1447,7 +1927,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Mesojectgun – tvár + krk',
@@ -1455,7 +1936,12 @@ SELECT
   100,
   70,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-non-invasive';
 
@@ -1465,7 +1951,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Mesojectgun – tvár+krk+dekolt',
@@ -1473,7 +1960,12 @@ SELECT
   130,
   80,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-non-invasive';
 
@@ -1483,7 +1975,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Mesojectgun – mesohair',
@@ -1491,7 +1984,12 @@ SELECT
   60,
   60,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-non-invasive';
 
@@ -1501,7 +1999,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Výživná maska',
@@ -1509,7 +2008,12 @@ SELECT
   7,
   7,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-non-invasive';
 
@@ -1519,7 +2023,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Mezosérum "namieru"',
@@ -1527,7 +2032,12 @@ SELECT
   35,
   35,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-non-invasive';
 
@@ -1537,7 +2047,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vstupná konzultácia',
@@ -1545,7 +2056,12 @@ SELECT
   15,
   15,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'mezoterapia-non-invasive';
 
@@ -1555,7 +2071,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Microneedling – tvár',
@@ -1563,7 +2080,12 @@ SELECT
   59,
   39,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'microneedling';
 
@@ -1573,7 +2095,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Microneedling – tvár+krk',
@@ -1581,7 +2104,12 @@ SELECT
   69,
   49,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'microneedling';
 
@@ -1591,7 +2119,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Microneedling – tvár+krk+dekolt',
@@ -1599,7 +2128,12 @@ SELECT
   79,
   59,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'microneedling';
 
@@ -1609,7 +2143,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Oxygeneo - tvár + RF',
@@ -1617,7 +2152,12 @@ SELECT
   70,
   60,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'oxygeneo';
 
@@ -1627,7 +2167,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Oxygeneo - tvár + krk + RF',
@@ -1635,7 +2176,12 @@ SELECT
   80,
   70,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'oxygeneo';
 
@@ -1645,7 +2191,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Oxygeneo - tvár + krk + dekolt + RF',
@@ -1653,7 +2200,12 @@ SELECT
   90,
   80,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'oxygeneo';
 
@@ -1663,7 +2215,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Rádiofrekvencia - tvár',
@@ -1671,7 +2224,12 @@ SELECT
   25,
   25,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'oxygeneo';
 
@@ -1681,7 +2239,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vstupná konzultácia',
@@ -1689,7 +2248,12 @@ SELECT
   15,
   15,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'oxygeneo';
 
@@ -1699,7 +2263,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Profhilo',
@@ -1707,7 +2272,12 @@ SELECT
   270,
   250,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'profhilo';
 
@@ -1717,7 +2287,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Profhilo Structura',
@@ -1725,7 +2296,12 @@ SELECT
   250,
   250,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'profhilo';
 
@@ -1735,7 +2311,8 @@ INSERT INTO pricing (
   price_before_discount,
   price_after_discount,
   discount,
-  is_active
+  is_active,
+  order_index
 )
 SELECT
   'Vstupná konzultácia',
@@ -1743,7 +2320,14 @@ SELECT
   15,
   15,
   NULL,
-  true
+  true,
+  (
+    SELECT COALESCE(MAX(p.order_index), 0) + 1
+    FROM pricing p
+    WHERE p.service_id = service_items.id
+  )
 FROM service_items
 WHERE slug = 'profhilo';
+
+
 

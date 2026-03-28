@@ -1,4 +1,4 @@
-import { getSupabaseServerClient } from "../supabase/server"
+﻿import { getSupabaseServerClient } from "../supabase/server"
 
 export type PricingProps = {
   id: string
@@ -26,6 +26,7 @@ export default async function getBiokompatibilneNite(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
 
   if (error) {
@@ -35,3 +36,4 @@ export default async function getBiokompatibilneNite(slug: string) {
 
   return data
 }
+

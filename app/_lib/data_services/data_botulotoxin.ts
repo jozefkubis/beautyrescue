@@ -56,6 +56,7 @@ export async function getBotulotoxin(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
 
   if (error) {
@@ -99,3 +100,4 @@ export async function getBotulotoxinVrasky(slug: string) {
 
   return data
 }
+

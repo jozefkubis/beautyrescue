@@ -25,6 +25,7 @@ export async function getProfhilo(slug: string) {
     .from("service_items")
     .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
   if (error) {
     console.error("Error fetching profhilo data:", error)
@@ -32,3 +33,4 @@ export async function getProfhilo(slug: string) {
   }
   return data
 }
+
