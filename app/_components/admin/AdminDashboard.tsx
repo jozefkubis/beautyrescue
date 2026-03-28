@@ -1,21 +1,12 @@
 import { brandFont } from "@/app/_components/fonts"
 import {
-  RiArticleLine,
   RiCornerUpLeftDoubleLine,
   RiDropLine,
-  RiFirstAidKitLine,
   RiFlaskLine,
   RiGeminiLine,
   RiInformationLine,
-  RiLeafLine,
-  RiMagicLine,
-  RiMicLine,
   RiScissorsLine,
-  RiSettings4Line,
-  RiSparklingLine,
   RiSyringeLine,
-  RiTestTubeLine,
-  RiWaterFlashLine,
   RiWindyLine,
 } from "react-icons/ri"
 import AdminDashboardCard from "./AdminDashboardCard"
