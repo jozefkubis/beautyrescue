@@ -102,7 +102,7 @@ export default function AdminDashboard() {
         <div className="relative">
           <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-goldDark/35 to-transparent" />
 
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(340px,0.85fr)] lg:items-start">
+          <div className="grid gap-8 lg:grid-cols-1 lg:items-start">
             <div className="space-y-5 lg:space-y-6">
               <div className="inline-flex rounded-full border border-redMain/15 bg-redMain/8 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-redDark">
                  Prehľad nastavení
@@ -112,16 +112,8 @@ export default function AdminDashboard() {
                 <h1
                   className={`premium-title text-3xl font-semibold italic tracking-tight sm:text-4xl lg:text-5xl ${brandFont.className}`}
                 >
-                  Admin Settings
-                </h1>
-
-                {/* <p className="max-w-2xl text-sm leading-7 text-greyMain/80 sm:text-base sm:leading-8">
-                  Administrátorská sekcia určená na úpravu obsahu, podtextov,
-                  popisov produktov a prezentačných detailov v aplikácii.
-                  Dashboard je navrhnutý ako prirodzená súčasť settings
-                  rozhrania, s rovnakým vizuálnym rytmom, materiálmi a jemným
-                  premium charakterom ako zvyšok aplikácie.
-                </p> */}
+                  Nastavenia a správa obsahu
+                </h1>             
               </div>
             </div>
 
