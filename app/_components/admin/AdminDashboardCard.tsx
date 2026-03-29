@@ -1,21 +1,21 @@
 import Link from "next/link"
-import type { IconType } from "react-icons"
+import { IoSettingsOutline } from "react-icons/io5"
 import { RiArrowRightUpLine } from "react-icons/ri"
 
 type AdminDashboardCardProps = {
   href: string
   title: string
-  description: string
+  // description: string
   label: string
-  icon: IconType
+  // icon: IconType
 }
 
 export default function AdminDashboardCard({
   href,
   title,
-  description,
+  // description,
   label,
-  icon: Icon,
+  // icon: Icon,
 }: AdminDashboardCardProps) {
   return (
     <Link
@@ -27,7 +27,7 @@ export default function AdminDashboardCard({
       <div className="relative flex h-full flex-col gap-5">
         <div className="flex items-start justify-between gap-4">
           <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-goldDark/15 bg-[linear-gradient(180deg,rgba(255,249,241,0.96)_0%,rgba(255,242,230,0.92)_100%)] text-xl text-goldDark shadow-[0_8px_18px_rgba(157,116,16,0.12)] transition-transform duration-300 group-hover:scale-105 group-hover:text-redDark">
-            <Icon />
+            <IoSettingsOutline />
           </span>
 
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-goldDark/15 bg-white/88 text-lg text-goldDark shadow-sm transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:border-redMain/20 group-hover:text-redDark">
@@ -42,9 +42,9 @@ export default function AdminDashboardCard({
           <h3 className="text-xl font-semibold tracking-tight text-goldDark sm:text-2xl">
             {title}
           </h3>
-          <p className="text-sm leading-7 text-greyMain/75 sm:text-[15px]">
+          {/* <p className="text-sm leading-7 text-greyMain/75 sm:text-[15px]">
             {description}
-          </p>
+          </p> */}
         </div>
       </div>
     </Link>
