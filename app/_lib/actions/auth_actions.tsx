@@ -22,6 +22,7 @@ export async function logIn({ email, password }: SignInParams) {
   }
 
   revalidatePath("/", "layout")
+  return { success: true, message: "Prihlásenie bolo úspešné." }
 }
 
 export async function logOut() {
