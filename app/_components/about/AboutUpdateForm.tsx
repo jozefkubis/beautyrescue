@@ -117,9 +117,9 @@ export default function AboutUpdateForm({
   }
 
   return (
-    <section className="w-full px-4 pb-10 pt-6 md:px-8 lg:px-16">
-      <div className="mx-auto w-full max-w-5xl overflow-hidden rounded-[28px] border-2 border-goldDark/15 bg-[#fffdf9] shadow-[0_14px_36px_rgba(91,64,38,0.08)]">
-        <div className="px-6 pb-5 pt-7 md:px-8">
+    <section className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
+      <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:gap-4 lg:p-8 lg:px-44">
+        <div className="px-6 pb-7 pt-7 md:px-8">
           <div className="flex flex-col items-center text-center">
             <p className="inline-flex rounded-full bg-[#fff6ee] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-goldDark">
               Nastavenia obsahu

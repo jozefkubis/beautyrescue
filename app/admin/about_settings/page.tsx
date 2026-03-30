@@ -24,8 +24,6 @@ export default async function Page() {
   }
 
   return (
-    <div className="min-h-screen py-8">
       <AboutUpdateForm aboutUsData={aboutUsData} isAdmin={isAdmin} />
-    </div>
   )
 }
