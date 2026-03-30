@@ -16,6 +16,7 @@ type AboutData = {
   slug?: string
   name?: string
   summary?: string
+  is_active?: boolean
   metadata?: {
     quoteAuthor?: string
   }
@@ -55,6 +56,7 @@ export default function AboutUpdateForm({
       bodyTeam: aboutUsData?.content?.bodyTeam ?? "",
       bodyServices: aboutUsData?.content?.bodyServices ?? "",
       bodyPhilosophy: aboutUsData?.content?.bodyPhilosophy ?? "",
+      isActive: aboutUsData?.is_active ?? false,
     }),
     [aboutUsData],
   )

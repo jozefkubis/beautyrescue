@@ -4,6 +4,7 @@ export type AboutMainProps = {
   aboutUsData: {
     name: string
     summary: string
+    is_active: boolean
     metadata: {
       quoteAuthor: string
     }
