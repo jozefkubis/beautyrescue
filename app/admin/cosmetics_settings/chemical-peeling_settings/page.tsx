@@ -10,6 +10,7 @@ export default async function Page() {
   ])
 
   const isAdmin = Boolean(user && user.email === process.env.ADMIN_EMAIL)
+  
 
   if (!isAdmin) {
     return (
