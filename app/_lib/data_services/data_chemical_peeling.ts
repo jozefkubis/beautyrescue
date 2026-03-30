@@ -11,6 +11,7 @@ export type PricingProps = {
 export type ChemicalPeelingMainProps = {
   chemicalPeelingData: {
     name: string
+    is_active: boolean
     content: {
       paragraphs: string[]
     }
