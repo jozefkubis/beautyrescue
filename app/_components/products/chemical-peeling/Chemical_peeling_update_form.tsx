@@ -56,7 +56,10 @@ export default function Chemical_peeling_update_form({
   // Generická funkcia na aktualizáciu ľubovoľného poľa vo formulári.
   // na pochopenie: "prev" je starý stav formulára, "...prev" ho skopíruje
   // a [field]: value prepíše iba jedno vybrané pole.
-  function handleChange(field: keyof typeof formValues, value: string) {
+  function handleChange(
+    field: keyof typeof formValues,
+    value: string | boolean,
+  ) {
     setFormValues((prev) => ({ ...prev, [field]: value }));
   }
 
@@ -126,6 +129,32 @@ export default function Chemical_peeling_update_form({
                 readOnly={!isAdmin}
                 className="w-full rounded-xl border border-goldDark/20 bg-white px-4 py-3 text-sm text-gray-800 outline-none transition focus:border-goldDark/35"
               />
+            </label>
+
+            <label className="flex items-center gap-3 cursor-pointer w-full justify-between">
+              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-goldDark/80">
+                {formValues.isActive ? "Aktívne" : "Neaktívne"}
+              </span>
+
+              <input
+                type="checkbox"
+                checked={formValues.isActive}
+                onChange={(e) => handleChange("isActive", e.target.checked)}
+                disabled={!isAdmin}
+                className="sr-only"
+              />
+
+              <div
+                className={`flex h-6 w-10 items-center rounded-full p-1 transition ${
+                  formValues.isActive ? "bg-goldLight" : "bg-gray-400"
+                }`}
+              >
+                <div
+                  className={`h-4 w-4 rounded-full bg-white shadow-md transform transition ${
+                    formValues.isActive ? "translate-x-4" : "translate-x-0"
+                  }`}
+                />
+              </div>
             </label>
 
             <div className="flex flex-col gap-3 border-t border-goldDark/10 pt-5 sm:flex-row sm:items-center sm:justify-end">
