@@ -208,7 +208,7 @@ export default function AboutUpdateForm({
               value={formValues.bodyServices}
               onChange={(e) => handleChange("bodyServices", e.target.value)}
               readOnly={!isAdmin}
-              rows={5}
+              rows={10}
               className="w-full rounded-xl border border-goldDark/20 bg-white px-4 py-3 text-sm text-gray-800 outline-none transition focus:border-goldDark/35"
             />
           </label>
@@ -241,7 +241,7 @@ export default function AboutUpdateForm({
               disabled={!hasChanges || isPending || !isAdmin}
               className="inline-flex h-11 items-center justify-center rounded-full bg-linear-to-r from-redMain to-redDark px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(190,18,60,0.22)] transition duration-300 hover:-translate-y-0.5 hover:cursor-pointer hover:shadow-[0_14px_30px_rgba(190,18,60,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/25 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
             >
-              {isPending ? "Ukladám..." : "Uložiť O nás"}
+              {isPending ? "Ukladám..." : "Uložiť zmeny"}
             </button>
           </div>
         </form>
