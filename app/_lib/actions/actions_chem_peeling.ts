@@ -10,8 +10,12 @@ type ChemicalPeelingUpdatePayload = {
 };
 
 export async function updateChemicalPeeling(formData: FormData) {
+  // Vytvoríme serverového Supabase klienta, aby sme vedeli pracovať
+  // s aktuálnou session používateľa aj s databázou priamo na serveri.
   const supabase = await getSupabaseServerClient();
 
+  // Zistíme, kto odoslal formulár. Ukladanie chceme povoliť iba adminovi,
+  // aby obsah webu nemohol meniť neprihlásený alebo nesprávny používateľ.
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -20,21 +24,29 @@ export async function updateChemicalPeeling(formData: FormData) {
     throw new Error("Unauthorized");
   }
 
+  // Z formulára si vytiahneme slug záznamu a JSON string s dátami.
+  // Slug určuje, ktorý riadok v service_items sa má aktualizovať.
   const slug = formData.get("slug")?.toString() || "chemical-peeling";
   const rawData = formData.get("data")?.toString();
 
+  // Ak data vôbec neprišli, nemáme čo spracovať ani uložiť.
   if (!rawData) {
     throw new Error("Chýbajú dáta pre Chemical Peeling");
   }
 
   let payload: ChemicalPeelingUpdatePayload;
 
+  // Formulár posiela obsah ako JSON text, preto ho musíme premeniť
+  // na objekt. Ak parse zlyhá, dáta prišli v neplatnom formáte.
   try {
     payload = JSON.parse(rawData);
   } catch {
     throw new Error("Neplatné dáta formulára");
   }
 
+  // Overíme základnú štruktúru payloadu, aby sme na serveri nepracovali
+  // s neúplnými alebo nesprávnymi dátami. Server si to kontroluje sám,
+  // nestačí sa spoliehať len na klientský formulár.
   if (
     typeof payload.name !== "string" ||
     (!Array.isArray(payload.paragraphs) &&
@@ -44,6 +56,9 @@ export async function updateChemicalPeeling(formData: FormData) {
     throw new Error("Neplatná štruktúra dát");
   }
 
+  // Text odsekov zjednotíme do poľa stringov.
+  // Robí sa to preto, že formulár pracuje s textarea ako s jedným textom,
+  // ale v databáze a na fronte sa paragraphs používa ako pole odsekov.
   const normalizedParagraphs = Array.isArray(payload.paragraphs)
     ? payload.paragraphs
         .map((paragraph) =>
@@ -55,6 +70,8 @@ export async function updateChemicalPeeling(formData: FormData) {
         .map((paragraph) => paragraph.trim())
         .filter(Boolean);
 
+  // Načítame existujúci content, aby sme pri update neprepísali celý objekt,
+  // ale zachovali aj ostatné kľúče, ktoré môžu byť v content uložené.
   const { data: existingItem, error: existingItemError } = await supabase
     .from("service_items")
     .select("content")
@@ -70,6 +87,9 @@ export async function updateChemicalPeeling(formData: FormData) {
       ? (existingItem.content as Record<string, unknown>)
       : {};
 
+  // Uložíme nové hodnoty do databázy. Name a is_active prepíšeme priamo,
+  // content poskladáme zo starého objektu a nahradíme len paragraphs,
+  // aby sme zbytočne nevymazali iné uložené dáta.
   const { data: updatedRows, error: updateError } = await supabase
     .from("service_items")
     .update({
@@ -93,10 +113,13 @@ export async function updateChemicalPeeling(formData: FormData) {
     throw new Error("Žiadna položka nebola aktualizovaná");
   }
 
+  // Po úspešnom update vyčistíme cache dotknutých stránok,
+  // aby sa nové dáta zobrazili hneď bez čakania na ďalší deploy alebo refresh cache.
   revalidatePath("/", "layout");
   revalidatePath("/about");
   revalidatePath("/admin/chemical-peeling");
 
+  // Klientovi vrátime jednoduchú úspešnú odpoveď, aby mohol zobraziť toast.
   return {
     success: true,
     message: "Chemical Peeling bolo aktualizované.",
