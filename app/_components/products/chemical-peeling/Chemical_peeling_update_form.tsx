@@ -9,6 +9,7 @@ type ChemicalPeelingData = {
   name?: string;
   summary?: string;
   is_active?: boolean;
+  image_url?: string;
   metadata?: {
     quoteAuthor?: string;
   };
