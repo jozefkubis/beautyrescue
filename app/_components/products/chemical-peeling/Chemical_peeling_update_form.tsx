@@ -1,5 +1,6 @@
 "use client";
 
+import { updateChemicalPeeling } from "@/app/_lib/actions/actions_chem_peeling";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
@@ -7,14 +8,10 @@ import toast from "react-hot-toast";
 type ChemicalPeelingData = {
   slug?: string;
   name?: string;
-  summary?: string;
   is_active?: boolean;
   image_url?: string;
-  metadata?: {
-    quoteAuthor?: string;
-  };
   content?: {
-    paragraphs?: string;
+    paragraphs?: string | string[];
   };
 };
 
@@ -27,10 +24,6 @@ export default function Chemical_peeling_update_form({
   chemicalPeelingData,
   isAdmin,
 }: ChemicalPeelingUpdateFormProps) {
-  console.log("Received chemicalPeelingData:", chemicalPeelingData);
-  console.log("isAdmin:", isAdmin);
-  console.log("isActive:", chemicalPeelingData?.is_active);
-
   const router = useRouter();
 
   // isPending = true kým beží ukladanie na server; startTransition spustí async akciu.
@@ -41,7 +34,9 @@ export default function Chemical_peeling_update_form({
   const initialValues = useMemo(
     () => ({
       name: chemicalPeelingData?.name ?? "",
-      content: chemicalPeelingData?.content?.paragraphs ?? "",
+      content: Array.isArray(chemicalPeelingData?.content?.paragraphs)
+        ? chemicalPeelingData.content.paragraphs.join("\n\n")
+        : (chemicalPeelingData?.content?.paragraphs ?? ""),
       isActive: chemicalPeelingData?.is_active ?? false,
     }),
     [chemicalPeelingData],
@@ -70,8 +65,35 @@ export default function Chemical_peeling_update_form({
     toast.success("Zmeny boli vrátené");
   }
 
-  function handleSubmit() {
-    console.log("Form submitted");
+  // Spustí sa po kliknutí na "Uložiť Chemický peeling".
+  // Zabalí dáta do FormData, odošle na server a po úspechu obnoví stránku.
+  function handleSubmit(formData: FormData) {
+    startTransition(async () => {
+      try {
+        // Pridáme slug, aby server vedel, ktorý záznam v DB má aktualizovať.
+        formData.set("slug", chemicalPeelingData?.slug ?? "chemical-peeling");
+        // Celý stav formulára serializujeme do JSON v tvare, ktorý očakáva server action.
+        formData.set(
+          "data",
+          JSON.stringify({
+            name: formValues.name,
+            paragraphs: formValues.content,
+            is_active: formValues.isActive,
+          }),
+        );
+
+        await updateChemicalPeeling(formData);
+
+        // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
+        setLastSavedValues(formValues);
+        // Obnoví Next.js cache a re-fetchne dáta na stránke.
+        router.refresh();
+        toast.success("Sekcia Chemický peeling bola aktualizovaná");
+      } catch (error) {
+        console.error(error);
+        toast.error("Chyba pri ukladaní Chemický peeling");
+      }
+    });
   }
 
   // true ak sa aktuálne hodnoty líšia od posledného uloženia → aktivuje tlačidlá.
@@ -88,10 +110,7 @@ export default function Chemical_peeling_update_form({
   }
 
   return (
-    <section
-      onSubmit={handleSubmit}
-      className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20"
-    >
+    <section className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:gap-4 lg:p-8 lg:px-44">
         <div className="px-6 pb-7 pt-7 md:px-8">
           <div className="flex flex-col items-center text-center">
@@ -124,7 +143,7 @@ export default function Chemical_peeling_update_form({
                 Obsah
               </span>
               <textarea
-                rows={10}
+                rows={12}
                 value={formValues.content}
                 onChange={(e) => handleChange("content", e.target.value)}
                 readOnly={!isAdmin}
