@@ -1,10 +1,12 @@
 "use client";
 
+import { updateDiamondMicrodermabrasion } from "@/app/_lib/actions/actions_diamond_microderma";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
 type diamondMicrodermabrasionData = {
+  slug?: string;
   name?: string;
   content?: {
     intro?: string;
@@ -74,8 +76,42 @@ export default function Diamond_microderma_update_form({
     toast.success("Zmeny boli vrátené");
   }
 
-  function handleSubmit() {
-    console.log("Submitting form with values:", formValues);
+  function handleSubmit(formData: FormData) {
+    startTransition(async () => {
+      try {
+        // Pridáme slug, aby server vedel, ktorý záznam v DB má aktualizovať.
+        formData.set(
+          "slug",
+          diamondMicrodermabrasionMainData?.slug ?? "diamond-microdermabrasion",
+        );
+        // Celý stav formulára serializujeme do JSON v tvare, ktorý očakáva server action.
+        formData.set(
+          "data",
+          JSON.stringify({
+            name: formValues.name,
+            content: {
+              intro: formValues.contentIntro,
+              paragraphs: formValues.contentParagraphs.split("\n\n").map((paragraph) => paragraph.trim()).filter(Boolean),
+            },
+            attributes: {
+              benefits: formValues.attributesBenefits.split("\n").map((benefit) => benefit.trim()).filter(Boolean),
+            },
+            is_active: formValues.isActive,
+          }),
+        );
+
+        await updateDiamondMicrodermabrasion(formData);
+
+        // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
+        setLastSavedValues(formValues);
+        // Obnoví Next.js cache a re-fetchne dáta na stránke.
+        router.refresh();
+        toast.success("Sekcia Diamantová mikrodermabrázia bola aktualizovaná");
+      } catch (error) {
+        console.error(error);
+        toast.error("Chyba pri ukladaní Diamantová mikrodermabrázia");
+      }
+    });
   }
 
   // true ak sa aktuálne hodnoty líšia od posledného uloženia → aktivuje tlačidlá.
