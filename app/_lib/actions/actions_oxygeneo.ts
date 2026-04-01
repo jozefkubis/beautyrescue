@@ -3,19 +3,23 @@
 import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "../supabase/server";
 
-type DiamondMicrodermabrasionUpdatePayload = {
-  name?: string;
-  content?: {
+type OxygeneoData = {
+  name: string;
+  content: {
     intro?: string;
-    paragraphs?: string[];
+    description?: string;
+    stepsTitle?: string;
+    steps?: string[];
+    result?: string;
   };
-  attributes?: {
-    benefits?: string[];
+  metadata: {
+    citationLabel?: string;
+    citationUrl?: string;
   };
   is_active?: boolean;
 };
 
-export async function updateDiamondMicrodermabrasion(formData: FormData) {
+export async function updateOxygeneo(formData: FormData) {
   const supabase = await getSupabaseServerClient();
 
   // Zistíme, kto odoslal formulár. Ukladanie chceme povoliť iba adminovi,
@@ -30,15 +34,15 @@ export async function updateDiamondMicrodermabrasion(formData: FormData) {
 
   // Z formulára si vytiahneme slug záznamu a JSON string s dátami.
   // Slug určuje, ktorý riadok v service_items sa má aktualizovať.
-  const slug = formData.get("slug")?.toString() || "diamond-microdermabrasion";
+  const slug = formData.get("slug")?.toString() || "oxygeneo";
   const rawData = formData.get("data")?.toString();
 
   // Ak data vôbec neprišli, nemáme čo spracovať ani uložiť.
   if (!rawData) {
-    throw new Error("Chýbajú dáta pre Diamantová mikrodermabrázia");
+    throw new Error("Chýbajú dáta pre Oxygeneo");
   }
 
-  let payload: DiamondMicrodermabrasionUpdatePayload;
+  let payload: OxygeneoData;
 
   // Formulár posiela obsah ako JSON text, preto ho musíme premeniť
   // na objekt. Ak parse zlyhá, dáta prišli v neplatnom formáte.
@@ -53,39 +57,28 @@ export async function updateDiamondMicrodermabrasion(formData: FormData) {
   // nestačí sa spoliehať len na klientský formulár.
   if (
     typeof payload.name !== "string" ||
-    (!Array.isArray(payload.content?.paragraphs) &&
-      typeof payload.content?.intro !== "string") ||
-    (!Array.isArray(payload.attributes?.benefits) &&
-      typeof payload.attributes?.benefits !== "string") ||
+    (typeof payload.content.intro !== "string" &&
+      !Array.isArray(payload.content.steps)) ||
+    (typeof payload.content.description !== "string" &&
+      typeof payload.content.result !== "string") ||
+    (typeof payload.metadata.citationLabel !== "string" &&
+      typeof payload.metadata.citationUrl !== "string") ||
     typeof payload.is_active !== "boolean"
   ) {
-    throw new Error("Neplatná štruktúra dát pre Diamantová mikrodermabrázia");
+    throw new Error("Neplatná štruktúra dát pre Oxygeneo");
   }
 
   // Text odsekov zjednotíme do poľa stringov.
   // Robí sa to preto, že formulár pracuje s textarea ako s jedným textom,
   // ale v databáze a na fronte sa paragraphs používa ako pole odsekov.
-  const normalizedParagraphs = Array.isArray(payload.content?.paragraphs)
-    ? payload.content.paragraphs
-        .map((paragraph) =>
-          typeof paragraph === "string" ? paragraph.trim() : "",
-        )
+  const normalizedSteps = Array.isArray(payload.content.steps)
+    ? payload.content.steps
+        .map((step) => (typeof step === "string" ? step.trim() : ""))
         .filter(Boolean)
-    : typeof payload.content?.paragraphs === "string"
-      ? (payload.content.paragraphs as string)
+    : typeof payload.content.steps === "string"
+      ? (payload.content.steps as string)
           .split(/\r?\n\s*\r?\n|\r?\n/)
-          .map((paragraph) => paragraph.trim())
-          .filter(Boolean)
-      : [];
-
-  const normalizedBenefits = Array.isArray(payload.attributes?.benefits)
-    ? payload.attributes.benefits
-        .map((benefit) => (typeof benefit === "string" ? benefit.trim() : ""))
-        .filter(Boolean)
-    : typeof payload.attributes?.benefits === "string"
-      ? (payload.attributes.benefits as string)
-          .split(/\r?\n\s*\r?\n|\r?\n/)
-          .map((benefit) => benefit.trim())
+          .map((step) => step.trim())
           .filter(Boolean)
       : [];
 
@@ -93,7 +86,7 @@ export async function updateDiamondMicrodermabrasion(formData: FormData) {
   // ale zachovali aj ostatné kľúče, ktoré môžu byť v content uložené.
   const { data: existingItem, error: existingItemError } = await supabase
     .from("service_items")
-    .select("content, attributes")
+    .select("content, metadata")
     .eq("slug", slug)
     .single();
 
@@ -101,14 +94,20 @@ export async function updateDiamondMicrodermabrasion(formData: FormData) {
     throw new Error(`Chyba pri načítaní položky: ${existingItemError.message}`);
   }
 
+  // Načítame existujúci content z databázy a bezpečne ho pretypujeme.
+  // Ak content nie je objekt alebo neexistuje, použijeme prázdny objekt.
+  // To umožňuje merge s novými dátami bez straty existujúcich kľúčov.
   const currentContent =
     existingItem?.content && typeof existingItem.content === "object"
       ? (existingItem.content as Record<string, unknown>)
       : {};
 
-  const currentAttributes =
-    existingItem?.attributes && typeof existingItem.attributes === "object"
-      ? (existingItem.attributes as Record<string, unknown>)
+  // Rovnakú logiku aplikujeme aj na metadata.
+  // Overujeme typ a v prípade neúspechu nastavíme prázdny objekt,
+  // aby sme nezlyhal pri pokuse o merge s novými metadátami.
+  const currentMetadata =
+    existingItem?.metadata && typeof existingItem.metadata === "object"
+      ? (existingItem.metadata as Record<string, unknown>)
       : {};
 
   // Uložíme nové hodnoty do databázy. Name a is_active prepíšeme priamo,
@@ -117,26 +116,24 @@ export async function updateDiamondMicrodermabrasion(formData: FormData) {
   const { data: updatedRows, error: updateError } = await supabase
     .from("service_items")
     .update({
-      name: payload.name.trim(),
+      name: payload.name,
       is_active: payload.is_active,
       content: {
         ...currentContent,
-        intro: payload.content?.intro ?? "",
-        paragraphs: normalizedParagraphs,
+        intro: payload.content.intro,
+        description: payload.content.description,
+        stepsTitle: payload.content.stepsTitle,
+        steps: normalizedSteps,
+        result: payload.content.result,
       },
-      attributes: {
-        ...currentAttributes,
-        benefits: normalizedBenefits,
+      metadata: {
+        ...currentMetadata,
+        citationLabel: payload.metadata.citationLabel,
+        citationUrl: payload.metadata.citationUrl,
       },
     })
     .eq("slug", slug)
     .select("slug");
-
-  if (updateError) {
-    throw new Error(
-      `Chyba pri aktualizácii Diamantová mikrodermabrázia: ${updateError.message}`,
-    );
-  }
 
   if (!updatedRows || updatedRows.length === 0) {
     throw new Error("Žiadna položka nebola aktualizovaná");
@@ -146,11 +143,11 @@ export async function updateDiamondMicrodermabrasion(formData: FormData) {
   // aby sa nové dáta zobrazili hneď bez čakania na ďalší deploy alebo refresh cache.
   revalidatePath("/", "layout");
   revalidatePath("/about");
-  revalidatePath("/admin/diamond-microdermabrasion");
+  revalidatePath("/admin/oxygeneo");
 
   // Klientovi vrátime jednoduchú úspešnú odpoveď, aby mohol zobraziť toast.
   return {
     success: true,
-    message: "Diamantová mikrodermabrázia bola aktualizovaná.",
+    message: "Oxygeneo bola aktualizovaná.",
   };
 }
