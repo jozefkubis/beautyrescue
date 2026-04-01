@@ -84,3 +84,10 @@ keep it simple
 keep code readable  
 do not overengineer  
 make it easy to maintain
+
+## UX AGENT
+
+@ux-agent improve this form UX
+@ux-agent make this dashboard more user friendly
+@ux-agent simplify this page layout
+@ux-agent improve user flow for booking feature
