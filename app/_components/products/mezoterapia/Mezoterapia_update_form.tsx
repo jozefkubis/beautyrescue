@@ -1,19 +1,28 @@
 "use client";
 
+// --- FORMULÁR NA AKTUALIZÁCIU OBSAHU MEZOTERAPIE ---
+// Tento komponent slúži na správu a úpravu obsahu pre všetky sekcie mezoterapie (hlavná, invazívna, neinvazívna) v admin rozhraní.
+// Umožňuje adminovi upravovať názov, texty a aktivitu každej sekcie. Každá sekcia má vlastný formulár a vlastné tlačidlá na uloženie/vrátenie zmien.
+
+// --- ZDIEĽANÉ KOMPONENTY PRE FORMULÁR ---
 import CheckboxField from "@/app/_components/CheckboxField";
 import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
 
+// --- SERVEROVÉ AKCIE NA ULOŽENIE ZMIEN DO DB ---
 import {
   updateMezoterapia,
   updateMezoterapiaInvasive,
   updateMezoterapiaNonInvasive,
 } from "@/app/_lib/actions/actions_mezoterapia";
+
+// --- HOOKY A NOTIFIKÁCIE ---
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
+// --- TYPY PRE DÁTA ---
 export type MezoterapiaData = {
   slug?: string;
   name?: string;
@@ -32,6 +41,8 @@ export type MezoterapiaServiceData = {
   is_active?: boolean;
 };
 
+// --- PROPS PRE HLAVNÝ FORMULÁR ---
+// Prijíma dáta pre všetky tri sekcie a informáciu, či je užívateľ admin
 type MezoterapiaUpdateFormProps = {
   mezoterapiaData: MezoterapiaData;
   mezoterapiaInvasiveData: MezoterapiaServiceData;
@@ -39,6 +50,8 @@ type MezoterapiaUpdateFormProps = {
   isAdmin?: boolean;
 };
 
+// --- HLAVIČKA SEKCIÍ ---
+// Zobrazí nadpis a popis sekcie vo formulári
 function SectionHeader({ title }: { title: string }) {
   return (
     <div className="px-6 pb-7 pt-7 md:px-8">
@@ -54,6 +67,9 @@ function SectionHeader({ title }: { title: string }) {
   );
 }
 
+// --- JEDEN FORMULÁR PRE JEDNU SEKCIU ---
+// Komponent pre editáciu jednej sekcie mezoterapie (hlavná/invazívna/neinvazívna)
+// Umožňuje editovať názov, text a aktivitu, a uložiť/vrátiť zmeny
 function SingleMezoterapiaForm({
   data,
   label,
