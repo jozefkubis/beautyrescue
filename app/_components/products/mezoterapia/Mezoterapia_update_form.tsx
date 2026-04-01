@@ -5,6 +5,12 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
+
+import {
+  updateMezoterapia,
+  updateMezoterapiaInvasive,
+  updateMezoterapiaNonInvasive,
+} from "@/app/_lib/actions/actions_mezoterapia";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
@@ -52,10 +58,12 @@ function SingleMezoterapiaForm({
   data,
   label,
   isAdmin,
+  type,
 }: {
   data: MezoterapiaServiceData;
   label: string;
   isAdmin?: boolean;
+  type: "main" | "invasive" | "noninvasive";
 }) {
   const [isPending, startTransition] = useTransition();
   const initialValues = useMemo(
@@ -81,13 +89,26 @@ function SingleMezoterapiaForm({
     setFormValues(lastSavedValues);
     toast.success("Zmeny boli vrátené");
   }
-  function handleSubmit(formData: FormData) {
+  async function handleSubmit(formData: FormData) {
     startTransition(async () => {
       try {
-        // TODO: Implement updateMezoterapia server action for each type
-        toast("(DEMO) Uloženie nie je implementované");
-        // setLastSavedValues(formValues);
-        // router.refresh();
+        formData.set(
+          "data",
+          JSON.stringify({
+            name: formValues.name,
+            paragraphs: formValues.paragraphs,
+            is_active: formValues.isActive,
+          }),
+        );
+        if (type === "main") {
+          await updateMezoterapia(formData);
+        } else if (type === "invasive") {
+          await updateMezoterapiaInvasive(formData);
+        } else if (type === "noninvasive") {
+          await updateMezoterapiaNonInvasive(formData);
+        }
+        setLastSavedValues(formValues);
+        toast.success("Zmeny boli uložené");
       } catch (error) {
         console.error(error);
         toast.error("Chyba pri ukladaní " + label);
@@ -152,18 +173,21 @@ export default function Mezoterapia_update_form({
           data={mezoterapiaData}
           label="Mezoterapia"
           isAdmin={isAdmin}
+          type="main"
         />
         <SectionHeader title="Invazívna mezoterapia" />
         <SingleMezoterapiaForm
           data={mezoterapiaInvasiveData}
           label="Invazívna mezoterapia"
           isAdmin={isAdmin}
+          type="invasive"
         />
         <SectionHeader title="Neinvazívna mezoterapia" />
         <SingleMezoterapiaForm
           data={mezoterapiaNonInvasiveData}
           label="Neinvazívna mezoterapia"
           isAdmin={isAdmin}
+          type="noninvasive"
         />
       </div>
     </section>

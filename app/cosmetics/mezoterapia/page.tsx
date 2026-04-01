@@ -1,8 +1,31 @@
-import Mezoterapia from "@/app/_components/products/mezoterapia/Mezoterapia"
-import { getMezoterapia } from "@/app/_lib/data_services/data_mezoterapia"
+import Mezoterapia from "@/app/_components/products/mezoterapia/Mezoterapia";
+import { getMezoterapia } from "@/app/_lib/data_services/data_mezoterapia";
 
 export default async function Page() {
-  const mezoterapiaData = await getMezoterapia("mezoterapia")
+  const mezoterapiaData = await getMezoterapia("mezoterapia");
+  // const user = await getCurrentUser();
+  // const isAdmin = user?.email === process.env.ADMIN_EMAIL;
+  const isActive = mezoterapiaData?.is_active ?? false;
 
-  return <Mezoterapia mezoterapiaData={mezoterapiaData} />
+  if (!isActive) {
+    return (
+      <div className="flex h-screen items-center justify-center px-4">
+        <div className="section-shell fade-up w-full max-w-2xl p-8 text-center md:p-10">
+          <p className="mb-3 text-xs font-medium tracking-[0.2em] text-goldDark uppercase">
+            Signature Collection
+          </p>
+          <h1 className="premium-title mb-4 text-3xl leading-tight font-semibold md:text-4xl">
+            Luxus potrebuje svoj moment.
+          </h1>
+          <p className="mx-auto max-w-xl text-sm leading-relaxed text-greyMain md:text-base">
+            Táto procedúra je dočasne pozastavená, aby sme zachovali náš
+            prémiový štandard výsledkov. Pre osobné odporúčanie alternatívy nás
+            kontaktujte a pripravíme pre vás individuálny plán.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return <Mezoterapia mezoterapiaData={mezoterapiaData} />;
 }
