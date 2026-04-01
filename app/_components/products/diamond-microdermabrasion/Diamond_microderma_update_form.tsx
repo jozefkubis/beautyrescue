@@ -4,6 +4,12 @@ import { updateDiamondMicrodermabrasion } from "@/app/_lib/actions/actions_diamo
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
+// Import zdieľaných komponentov pre formulár
+import CheckboxField from "@/app/_components/CheckboxField";
+import InputField from "@/app/_components/InputField";
+import SubmitButton from "@/app/_components/SubmitButton";
+import TextareaField from "@/app/_components/TextareaField";
+import UndoButton from "@/app/_components/UndoButton";
 
 type diamondMicrodermabrasionData = {
   slug?: string;
@@ -91,10 +97,16 @@ export default function Diamond_microderma_update_form({
             name: formValues.name,
             content: {
               intro: formValues.contentIntro,
-              paragraphs: formValues.contentParagraphs.split("\n\n").map((paragraph) => paragraph.trim()).filter(Boolean),
+              paragraphs: formValues.contentParagraphs
+                .split("\n\n")
+                .map((paragraph) => paragraph.trim())
+                .filter(Boolean),
             },
             attributes: {
-              benefits: formValues.attributesBenefits.split("\n").map((benefit) => benefit.trim()).filter(Boolean),
+              benefits: formValues.attributesBenefits
+                .split("\n")
+                .map((benefit) => benefit.trim())
+                .filter(Boolean),
             },
             is_active: formValues.isActive,
           }),
@@ -143,105 +155,68 @@ export default function Diamond_microderma_update_form({
 
         <form action={handleSubmit} className="space-y-5 px-5 pb-6 md:px-8">
           <div className="grid grid-cols-1 gap-4">
-            <label className="flex flex-col gap-2">
-              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-goldDark/80">
-                Názov
-              </span>
-              <input
-                type="text"
-                value={formValues.name}
-                onChange={(e) => handleChange("name", e.target.value)}
-                readOnly={!isAdmin}
-                className="h-12 rounded-xl border border-goldDark/20 bg-white px-4 text-sm text-gray-800 outline-none transition focus:border-goldDark/35"
-              />
-            </label>
+            {/* Pole pre názov */}
+            <InputField
+              label="Názov"
+              value={formValues.name}
+              onChange={(e) => handleChange("name", e.target.value)}
+              readOnly={!isAdmin}
+            />
 
-            <label className="flex flex-col gap-2">
-              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-goldDark/80">
-                Obsah - Úvod
-              </span>
-              <textarea
-                rows={6}
-                value={formValues.contentIntro}
-                onChange={(e) => handleChange("contentIntro", e.target.value)}
-                readOnly={!isAdmin}
-                className="w-full rounded-xl border border-goldDark/20 bg-white px-4 py-3 text-sm text-gray-800 outline-none transition focus:border-goldDark/35"
-              />
-            </label>
+            {/* Pole pre úvodný obsah */}
+            <TextareaField
+              label="Obsah - Úvod"
+              value={formValues.contentIntro}
+              onChange={(e) => handleChange("contentIntro", e.target.value)}
+              readOnly={!isAdmin}
+              rows={6}
+            />
 
-            <label className="flex flex-col gap-2">
-              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-goldDark/80">
-                Obsah
-              </span>
-              <textarea
-                rows={12}
-                value={formValues.contentParagraphs}
-                onChange={(e) =>
-                  handleChange("contentParagraphs", e.target.value)
-                }
-                readOnly={!isAdmin}
-                className="w-full rounded-xl border border-goldDark/20 bg-white px-4 py-3 text-sm text-gray-800 outline-none transition focus:border-goldDark/35"
-              />
-            </label>
+            {/* Pole pre hlavný obsah */}
+            <TextareaField
+              label="Obsah"
+              value={formValues.contentParagraphs}
+              onChange={(e) =>
+                handleChange("contentParagraphs", e.target.value)
+              }
+              readOnly={!isAdmin}
+              rows={12}
+            />
 
-            <label className="flex flex-col gap-2">
-              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-goldDark/80">
-                Benefity
-              </span>
-              <textarea
-                rows={6}
-                value={formValues.attributesBenefits}
-                onChange={(e) =>
-                  handleChange("attributesBenefits", e.target.value)
-                }
-                readOnly={!isAdmin}
-                className="w-full rounded-xl border border-goldDark/20 bg-white px-4 py-3 text-sm text-gray-800 outline-none transition focus:border-goldDark/35"
-              />
-            </label>
+            {/* Pole pre benefity */}
+            <TextareaField
+              label="Benefity"
+              value={formValues.attributesBenefits}
+              onChange={(e) =>
+                handleChange("attributesBenefits", e.target.value)
+              }
+              readOnly={!isAdmin}
+              rows={6}
+            />
 
-            <label className="flex items-center gap-3 cursor-pointer w-full justify-between">
-              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-goldDark/80">
-                {formValues.isActive ? "Aktívne" : "Neaktívne"}
-              </span>
+            {/* Checkbox pre aktívny stav */}
+            <CheckboxField
+              labelActive="Aktívne"
+              labelInactive="Neaktívne"
+              checked={formValues.isActive}
+              onChange={(e) => handleChange("isActive", e.target.checked)}
+              disabled={!isAdmin}
+            />
 
-              <input
-                type="checkbox"
-                checked={formValues.isActive}
-                onChange={(e) => handleChange("isActive", e.target.checked)}
-                disabled={!isAdmin}
-                className="sr-only"
-              />
-
-              <div
-                className={`flex h-6 w-10 items-center rounded-full p-1 transition ${
-                  formValues.isActive ? "bg-goldLight" : "bg-gray-400"
-                }`}
-              >
-                <div
-                  className={`h-4 w-4 rounded-full bg-white shadow-md transform transition ${
-                    formValues.isActive ? "translate-x-4" : "translate-x-0"
-                  }`}
-                />
-              </div>
-            </label>
-
+            {/* Tlačidlá pre Undo a Submit */}
             <div className="flex flex-col gap-3 border-t border-goldDark/10 pt-5 sm:flex-row sm:items-center sm:justify-end">
-              <button
-                type="button"
+              <UndoButton
                 onClick={handleUndo}
                 disabled={!hasChanges || isPending || !isAdmin}
-                className="inline-flex h-11 items-center justify-center rounded-full border border-goldDark/15 bg-white px-5 text-sm font-semibold text-goldDark transition duration-300 hover:-translate-y-0.5 hover:cursor-pointer hover:border-goldDark/30 hover:bg-[#fffaf2] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
               >
                 Undo
-              </button>
-
-              <button
-                type="submit"
+              </UndoButton>
+              <SubmitButton
                 disabled={!hasChanges || isPending || !isAdmin}
-                className="inline-flex h-11 items-center justify-center rounded-full bg-linear-to-r from-redMain to-redDark px-6 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(190,18,60,0.22)] transition duration-300 hover:-translate-y-0.5 hover:cursor-pointer hover:shadow-[0_14px_30px_rgba(190,18,60,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/25 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
+                loading={isPending}
               >
-                {isPending ? "Ukladám..." : "Uložiť zmeny"}
-              </button>
+                Uložiť zmeny
+              </SubmitButton>
             </div>
           </div>
         </form>
