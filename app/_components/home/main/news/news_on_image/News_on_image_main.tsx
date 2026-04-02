@@ -55,7 +55,7 @@ export default function News_on_image_main() {
           <span className="text-[8rem] xl:text-[15rem]">A</span>kcia
         </h1>
         <p className="mb-6 max-w-4xl whitespace-pre-wrap rounded-full border border-goldDark/20 bg-white/60 px-6 py-2 text-lg italic text-greyMain/80 shadow-sm shadow-goldDark/15 xl:text-3xl">
-          ...Botulotoxín 3 lok./199,- € alebo 1 lok./69,- €!
+          ...April 2026 - Botulotoxín 3 lok./199,- € alebo 1 lok./69,- €!
         </p>
       </motion.div>
 
