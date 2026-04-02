@@ -1,53 +1,53 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
-import { IoTriangle } from "react-icons/io5"
-import AdminLink from "../admin/AdminLink"
-import LoginForm from "../admin/LoginForm"
-import LoginLink from "../admin/LoginLink"
-import LogoutButton from "../admin/LogoutButton"
-import { robotoCondensed } from "../fonts"
-import Modal from "../Modal"
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { IoTriangle } from "react-icons/io5";
+import AdminLink from "../admin/AdminLink";
+import LoginForm from "../admin/LoginForm";
+import LoginLink from "../admin/LoginLink";
+import LogoutButton from "../admin/LogoutButton";
+import { robotoCondensed } from "../fonts";
+import Modal from "../Modal";
 
 export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
-  const pathname = usePathname()
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
-  const [openModal, setOpenModal] = useState(false)
-  const navRef = useRef<HTMLDivElement | null>(null)
-  const router = useRouter()
+  const pathname = usePathname();
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [openModal, setOpenModal] = useState(false);
+  const navRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const handlePointerDown = (event: MouseEvent) => {
-      if (!navRef.current) return
+      if (!navRef.current) return;
       if (!navRef.current.contains(event.target as Node)) {
-        setOpenDropdown(null)
+        setOpenDropdown(null);
       }
-    }
+    };
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setOpenDropdown(null)
+        setOpenDropdown(null);
       }
-    }
+    };
 
-    window.addEventListener("mousedown", handlePointerDown)
-    window.addEventListener("keydown", handleEscape)
+    window.addEventListener("mousedown", handlePointerDown);
+    window.addEventListener("keydown", handleEscape);
 
     return () => {
-      window.removeEventListener("mousedown", handlePointerDown)
-      window.removeEventListener("keydown", handleEscape)
-    }
-  }, [])
+      window.removeEventListener("mousedown", handlePointerDown);
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
 
   const isLinkActive = (href: string, hasDropdown: boolean) => {
     if (hasDropdown) {
-      return pathname === href || pathname.startsWith(`${href}/`)
+      return pathname === href || pathname.startsWith(`${href}/`);
     }
 
-    return pathname === href
-  }
+    return pathname === href;
+  };
 
   const navigationLinks = [
     { name: "O nás", href: "/about" },
@@ -84,8 +84,8 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
     },
     { name: "Lekárska akupunktúra", href: "/acupuncture" },
     { name: "Cenník", href: "/pricing" },
-    { name: "Akcia", href: "/promotion" },
-  ]
+    { name: "Novinky", href: "/promotion" },
+  ];
 
   return (
     <>
@@ -206,5 +206,5 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
         </Modal>
       )}
     </>
-  )
+  );
 }

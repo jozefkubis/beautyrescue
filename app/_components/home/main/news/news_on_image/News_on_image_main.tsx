@@ -1,10 +1,10 @@
-"use client" // musí byť, lebo používame animácie na klientovi
+"use client"; // musí byť, lebo používame animácie na klientovi
 
-import { luxuriousScript } from "@/app/_components/fonts"
-import { motion } from "framer-motion" // import z framer-motion
-import Image from "next/image"
-import { useState } from "react"
-import EcgLine from "../ecg_effect/EcgLine"
+import { luxuriousScript } from "@/app/_components/fonts";
+import { motion } from "framer-motion"; // import z framer-motion
+import Image from "next/image";
+import { useState } from "react";
+import EcgLine from "../ecg_effect/EcgLine";
 
 // definujeme "stavy" animácie
 const textVariants = {
@@ -19,10 +19,10 @@ const textVariants = {
       duration: 0.8, // stačí duration, ease môžeme vynechať
     },
   },
-}
+};
 
 export default function News_on_image_main() {
-  const [showEcg, setShowEcg] = useState(false)
+  const [showEcg, setShowEcg] = useState(false);
 
   return (
     <section className="relative w-full aspect-16/6 overflow-hidden">
@@ -52,10 +52,10 @@ export default function News_on_image_main() {
         <h1
           className={`mb-1 text-3xl font-bold text-redDark drop-shadow-[0_6px_22px_rgba(141,10,45,0.24)] lg:text-7xl xl:text-[9rem] ${luxuriousScript.className}`}
         >
-          <span className="text-[8rem] xl:text-[15rem]">N</span>ovinky
+          <span className="text-[8rem] xl:text-[15rem]">A</span>kcia
         </h1>
         <p className="mb-6 max-w-4xl whitespace-pre-wrap rounded-full border border-goldDark/20 bg-white/60 px-6 py-2 text-lg italic text-greyMain/80 shadow-sm shadow-goldDark/15 xl:text-3xl">
-          ...Lorem ipsum dolor sit amet consectetur adipisicing elit!
+          ...Botulotoxín 3 lok./199,- € alebo 1 lok./69,- €!
         </p>
       </motion.div>
 
@@ -64,5 +64,5 @@ export default function News_on_image_main() {
         {showEcg && <EcgLine />}
       </div>
     </section>
-  )
+  );
 }

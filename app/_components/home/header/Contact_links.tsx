@@ -2,8 +2,8 @@ import {
   FaFacebookSquare,
   FaInstagramSquare,
   FaMapMarkerAlt,
-} from "react-icons/fa"
-import { MdEmail, MdPhone } from "react-icons/md"
+} from "react-icons/fa";
+import { MdEmail, MdPhone } from "react-icons/md";
 
 export default function Contact_links() {
   const contactLinks = [
@@ -28,10 +28,10 @@ export default function Contact_links() {
         <FaMapMarkerAlt className="rounded-full bg-linear-to-br from-[#fff5db] to-[#ffe8c7] p-2 text-3xl text-redDark ring-1 ring-goldLight/60 xl:text-4xl" />
       ),
     },
-  ]
+  ];
 
   return (
-    <div className="flex items-center gap-6 xl:gap-8">
+    <div className="flex items-center gap-3 xl:gap-8">
       {contactLinks.map((link, index) => (
         <div
           key={index}
@@ -59,5 +59,5 @@ export default function Contact_links() {
         />
       </div>
     </div>
-  )
+  );
 }
