@@ -1,17 +1,18 @@
-import { brandFont } from "@/app/_components/fonts"
-import { dataDashboard } from "@/app/_lib/data_services/data_dashboard"
+import { brandFont } from "@/app/_components/fonts";
+import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
+import getTknVisibility from "@/app/_lib/data_services/data_tkn_visibility";
 import {
-  getTknProduct,
+  applyTknVisibility,
   tknCategories,
-} from "@/app/_lib/data_services/tkn_catalog"
-import { getTknProductImage } from "@/app/_lib/data_services/tkn_image_map"
-import Image from "next/image"
-import Link from "next/link"
-import { notFound } from "next/navigation"
+} from "@/app/_lib/data_services/tkn_catalog";
+import { getTknProductImage } from "@/app/_lib/data_services/tkn_image_map";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 type ProductPageProps = {
-  params: Promise<{ category: string; product: string }>
-}
+  params: Promise<{ category: string; product: string }>;
+};
 
 export function generateStaticParams() {
   return tknCategories.flatMap((category) =>
@@ -19,16 +20,27 @@ export function generateStaticParams() {
       category: category.slug,
       product: product.slug,
     })),
-  )
+  );
 }
 
 export default async function Page({ params }: ProductPageProps) {
-  const { category, product } = await params
-  const detail = getTknProduct(category, product)
-  const imageSrc = getTknProductImage(product)
+  const { category, product } = await params;
+  const tknVisibility = await getTknVisibility();
+  const visibleTknCategories = applyTknVisibility(tknCategories, tknVisibility);
+  const visibleCategory = visibleTknCategories.find(
+    (item) => item.slug === category,
+  );
+  const visibleProduct = visibleCategory?.products.find(
+    (item) => item.slug === product,
+  );
+  const detail =
+    visibleCategory && visibleProduct
+      ? { category: visibleCategory, product: visibleProduct }
+      : null;
+  const imageSrc = getTknProductImage(product);
 
   if (!detail) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -114,5 +126,5 @@ export default async function Page({ params }: ProductPageProps) {
         </div>
       </section>
     </div>
-  )
+  );
 }

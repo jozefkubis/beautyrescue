@@ -1,8 +1,10 @@
 export {
-  getTknCategory,
-  getTknProduct,
-  tknCategories,
-  type TknCategory,
-  type TknProduct
-} from "./data_tkn"
+    applyTknVisibility,
+    getTknCategory,
+    getTknProduct,
+    tknCategories,
+    type TknCategory,
+    type TknProduct,
+    type TknVisibility
+} from "./data_tkn";
 

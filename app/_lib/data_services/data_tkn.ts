@@ -4,6 +4,7 @@ export type TknProduct = {
   summary: string
   details: string
   indications: string[]
+  is_active?: boolean
 }
 
 export type TknCategory = {
@@ -12,6 +13,12 @@ export type TknCategory = {
   description: string
   intro: string
   products: TknProduct[]
+  is_active?: boolean
+}
+
+export type TknVisibility = {
+  categories?: Record<string, boolean>
+  products?: Record<string, boolean>
 }
 
 export const tknCategories: TknCategory[] = [
@@ -362,6 +369,27 @@ export const tknCategories: TknCategory[] = [
     ],
   },
 ]
+
+export function applyTknVisibility(
+  categories: TknCategory[],
+  visibility?: TknVisibility,
+) {
+  return categories
+    .filter((category) => {
+      const categoryOverride = visibility?.categories?.[category.slug]
+      const categoryActive = categoryOverride ?? category.is_active ?? true
+      return categoryActive
+    })
+    .map((category) => ({
+      ...category,
+      products: category.products.filter((product) => {
+        const productOverride = visibility?.products?.[product.slug]
+        const productActive = productOverride ?? product.is_active ?? true
+        return productActive
+      }),
+    }))
+    .filter((category) => category.products.length > 0)
+}
 
 export function getTknCategory(categorySlug: string) {
   return tknCategories.find((category) => category.slug === categorySlug)

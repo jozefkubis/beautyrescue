@@ -1,9 +1,16 @@
-import { brandFont } from "@/app/_components/fonts"
-import { dataDashboard } from "@/app/_lib/data_services/data_dashboard"
-import { tknCategories } from "@/app/_lib/data_services/tkn_catalog"
-import Link from "next/link"
+import { brandFont } from "@/app/_components/fonts";
+import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
+import getTknVisibility from "@/app/_lib/data_services/data_tkn_visibility";
+import {
+  applyTknVisibility,
+  tknCategories,
+} from "@/app/_lib/data_services/tkn_catalog";
+import Link from "next/link";
 
-export default function Page() {
+export default async function Page() {
+  const tknVisibility = await getTknVisibility();
+  const visibleTknCategories = applyTknVisibility(tknCategories, tknVisibility);
+
   return (
     <div className="w-full px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <section className="section-shell fade-up p-5 lg:p-8">
@@ -18,7 +25,7 @@ export default function Page() {
       </section>
 
       <section className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-        {tknCategories.map((category) => (
+        {visibleTknCategories.map((category) => (
           <Link
             key={category.slug}
             href={`/cosmetics/microneedling/tkn/${category.slug}`}
@@ -41,5 +48,5 @@ export default function Page() {
         ))}
       </section>
     </div>
-  )
+  );
 }

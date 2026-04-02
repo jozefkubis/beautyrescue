@@ -1,17 +1,43 @@
-import Microneedling from "@/app/_components/products/microneedling/Microneedling"
-import { getCurrentUser } from "@/app/_lib/actions/auth_actions"
-import getMicroneedling from "@/app/_lib/data_services/data_microneedling"
+import Microneedling from "@/app/_components/products/microneedling/Microneedling";
+import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
+import getMicroneedling from "@/app/_lib/data_services/data_microneedling";
+import getTknVisibility from "@/app/_lib/data_services/data_tkn_visibility";
 
 export default async function Page() {
-  const microneedlingData = await getMicroneedling("microneedling")
-  const user = await getCurrentUser()
-  const isAdmin = user?.email === process.env.ADMIN_EMAIL
+  const [microneedlingData, user, tknVisibility] = await Promise.all([
+    getMicroneedling("microneedling"),
+    getCurrentUser(),
+    getTknVisibility(),
+  ]);
+  const isAdmin = user?.email === process.env.ADMIN_EMAIL;
+  const isActive = microneedlingData?.is_active ?? false;
+
+  if (!isActive) {
+    return (
+      <div className="flex h-screen items-center justify-center px-4">
+        <div className="section-shell fade-up w-full max-w-2xl p-8 text-center md:p-10">
+          <p className="mb-3 text-xs font-medium tracking-[0.2em] text-goldDark uppercase">
+            Signature Collection
+          </p>
+          <h1 className="premium-title mb-4 text-3xl leading-tight font-semibold md:text-4xl">
+            Luxus potrebuje svoj moment.
+          </h1>
+          <p className="mx-auto max-w-xl text-sm leading-relaxed text-greyMain md:text-base">
+            Táto procedúra je dočasne pozastavená, aby sme zachovali náš
+            prémiový štandard výsledkov. Pre osobné odporúčanie alternatívy nás
+            kontaktujte a pripravíme pre vás individuálny plán.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Microneedling
       microneedlingData={microneedlingData}
+      tknVisibility={tknVisibility}
       user={user?.email ?? null}
       isAdmin={isAdmin}
     />
-  )
+  );
 }

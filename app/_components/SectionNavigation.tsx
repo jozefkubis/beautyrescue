@@ -4,7 +4,7 @@ import {
 } from "react-icons/io";
 
 type SectionNavigationProps = {
-  sections: number[];
+  sections: number[] | string[];
   index: number;
   setIndex: (index: number) => void;
   numberOfSections: number;
@@ -44,11 +44,11 @@ export default function SectionNavigation({
             Sekcia {index} z {numberOfSections}
           </p>
           <div className="mt-2 flex items-center justify-center gap-2">
-            {sections.map((step) => (
+            {sections.map((step, idx) => (
               <span
-                key={step}
+                key={idx}
                 className={`h-2.5 rounded-full transition-all ${
-                  index === step ? "w-7 bg-goldDark" : "w-2.5 bg-goldDark/25"
+                  index === idx + 1 ? "w-7 bg-goldDark" : "w-2.5 bg-goldDark/25"
                 }`}
               />
             ))}

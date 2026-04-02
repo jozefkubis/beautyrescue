@@ -1,20 +1,31 @@
-"use client"
+"use client";
 
-import { dataDashboard } from "@/app/_lib/data_services/data_dashboard"
-import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling"
-import { tknCategories } from "@/app/_lib/data_services/tkn_catalog"
-import Image from "next/image"
-import Link from "next/link"
-import ExpandText from "../../ExpandText"
-import { brandFont } from "../../fonts"
-import Microneedling_pricing_form from "./Microneedling_pricing_form"
-import Microneedling_text from "./Microneedling_text"
+import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
+import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling";
+import {
+  applyTknVisibility,
+  tknCategories,
+  type TknVisibility,
+} from "@/app/_lib/data_services/tkn_catalog";
+import Image from "next/image";
+import Link from "next/link";
+import ExpandText from "../../ExpandText";
+import { brandFont } from "../../fonts";
+import Microneedling_pricing_form from "./Microneedling_pricing_form";
+import Microneedling_text from "./Microneedling_text";
 
 export default function Microneedling({
   microneedlingData,
+  tknVisibility,
   user,
   isAdmin,
-}: MicroneedlingMainProps & { user?: string | null; isAdmin?: boolean }) {
+}: MicroneedlingMainProps & {
+  tknVisibility?: TknVisibility;
+  user?: string | null;
+  isAdmin?: boolean;
+}) {
+  const visibleTknCategories = applyTknVisibility(tknCategories, tknVisibility);
+
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
@@ -57,7 +68,7 @@ export default function Microneedling({
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {tknCategories.map((category) => (
+            {visibleTknCategories.map((category) => (
               <Link
                 key={category.slug}
                 href={`/cosmetics/microneedling/tkn/${category.slug}`}
@@ -96,5 +107,5 @@ export default function Microneedling({
         </div>
       </div>
     </div>
-  )
+  );
 }

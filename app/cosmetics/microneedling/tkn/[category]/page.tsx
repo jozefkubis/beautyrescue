@@ -1,28 +1,33 @@
-import { brandFont } from "@/app/_components/fonts"
-import { dataDashboard } from "@/app/_lib/data_services/data_dashboard"
+import { brandFont } from "@/app/_components/fonts";
+import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
+import getTknVisibility from "@/app/_lib/data_services/data_tkn_visibility";
 import {
-  getTknCategory,
+  applyTknVisibility,
   tknCategories,
-} from "@/app/_lib/data_services/tkn_catalog"
-import { getTknProductImage } from "@/app/_lib/data_services/tkn_image_map"
-import Image from "next/image"
-import Link from "next/link"
-import { notFound } from "next/navigation"
+} from "@/app/_lib/data_services/tkn_catalog";
+import { getTknProductImage } from "@/app/_lib/data_services/tkn_image_map";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 type CategoryPageProps = {
-  params: Promise<{ category: string }>
-}
+  params: Promise<{ category: string }>;
+};
 
 export function generateStaticParams() {
-  return tknCategories.map((category) => ({ category: category.slug }))
+  return tknCategories.map((category) => ({ category: category.slug }));
 }
 
 export default async function Page({ params }: CategoryPageProps) {
-  const { category: categorySlug } = await params
-  const category = getTknCategory(categorySlug)
+  const { category: categorySlug } = await params;
+  const tknVisibility = await getTknVisibility();
+  const visibleTknCategories = applyTknVisibility(tknCategories, tknVisibility);
+  const category = visibleTknCategories.find(
+    (item) => item.slug === categorySlug,
+  );
 
   if (!category) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -46,7 +51,7 @@ export default async function Page({ params }: CategoryPageProps) {
 
       <section className="mt-8 grid grid-cols-1 gap-4 lg:gap-6">
         {category.products.map((product) => {
-          const imageSrc = getTknProductImage(product.slug)
+          const imageSrc = getTknProductImage(product.slug);
 
           return (
             <article
@@ -113,9 +118,9 @@ export default async function Page({ params }: CategoryPageProps) {
                 )}
               </div>
             </article>
-          )
+          );
         })}
       </section>
     </div>
-  )
+  );
 }
