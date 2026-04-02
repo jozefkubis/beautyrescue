@@ -21,6 +21,7 @@ import {
 // --- HOOKY A NOTIFIKÁCIE ---
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
+import SectionNavigation from "../../SectionNavigation";
 
 // --- TYPY PRE DÁTA ---
 export type MezoterapiaData = {
@@ -181,30 +182,54 @@ export default function Mezoterapia_update_form({
   mezoterapiaNonInvasiveData,
   isAdmin,
 }: MezoterapiaUpdateFormProps) {
+  const [index, setIndex] = useState(1);
+
+  const sections = [1, 2, 3];
+  const numberOfSections = sections.length;
+
   return (
     <section className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-8 p-5 lg:gap-8 lg:p-8 lg:px-44">
-        <SectionHeader title="Mezoterapia (hlavná sekcia)" />
-        <SingleMezoterapiaForm
-          data={mezoterapiaData}
-          label="Mezoterapia"
-          isAdmin={isAdmin}
-          type="main"
+        <SectionNavigation
+          sections={sections}
+          index={index}
+          setIndex={setIndex}
+          numberOfSections={numberOfSections}
         />
-        <SectionHeader title="Invazívna mezoterapia" />
-        <SingleMezoterapiaForm
-          data={mezoterapiaInvasiveData}
-          label="Invazívna mezoterapia"
-          isAdmin={isAdmin}
-          type="invasive"
-        />
-        <SectionHeader title="Neinvazívna mezoterapia" />
-        <SingleMezoterapiaForm
-          data={mezoterapiaNonInvasiveData}
-          label="Neinvazívna mezoterapia"
-          isAdmin={isAdmin}
-          type="noninvasive"
-        />
+
+        {index === 1 && (
+          <>
+            <SectionHeader title="Mezoterapia (hlavná sekcia)" />
+            <SingleMezoterapiaForm
+              data={mezoterapiaData}
+              label="Mezoterapia"
+              isAdmin={isAdmin}
+              type="main"
+            />
+          </>
+        )}
+        {index === 2 && (
+          <>
+            <SectionHeader title="Invazívna mezoterapia" />
+            <SingleMezoterapiaForm
+              data={mezoterapiaInvasiveData}
+              label="Invazívna mezoterapia"
+              isAdmin={isAdmin}
+              type="invasive"
+            />
+          </>
+        )}
+        {index === 3 && (
+          <>
+            <SectionHeader title="Neinvazívna mezoterapia" />
+            <SingleMezoterapiaForm
+              data={mezoterapiaNonInvasiveData}
+              label="Neinvazívna mezoterapia"
+              isAdmin={isAdmin}
+              type="noninvasive"
+            />
+          </>
+        )}
       </div>
     </section>
   );
