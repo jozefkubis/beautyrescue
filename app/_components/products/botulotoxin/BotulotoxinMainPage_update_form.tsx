@@ -141,7 +141,7 @@ export default function BotulotoxinMainPage_update_form({
           value={formValues.intro}
           onChange={(e) => handleChange("intro", e.target.value)}
           readOnly={!isAdmin}
-          rows={12}
+          rows={8}
         />
 
         <TextareaField
@@ -149,7 +149,7 @@ export default function BotulotoxinMainPage_update_form({
           value={formValues.complications}
           onChange={(e) => handleChange("complications", e.target.value)}
           readOnly={!isAdmin}
-          rows={12}
+          rows={8}
         />
 
         <TextareaField
@@ -157,7 +157,7 @@ export default function BotulotoxinMainPage_update_form({
           value={formValues.contraindications}
           onChange={(e) => handleChange("contraindications", e.target.value)}
           readOnly={!isAdmin}
-          rows={12}
+          rows={8}
         />
 
         <InputField
@@ -172,7 +172,7 @@ export default function BotulotoxinMainPage_update_form({
           value={formValues.paragraphs}
           onChange={(e) => handleChange("paragraphs", e.target.value)}
           readOnly={!isAdmin}
-          rows={12}
+          rows={8}
         />
 
         <CheckboxField
