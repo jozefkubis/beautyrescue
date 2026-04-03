@@ -14,6 +14,14 @@ export default function Botulotoxin({
   user,
   isAdmin,
 }: BotulotoxinMainProps & { user?: string | null; isAdmin?: boolean }) {
+  if (!botulotoxinData) {
+    return (
+      <div className="section-shell mx-auto mt-10 w-full max-w-3xl p-6 text-center text-redDark">
+        Dáta pre stránku Botulotoxín sa nepodarilo načítať.
+      </div>
+    )
+  }
+
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">

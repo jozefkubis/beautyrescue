@@ -1,14 +1,25 @@
 import Botulotoxin_update_form from "@/app/_components/products/botulotoxin/Botulotoxin_update_form";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import { getBotulotoxin } from "@/app/_lib/data_services/data_botulotoxin";
+import {
+  getBotulotoxin,
+  getBotulotoxinPotenie,
+  getBotulotoxinVrasky,
+} from "@/app/_lib/data_services/data_botulotoxin";
 
 export default async function Page() {
-  const [user, botulotoxinData] = await Promise.all([
-    getCurrentUser(),
-    getBotulotoxin("botulotoxin"),
-  ]);
+  const [user, botulotoxinData, botulotoxinPotenieData, botulotoxinVraskyData] =
+    await Promise.all([
+      getCurrentUser(),
+      getBotulotoxin("botulotoxin"),
+      getBotulotoxinPotenie("botulotoxin-potenie"),
+      getBotulotoxinVrasky("botulotoxin-vrasky"),
+    ]);
 
   const isAdmin = Boolean(user && user.email === process.env.ADMIN_EMAIL);
+
+  console.log("potenieData v page.tsx", botulotoxinPotenieData);
+
+  console.log("poteniteData v page.tsx", botulotoxinPotenieData);
 
   if (!isAdmin) {
     return (
@@ -28,6 +39,8 @@ export default async function Page() {
   return (
     <Botulotoxin_update_form
       botulotoxinData={botulotoxinData}
+      botulotoxinPotenieData={botulotoxinPotenieData}
+      botulotoxinVraskyData={botulotoxinVraskyData}
       isAdmin={isAdmin}
     />
   );

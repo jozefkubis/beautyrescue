@@ -1,12 +1,24 @@
 "use client";
 
-import type { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulotoxin";
+import type {
+  BotulotoxinMainProps,
+  BotulotoxinPotenieMainProps,
+  BotulotoxinVraskyMainProps,
+} from "@/app/_lib/data_services/data_botulotoxin";
 import { useState } from "react";
 import SectionNavigation from "../../SectionNavigation";
 import BotulotoxinMainPage_update_form from "./BotulotoxinMainPage_update_form";
+import BotulotoxinPotenie_update_form from "./potenie/BotulotoxinPotenie_update.form";
+import BotulotoxinVrasky_update_form from "./vrasky/BotulotoxinVrasky_update_form";
 
 type Botulotoxin_update_formProps = {
   botulotoxinData: BotulotoxinMainProps["botulotoxinData"] | null;
+  botulotoxinPotenieData:
+    | BotulotoxinPotenieMainProps["botulotoxinPotenieData"]
+    | null;
+  botulotoxinVraskyData:
+    | BotulotoxinVraskyMainProps["botulotoxinVraskyData"]
+    | null;
   isAdmin?: boolean;
 };
 
@@ -28,6 +40,8 @@ function SectionHeader({ title }: { title: string }) {
 
 export default function Botulotoxin_update_form({
   botulotoxinData,
+  botulotoxinPotenieData,
+  botulotoxinVraskyData,
   isAdmin,
 }: Botulotoxin_update_formProps) {
   const [index, setIndex] = useState(1);
@@ -49,6 +63,24 @@ export default function Botulotoxin_update_form({
             <SectionHeader title="Botulotoxín (hlavná sekcia)" />
             <BotulotoxinMainPage_update_form
               botulotoxinData={botulotoxinData}
+              isAdmin={isAdmin}
+            />
+          </>
+        )}
+        {index === 2 && (
+          <>
+            <SectionHeader title="Botulotoxín (potenie)" />
+            <BotulotoxinPotenie_update_form
+              botulotoxinPotenieData={botulotoxinPotenieData}
+              isAdmin={isAdmin}
+            />
+          </>
+        )}
+        {index === 3 && (
+          <>
+            <SectionHeader title="Botulotoxín (vrásky)" />
+            <BotulotoxinVrasky_update_form
+              botulotoxinVraskyData={botulotoxinVraskyData}
               isAdmin={isAdmin}
             />
           </>

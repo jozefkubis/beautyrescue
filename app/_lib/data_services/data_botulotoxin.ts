@@ -39,8 +39,8 @@ export type BotulotoxinPotenieMainProps = {
     metadata: {
       sourceUrl: string
     }
+    is_active: boolean
   }
-  is_active: boolean
 }
 
 export type BotulotoxinVraskyMainProps = {
@@ -51,8 +51,8 @@ export type BotulotoxinVraskyMainProps = {
     content: {
       paragraphs: string[]
     }
+    is_active: boolean
   }
-  is_active: boolean
 }
 
 export async function getBotulotoxin(slug: string) {
@@ -78,8 +78,9 @@ export async function getBotulotoxinPotenie(slug: string) {
 
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
 
   if (error) {
@@ -95,8 +96,9 @@ export async function getBotulotoxinVrasky(slug: string) {
 
   const { data, error } = await supabase
     .from("service_items")
-    .select("*")
+    .select("*, pricing(*)")
     .eq("slug", slug)
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
 
   if (error) {
