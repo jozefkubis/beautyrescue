@@ -10,6 +10,7 @@ export type PricingProps = {
 
 export type BotulotoxinMainProps = {
   botulotoxinData: {
+    slug: string
     name: string
     gallery: { src: string; alt?: string }[]
     content: {
@@ -24,11 +25,13 @@ export type BotulotoxinMainProps = {
       complications: string
     }
     pricing: PricingProps[]
+    is_active: boolean
   }
 }
 
 export type BotulotoxinPotenieMainProps = {
   botulotoxinPotenieData: {
+    slug: string
     name: string
     content: {
       paragraphs: string[]
@@ -37,16 +40,19 @@ export type BotulotoxinPotenieMainProps = {
       sourceUrl: string
     }
   }
+  is_active: boolean
 }
 
 export type BotulotoxinVraskyMainProps = {
   botulotoxinVraskyData: {
+    slug: string
     name: string
     summary: string | null
     content: {
       paragraphs: string[]
     }
   }
+  is_active: boolean
 }
 
 export async function getBotulotoxin(slug: string) {
