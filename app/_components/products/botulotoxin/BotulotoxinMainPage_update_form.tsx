@@ -4,6 +4,11 @@ import type { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulot
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
+import CheckboxField from "../../CheckboxField";
+import InputField from "../../InputField";
+import SubmitButton from "../../SubmitButton";
+import TextareaField from "../../TextareaField";
+import UndoButton from "../../UndoButton";
 
 type BotulotoxinMainPageUpdateFormProps = {
   botulotoxinData: BotulotoxinMainProps["botulotoxinData"] | null;
@@ -121,5 +126,78 @@ export default function BotulotoxinMainPage_update_form({
     );
   }
 
-  return <div>BotulotoxinMainPage_update_form</div>;
+  return (
+    <form action={handleSubmit} className="space-y-5 px-5 pb-6 md:px-8">
+      <div className="grid grid-cols-1 gap-4">
+        <InputField
+          label="Názov"
+          value={formValues.name}
+          onChange={(e) => handleChange("name", e.target.value)}
+          readOnly={!isAdmin}
+        />
+
+        <TextareaField
+          label="Uvodný text (intro)"
+          value={formValues.intro}
+          onChange={(e) => handleChange("intro", e.target.value)}
+          readOnly={!isAdmin}
+          rows={12}
+        />
+
+        <TextareaField
+          label="Komplikácie"
+          value={formValues.complications}
+          onChange={(e) => handleChange("complications", e.target.value)}
+          readOnly={!isAdmin}
+          rows={12}
+        />
+
+        <TextareaField
+          label="Kontraindikácie"
+          value={formValues.contraindications}
+          onChange={(e) => handleChange("contraindications", e.target.value)}
+          readOnly={!isAdmin}
+          rows={12}
+        />
+
+        <InputField
+          label="Titulok sekcie O Botulotoxíne"
+          value={formValues.title}
+          onChange={(e) => handleChange("title", e.target.value)}
+          readOnly={!isAdmin}
+        />
+
+        <TextareaField
+          label="text sekcie O Botulotoxíne"
+          value={formValues.paragraphs}
+          onChange={(e) => handleChange("paragraphs", e.target.value)}
+          readOnly={!isAdmin}
+          rows={12}
+        />
+
+        <CheckboxField
+          labelActive="Aktívne"
+          labelInactive="Neaktívne"
+          checked={formValues.isActive}
+          onChange={(e) => handleChange("isActive", e.target.checked)}
+          disabled={!isAdmin}
+        />
+
+        <div className="flex flex-col gap-3 border-t border-goldDark/10 pt-5 sm:flex-row sm:items-center sm:justify-end">
+          <UndoButton
+            onClick={handleUndo}
+            disabled={!hasChanges || isPending || !isAdmin}
+          >
+            Undo
+          </UndoButton>
+          <SubmitButton
+            loading={isPending}
+            disabled={!hasChanges || isPending || !isAdmin}
+          >
+            Uložiť zmeny
+          </SubmitButton>
+        </div>
+      </div>
+    </form>
+  );
 }
