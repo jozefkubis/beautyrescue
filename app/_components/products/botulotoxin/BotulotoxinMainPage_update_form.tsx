@@ -1,5 +1,6 @@
 "use client";
 
+import { updateBotulotoxinMain } from "@/app/_lib/actions/actions_botulotoxin";
 import type { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulotoxin";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
@@ -99,7 +100,7 @@ export default function BotulotoxinMainPage_update_form({
           }),
         );
 
-        // await updateBotulotoxinMain(formData);
+        await updateBotulotoxinMain(formData);
 
         // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
         setLastSavedValues(formValues);

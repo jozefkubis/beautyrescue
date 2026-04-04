@@ -5,6 +5,7 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
+import { updateBotulotoxinPotenie } from "@/app/_lib/actions/actions_botulotoxin";
 import type { BotulotoxinPotenieMainProps } from "@/app/_lib/data_services/data_botulotoxin";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
@@ -88,7 +89,7 @@ export default function BotulotoxinPotenie_update_form({
           }),
         );
 
-        // await updateBotulotoxinPotenie(formData);
+        await updateBotulotoxinPotenie(formData);
 
         // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
         setLastSavedValues(formValues);

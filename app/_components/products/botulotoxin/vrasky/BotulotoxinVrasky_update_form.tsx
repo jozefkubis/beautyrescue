@@ -5,6 +5,7 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
+import { updateBotulotoxinVrasky } from "@/app/_lib/actions/actions_botulotoxin";
 import type { BotulotoxinVraskyMainProps } from "@/app/_lib/data_services/data_botulotoxin";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
@@ -31,6 +32,7 @@ export default function BotulotoxinVrasky_update_form({
   const initialValues = useMemo(
     () => ({
       name: botulotoxinVraskyData?.name ?? "",
+      summary: botulotoxinVraskyData?.summary ?? "",
       paragraphs: Array.isArray(botulotoxinVraskyData?.content.paragraphs)
         ? botulotoxinVraskyData.content.paragraphs.join("\n\n")
         : (botulotoxinVraskyData?.content.paragraphs ?? ""),
@@ -77,6 +79,7 @@ export default function BotulotoxinVrasky_update_form({
           "data",
           JSON.stringify({
             name: formValues.name,
+            summary: formValues.summary,
             content: {
               paragraphs: formValues.paragraphs.split("\n\n"),
             },
@@ -84,7 +87,7 @@ export default function BotulotoxinVrasky_update_form({
           }),
         );
 
-        // await updateBotulotoxinVrasky(formData);
+        await updateBotulotoxinVrasky(formData);
 
         // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
         setLastSavedValues(formValues);
@@ -118,6 +121,13 @@ export default function BotulotoxinVrasky_update_form({
           label="Názov"
           value={formValues.name}
           onChange={(e) => handleChange("name", e.target.value)}
+          readOnly={!isAdmin}
+        />
+
+          <InputField
+          label="Krátky popis (summary)"
+          value={formValues.summary}
+          onChange={(e) => handleChange("summary", e.target.value)}
           readOnly={!isAdmin}
         />
 

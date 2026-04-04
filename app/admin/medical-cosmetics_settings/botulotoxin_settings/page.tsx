@@ -17,10 +17,6 @@ export default async function Page() {
 
   const isAdmin = Boolean(user && user.email === process.env.ADMIN_EMAIL);
 
-  console.log("potenieData v page.tsx", botulotoxinPotenieData);
-
-  console.log("poteniteData v page.tsx", botulotoxinPotenieData);
-
   if (!isAdmin) {
     return (
       <div className="flex h-screen items-center justify-center px-4">
