@@ -83,6 +83,11 @@ const adminSections = [
     label: "Lekárska Kozmetika",
     // icon: RiSyringeLine, // stále injekčná procedúra 👍
   },
+  {
+    href: "/admin/acupuncture_settings",
+    title: "Lekárska akupunktúra",
+    label: "Akupunktúra",
+  },
 ] as const
 
 export default function AdminDashboard() {

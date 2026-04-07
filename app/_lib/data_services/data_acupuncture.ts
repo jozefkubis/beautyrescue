@@ -11,10 +11,6 @@ export type PricingProps = {
 export type AcupunctureMainProps = {
   acupunctureData: {
     name: string
-    summary: string
-    metadata: {
-      quoteAuthor: string
-    }
     content: {
       paragraphs?: string[]
     }
