@@ -9,6 +9,7 @@ import { updateChemicalPeeling } from "@/app/_lib/actions/actions_chem_peeling";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
+import FileField from "../../FileField";
 
 type ChemicalPeelingData = {
   slug?: string;
@@ -134,6 +135,17 @@ export default function Chemical_peeling_update_form({
               readOnly={!isAdmin}
               rows={12}
             />
+
+            <FileField
+              type="file"
+              label="Obrázok (URL)"
+              value={chemicalPeelingData.image_url ?? ""}
+              onChange={(e) => {
+                console.log(e.target.files);
+              }}
+              readOnly={!isAdmin}
+            />
+
             {/* Checkbox pre aktivitu */}
             <CheckboxField
               labelActive="Aktívne"
