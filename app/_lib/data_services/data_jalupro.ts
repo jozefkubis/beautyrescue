@@ -24,6 +24,7 @@ type JaluproServiceData = {
   }
   attributes?: JaluproAttributes
   pricing: PricingProps[]
+  is_active?: boolean
 }
 
 export type JaluproMainProps = {
