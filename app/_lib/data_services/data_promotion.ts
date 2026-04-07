@@ -1,10 +1,10 @@
 import { getSupabaseServerClient } from "../supabase/server"
 
 
-
 export type PromotionMainProps = {
   promotionData: {
     name: string
+    summary: string
     is_active: boolean
     content: {
       paragraphs: string[]

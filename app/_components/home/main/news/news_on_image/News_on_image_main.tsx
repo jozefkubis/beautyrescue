@@ -1,10 +1,15 @@
 "use client"; // musí byť, lebo používame animácie na klientovi
 
 import { luxuriousScript } from "@/app/_components/fonts";
+import type { PromotionMainProps } from "@/app/_lib/data_services/data_promotion";
 import { motion } from "framer-motion"; // import z framer-motion
 import Image from "next/image";
 import { useState } from "react";
 import EcgLine from "../ecg_effect/EcgLine";
+
+type News_on_image_mainProps = {
+  promotionSummary: PromotionMainProps["promotionData"]["summary"];
+};
 
 // definujeme "stavy" animácie
 const textVariants = {
@@ -21,7 +26,9 @@ const textVariants = {
   },
 };
 
-export default function News_on_image_main() {
+export default function News_on_image_main({
+  promotionSummary,
+}: News_on_image_mainProps) {
   const [showEcg, setShowEcg] = useState(false);
 
   return (
@@ -55,7 +62,7 @@ export default function News_on_image_main() {
           <span className="text-[8rem] xl:text-[15rem]">A</span>kcia
         </h1>
         <p className="mb-6 max-w-4xl whitespace-pre-wrap rounded-full border border-goldDark/20 bg-white/60 px-6 py-2 text-lg italic text-greyMain/80 shadow-sm shadow-goldDark/15 xl:text-3xl">
-          ...April 2026 - Botulotoxín 3 lok./199,- € alebo 1 lok./69,- €!
+          {promotionSummary}
         </p>
       </motion.div>
 

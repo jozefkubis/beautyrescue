@@ -1,10 +1,15 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import Interior from "./main/interior/Interior"
-import Location from "./main/location/Location"
-import News_on_image_main from "./main/news/news_on_image/News_on_image_main"
-import News_text from "./main/news/news_text/News_text"
+import type { PromotionMainProps } from "@/app/_lib/data_services/data_promotion";
+import { motion } from "framer-motion";
+import Interior from "./main/interior/Interior";
+import Location from "./main/location/Location";
+import News_on_image_main from "./main/news/news_on_image/News_on_image_main";
+import News_text from "./main/news/news_text/News_text";
+
+type MainProps = {
+  promotion: PromotionMainProps["promotionData"] | null;
+};
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 18 },
@@ -13,13 +18,21 @@ const sectionVariants = {
     y: 0,
     transition: { duration: 0.55, ease: "easeOut" as const },
   },
-}
+};
 
-export default function Main() {
+export default function Main({ promotion }: MainProps) {
+  const promotionName = promotion?.name || "Žiadna aktuálna akcia";
+
+  const promotionSummary = promotion?.summary || "Žiadna aktuálna akcia";
+
+  const promotionParagraphs = promotion?.content.paragraphs || [
+    "Žiadne detaily k akcii",
+  ];
+
   return (
     <>
       <div className="lg:block hidden">
-        <News_on_image_main />
+        <News_on_image_main promotionSummary={promotionSummary} />
       </div>
       <motion.div
         variants={sectionVariants}
@@ -27,7 +40,7 @@ export default function Main() {
         whileInView="show"
         viewport={{ once: true, amount: 0.22 }}
       >
-        <News_text />
+        <News_text paragraphs={promotionParagraphs} promotionName={promotionName} />
       </motion.div>
       <motion.div
         variants={sectionVariants}
@@ -49,5 +62,5 @@ export default function Main() {
       </motion.div>
       {/* <Footer /> */}
     </>
-  )
+  );
 }
