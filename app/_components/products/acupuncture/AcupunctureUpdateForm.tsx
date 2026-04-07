@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import CheckboxField from "@/app/_components/CheckboxField"
-import InputField from "@/app/_components/InputField"
-import SubmitButton from "@/app/_components/SubmitButton"
-import TextareaField from "@/app/_components/TextareaField"
-import UndoButton from "@/app/_components/UndoButton"
-import { updateAcupuncture } from "@/app/_lib/actions/actions_acupuncture"
-import type { AcupunctureMainProps } from "@/app/_lib/data_services/data_acupuncture"
-import { useRouter } from "next/navigation"
-import { useMemo, useState, useTransition } from "react"
-import toast from "react-hot-toast"
+import CheckboxField from "@/app/_components/CheckboxField";
+import InputField from "@/app/_components/InputField";
+import SubmitButton from "@/app/_components/SubmitButton";
+import TextareaField from "@/app/_components/TextareaField";
+import UndoButton from "@/app/_components/UndoButton";
+import { updateAcupuncture } from "@/app/_lib/actions/actions_acupuncture";
+import type { AcupunctureMainProps } from "@/app/_lib/data_services/data_acupuncture";
+import { useRouter } from "next/navigation";
+import { useMemo, useState, useTransition } from "react";
+import toast from "react-hot-toast";
 
 type AcupunctureUpdateFormProps = {
-  acupunctureData: AcupunctureMainProps["acupunctureData"] | null
-  isAdmin?: boolean
-}
+  acupunctureData: AcupunctureMainProps["acupunctureData"] | null;
+  isAdmin?: boolean;
+};
 
 // Admin formulár pre jednoduchú úpravu Lekárskej akupunktúry.
 // Upravuje názov, odseky a is_active prepínač.
@@ -22,8 +22,8 @@ export default function AcupunctureUpdateForm({
   acupunctureData,
   isAdmin,
 }: AcupunctureUpdateFormProps) {
-  const router = useRouter()
-  const [isPending, startTransition] = useTransition()
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const initialValues = useMemo(
     () => ({
@@ -31,30 +31,34 @@ export default function AcupunctureUpdateForm({
       paragraphs: Array.isArray(acupunctureData?.content?.paragraphs)
         ? acupunctureData.content.paragraphs.join("\n\n")
         : "",
-      isActive: (acupunctureData as { is_active?: boolean } | null)?.is_active ?? false,
+      isActive:
+        (acupunctureData as { is_active?: boolean } | null)?.is_active ?? false,
     }),
     [acupunctureData],
-  )
+  );
 
-  const [formValues, setFormValues] = useState(initialValues)
-  const [lastSavedValues, setLastSavedValues] = useState(initialValues)
+  const [formValues, setFormValues] = useState(initialValues);
+  const [lastSavedValues, setLastSavedValues] = useState(initialValues);
 
   function handleChange(
     field: keyof typeof formValues,
     value: string | boolean,
   ) {
-    setFormValues((prev) => ({ ...prev, [field]: value }))
+    setFormValues((prev) => ({ ...prev, [field]: value }));
   }
 
   function handleUndo() {
-    setFormValues(lastSavedValues)
-    toast.success("Zmeny boli vrátené")
+    setFormValues(lastSavedValues);
+    toast.success("Zmeny boli vrátené");
   }
 
   function handleSubmit(formData: FormData) {
     startTransition(async () => {
       try {
-        formData.set("slug", (acupunctureData as { slug?: string } | null)?.slug ?? "acupuncture")
+        formData.set(
+          "slug",
+          (acupunctureData as { slug?: string } | null)?.slug ?? "acupuncture",
+        );
         formData.set(
           "data",
           JSON.stringify({
@@ -62,29 +66,29 @@ export default function AcupunctureUpdateForm({
             paragraphs: formValues.paragraphs,
             is_active: formValues.isActive,
           }),
-        )
+        );
 
-        await updateAcupuncture(formData)
+        await updateAcupuncture(formData);
 
-        setLastSavedValues(formValues)
-        router.refresh()
-        toast.success("Sekcia Lekárska akupunktúra bola aktualizovaná")
+        setLastSavedValues(formValues);
+        router.refresh();
+        toast.success("Sekcia Lekárska akupunktúra bola aktualizovaná");
       } catch (error) {
-        console.error(error)
-        toast.error("Chyba pri ukladaní Lekárskej akupunktúry")
+        console.error(error);
+        toast.error("Chyba pri ukladaní Lekárskej akupunktúry");
       }
-    })
+    });
   }
 
   const hasChanges =
-    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues)
+    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues);
 
   if (!acupunctureData) {
     return (
       <div className="section-shell mx-auto w-full max-w-3xl p-6 text-center text-redDark">
         Dáta pre stránku Lekárska akupunktúra sa nepodarilo načítať.
       </div>
-    )
+    );
   }
 
   return (
@@ -144,6 +148,5 @@ export default function AcupunctureUpdateForm({
         </form>
       </div>
     </section>
-  )
+  );
 }
-

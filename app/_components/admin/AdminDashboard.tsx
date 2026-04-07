@@ -1,5 +1,5 @@
-import { brandFont } from "@/app/_components/fonts"
-import AdminDashboardCard from "./AdminDashboardCard"
+import { brandFont } from "@/app/_components/fonts";
+import AdminDashboardCard from "./AdminDashboardCard";
 
 const adminSections = [
   {
@@ -88,7 +88,7 @@ const adminSections = [
     title: "Lekárska akupunktúra",
     label: "Akupunktúra",
   },
-] as const
+] as const;
 
 export default function AdminDashboard() {
   return (
@@ -100,7 +100,7 @@ export default function AdminDashboard() {
           <div className="grid gap-8 lg:grid-cols-1 lg:items-start">
             <div className="space-y-5 mt-4 lg:space-y-6">
               <div className="inline-flex rounded-full border border-redMain/15 bg-redMain/8 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-redDark">
-                 Prehľad nastavení
+                Prehľad nastavení
               </div>
 
               <div className="space-y-4">
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
                   className={`premium-title text-3xl font-semibold italic tracking-tight sm:text-4xl lg:text-5xl ${brandFont.className}`}
                 >
                   Nastavenia a správa obsahu
-                </h1>             
+                </h1>
               </div>
             </div>
 
@@ -121,10 +121,10 @@ export default function AdminDashboard() {
                   Centralizovaná úprava obsahu
                 </h2>
                 <p className="text-sm leading-7 text-greyMain/75">
-                  Otvorte konkrétnu settings stránku cez karty nižšie a spravujte
-                  texty, podklady a prezentačné popisy jednotlivých sekcií. Na
-                  desktope sú zoradené v prehľadnom gride, na mobile plynulo
-                  prechádzajú do jedného stĺpca bez straty čitateľnosti.
+                  Otvorte konkrétnu settings stránku cez karty nižšie a
+                  spravujte texty, podklady a prezentačné popisy jednotlivých
+                  sekcií. Na desktope sú zoradené v prehľadnom gride, na mobile
+                  plynulo prechádzajú do jedného stĺpca bez straty čitateľnosti.
                 </p>
               </div>
             </aside>
@@ -145,5 +145,5 @@ export default function AdminDashboard() {
         </div>
       </div>
     </section>
-  )
+  );
 }

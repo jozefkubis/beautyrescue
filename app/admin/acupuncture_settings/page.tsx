@@ -1,14 +1,14 @@
-import AcupunctureUpdateForm from "@/app/_components/products/acupuncture/AcupunctureUpdateForm"
-import { getCurrentUser } from "@/app/_lib/actions/auth_actions"
-import getAcupuncture from "@/app/_lib/data_services/data_acupuncture"
+import AcupunctureUpdateForm from "@/app/_components/products/acupuncture/AcupunctureUpdateForm";
+import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
+import getAcupuncture from "@/app/_lib/data_services/data_acupuncture";
 
 export default async function Page() {
   const [user, acupunctureData] = await Promise.all([
     getCurrentUser(),
     getAcupuncture("acupuncture"),
-  ])
+  ]);
 
-  const isAdmin = Boolean(user && user.email === process.env.ADMIN_EMAIL)
+  const isAdmin = Boolean(user && user.email === process.env.ADMIN_EMAIL);
 
   if (!isAdmin) {
     return (
@@ -23,8 +23,13 @@ export default async function Page() {
           </p>
         </div>
       </div>
-    )
+    );
   }
 
-  return <AcupunctureUpdateForm acupunctureData={acupunctureData} isAdmin={isAdmin} />
+  return (
+    <AcupunctureUpdateForm
+      acupunctureData={acupunctureData}
+      isAdmin={isAdmin}
+    />
+  );
 }
