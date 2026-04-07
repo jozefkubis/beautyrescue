@@ -1,17 +1,20 @@
-"use client"
+"use client";
 
-import type { OxygeneoMainProps } from "@/app/_lib/data_services/data_oxygeneo"
-import Image from "next/image"
-import ExpandText from "../../ExpandText"
-import { brandFont } from "../../fonts"
-import Oxygeneo_pricing_form from "./Oxygeneo_pricing_form"
-import Oxygeneo_text from "./Oxygeneo_text"
+import type { OxygeneoMainProps } from "@/app/_lib/data_services/data_oxygeneo";
+import Image from "next/image";
+import ExpandText from "../../ExpandText";
+import { brandFont } from "../../fonts";
+import Oxygeneo_pricing_form from "./Oxygeneo_pricing_form";
+import Oxygeneo_text from "./Oxygeneo_text";
 
 export default function Oxygeneo({
   oxygeneoData,
   user,
   isAdmin,
 }: OxygeneoMainProps & { user?: string | null; isAdmin?: boolean }) {
+  // Ak je v DB nahraný obrázok zo Storage, použijeme ho; inak ostáva lokálny fallback.
+  const uploadedImageUrl = oxygeneoData.image_url?.trim();
+
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
@@ -33,11 +36,12 @@ export default function Oxygeneo({
           </div>
         </div>
 
-        <div className="relative mt-10 w-full aspect-4/2 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
+        <div className="relative mt-10 w-full aspect-auto overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <Image
-            src="/images/oxygeneo.jpeg"
+            src={uploadedImageUrl || "/images/oxygeneo.jpeg"}
             alt="Oxygeneo"
             fill
+            unoptimized
             className="object-cover"
           />
         </div>
@@ -51,5 +55,5 @@ export default function Oxygeneo({
         </div>
       </div>
     </div>
-  )
+  );
 }

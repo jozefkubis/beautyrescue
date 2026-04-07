@@ -11,6 +11,7 @@ export type PricingProps = {
 export type OxygeneoMainProps = {
   oxygeneoData: {
     name: string
+    image_url?: string
     content: {
       intro?: string
       description?: string

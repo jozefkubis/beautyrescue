@@ -36,6 +36,7 @@ export async function updateOxygeneo(formData: FormData) {
   // Slug určuje, ktorý riadok v service_items sa má aktualizovať.
   const slug = formData.get("slug")?.toString() || "oxygeneo";
   const rawData = formData.get("data")?.toString();
+  const imageFile = formData.get("image_file");
 
   // Ak data vôbec neprišli, nemáme čo spracovať ani uložiť.
   if (!rawData) {
@@ -110,6 +111,56 @@ export async function updateOxygeneo(formData: FormData) {
       ? (existingItem.metadata as Record<string, unknown>)
       : {};
 
+  let uploadedImageUrl: string | undefined;
+
+  if (imageFile && imageFile instanceof File && imageFile.size > 0) {
+    // Jednoduchá ochrana pre veľkosť a typ súboru.
+    const maxFileSize = 5 * 1024 * 1024;
+    const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (imageFile.size > maxFileSize) {
+      throw new Error("Obrázok je príliš veľký (max 5 MB)");
+    }
+
+    if (!allowedMimeTypes.includes(imageFile.type)) {
+      throw new Error("Podporované sú iba formáty JPG, PNG a WEBP");
+    }
+
+    // Názov súboru skladáme zo slugu + času, aby sme minimalizovali kolízie.
+    // Medzery nahradíme pomlčkami, aby bol názov bezpečný pre URL aj storage.
+    const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(
+      /\s/g,
+      "-",
+    );
+
+    // Obrázok uložíme do bucketu BRImages.
+    // upsert: true znamená, že pri rovnakej ceste sa súbor prepíše.
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("BRImages")
+      .upload(fileName, imageFile, {
+        cacheControl: "3600",
+        upsert: true,
+      });
+
+    if (uploadError) {
+      throw new Error(`Chyba pri nahrávaní obrázka: ${uploadError.message}`);
+    }
+
+    // Pre uložený súbor vygenerujeme signed URL s dlhou platnosťou,
+    // ktorú následne uložíme do image_url v databáze.
+    const { data: signed, error: signedError } = await supabase.storage
+      .from("BRImages")
+      .createSignedUrl(uploadData.path, 157680000);
+
+    if (signedError) {
+      throw new Error(
+        `Chyba pri generovaní signed URL: ${signedError.message}`,
+      );
+    }
+
+    uploadedImageUrl = signed.signedUrl;
+  }
+
   // Uložíme nové hodnoty do databázy. Name a is_active prepíšeme priamo,
   // content poskladáme zo starého objektu a nahradíme len paragraphs,
   // aby sme zbytočne nevymazali iné uložené dáta.
@@ -118,6 +169,9 @@ export async function updateOxygeneo(formData: FormData) {
     .update({
       name: payload.name,
       is_active: payload.is_active,
+       // image_url meníme len vtedy, keď sa reálne nahral nový obrázok.
+      // Ak upload neprebehol, tento kľúč neposielame a pôvodná hodnota zostane zachovaná.
+      ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
       content: {
         ...currentContent,
         intro: payload.content.intro,
@@ -134,6 +188,12 @@ export async function updateOxygeneo(formData: FormData) {
     })
     .eq("slug", slug)
     .select("slug");
+
+    if (updateError) {
+    throw new Error(
+      `Chyba pri aktualizácii Oxygeneo: ${updateError.message}`,
+    );
+  }
 
   if (!updatedRows || updatedRows.length === 0) {
     throw new Error("Žiadna položka nebola aktualizovaná");
