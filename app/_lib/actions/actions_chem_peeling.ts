@@ -103,11 +103,15 @@ export async function updateChemicalPeeling(formData: FormData) {
       throw new Error("Podporované sú iba formáty JPG, PNG a WEBP");
     }
 
+    // Názov súboru skladáme zo slugu + času, aby sme minimalizovali kolízie.
+    // Medzery nahradíme pomlčkami, aby bol názov bezpečný pre URL aj storage.
     const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(
       /\s/g,
       "-",
     );
 
+    // Obrázok uložíme do bucketu BRImages.
+    // upsert: true znamená, že pri rovnakej ceste sa súbor prepíše.
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from("BRImages")
       .upload(fileName, imageFile, {
@@ -119,6 +123,8 @@ export async function updateChemicalPeeling(formData: FormData) {
       throw new Error(`Chyba pri nahrávaní obrázka: ${uploadError.message}`);
     }
 
+    // Pre uložený súbor vygenerujeme signed URL s dlhou platnosťou,
+    // ktorú následne uložíme do image_url v databáze.
     const { data: signed, error: signedError } = await supabase.storage
       .from("BRImages")
       .createSignedUrl(uploadData.path, 157680000);
@@ -140,6 +146,8 @@ export async function updateChemicalPeeling(formData: FormData) {
     .update({
       name: payload.name.trim(),
       is_active: payload.is_active,
+      // image_url meníme len vtedy, keď sa reálne nahral nový obrázok.
+      // Ak upload neprebehol, tento kľúč neposielame a pôvodná hodnota zostane zachovaná.
       ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
       content: {
         ...currentContent,
