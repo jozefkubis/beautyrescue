@@ -12,6 +12,7 @@ export type ChemicalPeelingMainProps = {
   chemicalPeelingData: {
     name: string
     is_active: boolean
+    image_url?: string
     content: {
       paragraphs: string[]
     }

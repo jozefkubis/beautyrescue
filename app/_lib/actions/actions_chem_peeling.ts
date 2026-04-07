@@ -28,6 +28,7 @@ export async function updateChemicalPeeling(formData: FormData) {
   // Slug určuje, ktorý riadok v service_items sa má aktualizovať.
   const slug = formData.get("slug")?.toString() || "chemical-peeling";
   const rawData = formData.get("data")?.toString();
+  const imageFile = formData.get("image_file");
 
   // Ak data vôbec neprišli, nemáme čo spracovať ani uložiť.
   if (!rawData) {
@@ -87,6 +88,50 @@ export async function updateChemicalPeeling(formData: FormData) {
       ? (existingItem.content as Record<string, unknown>)
       : {};
 
+  let uploadedImageUrl: string | undefined;
+
+  if (imageFile && imageFile instanceof File && imageFile.size > 0) {
+    // Jednoduchá ochrana pre veľkosť a typ súboru.
+    const maxFileSize = 5 * 1024 * 1024;
+    const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (imageFile.size > maxFileSize) {
+      throw new Error("Obrázok je príliš veľký (max 5 MB)");
+    }
+
+    if (!allowedMimeTypes.includes(imageFile.type)) {
+      throw new Error("Podporované sú iba formáty JPG, PNG a WEBP");
+    }
+
+    const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(
+      /\s/g,
+      "-",
+    );
+
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("BRImages")
+      .upload(fileName, imageFile, {
+        cacheControl: "3600",
+        upsert: true,
+      });
+
+    if (uploadError) {
+      throw new Error(`Chyba pri nahrávaní obrázka: ${uploadError.message}`);
+    }
+
+    const { data: signed, error: signedError } = await supabase.storage
+      .from("BRImages")
+      .createSignedUrl(uploadData.path, 157680000);
+
+    if (signedError) {
+      throw new Error(
+        `Chyba pri generovaní signed URL: ${signedError.message}`,
+      );
+    }
+
+    uploadedImageUrl = signed.signedUrl;
+  }
+
   // Uložíme nové hodnoty do databázy. Name a is_active prepíšeme priamo,
   // content poskladáme zo starého objektu a nahradíme len paragraphs,
   // aby sme zbytočne nevymazali iné uložené dáta.
@@ -95,6 +140,7 @@ export async function updateChemicalPeeling(formData: FormData) {
     .update({
       name: payload.name.trim(),
       is_active: payload.is_active,
+      ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
       content: {
         ...currentContent,
         paragraphs: normalizedParagraphs,

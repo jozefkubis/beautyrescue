@@ -40,6 +40,7 @@ export default function Chemical_peeling_update_form({
   const initialValues = useMemo(
     () => ({
       name: chemicalPeelingData?.name ?? "",
+      image_url: chemicalPeelingData?.image_url ?? "",
       content: Array.isArray(chemicalPeelingData?.content?.paragraphs)
         ? chemicalPeelingData.content.paragraphs.join("\n\n")
         : (chemicalPeelingData?.content?.paragraphs ?? ""),
@@ -50,6 +51,8 @@ export default function Chemical_peeling_update_form({
 
   // formValues = to, čo admin práve píše do formulára (live stav).
   const [formValues, setFormValues] = useState(initialValues);
+  // Vybraný obrázok držíme samostatne, aby sa poslal ako File vo FormData.
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
   // lastSavedValues = posledný stav, ktorý bol úspešne uložený do DB.
   // Používa sa na detekciu zmien a funkciu Undo.
@@ -68,6 +71,7 @@ export default function Chemical_peeling_update_form({
   // Vráti formulár do stavu posledného úspešného uloženia.
   function handleUndo() {
     setFormValues(lastSavedValues);
+    setSelectedImageFile(null);
     toast.success("Zmeny boli vrátené");
   }
 
@@ -88,6 +92,10 @@ export default function Chemical_peeling_update_form({
           }),
         );
 
+        if (selectedImageFile) {
+          formData.set("image_file", selectedImageFile);
+        }
+
         await updateChemicalPeeling(formData);
 
         // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
@@ -104,7 +112,8 @@ export default function Chemical_peeling_update_form({
 
   // true ak sa aktuálne hodnoty líšia od posledného uloženia → aktivuje tlačidlá.
   const hasChanges =
-    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues);
+    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues) ||
+    selectedImageFile !== null;
 
   // Ak sa dáta z DB nepodarilo načítať, zobrazíme chybovú správu namiesto formulára.
   if (!chemicalPeelingData) {
@@ -139,12 +148,18 @@ export default function Chemical_peeling_update_form({
             <FileField
               type="file"
               label="Obrázok (URL)"
-              value={chemicalPeelingData.image_url ?? ""}
+              value={formValues.image_url}
               onChange={(e) => {
-                console.log(e.target.files);
+                const file = e.target.files?.[0] ?? null;
+                setSelectedImageFile(file);
               }}
               readOnly={!isAdmin}
             />
+            {selectedImageFile ? (
+              <p className="text-xs text-greyMain/80">
+                Vybraný súbor: {selectedImageFile.name}
+              </p>
+            ) : null}
 
             {/* Checkbox pre aktivitu */}
             <CheckboxField
