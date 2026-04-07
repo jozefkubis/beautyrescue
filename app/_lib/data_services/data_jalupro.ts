@@ -17,6 +17,7 @@ type JaluproAttributes = {
 
 type JaluproServiceData = {
   name: string
+  summary?: string
   gallery: { src: string; alt?: string }[]
   content: Record<string, unknown> & {
     paragraphs?: string[]
