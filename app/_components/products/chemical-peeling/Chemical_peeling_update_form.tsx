@@ -51,6 +51,7 @@ export default function Chemical_peeling_update_form({
 
   // formValues = to, čo admin práve píše do formulára (live stav).
   const [formValues, setFormValues] = useState(initialValues);
+  
   // Vybraný obrázok držíme samostatne, aby sa poslal ako File vo FormData.
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 

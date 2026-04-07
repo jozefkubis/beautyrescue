@@ -10,10 +10,12 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
+import FileField from "../../FileField";
 
 type diamondMicrodermabrasionData = {
   slug?: string;
   name?: string;
+  image_url?: string;
   content?: {
     intro?: string;
     paragraphs?: string[];
@@ -43,6 +45,7 @@ export default function Diamond_microderma_update_form({
   const initialValues = useMemo(
     () => ({
       name: diamondMicrodermabrasionMainData?.name ?? "",
+      image_url: diamondMicrodermabrasionMainData?.image_url ?? "",
       contentIntro: diamondMicrodermabrasionMainData?.content?.intro ?? "",
       contentParagraphs: Array.isArray(
         diamondMicrodermabrasionMainData?.content?.paragraphs,
@@ -62,6 +65,9 @@ export default function Diamond_microderma_update_form({
   // formValues = to, čo admin práve píše do formulára (live stav).
   const [formValues, setFormValues] = useState(initialValues);
 
+  // Vybraný obrázok držíme samostatne, aby sa poslal ako File vo FormData.
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+
   // lastSavedValues = posledný stav, ktorý bol úspešne uložený do DB.
   // Používa sa na detekciu zmien a funkciu Undo.
   const [lastSavedValues, setLastSavedValues] = useState(initialValues);
@@ -79,9 +85,12 @@ export default function Diamond_microderma_update_form({
   // Vráti formulár do stavu posledného úspešného uloženia.
   function handleUndo() {
     setFormValues(lastSavedValues);
+    setSelectedImageFile(null);
     toast.success("Zmeny boli vrátené");
   }
 
+  // Spustí sa po kliknutí na "Uložiť Diamantová mikrodermabrázia".
+  // Zabalí dáta do FormData, odošle na server a po úspechu obnoví stránku.
   function handleSubmit(formData: FormData) {
     startTransition(async () => {
       try {
@@ -112,6 +121,10 @@ export default function Diamond_microderma_update_form({
           }),
         );
 
+        if (selectedImageFile) {
+          formData.set("image_file", selectedImageFile);
+        }
+
         await updateDiamondMicrodermabrasion(formData);
 
         // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
@@ -128,7 +141,8 @@ export default function Diamond_microderma_update_form({
 
   // true ak sa aktuálne hodnoty líšia od posledného uloženia → aktivuje tlačidlá.
   const hasChanges =
-    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues);
+    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues) ||
+    selectedImageFile !== null;
 
   // Ak sa dáta z DB nepodarilo načítať, zobrazíme chybovú správu namiesto formulára.
   if (!diamondMicrodermabrasionMainData) {
@@ -193,6 +207,22 @@ export default function Diamond_microderma_update_form({
               readOnly={!isAdmin}
               rows={6}
             />
+
+            <FileField
+              type="file"
+              label="Obrázok (URL)"
+              value={formValues.image_url}
+              onChange={(e) => {
+                const file = e.target.files?.[0] ?? null;
+                setSelectedImageFile(file);
+              }}
+              readOnly={!isAdmin}
+            />
+            {selectedImageFile ? (
+              <p className="text-xs text-greyMain/80">
+                Vybraný súbor: {selectedImageFile.name}
+              </p>
+            ) : null}
 
             {/* Checkbox pre aktívny stav */}
             <CheckboxField

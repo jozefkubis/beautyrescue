@@ -11,6 +11,7 @@ export type PricingProps = {
 export type DiamondMicrodermabrasionMainProps = {
   diamondMicrodermabrasionData: {
     name: string
+    image_url?: string
     summary: string
     metadata: {
       quoteAuthor: string

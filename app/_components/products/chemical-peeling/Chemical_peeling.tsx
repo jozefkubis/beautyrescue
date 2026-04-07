@@ -11,7 +11,7 @@ export default function Chemical_peeling({
   chemicalPeelingData,
   user,
   isAdmin,
-}: ChemicalPeelingMainProps & { user?: string | null }) {
+}: ChemicalPeelingMainProps & { user?: string | null; isAdmin?: boolean }) {
   // Ak je v DB nahraný obrázok zo Storage, použijeme ho; inak ostáva lokálny fallback.
   const uploadedImageUrl = chemicalPeelingData.image_url?.trim();
 
@@ -39,22 +39,13 @@ export default function Chemical_peeling({
         </div>
 
         <div className="relative mt-10 h-56 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 md:h-125 lg:h-[90%] lg:w-full">
-          {uploadedImageUrl ? (
-            <Image
-              src={uploadedImageUrl}
-              alt="Chemical peeling"
-              fill
-              unoptimized
-              className="object-cover"
-            />
-          ) : (
-            <Image
-              src="/images/chemical_peeling.jpeg"
-              alt="Chemical peeling"
-              fill
-              className="object-cover"
-            />
-          )}
+          <Image
+            src={uploadedImageUrl || "/images/chemical_peeling.jpeg"}
+            alt="Chemical peeling"
+            fill
+            unoptimized
+            className="object-cover"
+          />
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
