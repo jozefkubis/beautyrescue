@@ -9,6 +9,7 @@ import EcgLine from "../ecg_effect/EcgLine";
 
 type News_on_image_mainProps = {
   promotionSummary: PromotionMainProps["promotionData"]["summary"];
+  isActive: PromotionMainProps["promotionData"]["is_active"];
 };
 
 // definujeme "stavy" animácie
@@ -26,8 +27,25 @@ const textVariants = {
   },
 };
 
+function IfNotPromotionActive() {
+  return (
+    <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center">
+      <h1 className="text-4xl lg:text-5xl font-semibold italic text-redMain">
+        RESCUE YOUR BODY
+      </h1>
+      <h1 className="text-4xl lg:text-5xl font-semibold italic text-redMain">
+        RESCUE YOUR BEAUTY
+      </h1>
+      <h1 className="text-4xl lg:text-5xl font-semibold italic text-redMain">
+        RESCUE YOUR SELF
+      </h1>
+    </div>
+  );
+}
+
 export default function News_on_image_main({
   promotionSummary,
+  isActive,
 }: News_on_image_mainProps) {
   const [showEcg, setShowEcg] = useState(false);
 
@@ -56,14 +74,21 @@ export default function News_on_image_main({
         animate="visible"
         onAnimationComplete={() => setShowEcg(true)}
       >
-        <h1
-          className={`mb-1 text-3xl font-bold text-redDark drop-shadow-[0_6px_22px_rgba(141,10,45,0.24)] lg:text-7xl xl:text-[9rem] ${luxuriousScript.className}`}
-        >
-          <span className="text-[8rem] xl:text-[15rem]">A</span>kcia
-        </h1>
-        <p className="mb-6 max-w-4xl whitespace-pre-wrap rounded-full border border-goldDark/20 bg-white/60 px-6 py-2 text-lg italic text-greyMain/80 shadow-sm shadow-goldDark/15 xl:text-3xl">
-          {promotionSummary}
-        </p>
+        {isActive ? (
+          <h1
+            className={`mb-1 text-3xl font-bold text-redDark drop-shadow-[0_6px_22px_rgba(141,10,45,0.24)] lg:text-7xl xl:text-[9rem] ${luxuriousScript.className}`}
+          >
+            <span className="text-[8rem] xl:text-[15rem]">A</span>kcia
+          </h1>
+        ) : (
+          <IfNotPromotionActive />
+        )}
+
+        {isActive && (
+          <p className="mb-6 max-w-4xl whitespace-pre-wrap rounded-full border border-goldDark/20 bg-white/60 px-6 py-2 text-lg italic text-greyMain/80 shadow-sm shadow-goldDark/15 xl:text-3xl">
+            {promotionSummary}
+          </p>
+        )}
       </motion.div>
 
       {/* EKG – cez celú šírku, fixne nad spodkom */}

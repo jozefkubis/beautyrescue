@@ -88,6 +88,11 @@ const adminSections = [
     title: "Lekárska akupunktúra",
     label: "Akupunktúra",
   },
+  {
+    href: "/admin/promotions_settings",
+    title: "Novinky a akcie",
+    label: "Promotions",
+  },
 ] as const;
 
 export default function AdminDashboard() {

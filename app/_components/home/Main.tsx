@@ -22,17 +22,19 @@ const sectionVariants = {
 
 export default function Main({ promotion }: MainProps) {
   const promotionName = promotion?.name || "Žiadna aktuálna akcia";
-
   const promotionSummary = promotion?.summary || "Žiadna aktuálna akcia";
-
   const promotionParagraphs = promotion?.content.paragraphs || [
     "Žiadne detaily k akcii",
   ];
+  const isActive = promotion?.is_active ?? false;
 
   return (
     <>
       <div className="lg:block hidden">
-        <News_on_image_main promotionSummary={promotionSummary} />
+        <News_on_image_main
+          promotionSummary={promotionSummary}
+          isActive={isActive}
+        />
       </div>
       <motion.div
         variants={sectionVariants}
@@ -40,7 +42,11 @@ export default function Main({ promotion }: MainProps) {
         whileInView="show"
         viewport={{ once: true, amount: 0.22 }}
       >
-        <News_text paragraphs={promotionParagraphs} promotionName={promotionName} />
+        <News_text
+          paragraphs={promotionParagraphs}
+          promotionName={promotionName}
+          isActive={isActive}
+        />
       </motion.div>
       <motion.div
         variants={sectionVariants}
