@@ -3,6 +3,7 @@
 import FileField from "@/app/_components/FileField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import UndoButton from "@/app/_components/UndoButton";
+import { updateMainImage } from "@/app/_lib/actions/actions_main_image";
 import type { HomeImageProps } from "@/app/_lib/data_services/data_home_image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
@@ -34,21 +35,36 @@ export default function MainImage_update_form({ isAdmin, homeImg }: Props) {
 
   function handleUndo() {
     setFormValues(lastSavedValues);
+    setSelectedImageFile(null);
     toast.success("Zmeny boli vrátené");
   }
 
   function handleSubmit(formData: FormData) {
     startTransition(async () => {
       try {
-        if (selectedImageFile) {
-          formData.set("image_file", selectedImageFile);
+        if (!selectedImageFile) {
+          toast.error("Najprv vyber obrázok");
+          return;
         }
 
-        // await updateMainImage(formData);
+        formData.set("image_file", selectedImageFile);
 
-        setLastSavedValues(formValues);
+        const result = await updateMainImage(formData);
+
+        if (!result.success) {
+          toast.error(result.message);
+          return;
+        }
+
+        const nextValues = {
+          image_url: result.imageUrl ?? formValues.image_url,
+        };
+
+        setFormValues(nextValues);
+        setLastSavedValues(nextValues);
+        setSelectedImageFile(null);
         router.refresh();
-        toast.success("Hlavná fotka bola aktualizovaná");
+        toast.success(result.message);
       } catch (error) {
         console.error(error);
         toast.error("Chyba pri ukladaní Hlavnej fotky");
