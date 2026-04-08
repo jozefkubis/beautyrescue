@@ -11,6 +11,7 @@ export type PricingProps = {
 export type MicroneedlingMainProps = {
   microneedlingData: {
     name: string
+    image_url: string
     content: {
       paragraphs: string[]
     }

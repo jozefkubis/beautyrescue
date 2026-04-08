@@ -5,6 +5,7 @@ import { getSupabaseServerClient } from "../supabase/server";
 
 type MicroneedlingUpdatePayload = {
   name: string;
+  image_url?: string;
   paragraphs: string | string[];
   contraindicationsTitle: string;
   contraindications: string | string[];
@@ -59,6 +60,7 @@ export async function updateMicroneedling(formData: FormData) {
   const supabase = await requireAdmin();
   const slug = formData.get("slug")?.toString() || "microneedling";
   const rawData = formData.get("data")?.toString();
+  const imageFile = formData.get("image_file");
 
   if (!rawData) {
     throw new Error("Chýbajú dáta pre Microneedling");
@@ -95,10 +97,63 @@ export async function updateMicroneedling(formData: FormData) {
       ? (existingItem.attributes as Record<string, unknown>)
       : {};
 
+  let uploadedImageUrl: string | undefined;
+
+  if (imageFile && imageFile instanceof File && imageFile.size > 0) {
+    // Jednoduchá ochrana pre veľkosť a typ súboru.
+    const maxFileSize = 5 * 1024 * 1024;
+    const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (imageFile.size > maxFileSize) {
+      throw new Error("Obrázok je príliš veľký (max 5 MB)");
+    }
+
+    if (!allowedMimeTypes.includes(imageFile.type)) {
+      throw new Error("Podporované sú iba formáty JPG, PNG a WEBP");
+    }
+
+    // Názov súboru skladáme zo slugu + času, aby sme minimalizovali kolízie.
+    // Medzery nahradíme pomlčkami, aby bol názov bezpečný pre URL aj storage.
+    const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(
+      /\s/g,
+      "-",
+    );
+
+    // Obrázok uložíme do bucketu BRImages.
+    // upsert: true znamená, že pri rovnakej ceste sa súbor prepíše.
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("BRImages")
+      .upload(fileName, imageFile, {
+        cacheControl: "3600",
+        upsert: true,
+      });
+
+    if (uploadError) {
+      throw new Error(`Chyba pri nahrávaní obrázka: ${uploadError.message}`);
+    }
+
+    // Pre uložený súbor vygenerujeme signed URL s dlhou platnosťou,
+    // ktorú následne uložíme do image_url v databáze.
+    const { data: signed, error: signedError } = await supabase.storage
+      .from("BRImages")
+      .createSignedUrl(uploadData.path, 157680000);
+
+    if (signedError) {
+      throw new Error(
+        `Chyba pri generovaní signed URL: ${signedError.message}`,
+      );
+    }
+
+    uploadedImageUrl = signed.signedUrl;
+  }
+
   const { error } = await supabase
     .from("service_items")
     .update({
       name: payload.name.trim(),
+      // image_url meníme len vtedy, keď sa reálne nahral nový obrázok.
+      // Ak upload neprebehol, tento kľúč neposielame a pôvodná hodnota zostane zachovaná.
+      ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
       is_active: payload.is_active,
       content: {
         ...currentContent,

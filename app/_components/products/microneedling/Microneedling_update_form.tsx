@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import CheckboxField from "@/app/_components/CheckboxField";
 import InputField from "@/app/_components/InputField";
@@ -15,11 +15,13 @@ import {
 } from "@/app/_lib/data_services/tkn_catalog";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
+import FileField from "../../FileField";
 import SectionNavigation from "../../SectionNavigation";
 
 type MicroneedlingData = {
   slug?: string;
   name?: string;
+  image_url?: string;
   content?: {
     paragraphs?: string[];
   };
@@ -68,6 +70,7 @@ export default function Microneedling_update_form({
   const initialMainValues = useMemo(
     () => ({
       name: microneedlingData?.name ?? "",
+      image_url: microneedlingData?.image_url ?? "",
       paragraphs: microneedlingData?.content?.paragraphs?.join("\n\n") ?? "",
       contraindicationsTitle:
         microneedlingData?.attributes?.contraindicationsTitle ?? "",
@@ -91,6 +94,9 @@ export default function Microneedling_update_form({
   const [mainValues, setMainValues] = useState(initialMainValues);
   const [lastSavedMainValues, setLastSavedMainValues] =
     useState(initialMainValues);
+
+  // Vybraný obrázok držíme samostatne, aby sa poslal ako File vo FormData.
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
   // ===== STATE MANAGEMENT PRE TKN VIDITEĽNOSŤ =====
   // visibilityValues = lokálny checkbox state (admin zmeny)
@@ -130,6 +136,7 @@ export default function Microneedling_update_form({
 
   function handleMainUndo() {
     setMainValues(lastSavedMainValues);
+    setSelectedImageFile(null);
     toast.success("Zmeny boli vrátené");
   }
 
@@ -153,6 +160,10 @@ export default function Microneedling_update_form({
             is_active: mainValues.isActive,
           }),
         );
+
+        if (selectedImageFile) {
+          formData.set("image_file", selectedImageFile);
+        }
 
         await updateMicroneedling(formData);
         setLastSavedMainValues(mainValues);
@@ -182,7 +193,8 @@ export default function Microneedling_update_form({
   }
 
   const hasMainChanges =
-    JSON.stringify(mainValues) !== JSON.stringify(lastSavedMainValues);
+    JSON.stringify(mainValues) !== JSON.stringify(lastSavedMainValues) ||
+    selectedImageFile !== null;
 
   // Porovnaj s lastSavedVisibilityValues — admin stránka sa po TKN save NEreloaduje,
   // takže lastSavedVisibilityValues je stabilný zdroj pravdy bez race condition.
@@ -253,6 +265,20 @@ export default function Microneedling_update_form({
                   readOnly={!isAdmin}
                   rows={7}
                 />
+                <FileField
+                  type="file"
+                  label="Hlavná fotka (image_url)"
+                  value={mainValues.image_url}
+                  onChange={(e) =>
+                    setSelectedImageFile(e.target.files?.[0] ?? null)
+                  }
+                  readOnly={!isAdmin}
+                />
+                {selectedImageFile ? (
+                  <p className="text-xs text-greyMain/80">
+                    Vybraný súbor: {selectedImageFile.name}
+                  </p>
+                ) : null}
                 <CheckboxField
                   labelActive="Aktívne"
                   labelInactive="Neaktívne"
@@ -269,11 +295,12 @@ export default function Microneedling_update_form({
                   >
                     Undo
                   </UndoButton>
+
                   <SubmitButton
                     loading={isPendingMain}
                     disabled={!hasMainChanges || isPendingMain || !isAdmin}
                   >
-                    Uložiť Microneedling
+                    Uložiť zmeny
                   </SubmitButton>
                 </div>
               </div>
@@ -360,7 +387,7 @@ export default function Microneedling_update_form({
                   !hasVisibilityChanges || isPendingVisibility || !isAdmin
                 }
               >
-                Uložiť TKN viditeľnosť
+                Uložiť zmeny
               </SubmitButton>
             </div>
           </form>

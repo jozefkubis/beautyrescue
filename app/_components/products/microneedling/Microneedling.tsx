@@ -24,6 +24,9 @@ export default function Microneedling({
   user?: string | null;
   isAdmin?: boolean;
 }) {
+  // Ak je v DB nahraný obrázok zo Storage, použijeme ho; inak ostáva lokálny fallback.
+  const uploadedImageUrl = microneedlingData.image_url?.trim();
+
   const visibleTknCategories = applyTknVisibility(tknCategories, tknVisibility);
 
   return (
@@ -50,9 +53,10 @@ export default function Microneedling({
         <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <div className="absolute inset-0 bg-linear-to-br from-white via-white/10 to-white z-50"></div>
           <Image
-            src="/images/microneedling.jpg"
+            src={uploadedImageUrl || "/images/microneedling.jpg"}
             alt="Microneedling"
             fill
+            unoptimized
             className="object-cover"
           />
         </div>
