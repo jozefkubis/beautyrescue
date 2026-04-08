@@ -1,18 +1,17 @@
-import Chemical_peeling from "@/app/_components/products/chemical-peeling/Chemical_peeling"
-import { getCurrentUser } from "@/app/_lib/actions/auth_actions"
-import getChemicalPeeling from "@/app/_lib/data_services/data_chemical_peeling"
+import Chemical_peeling from "@/app/_components/products/chemical-peeling/Chemical_peeling";
+import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
+import getChemicalPeeling from "@/app/_lib/data_services/data_chemical_peeling";
 
 export default async function Page() {
-  const chemicalPeelingData = await getChemicalPeeling("chemical-peeling")
+  const chemicalPeelingData = await getChemicalPeeling("chemical-peeling");
 
-  const user = await getCurrentUser()
+  const user = await getCurrentUser();
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||
-    user?.email === process.env.ADMIN_EMAIL_2
-  const isActive = chemicalPeelingData?.is_active ?? false
+    user?.email === process.env.ADMIN_EMAIL_2;
+  const isActive = chemicalPeelingData?.is_active ?? false;
 
-
- if (!isActive) {
+  if (!isActive) {
     return (
       <div className="flex h-screen items-center justify-center px-4">
         <div className="section-shell fade-up w-full max-w-2xl p-8 text-center md:p-10">
@@ -23,14 +22,14 @@ export default async function Page() {
             Luxus potrebuje svoj moment.
           </h1>
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-greyMain md:text-base">
-            Táto procedúra je dočasne pozastavená, aby sme zachovali náš prémiový štandard výsledkov.
-            Pre osobné odporúčanie alternatívy nás kontaktujte a pripravíme pre vás individuálny plán.
+            Táto procedúra je dočasne pozastavená, aby sme zachovali náš
+            prémiový štandard výsledkov. Pre osobné odporúčanie alternatívy nás
+            kontaktujte a pripravíme pre vás individuálny plán.
           </p>
         </div>
       </div>
-    )
+    );
   }
-
 
   return (
     <Chemical_peeling
@@ -38,5 +37,5 @@ export default async function Page() {
       user={user?.email ?? null}
       isAdmin={isAdmin}
     />
-  )
+  );
 }
