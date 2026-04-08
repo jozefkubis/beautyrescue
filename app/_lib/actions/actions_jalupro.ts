@@ -45,6 +45,56 @@ function normalizeToArray(value: string | string[]) {
         .filter(Boolean)
 }
 
+// Ak formulár obsahuje nový obrázok, validujeme ho, nahráme do storage
+// a vrátime podpísanú URL na uloženie do image_url.
+async function uploadImageIfProvided(
+  supabase: Awaited<ReturnType<typeof getSupabaseServerClient>>,
+  formData: FormData,
+  slug: string,
+) {
+  const imageFile = formData.get("image_file")
+
+  if (!imageFile || !(imageFile instanceof File) || imageFile.size <= 0) {
+    return null
+  }
+
+  const maxFileSize = 5 * 1024 * 1024
+  const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"]
+
+  if (imageFile.size > maxFileSize) {
+    throw new Error("Obrázok je príliš veľký (max 5MB)")
+  }
+
+  if (!allowedMimeTypes.includes(imageFile.type)) {
+    throw new Error("Nepovolený typ obrázka (povolené JPG, PNG alebo WebP)")
+  }
+
+  const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(/\s/g, "-")
+
+  const { data: uploadData, error: uploadError } = await supabase.storage
+    .from("BRImages")
+    .upload(fileName, imageFile, {
+      cacheControl: "3600",
+      upsert: true,
+    })
+
+  if (uploadError) {
+    throw new Error(`Chyba pri nahrávaní obrázka: ${uploadError.message}`)
+  }
+
+  const { data: signedData, error: signedError } = await supabase.storage
+    .from("BRImages")
+    .createSignedUrl(uploadData.path, 157680000)
+
+  if (signedError || !signedData?.signedUrl) {
+    throw new Error(
+      `Chyba pri vytváraní URL obrázka: ${signedError?.message ?? "Neznáma chyba"}`,
+    )
+  }
+
+  return signedData.signedUrl
+}
+
 async function requireAdmin() {
   const supabase = await getSupabaseServerClient()
   const {
@@ -114,6 +164,7 @@ export async function updateJaluproMain(formData: FormData) {
   const normalizedAftercareParagraphs = normalizeToArray(
     payload.attributes.aftercareParagraphs,
   )
+  const uploadedImageUrl = await uploadImageIfProvided(supabase, formData, slug)
 
   const { data: existingItem, error: existingItemError } = await supabase
     .from("service_items")
@@ -164,6 +215,7 @@ export async function updateJaluproMain(formData: FormData) {
         treatmentParagraphs: normalizedTreatmentParagraphs,
         aftercareParagraphs: normalizedAftercareParagraphs,
       },
+      ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
     })
     .eq("slug", slug)
     .select("slug")
@@ -211,6 +263,7 @@ async function updateJaluproParagraphSection(
   }
 
   const normalizedParagraphs = normalizeToArray(payload.paragraphs)
+  const uploadedImageUrl = await uploadImageIfProvided(supabase, formData, slug)
 
   const { data: existingItem, error: existingItemError } = await supabase
     .from("service_items")
@@ -236,6 +289,7 @@ async function updateJaluproParagraphSection(
         ...currentContent,
         paragraphs: normalizedParagraphs,
       },
+      ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
     })
     .eq("slug", slug)
     .select("slug")
@@ -299,6 +353,7 @@ export async function updateJaluproSuperHydro(formData: FormData) {
 
   const normalizedTop = normalizeToArray(payload.topBullets)
   const normalizedBottom = normalizeToArray(payload.bottomBullets)
+  const uploadedImageUrl = await uploadImageIfProvided(supabase, formData, slug)
 
   const { data: existingItem, error: existingItemError } = await supabase
     .from("service_items")
@@ -326,6 +381,7 @@ export async function updateJaluproSuperHydro(formData: FormData) {
         topBullets: normalizedTop,
         bottomBullets: normalizedBottom,
       },
+      ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
     })
     .eq("slug", slug)
     .select("slug")
