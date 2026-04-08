@@ -12,6 +12,7 @@ export type BiokompatibilneNiteMainProps = {
   biokompatibilneNiteData: {
     name: string
     summary: string | null
+    image_url?: string
     content: {
       paragraphs: string[]
     }

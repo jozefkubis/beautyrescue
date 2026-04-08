@@ -10,6 +10,7 @@ export type PricingProps = {
 
 type KyselinaServiceData = {
   name: string
+  image_url?: string
   gallery: { src: string; alt?: string }[]
   content: {
     paragraphs?: string[]

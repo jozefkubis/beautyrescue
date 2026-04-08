@@ -1,6 +1,7 @@
 "use client";
 
 import CheckboxField from "@/app/_components/CheckboxField";
+import FileField from "@/app/_components/FileField";
 import InputField from "@/app/_components/InputField";
 import SectionNavigation from "@/app/_components/SectionNavigation";
 import SubmitButton from "@/app/_components/SubmitButton";
@@ -17,6 +18,7 @@ import toast from "react-hot-toast";
 type KyselinaHyaluronovaServiceData = {
   slug?: string;
   name?: string;
+  image_url?: string;
   content?: {
     paragraphs?: string | string[];
   };
@@ -69,6 +71,7 @@ function SingleKyselinaForm({
   const initialValues = useMemo(
     () => ({
       name: data?.name ?? "",
+      image_url: data?.image_url ?? "",
       content: Array.isArray(data?.content?.paragraphs)
         ? data.content.paragraphs.join("\n\n")
         : (data?.content?.paragraphs ?? ""),
@@ -79,6 +82,7 @@ function SingleKyselinaForm({
 
   const [formValues, setFormValues] = useState(initialValues);
   const [lastSavedValues, setLastSavedValues] = useState(initialValues);
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
   function handleChange(
     field: keyof typeof formValues,
@@ -105,6 +109,10 @@ function SingleKyselinaForm({
           }),
         );
 
+        if (selectedImageFile) {
+          formData.set("image_file", selectedImageFile);
+        }
+
         await onSubmitAction(formData);
         setLastSavedValues(formValues);
         toast.success(`Sekcia ${sectionLabel} bola aktualizovaná`);
@@ -116,7 +124,8 @@ function SingleKyselinaForm({
   }
 
   const hasChanges =
-    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues);
+    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues) ||
+    selectedImageFile !== null;
 
   if (!data) {
     return (
@@ -143,6 +152,19 @@ function SingleKyselinaForm({
           readOnly={!isAdmin}
           rows={12}
         />
+
+        <FileField
+          type="file"
+          label="Hlavná fotka (image_url)"
+          value={formValues.image_url}
+          onChange={(e) => setSelectedImageFile(e.target.files?.[0] ?? null)}
+          readOnly={!isAdmin}
+        />
+        {selectedImageFile ? (
+          <p className="text-xs text-greyMain/80">
+            Vybraný súbor: {selectedImageFile.name}
+          </p>
+        ) : null}
 
         <CheckboxField
           labelActive="Aktívne"

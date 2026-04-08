@@ -1,17 +1,19 @@
-"use client"
+"use client";
 
-import ExpandText from "@/app/_components/ExpandText"
-import { brandFont } from "@/app/_components/fonts"
-import type { KyselinaHyaluronovaLipsProps } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
-import Image from "next/image"
-import Kyselina_hyaluronova_pricing_form_lips from "./Kyselina_hyaluronova_pricing_form_lips"
-import Kyselina_hyaluronova_lips_text from "./Kyselina_hyaluronova_text_lips"
+import ExpandText from "@/app/_components/ExpandText";
+import { brandFont } from "@/app/_components/fonts";
+import type { KyselinaHyaluronovaLipsProps } from "@/app/_lib/data_services/data_kyselina_hyaluronova";
+import Image from "next/image";
+import Kyselina_hyaluronova_pricing_form_lips from "./Kyselina_hyaluronova_pricing_form_lips";
+import Kyselina_hyaluronova_lips_text from "./Kyselina_hyaluronova_text_lips";
 
 export default function Kyselina_hyaluronova_lips({
   kyselinaHyaluronovaLipsData,
   user,
   isAdmin,
 }: KyselinaHyaluronovaLipsProps & { user?: string | null; isAdmin?: boolean }) {
+  const uploadedImageUrl = kyselinaHyaluronovaLipsData.image_url?.trim();
+
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
@@ -37,9 +39,10 @@ export default function Kyselina_hyaluronova_lips({
 
         <div className="relative mt-10 h-85 overflow-hidden rounded-lg border border-goldDark/25 bg-white shadow-md shadow-goldDark/15 md:h-125 lg:h-155 lg:w-full">
           <Image
-            src="/images/kyselina_hyaluronova_lips.jpeg"
+            src={uploadedImageUrl || "/images/kyselina_hyaluronova_lips.jpeg"}
             alt="Kyselina hyaluronová"
             fill
+            unoptimized
             className="object-cover"
           />
         </div>
@@ -53,5 +56,5 @@ export default function Kyselina_hyaluronova_lips({
         </div>
       </div>
     </div>
-  )
+  );
 }

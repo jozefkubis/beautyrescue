@@ -1,17 +1,19 @@
-"use client"
+"use client";
 
-import ExpandText from "@/app/_components/ExpandText"
-import { brandFont } from "@/app/_components/fonts"
-import type { KyselinaHyaluronovaFaceProps } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
-import Image from "next/image"
-import Kyselina_hyaluronova_pricing_form_face from "./Kyselina_hyaluronova_pricing_form_face"
-import Kyselina_hyaluronova_text_face from "./Kyselina_hyaluronova_text_face"
+import ExpandText from "@/app/_components/ExpandText";
+import { brandFont } from "@/app/_components/fonts";
+import type { KyselinaHyaluronovaFaceProps } from "@/app/_lib/data_services/data_kyselina_hyaluronova";
+import Image from "next/image";
+import Kyselina_hyaluronova_pricing_form_face from "./Kyselina_hyaluronova_pricing_form_face";
+import Kyselina_hyaluronova_text_face from "./Kyselina_hyaluronova_text_face";
 
 export default function Kyselina_hyaluronova_face({
   kyselinaHyaluronovaFaceData,
   user,
   isAdmin,
 }: KyselinaHyaluronovaFaceProps & { user?: string | null; isAdmin?: boolean }) {
+  const uploadedImageUrl = kyselinaHyaluronovaFaceData.image_url?.trim();
+
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
@@ -34,9 +36,10 @@ export default function Kyselina_hyaluronova_face({
 
         <div className="relative mt-10 h-85 overflow-hidden rounded-lg border border-goldDark/25 bg-white shadow-md shadow-goldDark/15 md:h-125 lg:h-150 lg:w-full">
           <Image
-            src="/images/kyselina_hyaluronova_face.jpeg"
+            src={uploadedImageUrl || "/images/kyselina_hyaluronova_face.jpeg"}
             alt="Kyselina hyaluronová - Výplne na tvári"
             fill
+            unoptimized
             className="object-cover object-left"
           />
         </div>
@@ -50,5 +53,5 @@ export default function Kyselina_hyaluronova_face({
         </div>
       </div>
     </div>
-  )
+  );
 }
