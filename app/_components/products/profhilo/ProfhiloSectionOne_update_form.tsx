@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import FileField from "@/app/_components/FileField";
 import InputField from "@/app/_components/InputField";
@@ -119,18 +119,6 @@ export default function ProfhiloSectionOne_update_form({
           onChange={(e) => handleChange("whatTitle", e.target.value)}
           readOnly={!isAdmin}
         />
-        <FileField
-          type="file"
-          label="Fotka sekcie (image_url)"
-          value={formValues.image_url}
-          onChange={(e) => setSelectedImageFile(e.target.files?.[0] ?? null)}
-          readOnly={!isAdmin}
-        />
-        {selectedImageFile ? (
-          <p className="text-xs text-greyMain/80">
-            Vybraný súbor: {selectedImageFile.name}
-          </p>
-        ) : null}
         <TextareaField
           label="What body (riadky)"
           value={formValues.whatItems}
@@ -177,6 +165,18 @@ export default function ProfhiloSectionOne_update_form({
           readOnly={!isAdmin}
           rows={5}
         />
+        <FileField
+          type="file"
+          label="Fotka sekcie (image_url)"
+          value={formValues.image_url}
+          onChange={(e) => setSelectedImageFile(e.target.files?.[0] ?? null)}
+          readOnly={!isAdmin}
+        />
+        {selectedImageFile ? (
+          <p className="text-xs text-greyMain/80">
+            Vybraný súbor: {selectedImageFile.name}
+          </p>
+        ) : null}
         <div className="flex flex-col gap-3 border-t border-goldDark/10 pt-5 sm:flex-row sm:items-center sm:justify-end">
           <UndoButton
             onClick={handleUndo}
