@@ -6,7 +6,9 @@ export default async function Page() {
   const chemicalPeelingData = await getChemicalPeeling("chemical-peeling")
 
   const user = await getCurrentUser()
-  const isAdmin = user?.email === process.env.ADMIN_EMAIL
+  const isAdmin =
+    user?.email === process.env.ADMIN_EMAIL_1 ||
+    user?.email === process.env.ADMIN_EMAIL_2
   const isActive = chemicalPeelingData?.is_active ?? false
 
 

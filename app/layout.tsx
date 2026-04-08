@@ -51,7 +51,9 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const user = await getCurrentUser()
-  const isAdmin = user?.email === process.env.ADMIN_EMAIL
+  const isAdmin =
+    user?.email === process.env.ADMIN_EMAIL_1 ||
+    user?.email === process.env.ADMIN_EMAIL_2
 
   return (
     <html lang="en">

@@ -5,7 +5,9 @@ export default async function Page() {
   const botulotoxinVraskyData =
     await getBotulotoxinVrasky("botulotoxin-vrasky");
   // const user = await getCurrentUser();
-  // const isAdmin = user?.email === process.env.ADMIN_EMAIL;
+  // const isAdmin =
+  //   user?.email === process.env.ADMIN_EMAIL_1 ||
+  //   user?.email === process.env.ADMIN_EMAIL_2;
   const isActive = botulotoxinVraskyData?.is_active ?? false;
 
   if (!isActive) {

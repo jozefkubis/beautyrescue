@@ -7,7 +7,9 @@ export default async function Page() {
     "diamond-microdermabrasion",
   );
   const user = await getCurrentUser();
-  const isAdmin = user?.email === process.env.ADMIN_EMAIL;
+  const isAdmin =
+    user?.email === process.env.ADMIN_EMAIL_1 ||
+    user?.email === process.env.ADMIN_EMAIL_2;
   const isActive = diamondMicrodermabrasionData?.is_active ?? false;
 
   if (!isActive) {

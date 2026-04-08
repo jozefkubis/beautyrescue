@@ -5,7 +5,9 @@ import { getProfhilo } from "@/app/_lib/data_services/data_profhilo";
 export default async function Page() {
   const profhiloData = await getProfhilo("profhilo");
   const user = await getCurrentUser();
-  const isAdmin = user?.email === process.env.ADMIN_EMAIL;
+  const isAdmin =
+    user?.email === process.env.ADMIN_EMAIL_1 ||
+    user?.email === process.env.ADMIN_EMAIL_2;
   const isActive =
     (profhiloData as { is_active?: boolean } | null)?.is_active ?? false;
 

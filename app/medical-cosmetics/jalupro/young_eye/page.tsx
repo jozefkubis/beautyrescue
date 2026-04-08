@@ -5,7 +5,9 @@ import { getJaluproYoungEye } from "@/app/_lib/data_services/data_jalupro";
 export default async function Page() {
   const jaluproYoungEyeData = await getJaluproYoungEye("jalupro-young-eye");
   const user = await getCurrentUser();
-  const isAdmin = user?.email === process.env.ADMIN_EMAIL;
+  const isAdmin =
+    user?.email === process.env.ADMIN_EMAIL_1 ||
+    user?.email === process.env.ADMIN_EMAIL_2;
   const isActive = jaluproYoungEyeData?.is_active ?? false;
 
   if (!isActive) {

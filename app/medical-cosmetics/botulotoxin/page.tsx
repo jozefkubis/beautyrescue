@@ -5,7 +5,9 @@ import { getBotulotoxin } from "@/app/_lib/data_services/data_botulotoxin";
 export default async function Page() {
   const botulotoxinData = await getBotulotoxin("botulotoxin");
   const user = await getCurrentUser();
-  const isAdmin = user?.email === process.env.ADMIN_EMAIL;
+  const isAdmin =
+    user?.email === process.env.ADMIN_EMAIL_1 ||
+    user?.email === process.env.ADMIN_EMAIL_2;
   const isActive = botulotoxinData?.is_active ?? false;
 
   if (!isActive) {

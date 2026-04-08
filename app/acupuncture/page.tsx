@@ -5,7 +5,9 @@ import getAcupuncture from "../_lib/data_services/data_acupuncture";
 export default async function Page() {
   const acupunctureData = await getAcupuncture("acupuncture");
   const user = await getCurrentUser();
-  const isAdmin = user?.email === process.env.ADMIN_EMAIL;
+  const isAdmin =
+    user?.email === process.env.ADMIN_EMAIL_1 ||
+    user?.email === process.env.ADMIN_EMAIL_2;
   const isActive =
     (acupunctureData as { is_active?: boolean } | null)?.is_active ?? false;
 

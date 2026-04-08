@@ -7,7 +7,9 @@ export default async function Page() {
     "mezoterapia-non-invasive",
   );
   const user = await getCurrentUser();
-  const isAdmin = user?.email === process.env.ADMIN_EMAIL;
+  const isAdmin =
+    user?.email === process.env.ADMIN_EMAIL_1 ||
+    user?.email === process.env.ADMIN_EMAIL_2;
   const isActive = mezoterapiaNonInvasiveData?.is_active ?? false;
 
   if (!isActive) {

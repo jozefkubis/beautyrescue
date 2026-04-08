@@ -22,7 +22,11 @@ async function updateKyselinaHyaluronovaGeneric(
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user || user.email !== process.env.ADMIN_EMAIL) {
+  if (
+    !user ||
+    (user.email !== process.env.ADMIN_EMAIL_1 &&
+      user.email !== process.env.ADMIN_EMAIL_2)
+  ) {
     throw new Error("Unauthorized");
   }
 

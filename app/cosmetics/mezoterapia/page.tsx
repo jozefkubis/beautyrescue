@@ -4,7 +4,9 @@ import { getMezoterapia } from "@/app/_lib/data_services/data_mezoterapia";
 export default async function Page() {
   const mezoterapiaData = await getMezoterapia("mezoterapia");
   // const user = await getCurrentUser();
-  // const isAdmin = user?.email === process.env.ADMIN_EMAIL;
+  // const isAdmin =
+  //   user?.email === process.env.ADMIN_EMAIL_1 ||
+  //   user?.email === process.env.ADMIN_EMAIL_2;
   const isActive = mezoterapiaData?.is_active ?? false;
 
   if (!isActive) {

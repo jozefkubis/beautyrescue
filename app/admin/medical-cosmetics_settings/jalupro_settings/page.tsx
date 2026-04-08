@@ -25,7 +25,9 @@ export default async function Page() {
     getJaluproYoungEye("jalupro-young-eye"),
   ]);
 
-  const isAdmin = Boolean(user && user.email === process.env.ADMIN_EMAIL);
+  const isAdmin =
+    user?.email === process.env.ADMIN_EMAIL_1 ||
+    user?.email === process.env.ADMIN_EMAIL_2;
 
   if (!isAdmin) {
     return (

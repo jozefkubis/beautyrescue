@@ -5,7 +5,9 @@ import getOxygeneo from "@/app/_lib/data_services/data_oxygeneo";
 export default async function Page() {
   const oxygeneoData = await getOxygeneo("oxygeneo");
   const user = await getCurrentUser();
-  const isAdmin = user?.email === process.env.ADMIN_EMAIL;
+  const isAdmin =
+    user?.email === process.env.ADMIN_EMAIL_1 ||
+    user?.email === process.env.ADMIN_EMAIL_2;
   const isActive = oxygeneoData?.is_active ?? false;
 
   if (!isActive) {
