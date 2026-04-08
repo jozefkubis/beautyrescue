@@ -1,22 +1,30 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { brandFont } from "../fonts"
-import handleSubmitLogin from "./handleSubmitLogin"
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { brandFont } from "../fonts";
+import handleSubmitLogin from "./handleSubmitLogin";
 
 export default function LoginForm() {
-  const [error, setError] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setError("")
-    setIsLoading(true)
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
 
     try {
-      await handleSubmitLogin({ e, setError })
+      const result = await handleSubmitLogin({ e, setError });
+
+      // Po uspesnom logine hned obnovime layout, aby sa ukazal Admin/Logout.
+      if (result.success) {
+        router.replace("/");
+        router.refresh();
+      }
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
@@ -92,5 +100,5 @@ export default function LoginForm() {
         </form>
       </div>
     </section>
-  )
+  );
 }
