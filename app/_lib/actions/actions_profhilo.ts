@@ -30,6 +30,59 @@ function normalizeToArray(value: string | string[]) {
         .filter(Boolean)
 }
 
+// Ak formulár obsahuje obrázok, validujeme ho, nahráme do storage
+// a vrátime podpísanú URL na uloženie do DB.
+async function uploadImageIfProvided(
+  supabase: Awaited<ReturnType<typeof getSupabaseServerClient>>,
+  formData: FormData,
+  uploadKey: string,
+) {
+  const imageFile = formData.get("image_file")
+
+  if (!imageFile || !(imageFile instanceof File) || imageFile.size <= 0) {
+    return null
+  }
+
+  const maxFileSize = 5 * 1024 * 1024
+  const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"]
+
+  if (imageFile.size > maxFileSize) {
+    throw new Error("Obrázok je príliš veľký (max 5MB)")
+  }
+
+  if (!allowedMimeTypes.includes(imageFile.type)) {
+    throw new Error("Nepovolený typ obrázka (povolené JPG, PNG alebo WebP)")
+  }
+
+  const fileName = `${uploadKey}-${Date.now()}-${imageFile.name}`.replace(
+    /\s/g,
+    "-",
+  )
+
+  const { data: uploadData, error: uploadError } = await supabase.storage
+    .from("BRImages")
+    .upload(fileName, imageFile, {
+      cacheControl: "3600",
+      upsert: true,
+    })
+
+  if (uploadError) {
+    throw new Error(`Chyba pri nahrávaní obrázka: ${uploadError.message}`)
+  }
+
+  const { data: signedData, error: signedError } = await supabase.storage
+    .from("BRImages")
+    .createSignedUrl(uploadData.path, 157680000)
+
+  if (signedError || !signedData?.signedUrl) {
+    throw new Error(
+      `Chyba pri vytváraní URL obrázka: ${signedError?.message ?? "Neznáma chyba"}`,
+    )
+  }
+
+  return signedData.signedUrl
+}
+
 async function requireAdmin() {
   const supabase = await getSupabaseServerClient()
   const {
@@ -76,6 +129,7 @@ export async function updateProfhiloMain(formData: FormData) {
   }
 
   const normalizedParagraphs = normalizeToArray(payload.paragraphs)
+  const uploadedImageUrl = await uploadImageIfProvided(supabase, formData, slug)
 
   const { data: existingItem, error: existingItemError } = await supabase
     .from("service_items")
@@ -101,6 +155,7 @@ export async function updateProfhiloMain(formData: FormData) {
         ...currentContent,
         paragraphs: normalizedParagraphs,
       },
+      ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
     })
     .eq("slug", slug)
     .select("slug")
@@ -183,6 +238,12 @@ async function updateProfhiloAboutSection(
       >[])
     : []
 
+  const uploadedImageUrl = await uploadImageIfProvided(
+    supabase,
+    formData,
+    `${slug}-section-${sectionIndex + 1}`,
+  )
+
   // Meníme iba vybranú sekciu v poli sections, ostatné sekcie ostávajú bez zmeny.
   currentSections[sectionIndex] = {
     ...(currentSections[sectionIndex] ?? {}),
@@ -195,6 +256,7 @@ async function updateProfhiloAboutSection(
     benefitsItems: normalizeToArray(payload.benefitsItems),
     suitableTitle: payload.suitableTitle.trim(),
     suitableItems: normalizeToArray(payload.suitableItems),
+    ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
   }
 
   const { data: updatedRows, error: updateError } = await supabase

@@ -11,6 +11,7 @@ export type PricingProps = {
 export type ProfhiloMainProps = {
   profhiloData: {
     name: string
+    image_url?: string
     content: {
       paragraphs?: string[]
       about?: Record<string, unknown>

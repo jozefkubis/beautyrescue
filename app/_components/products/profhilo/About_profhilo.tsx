@@ -1,48 +1,49 @@
-"use client"
+"use client";
 
-import type { ProfhiloMainProps } from "@/app/_lib/data_services/data_profhilo"
-import Image from "next/image"
-import { useState } from "react"
-import { MdKeyboardArrowDown } from "react-icons/md"
+import type { ProfhiloMainProps } from "@/app/_lib/data_services/data_profhilo";
+import Image from "next/image";
+import { useState } from "react";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 type ProfhiloSection = {
-  product: string
-  whatTitle: string
-  whatItems: string[]
-  howTitle: string
-  howItems: string[]
-  benefitsTitle: string
-  benefitsItems: string[]
-  suitableTitle: string
-  suitableItems: string[]
-}
+  product: string;
+  image_url?: string;
+  whatTitle: string;
+  whatItems: string[];
+  howTitle: string;
+  howItems: string[];
+  benefitsTitle: string;
+  benefitsItems: string[];
+  suitableTitle: string;
+  suitableItems: string[];
+};
 
 export default function About_profhilo({ profhiloData }: ProfhiloMainProps) {
-  const [openBox, setOpenBox] = useState<number | null>(null)
+  const [openBox, setOpenBox] = useState<number | null>(null);
 
   const sectionDescriptions = [
     "Hydratácia, spevnenie a prirodzené omladenie pleti.",
     "Obnova strateného objemu a spevnenie kontúr tváre.",
-  ]
+  ];
 
   const sectionImages = [
     { src: "/images/profhilo_main.jpeg", alt: "Profhilo" },
     { src: "/images/profhilo-3.jpeg", alt: "Profhilo Structura" },
-  ]
+  ];
 
   function handleToggle(index: number) {
-    setOpenBox((current) => (current === index ? null : index))
+    setOpenBox((current) => (current === index ? null : index));
   }
 
   const sections =
     (profhiloData.content.about as unknown as { sections?: ProfhiloSection[] })
-      ?.sections ?? []
+      ?.sections ?? [];
 
   return (
     <section className="w-full items-center justify-center">
       <div className="w-full space-y-4 lg:space-y-5">
         {sections.map((section, index) => {
-          const isOpen = openBox === index
+          const isOpen = openBox === index;
 
           return (
             <article
@@ -177,11 +178,13 @@ export default function About_profhilo({ profhiloData }: ProfhiloMainProps) {
                       <div className="relative w-full aspect-square overflow-hidden rounded-xl border border-goldDark/20 shadow-md shadow-goldDark/15">
                         <Image
                           src={
-                            sectionImages[index]?.src ??
+                            (section.image_url?.trim() ||
+                              sectionImages[index]?.src) ??
                             "/images/profhilo_main.jpeg"
                           }
                           alt={sectionImages[index]?.alt ?? section.product}
                           fill
+                          unoptimized
                           className="object-cover"
                         />
                       </div>
@@ -190,9 +193,9 @@ export default function About_profhilo({ profhiloData }: ProfhiloMainProps) {
                 </div>
               </div>
             </article>
-          )
+          );
         })}
       </div>
     </section>
-  )
+  );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import CheckboxField from "@/app/_components/CheckboxField";
+import FileField from "@/app/_components/FileField";
 import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
@@ -28,6 +29,7 @@ export default function ProfhiloMain_update_form({
   const initialValues = useMemo(
     () => ({
       name: profhiloData?.name ?? "",
+      image_url: profhiloData?.image_url ?? "",
       paragraphs: Array.isArray(profhiloData?.content?.paragraphs)
         ? profhiloData.content.paragraphs.join("\n\n")
         : "",
@@ -39,6 +41,7 @@ export default function ProfhiloMain_update_form({
 
   const [formValues, setFormValues] = useState(initialValues);
   const [lastSavedValues, setLastSavedValues] = useState(initialValues);
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
   function handleChange(
     field: keyof typeof formValues,
@@ -68,6 +71,10 @@ export default function ProfhiloMain_update_form({
           }),
         );
 
+        if (selectedImageFile) {
+          formData.set("image_file", selectedImageFile);
+        }
+
         await updateProfhiloMain(formData);
         setLastSavedValues(formValues);
         router.refresh();
@@ -80,7 +87,8 @@ export default function ProfhiloMain_update_form({
   }
 
   const hasChanges =
-    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues);
+    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues) ||
+    selectedImageFile !== null;
 
   if (!profhiloData) {
     return (
@@ -107,6 +115,19 @@ export default function ProfhiloMain_update_form({
           readOnly={!isAdmin}
           rows={10}
         />
+
+        <FileField
+          type="file"
+          label="Hlavná fotka (image_url)"
+          value={formValues.image_url}
+          onChange={(e) => setSelectedImageFile(e.target.files?.[0] ?? null)}
+          readOnly={!isAdmin}
+        />
+        {selectedImageFile ? (
+          <p className="text-xs text-greyMain/80">
+            Vybraný súbor: {selectedImageFile.name}
+          </p>
+        ) : null}
 
         <CheckboxField
           labelActive="Aktívne"

@@ -1,5 +1,6 @@
 "use client";
 
+import FileField from "@/app/_components/FileField";
 import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
@@ -33,6 +34,7 @@ export default function ProfhiloSectionOne_update_form({
   const initialValues = useMemo(
     () => ({
       product: (sectionOne.product as string) ?? "",
+      image_url: (sectionOne.image_url as string) ?? "",
       whatTitle: (sectionOne.whatTitle as string) ?? "",
       whatItems: Array.isArray(sectionOne.whatItems)
         ? (sectionOne.whatItems as string[]).join("\n")
@@ -55,6 +57,7 @@ export default function ProfhiloSectionOne_update_form({
 
   const [formValues, setFormValues] = useState(initialValues);
   const [lastSavedValues, setLastSavedValues] = useState(initialValues);
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
   function handleChange(field: keyof typeof formValues, value: string) {
     setFormValues((prev) => ({ ...prev, [field]: value }));
@@ -74,6 +77,10 @@ export default function ProfhiloSectionOne_update_form({
         );
         formData.set("data", JSON.stringify(formValues));
 
+        if (selectedImageFile) {
+          formData.set("image_file", selectedImageFile);
+        }
+
         await updateProfhiloAboutSectionOne(formData);
         setLastSavedValues(formValues);
         router.refresh();
@@ -86,7 +93,8 @@ export default function ProfhiloSectionOne_update_form({
   }
 
   const hasChanges =
-    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues);
+    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues) ||
+    selectedImageFile !== null;
 
   if (!profhiloData) {
     return (
@@ -111,6 +119,18 @@ export default function ProfhiloSectionOne_update_form({
           onChange={(e) => handleChange("whatTitle", e.target.value)}
           readOnly={!isAdmin}
         />
+        <FileField
+          type="file"
+          label="Fotka sekcie (image_url)"
+          value={formValues.image_url}
+          onChange={(e) => setSelectedImageFile(e.target.files?.[0] ?? null)}
+          readOnly={!isAdmin}
+        />
+        {selectedImageFile ? (
+          <p className="text-xs text-greyMain/80">
+            Vybraný súbor: {selectedImageFile.name}
+          </p>
+        ) : null}
         <TextareaField
           label="What body (riadky)"
           value={formValues.whatItems}
