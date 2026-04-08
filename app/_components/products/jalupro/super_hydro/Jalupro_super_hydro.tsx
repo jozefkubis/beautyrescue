@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import ExpandText from "@/app/_components/ExpandText"
-import { brandFont } from "@/app/_components/fonts"
-import type { JaluproSuperHydroProps } from "@/app/_lib/data_services/data_jalupro"
-import Image from "next/image"
-import Jalupro_super_hydro_pricing_form from "./Jalupro_super_hydro_pricing_form"
-import Jalupro_super_hydro_text from "./Jalupro_super_hydro_text"
+import ExpandText from "@/app/_components/ExpandText";
+import { brandFont } from "@/app/_components/fonts";
+import type { JaluproSuperHydroProps } from "@/app/_lib/data_services/data_jalupro";
+import Image from "next/image";
+import Jalupro_super_hydro_pricing_form from "./Jalupro_super_hydro_pricing_form";
+import Jalupro_super_hydro_text from "./Jalupro_super_hydro_text";
 
 export default function Jalupro_super_hydro({
   jaluproSuperHydroData,
   user,
   isAdmin,
 }: JaluproSuperHydroProps & { user?: string | null; isAdmin?: boolean }) {
-  const uploadedImageUrl = jaluproSuperHydroData.image_url?.trim()
+  const uploadedImageUrl = jaluproSuperHydroData.image_url?.trim();
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
@@ -54,5 +54,5 @@ export default function Jalupro_super_hydro({
         </div>
       </div>
     </div>
-  )
+  );
 }

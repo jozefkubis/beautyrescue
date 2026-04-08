@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import ExpandText from "@/app/_components/ExpandText"
-import { brandFont } from "@/app/_components/fonts"
-import type { JaluproClassicProps } from "@/app/_lib/data_services/data_jalupro"
-import Image from "next/image"
-import Jalupro_classic_pricing_form from "./Jalupro_classic_pricing_form"
-import Jalupro_classic_text from "./Jalupro_classic_text"
+import ExpandText from "@/app/_components/ExpandText";
+import { brandFont } from "@/app/_components/fonts";
+import type { JaluproClassicProps } from "@/app/_lib/data_services/data_jalupro";
+import Image from "next/image";
+import Jalupro_classic_pricing_form from "./Jalupro_classic_pricing_form";
+import Jalupro_classic_text from "./Jalupro_classic_text";
 
 export default function Jalupro_classic({
   jaluproClassicData,
   user,
   isAdmin,
 }: JaluproClassicProps & { user?: string | null; isAdmin?: boolean }) {
-  const uploadedImageUrl = jaluproClassicData.image_url?.trim()
+  const uploadedImageUrl = jaluproClassicData.image_url?.trim();
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
@@ -54,5 +54,5 @@ export default function Jalupro_classic({
         </div>
       </div>
     </div>
-  )
+  );
 }

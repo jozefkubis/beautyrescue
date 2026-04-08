@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import type { JaluproMainProps } from "@/app/_lib/data_services/data_jalupro"
-import Image from "next/image"
-import Link from "next/link"
-import ExpandText from "../../ExpandText"
-import { brandFont } from "../../fonts"
-import About_jalupro from "./About_jalupro"
-import Jalupro_pricing_form from "./Jalupro_pricing_form"
-import Jalupro_text from "./Jalupro_text"
+import type { JaluproMainProps } from "@/app/_lib/data_services/data_jalupro";
+import Image from "next/image";
+import Link from "next/link";
+import ExpandText from "../../ExpandText";
+import { brandFont } from "../../fonts";
+import About_jalupro from "./About_jalupro";
+import Jalupro_pricing_form from "./Jalupro_pricing_form";
+import Jalupro_text from "./Jalupro_text";
 
 export default function Jalupro({
   jaluproData,
   user,
   isAdmin,
 }: JaluproMainProps & { user?: string | null; isAdmin?: boolean }) {
-  const uploadedImageUrl = jaluproData.image_url?.trim()
+  const uploadedImageUrl = jaluproData.image_url?.trim();
 
   const jaluproLinks = [
     "/medical-cosmetics/jalupro/classic",
     "/medical-cosmetics/jalupro/hmw",
     "/medical-cosmetics/jalupro/super_hydro",
     "/medical-cosmetics/jalupro/young_eye",
-  ]
+  ];
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
@@ -90,5 +90,5 @@ export default function Jalupro({
         </div>
       </div>
     </div>
-  )
+  );
 }

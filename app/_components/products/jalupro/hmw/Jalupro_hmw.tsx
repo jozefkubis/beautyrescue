@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import ExpandText from "@/app/_components/ExpandText"
-import { brandFont } from "@/app/_components/fonts"
-import type { JaluproHMWProps } from "@/app/_lib/data_services/data_jalupro"
-import Image from "next/image"
-import Jalupro_hmw_pricing_form from "./Jalupro_hmw_pricing_form"
-import Jalupro_hmw_text from "./Jalupro_hmw_text"
+import ExpandText from "@/app/_components/ExpandText";
+import { brandFont } from "@/app/_components/fonts";
+import type { JaluproHMWProps } from "@/app/_lib/data_services/data_jalupro";
+import Image from "next/image";
+import Jalupro_hmw_pricing_form from "./Jalupro_hmw_pricing_form";
+import Jalupro_hmw_text from "./Jalupro_hmw_text";
 
 export default function Jalupro_hmw({
   jaluproHMWData,
   user,
   isAdmin,
 }: JaluproHMWProps & { user?: string | null; isAdmin?: boolean }) {
-  const uploadedImageUrl = jaluproHMWData.image_url?.trim()
+  const uploadedImageUrl = jaluproHMWData.image_url?.trim();
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
@@ -54,5 +54,5 @@ export default function Jalupro_hmw({
         </div>
       </div>
     </div>
-  )
+  );
 }
