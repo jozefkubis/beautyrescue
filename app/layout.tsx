@@ -1,4 +1,3 @@
-import { unstable_noStore as noStore } from "next/cache";
 import {
   Open_Sans,
   Playfair_Display_SC,
@@ -51,19 +50,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Navigacia zavisi od auth stavu, preto nechceme staticky cache layoutu.
-  noStore();
-
   const user = await getCurrentUser();
-
-  // Osetrenie pre production: ak env admin emaily chybaju,
-  // odhlaseny user nesmie byt nikdy povazovany za admina.
-  const adminEmails = [process.env.ADMIN_EMAIL_1, process.env.ADMIN_EMAIL_2]
-    .map((email) => email?.trim().toLowerCase())
-    .filter((email): email is string => Boolean(email));
-
-  const userEmail = user?.email?.trim().toLowerCase();
-  const isAdmin = userEmail ? adminEmails.includes(userEmail) : false;
+  const isAdmin =
+    user?.email === process.env.ADMIN_EMAIL_1 ||
+    user?.email === process.env.ADMIN_EMAIL_2;
 
   return (
     <html lang="en">
