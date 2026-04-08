@@ -1,6 +1,6 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
+import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getSupabaseServerClient } from "../supabase/server"
 
 type SignInParams = {
@@ -40,6 +40,10 @@ export async function logOut() {
 }
 
 export async function getCurrentUser() {
+  // Vypneme cache pre auth check, aby sa po login/logout v produkcii
+  // hned zobrazil aktualny stav v navigacii.
+  noStore()
+
   const supabase = await getSupabaseServerClient()
 
   const { data, error } = await supabase.auth.getUser()
