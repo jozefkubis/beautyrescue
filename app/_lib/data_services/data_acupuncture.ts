@@ -15,6 +15,7 @@ export type AcupunctureMainProps = {
       paragraphs?: string[]
     }
     pricing: PricingProps[]
+    image_url?: string
   }
 }
 

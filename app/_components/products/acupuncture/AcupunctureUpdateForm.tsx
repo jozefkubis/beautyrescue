@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import CheckboxField from "@/app/_components/CheckboxField";
+import FileField from "@/app/_components/FileField";
 import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
@@ -17,7 +18,7 @@ type AcupunctureUpdateFormProps = {
 };
 
 // Admin formulár pre jednoduchú úpravu Lekárskej akupunktúry.
-// Upravuje názov, odseky a is_active prepínač.
+// Upravuje názov, odseky, obrázok a is_active prepínač.
 export default function AcupunctureUpdateForm({
   acupunctureData,
   isAdmin,
@@ -31,6 +32,7 @@ export default function AcupunctureUpdateForm({
       paragraphs: Array.isArray(acupunctureData?.content?.paragraphs)
         ? acupunctureData.content.paragraphs.join("\n\n")
         : "",
+      image_url: acupunctureData?.image_url ?? "",
       isActive:
         (acupunctureData as { is_active?: boolean } | null)?.is_active ?? false,
     }),
@@ -39,6 +41,7 @@ export default function AcupunctureUpdateForm({
 
   const [formValues, setFormValues] = useState(initialValues);
   const [lastSavedValues, setLastSavedValues] = useState(initialValues);
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
   function handleChange(
     field: keyof typeof formValues,
@@ -68,6 +71,10 @@ export default function AcupunctureUpdateForm({
           }),
         );
 
+        if (selectedImageFile) {
+          formData.set("image_file", selectedImageFile);
+        }
+
         await updateAcupuncture(formData);
 
         setLastSavedValues(formValues);
@@ -81,7 +88,8 @@ export default function AcupunctureUpdateForm({
   }
 
   const hasChanges =
-    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues);
+    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues) ||
+    selectedImageFile !== null;
 
   if (!acupunctureData) {
     return (
@@ -121,6 +129,21 @@ export default function AcupunctureUpdateForm({
               readOnly={!isAdmin}
               rows={10}
             />
+
+            <FileField
+              type="file"
+              label="Hlavná fotka (image_url)"
+              value={formValues.image_url}
+              onChange={(e) =>
+                setSelectedImageFile(e.target.files?.[0] ?? null)
+              }
+              readOnly={!isAdmin}
+            />
+            {selectedImageFile ? (
+              <p className="text-xs text-greyMain/80">
+                Vybraný súbor: {selectedImageFile.name}
+              </p>
+            ) : null}
 
             <CheckboxField
               labelActive="Aktívne"

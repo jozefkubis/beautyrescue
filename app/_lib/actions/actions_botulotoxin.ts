@@ -178,11 +178,17 @@ export async function updateBotulotoxinMain(formData: FormData) {
     }
 
     // Vytvoríme podpísanú URL pre prístup k obrázku.
-    const { data: signed } = await supabase.storage
+    const { data: signedData, error: signedError } = await supabase.storage
       .from("BRImages")
       .createSignedUrl(uploadData.path, 157680000);
 
-    uploadedImageUrl = signed.signedUrl;
+    if (signedError || !signedData?.signedUrl) {
+      throw new Error(
+        `Chyba pri generovaní signed URL: ${signedError?.message ?? "Neznáma chyba"}`,
+      );
+    }
+
+    uploadedImageUrl = signedData.signedUrl;
   }
 
   // Načítame existujúci content a artikle, aby sme pri update neprepísali celý objekt,
@@ -380,17 +386,17 @@ export async function updateBotulotoxinPotenie(formData: FormData) {
 
     // Pre uložený súbor vygenerujeme signed URL s dlhou platnosťou,
     // ktorú následne uložíme do image_url v databáze.
-    const { data: signed, error: signedError } = await supabase.storage
+    const { data: signedData, error: signedError } = await supabase.storage
       .from("BRImages")
       .createSignedUrl(uploadData.path, 157680000);
 
-    if (signedError) {
+    if (signedError || !signedData?.signedUrl) {
       throw new Error(
-        `Chyba pri generovaní signed URL: ${signedError.message}`,
+        `Chyba pri generovaní signed URL: ${signedError?.message ?? "Neznáma chyba"}`,
       );
     }
 
-    uploadedImageUrl = signed.signedUrl;
+    uploadedImageUrl = signedData.signedUrl;
   }
 
   // Uložíme nové hodnoty do databázy. Name a is_active prepíšeme priamo,
@@ -534,11 +540,17 @@ export async function updateBotulotoxinVrasky(formData: FormData) {
     }
 
     // Vytvoríme podpísanú URL pre prístup k obrázku.
-    const { data: signed } = await supabase.storage
+    const { data: signedData, error: signedError } = await supabase.storage
       .from("BRImages")
       .createSignedUrl(uploadData.path, 157680000);
 
-    uploadedImageUrl = signed.signedUrl;
+    if (signedError || !signedData?.signedUrl) {
+      throw new Error(
+        `Chyba pri generovaní signed URL: ${signedError?.message ?? "Neznáma chyba"}`,
+      );
+    }
+
+    uploadedImageUrl = signedData.signedUrl;
   }
 
   // Načítame existujúci content, aby sme pri update neprepísali celý objekt,

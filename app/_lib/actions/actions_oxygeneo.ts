@@ -148,17 +148,17 @@ export async function updateOxygeneo(formData: FormData) {
 
     // Pre uložený súbor vygenerujeme signed URL s dlhou platnosťou,
     // ktorú následne uložíme do image_url v databáze.
-    const { data: signed, error: signedError } = await supabase.storage
+    const { data: signedData, error: signedError } = await supabase.storage
       .from("BRImages")
       .createSignedUrl(uploadData.path, 157680000);
 
-    if (signedError) {
+    if (signedError || !signedData?.signedUrl) {
       throw new Error(
-        `Chyba pri generovaní signed URL: ${signedError.message}`,
+        `Chyba pri generovaní signed URL: ${signedError?.message ?? "Neznáma chyba"}`,
       );
     }
 
-    uploadedImageUrl = signed.signedUrl;
+    uploadedImageUrl = signedData.signedUrl;
   }
 
   // Uložíme nové hodnoty do databázy. Name a is_active prepíšeme priamo,

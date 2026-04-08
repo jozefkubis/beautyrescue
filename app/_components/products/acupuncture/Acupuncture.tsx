@@ -1,17 +1,19 @@
-"use client"
+"use client";
 
-import { AcupunctureMainProps } from "@/app/_lib/data_services/data_acupuncture"
-import Image from "next/image"
-import ExpandText from "../../ExpandText"
-import { brandFont } from "../../fonts"
-import Acupuncture_pricing_form from "./Acupuncture_pricing_form"
-import Acupuncture_text from "./Acupuncture_text"
+import { AcupunctureMainProps } from "@/app/_lib/data_services/data_acupuncture";
+import Image from "next/image";
+import ExpandText from "../../ExpandText";
+import { brandFont } from "../../fonts";
+import Acupuncture_pricing_form from "./Acupuncture_pricing_form";
+import Acupuncture_text from "./Acupuncture_text";
 
 export default function Acupuncture({
   acupunctureData,
   user,
   isAdmin,
 }: AcupunctureMainProps & { user?: string | null; isAdmin?: boolean }) {
+  const uploadedImageUrl = acupunctureData.image_url?.trim();
+
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
@@ -35,9 +37,10 @@ export default function Acupuncture({
 
         <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <Image
-            src="/images/acupuncture_main.jpeg"
+            src={uploadedImageUrl || "/images/acupuncture_main.jpeg"}
             alt="Lekárska akupunktúra"
             fill
+            unoptimized
             className="object-cover"
           />
         </div>
@@ -51,5 +54,5 @@ export default function Acupuncture({
         </div>
       </div>
     </div>
-  )
+  );
 }

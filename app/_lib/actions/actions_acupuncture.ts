@@ -22,6 +22,7 @@ export async function updateAcupuncture(formData: FormData) {
 
   const slug = formData.get("slug")?.toString() || "acupuncture"
   const rawData = formData.get("data")?.toString()
+  const imageFile = formData.get("image_file")
 
   if (!rawData) {
     throw new Error("Chýbajú dáta pre Lekársku akupunktúru")
@@ -50,6 +51,47 @@ export async function updateAcupuncture(formData: FormData) {
         .map((item) => item.trim())
         .filter(Boolean)
 
+  // Ak admin vybral nový obrázok, validujeme ho a uložíme do storage.
+  let uploadedImageUrl: string | null = null
+
+  if (imageFile && imageFile instanceof File && imageFile.size > 0) {
+    const maxFileSize = 5 * 1024 * 1024
+    const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"]
+
+    if (imageFile.size > maxFileSize) {
+      throw new Error("Obrázok je príliš veľký (max 5MB)")
+    }
+
+    if (!allowedMimeTypes.includes(imageFile.type)) {
+      throw new Error("Nepovolený typ obrázka (povolené JPG, PNG alebo WebP)")
+    }
+
+    const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(/\s/g, "-")
+
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("BRImages")
+      .upload(fileName, imageFile, {
+        cacheControl: "3600",
+        upsert: true,
+      })
+
+    if (uploadError) {
+      throw new Error(`Chyba pri nahrávaní obrázka: ${uploadError.message}`)
+    }
+
+    const { data: signedData, error: signedError } = await supabase.storage
+      .from("BRImages")
+      .createSignedUrl(uploadData.path, 157680000)
+
+    if (signedError || !signedData?.signedUrl) {
+      throw new Error(
+        `Chyba pri vytváraní URL obrázka: ${signedError?.message ?? "Neznáma chyba"}`,
+      )
+    }
+
+    uploadedImageUrl = signedData.signedUrl
+  }
+
   // Načítame existujúci content, aby sa zachovali aj ďalšie prípadné kľúče.
   const { data: existingItem, error: existingItemError } = await supabase
     .from("service_items")
@@ -75,6 +117,7 @@ export async function updateAcupuncture(formData: FormData) {
         ...currentContent,
         paragraphs: normalizedParagraphs,
       },
+      ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
     })
     .eq("slug", slug)
     .select("slug")
