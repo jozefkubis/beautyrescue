@@ -55,9 +55,15 @@ export default async function RootLayout({
   noStore();
 
   const user = await getCurrentUser();
-  const isAdmin =
-    user?.email === process.env.ADMIN_EMAIL_1 ||
-    user?.email === process.env.ADMIN_EMAIL_2;
+
+  // Osetrenie pre production: ak env admin emaily chybaju,
+  // odhlaseny user nesmie byt nikdy povazovany za admina.
+  const adminEmails = [process.env.ADMIN_EMAIL_1, process.env.ADMIN_EMAIL_2]
+    .map((email) => email?.trim().toLowerCase())
+    .filter((email): email is string => Boolean(email));
+
+  const userEmail = user?.email?.trim().toLowerCase();
+  const isAdmin = userEmail ? adminEmails.includes(userEmail) : false;
 
   return (
     <html lang="en">
