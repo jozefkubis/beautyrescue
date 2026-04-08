@@ -1,20 +1,23 @@
-"use client"
+"use client";
 
-import ExpandTextLG from "@/app/_components/ExpandTextLG"
-import { brandFont } from "@/app/_components/fonts"
-import type { BotulotoxinPotenieMainProps } from "@/app/_lib/data_services/data_botulotoxin"
-import Image from "next/image"
-import Botulotoxin_potenie_text from "./Botulotoxin_potenie_text"
+import ExpandTextLG from "@/app/_components/ExpandTextLG";
+import { brandFont } from "@/app/_components/fonts";
+import type { BotulotoxinPotenieMainProps } from "@/app/_lib/data_services/data_botulotoxin";
+import Image from "next/image";
+import Botulotoxin_potenie_text from "./Botulotoxin_potenie_text";
 
 export default function Botulotoxin_potenie({
   botulotoxinPotenieData,
 }: BotulotoxinPotenieMainProps) {
+  // Ak je v DB nahraný obrázok zo Storage, použijeme ho; inak ostáva lokálny fallback.
+  const uploadedImageUrl = botulotoxinPotenieData?.image_url?.trim();
+
   if (!botulotoxinPotenieData) {
     return (
       <div className="section-shell mx-auto mt-10 w-full max-w-3xl p-6 text-center text-redDark">
         Dáta pre stránku Botulotoxín potenie sa nepodarilo načítať.
       </div>
-    )
+    );
   }
 
   return (
@@ -22,9 +25,10 @@ export default function Botulotoxin_potenie({
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
         <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <Image
-            src="/images/botulotoxin_potenie.jpeg"
+            src={uploadedImageUrl || "/images/botulotoxin_potenie.jpeg"}
             alt="Botulotoxín nadmerné potenie"
             fill
+            unoptimized
             className="object-cover"
           />
         </div>
@@ -49,5 +53,5 @@ export default function Botulotoxin_potenie({
         </div>
       </div>
     </div>
-  )
+  );
 }

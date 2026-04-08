@@ -1,6 +1,7 @@
 "use client";
 
 import CheckboxField from "@/app/_components/CheckboxField";
+import FileField from "@/app/_components/FileField";
 import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
@@ -33,6 +34,7 @@ export default function BotulotoxinVrasky_update_form({
     () => ({
       name: botulotoxinVraskyData?.name ?? "",
       summary: botulotoxinVraskyData?.summary ?? "",
+      image_url: botulotoxinVraskyData?.image_url ?? "",
       paragraphs: Array.isArray(botulotoxinVraskyData?.content.paragraphs)
         ? botulotoxinVraskyData.content.paragraphs.join("\n\n")
         : (botulotoxinVraskyData?.content.paragraphs ?? ""),
@@ -47,6 +49,9 @@ export default function BotulotoxinVrasky_update_form({
   // lastSavedValues = posledný stav, ktorý bol úspešne uložený do DB.
   // Používa sa na detekciu zmien a funkciu Undo.
   const [lastSavedValues, setLastSavedValues] = useState(initialValues);
+
+  // selectedImageFile = aktuálne vybraný obrázok z file pickeru.
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
   // Generická funkcia na aktualizáciu ľubovoľného poľa vo formulári.
   // na pochopenie: "prev" je starý stav formulára, "...prev" ho skopíruje
@@ -87,6 +92,10 @@ export default function BotulotoxinVrasky_update_form({
           }),
         );
 
+        if (selectedImageFile) {
+          formData.set("image_file", selectedImageFile);
+        }
+
         await updateBotulotoxinVrasky(formData);
 
         // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
@@ -103,7 +112,8 @@ export default function BotulotoxinVrasky_update_form({
 
   // true ak sa aktuálne hodnoty líšia od posledného uloženia → aktivuje tlačidlá.
   const hasChanges =
-    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues);
+    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues) ||
+    selectedImageFile !== null;
 
   // Ak sa dáta z DB nepodarilo načítať, zobrazíme chybovú správu namiesto formulára.
   if (!botulotoxinVraskyData) {
@@ -124,7 +134,7 @@ export default function BotulotoxinVrasky_update_form({
           readOnly={!isAdmin}
         />
 
-          <InputField
+        <InputField
           label="Krátky popis (summary)"
           value={formValues.summary}
           onChange={(e) => handleChange("summary", e.target.value)}
@@ -138,6 +148,19 @@ export default function BotulotoxinVrasky_update_form({
           readOnly={!isAdmin}
           rows={12}
         />
+
+        <FileField
+          type="file"
+          label="Hlavná fotka (image_url)"
+          value={formValues.image_url}
+          onChange={(e) => setSelectedImageFile(e.target.files?.[0] ?? null)}
+          readOnly={!isAdmin}
+        />
+        {selectedImageFile ? (
+          <p className="text-xs text-greyMain/80">
+            Vybraný súbor: {selectedImageFile.name}
+          </p>
+        ) : null}
 
         <CheckboxField
           labelActive="Aktívne"

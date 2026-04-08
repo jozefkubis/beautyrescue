@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import CheckboxField from "@/app/_components/CheckboxField";
 import InputField from "@/app/_components/InputField";
@@ -10,6 +10,7 @@ import type { BotulotoxinPotenieMainProps } from "@/app/_lib/data_services/data_
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
+import FileField from "../../../FileField";
 
 type BotulotoxinPotenieUpdateFormProps = {
   botulotoxinPotenieData:
@@ -32,6 +33,7 @@ export default function BotulotoxinPotenie_update_form({
   const initialValues = useMemo(
     () => ({
       name: botulotoxinPotenieData?.name ?? "",
+      image_url: botulotoxinPotenieData?.image_url ?? "",
       paragraphs: Array.isArray(botulotoxinPotenieData?.content.paragraphs)
         ? botulotoxinPotenieData.content.paragraphs.join("\n\n")
         : (botulotoxinPotenieData?.content.paragraphs ?? ""),
@@ -43,6 +45,9 @@ export default function BotulotoxinPotenie_update_form({
 
   // formValues = to, čo admin práve píše do formulára (live stav).
   const [formValues, setFormValues] = useState(initialValues);
+
+  // Vybraný obrázok držíme samostatne, aby sa poslal ako File vo FormData.
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
   // lastSavedValues = posledný stav, ktorý bol úspešne uložený do DB.
   // Používa sa na detekciu zmien a funkciu Undo.
@@ -61,6 +66,7 @@ export default function BotulotoxinPotenie_update_form({
   // Vráti formulár do stavu posledného úspešného uloženia.
   function handleUndo() {
     setFormValues(lastSavedValues);
+    setSelectedImageFile(null);
     toast.success("Zmeny boli vrátené");
   }
 
@@ -89,6 +95,10 @@ export default function BotulotoxinPotenie_update_form({
           }),
         );
 
+        if (selectedImageFile) {
+          formData.set("image_file", selectedImageFile);
+        }
+
         await updateBotulotoxinPotenie(formData);
 
         // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
@@ -105,7 +115,8 @@ export default function BotulotoxinPotenie_update_form({
 
   // true ak sa aktuálne hodnoty líšia od posledného uloženia → aktivuje tlačidlá.
   const hasChanges =
-    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues);
+    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues) ||
+    selectedImageFile !== null;
 
   // Ak sa dáta z DB nepodarilo načítať, zobrazíme chybovú správu namiesto formulára.
   if (!botulotoxinPotenieData) {
@@ -140,6 +151,22 @@ export default function BotulotoxinPotenie_update_form({
           onChange={(e) => handleChange("url", e.target.value)}
           readOnly={!isAdmin}
         />
+
+        <FileField
+          type="file"
+          label="Hlavná fotka (image_url)"
+          value={formValues.image_url}
+          onChange={(e) => {
+            const file = e.target.files?.[0] ?? null;
+            setSelectedImageFile(file);
+          }}
+          readOnly={!isAdmin}
+        />
+        {selectedImageFile ? (
+          <p className="text-xs text-greyMain/80">
+            Vybraný súbor: {selectedImageFile.name}
+          </p>
+        ) : null}
 
         <CheckboxField
           labelActive="Aktívne"

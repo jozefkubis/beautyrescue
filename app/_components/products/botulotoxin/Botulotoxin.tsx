@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulotoxin"
-import Image from "next/image"
-import Link from "next/link"
-import ExpandText from "../../ExpandText"
-import { brandFont } from "../../fonts"
-import About_botulotoxin from "./About_botulotoxin"
-import Botulotoxin_pricing_form from "./Botulotoxin_pricing_form"
-import Botulotoxin_text from "./Botulotoxin_text"
+import { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulotoxin";
+import Image from "next/image";
+import Link from "next/link";
+import ExpandText from "../../ExpandText";
+import { brandFont } from "../../fonts";
+import About_botulotoxin from "./About_botulotoxin";
+import Botulotoxin_pricing_form from "./Botulotoxin_pricing_form";
+import Botulotoxin_text from "./Botulotoxin_text";
 
 export default function Botulotoxin({
   botulotoxinData,
@@ -19,7 +19,7 @@ export default function Botulotoxin({
       <div className="section-shell mx-auto mt-10 w-full max-w-3xl p-6 text-center text-redDark">
         Dáta pre stránku Botulotoxín sa nepodarilo načítať.
       </div>
-    )
+    );
   }
 
   return (
@@ -44,12 +44,24 @@ export default function Botulotoxin({
         </div>
 
         <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
-          <Image
-            src="/images/botulotoxin.jpg"
-            alt="Botulotoxín"
-            fill
-            className="object-cover"
-          />
+          {/* Použijeme URL z DB ak existuje, inak fallback na default obrázok */}
+          {botulotoxinData.image_url?.trim() && (
+            <Image
+              src={botulotoxinData.image_url.trim()}
+              alt="Botulotoxín"
+              fill
+              unoptimized
+              className="object-cover"
+            />
+          )}
+          {!botulotoxinData.image_url?.trim() && (
+            <Image
+              src="/images/botulotoxin.jpg"
+              alt="Botulotoxín"
+              fill
+              className="object-cover"
+            />
+          )}
         </div>
 
         <div className="mt-10 lg:mt-12 lg:col-span-2">
@@ -90,5 +102,5 @@ export default function Botulotoxin({
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import CheckboxField from "../../CheckboxField";
+import FileField from "../../FileField";
 import InputField from "../../InputField";
 import SubmitButton from "../../SubmitButton";
 import TextareaField from "../../TextareaField";
@@ -30,6 +31,7 @@ export default function BotulotoxinMainPage_update_form({
   const initialValues = useMemo(
     () => ({
       name: botulotoxinData?.name ?? "",
+      image_url: botulotoxinData?.image_url ?? "",
       intro: Array.isArray(botulotoxinData?.attributes.intro)
         ? botulotoxinData.attributes.intro.join("\n\n")
         : (botulotoxinData?.attributes.intro ?? ""),
@@ -56,6 +58,9 @@ export default function BotulotoxinMainPage_update_form({
   // lastSavedValues = posledný stav, ktorý bol úspešne uložený do DB.
   // Používa sa na detekciu zmien a funkciu Undo.
   const [lastSavedValues, setLastSavedValues] = useState(initialValues);
+
+  // selectedImageFile = aktuálne vybraný obrázok z file pickeru.
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
   // Generická funkcia na aktualizáciu ľubovoľného poľa vo formulári.
   // na pochopenie: "prev" je starý stav formulára, "...prev" ho skopíruje
@@ -100,6 +105,10 @@ export default function BotulotoxinMainPage_update_form({
           }),
         );
 
+        if (selectedImageFile) {
+          formData.set("image_file", selectedImageFile);
+        }
+
         await updateBotulotoxinMain(formData);
 
         // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
@@ -116,7 +125,8 @@ export default function BotulotoxinMainPage_update_form({
 
   // true ak sa aktuálne hodnoty líšia od posledného uloženia → aktivuje tlačidlá.
   const hasChanges =
-    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues);
+    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues) ||
+    selectedImageFile !== null;
 
   // Ak sa dáta z DB nepodarilo načítať, zobrazíme chybovú správu namiesto formulára.
   if (!botulotoxinData) {
@@ -175,6 +185,19 @@ export default function BotulotoxinMainPage_update_form({
           readOnly={!isAdmin}
           rows={8}
         />
+
+        <FileField
+          type="file"
+          label="Hlavná fotka (image_url)"
+          value={formValues.image_url}
+          onChange={(e) => setSelectedImageFile(e.target.files?.[0] ?? null)}
+          readOnly={!isAdmin}
+        />
+        {selectedImageFile ? (
+          <p className="text-xs text-greyMain/80">
+            Vybraný súbor: {selectedImageFile.name}
+          </p>
+        ) : null}
 
         <CheckboxField
           labelActive="Aktívne"

@@ -12,6 +12,7 @@ export type BotulotoxinMainProps = {
   botulotoxinData: {
     slug: string
     name: string
+    image_url?: string
     gallery: { src: string; alt?: string }[]
     content: {
       about: {
@@ -33,6 +34,7 @@ export type BotulotoxinPotenieMainProps = {
   botulotoxinPotenieData: {
     slug: string
     name: string
+    image_url?: string
     content: {
       paragraphs: string[]
     }
@@ -48,6 +50,7 @@ export type BotulotoxinVraskyMainProps = {
     slug: string
     name: string
     summary: string | null
+    image_url?: string
     content: {
       paragraphs: string[]
     }

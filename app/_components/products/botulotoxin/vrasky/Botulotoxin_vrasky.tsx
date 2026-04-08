@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import ExpandText from "@/app/_components/ExpandText"
-import { brandFont } from "@/app/_components/fonts"
-import type { BotulotoxinVraskyMainProps } from "@/app/_lib/data_services/data_botulotoxin"
-import Image from "next/image"
-import Botulotoxin_vrasky_text from "./Botulotoxin_vrasky_text"
+import ExpandText from "@/app/_components/ExpandText";
+import { brandFont } from "@/app/_components/fonts";
+import type { BotulotoxinVraskyMainProps } from "@/app/_lib/data_services/data_botulotoxin";
+import Image from "next/image";
+import Botulotoxin_vrasky_text from "./Botulotoxin_vrasky_text";
 
 export default function Botulotoxin_vrasky({
   botulotoxinVraskyData,
@@ -14,17 +14,21 @@ export default function Botulotoxin_vrasky({
       <div className="section-shell mx-auto mt-10 w-full max-w-3xl p-6 text-center text-redDark">
         Dáta pre stránku Botulotoxín vrásky sa nepodarilo načítať.
       </div>
-    )
+    );
   }
+
+  // Používame URL z DB ak existuje, inak fallback na default obrázok.
+  const uploadedImageUrl = botulotoxinVraskyData?.image_url?.trim();
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
         <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <Image
-            src="/images/botulotoxin_vrasky.jpeg"
+            src={uploadedImageUrl || "/images/botulotoxin_vrasky.jpeg"}
             alt="Botulotoxín vrásky"
             fill
+            unoptimized
             className="object-cover"
           />
         </div>
@@ -49,5 +53,5 @@ export default function Botulotoxin_vrasky({
         </div>
       </div>
     </div>
-  )
+  );
 }

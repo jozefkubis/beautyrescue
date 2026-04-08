@@ -58,6 +58,7 @@ export async function updateBotulotoxinMain(formData: FormData) {
   // Slug určuje, ktorý riadok v service_items sa má aktualizovať.
   const slug = formData.get("slug")?.toString() || "botulotoxin";
   const rawData = formData.get("data")?.toString();
+  const imageFile = formData.get("image_file");
 
   // Ak data vôbec neprišli, nemáme čo spracovať ani uložiť.
   if (!rawData) {
@@ -144,6 +145,46 @@ export async function updateBotulotoxinMain(formData: FormData) {
         .map((paragraph) => paragraph.trim())
         .filter(Boolean);
 
+  // Spracujeme nahratý obrázok ak bol vybraný.
+  let uploadedImageUrl: string | null = null;
+
+  if (imageFile && imageFile instanceof File && imageFile.size > 0) {
+    // Validácia veľkosti a typu súboru.
+    const maxFileSize = 5 * 1024 * 1024;
+    const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (imageFile.size > maxFileSize) {
+      throw new Error("Obrázok je príliš veľký (max 5MB)");
+    }
+
+    if (!allowedMimeTypes.includes(imageFile.type)) {
+      throw new Error("Nepovolený typ obrázka (pokope JPG, PNG alebo WebP)");
+    }
+
+    // Vytvoríme unikátne meno súboru a nahrajeme do Supabase Storage.
+    const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(
+      /\s/g,
+      "-",
+    );
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("BRImages")
+      .upload(fileName, imageFile, {
+        cacheControl: "3600",
+        upsert: true,
+      });
+
+    if (uploadError) {
+      throw new Error(`Chyba pri nahrávaní obrázka: ${uploadError.message}`);
+    }
+
+    // Vytvoríme podpísanú URL pre prístup k obrázku.
+    const { data: signed } = await supabase.storage
+      .from("BRImages")
+      .createSignedUrl(uploadData.path, 157680000);
+
+    uploadedImageUrl = signed.signedUrl;
+  }
+
   // Načítame existujúci content a artikle, aby sme pri update neprepísali celý objekt,
   // ale zachovali aj ostatné kľúče, ktoré môžu byť v content uložené.
   const { data: existingItem, error: existingItemError } = await supabase
@@ -188,6 +229,7 @@ export async function updateBotulotoxinMain(formData: FormData) {
         complications: normalizedComplications,
         contraindications: normalizedContraindications,
       },
+      ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
     })
     .eq("slug", slug)
     .select("slug");
@@ -204,8 +246,8 @@ export async function updateBotulotoxinMain(formData: FormData) {
   // Po úspešnom update vyčistíme cache dotknutých stránok,
   // aby sa nové dáta zobrazili hneď bez čakania na ďalší deploy alebo refresh cache.
   revalidatePath("/", "layout");
-  revalidatePath("/about");
-  revalidatePath("/admin/botulotoxin");
+  revalidatePath("/medical-cosmetics/botulotoxin");
+  revalidatePath("/admin/medical-cosmetics_settings/botulotoxin_settings");
 
   // Klientovi vrátime jednoduchú úspešnú odpoveď, aby mohol zobraziť toast.
   return {
@@ -234,6 +276,7 @@ export async function updateBotulotoxinPotenie(formData: FormData) {
   // Slug určuje, ktorý riadok v service_items sa má aktualizovať.
   const slug = formData.get("slug")?.toString() || "botulotoxin-potenie";
   const rawData = formData.get("data")?.toString();
+  const imageFile = formData.get("image_file");
 
   // Ak data vôbec neprišli, nemáme čo spracovať ani uložiť.
   if (!rawData) {
@@ -278,11 +321,11 @@ export async function updateBotulotoxinPotenie(formData: FormData) {
         .map((paragraph) => paragraph.trim())
         .filter(Boolean);
 
-  // Načítame existujúci content a artikle, aby sme pri update neprepísali celý objekt,
-  // ale zachovali aj ostatné kľúče, ktoré môžu byť v content uložené.
+  // Načítame existujúci content aj metadata, aby sme pri update neprepísali celý objekt,
+  // ale zachovali aj ostatné kľúče, ktoré môžu byť v DB uložené.
   const { data: existingItem, error: existingItemError } = await supabase
     .from("service_items")
-    .select("content")
+    .select("content, metadata")
     .eq("slug", slug)
     .single();
 
@@ -295,6 +338,61 @@ export async function updateBotulotoxinPotenie(formData: FormData) {
       ? (existingItem.content as Record<string, unknown>)
       : {};
 
+  const currentMetadata =
+    existingItem?.metadata && typeof existingItem.metadata === "object"
+      ? (existingItem.metadata as Record<string, unknown>)
+      : {};
+
+  let uploadedImageUrl: string | undefined;
+
+  if (imageFile && imageFile instanceof File && imageFile.size > 0) {
+    // Jednoduchá ochrana pre veľkosť a typ súboru.
+    const maxFileSize = 5 * 1024 * 1024;
+    const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (imageFile.size > maxFileSize) {
+      throw new Error("Obrázok je príliš veľký (max 5 MB)");
+    }
+
+    if (!allowedMimeTypes.includes(imageFile.type)) {
+      throw new Error("Podporované sú iba formáty JPG, PNG a WEBP");
+    }
+
+    // Názov súboru skladáme zo slugu + času, aby sme minimalizovali kolízie.
+    // Medzery nahradíme pomlčkami, aby bol názov bezpečný pre URL aj storage.
+    const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(
+      /\s/g,
+      "-",
+    );
+
+    // Obrázok uložíme do bucketu BRImages.
+    // upsert: true znamená, že pri rovnakej ceste sa súbor prepíše.
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("BRImages")
+      .upload(fileName, imageFile, {
+        cacheControl: "3600",
+        upsert: true,
+      });
+
+    if (uploadError) {
+      throw new Error(`Chyba pri nahrávaní obrázka: ${uploadError.message}`);
+    }
+
+    // Pre uložený súbor vygenerujeme signed URL s dlhou platnosťou,
+    // ktorú následne uložíme do image_url v databáze.
+    const { data: signed, error: signedError } = await supabase.storage
+      .from("BRImages")
+      .createSignedUrl(uploadData.path, 157680000);
+
+    if (signedError) {
+      throw new Error(
+        `Chyba pri generovaní signed URL: ${signedError.message}`,
+      );
+    }
+
+    uploadedImageUrl = signed.signedUrl;
+  }
+
   // Uložíme nové hodnoty do databázy. Name a is_active prepíšeme priamo,
   // content poskladáme zo starého objektu a nahradíme len paragraphs,
   // aby sme zbytočne nevymazali iné uložené dáta.
@@ -302,13 +400,16 @@ export async function updateBotulotoxinPotenie(formData: FormData) {
     .from("service_items")
     .update({
       name: payload.name.trim(),
+      // image_url meníme len vtedy, keď sa reálne nahral nový obrázok.
+      // Ak upload neprebehol, tento kľúč neposielame a pôvodná hodnota zostane zachovaná.
+      ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
       is_active: payload.is_active,
       content: {
         ...currentContent,
         paragraphs: normalizedParagraphs,
       },
       metadata: {
-        ...currentContent,
+        ...currentMetadata,
         sourceUrl: payload.metadata?.sourceUrl?.trim() || "",
       },
     })
@@ -399,7 +500,48 @@ export async function updateBotulotoxinVrasky(formData: FormData) {
         .map((paragraph) => paragraph.trim())
         .filter(Boolean);
 
-  // Načítame existujúci content a artikle, aby sme pri update neprepísali celý objekt,
+  // Spracujeme nahratý obrázok ak bol vybraný.
+  let uploadedImageUrl: string | null = null;
+  const imageFile = formData.get("image_file");
+
+  if (imageFile && imageFile instanceof File && imageFile.size > 0) {
+    // Validácia veľkosti a typu súboru.
+    const maxFileSize = 5 * 1024 * 1024;
+    const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (imageFile.size > maxFileSize) {
+      throw new Error("Obrázok je príliš veľký (max 5MB)");
+    }
+
+    if (!allowedMimeTypes.includes(imageFile.type)) {
+      throw new Error("Nepovolený typ obrázka (pokope JPG, PNG alebo WebP)");
+    }
+
+    // Vytvoríme unikátne meno súboru a nahrajeme do Supabase Storage.
+    const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(
+      /\s/g,
+      "-",
+    );
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from("BRImages")
+      .upload(fileName, imageFile, {
+        cacheControl: "3600",
+        upsert: true,
+      });
+
+    if (uploadError) {
+      throw new Error(`Chyba pri nahrávaní obrázka: ${uploadError.message}`);
+    }
+
+    // Vytvoríme podpísanú URL pre prístup k obrázku.
+    const { data: signed } = await supabase.storage
+      .from("BRImages")
+      .createSignedUrl(uploadData.path, 157680000);
+
+    uploadedImageUrl = signed.signedUrl;
+  }
+
+  // Načítame existujúci content, aby sme pri update neprepísali celý objekt,
   // ale zachovali aj ostatné kľúče, ktoré môžu byť v content uložené.
   const { data: existingItem, error: existingItemError } = await supabase
     .from("service_items")
@@ -429,6 +571,7 @@ export async function updateBotulotoxinVrasky(formData: FormData) {
         ...currentContent,
         paragraphs: normalizedParagraphs,
       },
+      ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
     })
     .eq("slug", slug)
     .select("slug");
