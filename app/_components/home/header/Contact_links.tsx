@@ -10,6 +10,7 @@ export default function Contact_links() {
     {
       type: "Email",
       value: "info@beautyrescue.sk",
+      href: "mailto:info@beautyrescue.sk",
       icon: (
         <MdEmail className="rounded-full bg-linear-to-br from-[#fff5db] to-[#ffe8c7] p-2 text-3xl text-redDark ring-1 ring-goldLight/60 xl:text-4xl" />
       ),
@@ -17,6 +18,7 @@ export default function Contact_links() {
     {
       type: "Telefón",
       value: "0907 81 65 37",
+      href: "tel:+421907816537",
       icon: (
         <MdPhone className="rounded-full bg-linear-to-br from-[#fff5db] to-[#ffe8c7] p-2 text-3xl text-redDark ring-1 ring-goldLight/60 xl:text-4xl" />
       ),
@@ -24,6 +26,7 @@ export default function Contact_links() {
     {
       type: "Adresa",
       value: "Korzo 8708/8 010 15 Žilina",
+      href: null,
       icon: (
         <FaMapMarkerAlt className="rounded-full bg-linear-to-br from-[#fff5db] to-[#ffe8c7] p-2 text-3xl text-redDark ring-1 ring-goldLight/60 xl:text-4xl" />
       ),
@@ -32,31 +35,68 @@ export default function Contact_links() {
 
   return (
     <div className="flex items-center gap-3 xl:gap-8">
-      {contactLinks.map((link, index) => (
-        <div
-          key={index}
-          className="flex items-center gap-3 rounded-xl border border-goldDark/15 bg-white/70 px-3 py-2 shadow-sm shadow-goldDark/10 transition-all duration-300 hover:-translate-y-0.5 hover:border-goldDark/35 hover:bg-white hover:cursor-pointer active:translate-y-0.5 active:border-goldDark/15 active:bg-white/90"
-        >
-          {link.icon}
-          <div className="flex flex-col items-start justify-center">
-            <h4 className="text-sm font-semibold text-redDark xl:text-md">
-              {link.type}
-            </h4>
-            <p className="text-xs font-medium text-greyMain/85 xl:text-[14px]">
-              {link.value}
-            </p>
+      {contactLinks.map((link, index) => {
+        const content = (
+          <>
+            {link.icon}
+            <div className="flex flex-col items-start justify-center">
+              <h4 className="text-sm font-semibold text-redDark xl:text-md">
+                {link.type}
+              </h4>
+              <p className="text-xs font-medium text-greyMain/85 xl:text-[14px]">
+                {link.value}
+              </p>
+            </div>
+          </>
+        );
+
+        const className =
+          "flex items-center gap-3 rounded-xl border border-goldDark/15 bg-white/70 px-3 py-2 shadow-sm shadow-goldDark/10 transition-all duration-300 hover:-translate-y-0.5 hover:border-goldDark/35 hover:bg-white active:translate-y-0.5 active:border-goldDark/15 active:bg-white/90";
+
+        // Kliknutelne polozky pouziju mailto/tel, adresa zatial ostava iba informacna.
+        if (link.href) {
+          return (
+            <a
+              key={index}
+              href={link.href}
+              className={`${className} hover:cursor-pointer`}
+            >
+              {content}
+            </a>
+          );
+        }
+
+        return (
+          <div key={index} className={className}>
+            {content}
           </div>
-        </div>
-      ))}
+        );
+      })}
       <div className="ml-1 flex items-center gap-1 rounded-xl border border-goldDark/15 bg-white/70 px-2 py-1 shadow-sm shadow-goldDark/10">
-        <FaFacebookSquare
-          size={38}
-          className="text-redDark transition-all duration-200 hover:cursor-pointer hover:scale-105 hover:text-[#1877F2] active:scale-95"
-        />
-        <FaInstagramSquare
-          size={38}
-          className="text-redDark transition-all duration-200 hover:cursor-pointer hover:scale-105 hover:text-[#e1306c] active:scale-95"
-        />
+        <a
+          href="https://www.facebook.com/beautyrescueprofikozmetika"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook Beauty Rescue"
+          title="Facebook Beauty Rescue"
+        >
+          <FaFacebookSquare
+            size={38}
+            className="text-redDark transition-all duration-200 hover:cursor-pointer hover:scale-105 hover:text-[#1877F2] active:scale-95"
+          />
+        </a>
+        <a
+          href="https://www.instagram.com/beautyrescue_profi/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram beautyrescue_profi"
+          title="Instagram beautyrescue_profi"
+        >
+          <FaInstagramSquare
+            size={38}
+            className="text-redDark transition-all duration-200 hover:cursor-pointer hover:scale-105 hover:text-[#e1306c] active:scale-95"
+          />
+        </a>
       </div>
     </div>
   );

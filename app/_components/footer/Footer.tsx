@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { FaFacebookSquare, FaInstagramSquare } from "react-icons/fa"
-import ContactForm from "../forms/ContactForm"
+import { FaFacebookSquare, FaInstagramSquare } from "react-icons/fa";
+import ContactForm from "../forms/ContactForm";
 
 export default function Footer() {
   return (
@@ -22,16 +22,32 @@ export default function Footer() {
             Telefón: +421 907 81 65 37
           </p>
 
-          <div className="flex gap-4 mt-4">
-            <FaFacebookSquare
-              size={42}
-              className="cursor-pointer text-background/80 transition-all duration-200 hover:scale-110 hover:text-[#1877F2] active:scale-95"
-            />
+          <div className="mt-4 flex gap-4">
+            <a
+              href="https://www.facebook.com/beautyrescueprofikozmetika"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook Beauty Rescue"
+              title="Facebook Beauty Rescue"
+            >
+              <FaFacebookSquare
+                size={42}
+                className="cursor-pointer text-background/80 transition-all duration-200 hover:scale-110 hover:text-[#1877F2] active:scale-95"
+              />
+            </a>
 
-            <FaInstagramSquare
-              size={42}
-              className="cursor-pointer text-background/80 transition-all duration-200 hover:scale-110 hover:text-[#e1306c] active:scale-95"
-            />
+            <a
+              href="https://www.instagram.com/beautyrescue_profi/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram beautyrescue_profi"
+              title="Instagram beautyrescue_profi"
+            >
+              <FaInstagramSquare
+                size={42}
+                className="cursor-pointer text-background/80 transition-all duration-200 hover:scale-110 hover:text-[#e1306c] active:scale-95"
+              />
+            </a>
           </div>
         </div>
 
@@ -59,5 +75,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
