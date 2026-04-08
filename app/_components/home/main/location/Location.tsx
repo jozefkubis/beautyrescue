@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { useState } from "react"
-import { MdKeyboardArrowDown } from "react-icons/md"
+import Image from "next/image";
+import { useState } from "react";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 export default function Location() {
-  const [openBox, setOpenBox] = useState(false)
+  const [openBox, setOpenBox] = useState(false);
 
   return (
     <section className="fade-up flex flex-col items-center px-4 py-12 sm:px-8 sm:py-14 lg:px-44 lg:py-16">
@@ -87,13 +87,20 @@ export default function Location() {
                 </div>
 
                 <div className="relative h-52 aspect-4/3 overflow-hidden rounded-2xl border border-goldDark/25 bg-white shadow-md shadow-goldDark/15 sm:h-56 lg:h-60 xl:h-64">
-                  <Image
-                    src="/images/studio_location3.jpeg"
-                    alt="Studio location 3"
-                    fill
-                    className="h-52 w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer sm:h-56 lg:h-60 xl:h-64"
-                    priority={false}
-                  />
+                  <a
+                    title="Google Maps - Korzo 8707/8, 010 15 Žilina-Hájik"
+                    href="https://www.google.com/maps/place/Korzo+8707%2F8,+010+15+%C5%BDilina-H%C3%A1jik/@49.2114221,18.6921066,15z/data=!3m1!4b1!4m6!3m5!1s0x47145e949e06440b:0xb9e41028416cd805!8m2!3d49.2114096!4d18.7105605!16s%2Fg%2F11yfdg47mw?entry=ttu&g_ep=EgoyMDI2MDQwNS4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image
+                      src="/images/studio_location3.jpeg"
+                      alt="Studio location 3"
+                      fill
+                      className="h-52 w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer sm:h-56 lg:h-60 xl:h-64"
+                      priority={false}
+                    />
+                  </a>
                 </div>
               </div>
 
@@ -108,5 +115,5 @@ export default function Location() {
         </div>
       </div>
     </section>
-  )
+  );
 }

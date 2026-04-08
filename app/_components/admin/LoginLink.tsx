@@ -1,9 +1,9 @@
-import Link from "next/link"
-import { RiAdminLine } from "react-icons/ri"
+import Link from "next/link";
+import { RiAdminLine } from "react-icons/ri";
 
 type LoginLinkProps = {
-  setOpenModal: (open: boolean) => void
-}
+  setOpenModal: (open: boolean) => void;
+};
 
 export default function LoginLink({ setOpenModal }: LoginLinkProps) {
   return (
@@ -16,5 +16,5 @@ export default function LoginLink({ setOpenModal }: LoginLinkProps) {
     >
       <RiAdminLine />
     </Link>
-  )
+  );
 }
