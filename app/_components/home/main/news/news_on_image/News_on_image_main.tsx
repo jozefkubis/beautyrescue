@@ -1,6 +1,7 @@
 "use client"; // musí byť, lebo používame animácie na klientovi
 
 import { luxuriousScript } from "@/app/_components/fonts";
+import type { HomeImageProps } from "@/app/_lib/data_services/data_home_image";
 import type { PromotionMainProps } from "@/app/_lib/data_services/data_promotion";
 import { motion } from "framer-motion"; // import z framer-motion
 import Image from "next/image";
@@ -10,6 +11,7 @@ import EcgLine from "../ecg_effect/EcgLine";
 type News_on_image_mainProps = {
   promotionSummary: PromotionMainProps["promotionData"]["summary"];
   isActive: PromotionMainProps["promotionData"]["is_active"];
+  homeImg: HomeImageProps;
 };
 
 // definujeme "stavy" animácie
@@ -46,18 +48,21 @@ function IfNotPromotionActive() {
 export default function News_on_image_main({
   promotionSummary,
   isActive,
+  homeImg,
 }: News_on_image_mainProps) {
   const [showEcg, setShowEcg] = useState(false);
+  const uploadedImageUrl = homeImg.image_url?.trim();
 
   return (
     <section className="relative w-full aspect-16/6 overflow-hidden">
       {/* Pozadie */}
       <Image
-        src="/images/imageHome.jpg"
+        src={uploadedImageUrl || "/images/home_main.jpg"}
         alt="Beauty Rescue"
         fill
         priority
         className="object-cover object-right"
+        unoptimized
       />
 
       {/* Tmavý overlay */}

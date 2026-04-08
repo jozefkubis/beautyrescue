@@ -1,5 +1,6 @@
 "use client";
 
+import type { HomeImageProps } from "@/app/_lib/data_services/data_home_image";
 import type { PromotionMainProps } from "@/app/_lib/data_services/data_promotion";
 import { motion } from "framer-motion";
 import Interior from "./main/interior/Interior";
@@ -9,6 +10,7 @@ import News_text from "./main/news/news_text/News_text";
 
 type MainProps = {
   promotion: PromotionMainProps["promotionData"] | null;
+  homeImg: HomeImageProps;
 };
 
 const sectionVariants = {
@@ -20,7 +22,7 @@ const sectionVariants = {
   },
 };
 
-export default function Main({ promotion }: MainProps) {
+export default function Main({ promotion, homeImg }: MainProps) {
   const promotionName = promotion?.name || "Žiadna aktuálna akcia";
   const promotionSummary = promotion?.summary || "Žiadna aktuálna akcia";
   const promotionParagraphs = promotion?.content.paragraphs || [
@@ -34,6 +36,7 @@ export default function Main({ promotion }: MainProps) {
         <News_on_image_main
           promotionSummary={promotionSummary}
           isActive={isActive}
+          homeImg={homeImg}
         />
       </div>
       <motion.div

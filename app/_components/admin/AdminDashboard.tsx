@@ -93,6 +93,11 @@ const adminSections = [
     title: "Novinky a akcie",
     label: "Promotions",
   },
+  {
+    href: "/admin/mainImage_settings",
+    title: "Hlavný obrázok",
+    label: "Hlavný obrázok",
+  },
 ] as const;
 
 export default function AdminDashboard() {
