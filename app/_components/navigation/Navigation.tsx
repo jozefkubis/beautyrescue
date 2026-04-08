@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { IoTriangle } from "react-icons/io5";
 import AdminLink from "../admin/AdminLink";
@@ -16,7 +16,6 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const navRef = useRef<HTMLDivElement | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     const handlePointerDown = (event: MouseEvent) => {

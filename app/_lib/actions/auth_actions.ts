@@ -46,19 +46,43 @@ export async function getCurrentUser() {
 
   const supabase = await getSupabaseServerClient()
 
-  const { data, error } = await supabase.auth.getUser()
+  const isRecoverableAuthError = (error: unknown) => {
+    const authError = error as {
+      name?: string
+      message?: string
+      code?: string
+      status?: number
+    }
 
-  if (error) {
-    const isMissingSession =
-      error.name === "AuthSessionMissingError" ||
-      error.message?.toLowerCase().includes("auth session missing")
+    const errorMessage = authError?.message?.toLowerCase() ?? ""
 
-    if (!isMissingSession) {
-      console.error("getCurrentUser error:", error)
+    return (
+      authError?.name === "AuthSessionMissingError" ||
+      errorMessage.includes("auth session missing") ||
+      authError?.code === "refresh_token_not_found" ||
+      errorMessage.includes("invalid refresh token") ||
+      errorMessage.includes("refresh token not found")
+    )
+  }
+
+  try {
+    const { data, error } = await supabase.auth.getUser()
+
+    if (error) {
+      if (!isRecoverableAuthError(error)) {
+        console.error("getCurrentUser error:", error)
+      }
+
+      return null
+    }
+
+    return data.user ?? null
+  } catch (error) {
+    // Pri neplatnom refresh tokene nechceme spadnut, ale vratit stav odhlaseny.
+    if (!isRecoverableAuthError(error)) {
+      console.error("getCurrentUser unexpected error:", error)
     }
 
     return null
   }
-
-  return data.user ?? null
 }
