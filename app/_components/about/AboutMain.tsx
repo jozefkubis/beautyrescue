@@ -1,12 +1,15 @@
-"use client"
+"use client";
 
 // import { dataAboutUs } from "@/app/_lib/data_services/data_about_us"
-import type { AboutMainProps } from "@/app/_lib/data_services/data_about_us"
-import ExpandText from "../ExpandText"
-import { brandFont } from "../fonts"
-import AboutText from "./AboutText"
+import type { AboutMainProps } from "@/app/_lib/data_services/data_about_us";
+import Image from "next/image";
+import ExpandText from "../ExpandText";
+import { brandFont } from "../fonts";
+import AboutText from "./AboutText";
 
 export default function AboutMain({ aboutUsData }: AboutMainProps) {
+  const uploadedImageUrl = aboutUsData.image_url?.trim();
+
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-6 p-5 lg:grid-cols-2 lg:p-7">
@@ -35,10 +38,16 @@ export default function AboutMain({ aboutUsData }: AboutMainProps) {
         </div>
 
         {/* Pravý stĺpec – obrázok */}
-        <div className="flex mt-10 items-center justify-center rounded-lg border border-goldDark/25 bg-linear-to-br from-[#fff7ea] to-[#ffeed9]">
-          <h1 className="text-4xl font-semibold text-goldDark/45">Foto</h1>
+        <div className="relative mt-10 h-56 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 md:h-125 lg:h-[90%] lg:w-full">
+          <Image
+            src={uploadedImageUrl || "/images/about_us.jpg"}
+            alt="About Us"
+            fill
+            unoptimized
+            className="object-cover"
+          />
         </div>
       </div>
     </div>
-  )
+  );
 }

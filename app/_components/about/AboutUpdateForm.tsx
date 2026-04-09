@@ -1,6 +1,11 @@
 "use client";
 
 // Serverová akcia, ktorá uloží zmenené dáta do databázy (Supabase).
+import FileField from "@/app/_components/FileField";
+import InputField from "@/app/_components/InputField";
+import SubmitButton from "@/app/_components/SubmitButton";
+import TextareaField from "@/app/_components/TextareaField";
+import UndoButton from "@/app/_components/UndoButton";
 import { updateAboutUs } from "@/app/_lib/actions/actions_about";
 // useRouter slúži na obnovenie stránky po uložení, aby sa zobrazili nové dáta.
 import { useRouter } from "next/navigation";
@@ -9,10 +14,6 @@ import { useRouter } from "next/navigation";
 // useTransition – umožňuje spustiť async akciu (uloženie) bez zablokovania UI.
 import { useMemo, useState, useTransition } from "react";
 // Knižnica na zobrazovanie notifikácií (toast správy).
-import InputField from "@/app/_components/InputField";
-import SubmitButton from "@/app/_components/SubmitButton";
-import TextareaField from "@/app/_components/TextareaField";
-import UndoButton from "@/app/_components/UndoButton";
 import toast from "react-hot-toast";
 
 // Typ popisuje, aký tvar majú dáta pre stránku O nás z databázy.
@@ -20,6 +21,7 @@ type AboutData = {
   slug?: string;
   name?: string;
   summary?: string;
+  image_url?: string;
   is_active?: boolean;
   metadata?: {
     quoteAuthor?: string;
@@ -50,11 +52,11 @@ export default function AboutUpdateForm({
   const [isPending, startTransition] = useTransition();
 
   // Počiatočné hodnoty formulára – naplnené z DB dát.
-  // useMemo zabezpečí, že sa tieto hodnoty prepočítajú iba ak sa zmení aboutUsData.
   const initialValues = useMemo(
     () => ({
       name: aboutUsData?.name ?? "",
       summary: aboutUsData?.summary ?? "",
+      image_url: aboutUsData?.image_url ?? "",
       quoteAuthor: aboutUsData?.metadata?.quoteAuthor ?? "",
       bodyIntro: aboutUsData?.content?.bodyIntro ?? "",
       bodyTeam: aboutUsData?.content?.bodyTeam ?? "",
@@ -68,38 +70,54 @@ export default function AboutUpdateForm({
   // formValues = to, čo admin práve píše do formulára (live stav).
   const [formValues, setFormValues] = useState(initialValues);
 
+  // Vybraný obrázok držíme samostatne, aby sa poslal ako File vo FormData.
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+
   // lastSavedValues = posledný stav, ktorý bol úspešne uložený do DB.
   // Používa sa na detekciu zmien a funkciu Undo.
   const [lastSavedValues, setLastSavedValues] = useState(initialValues);
 
   // Generická funkcia na aktualizáciu ľubovoľného poľa vo formulári.
-  // na pochopenie: "prev" je starý stav formulára, "...prev" ho skopíruje
-  // a [field]: value prepíše iba jedno vybrané pole.
-  function handleChange(field: keyof typeof formValues, value: string) {
+  function handleChange(
+    field: keyof typeof formValues,
+    value: string | boolean,
+  ) {
     setFormValues((prev) => ({ ...prev, [field]: value }));
   }
 
   // Vráti formulár do stavu posledného úspešného uloženia.
   function handleUndo() {
     setFormValues(lastSavedValues);
+    setSelectedImageFile(null);
     toast.success("Zmeny boli vrátené");
   }
 
-  // Spustí sa po kliknutí na "Uložiť O nás".
-  // Zabalí dáta do FormData, odošle na server a po úspechu obnoví stránku.
+  // Spustí sa po kliknutí na uloženie a pošle textové dáta aj obrázok.
   function handleSubmit(formData: FormData) {
     startTransition(async () => {
       try {
-        // Pridáme slug, aby server vedel, ktorý záznam v DB má aktualizovať.
         formData.set("slug", aboutUsData?.slug ?? "about-us");
-        // Celý stav formulára serializujeme do JSON a pošleme ako jeden parameter.
-        formData.set("data", JSON.stringify(formValues));
+        formData.set(
+          "data",
+          JSON.stringify({
+            name: formValues.name,
+            summary: formValues.summary,
+            quoteAuthor: formValues.quoteAuthor,
+            bodyIntro: formValues.bodyIntro,
+            bodyTeam: formValues.bodyTeam,
+            bodyServices: formValues.bodyServices,
+            bodyPhilosophy: formValues.bodyPhilosophy,
+          }),
+        );
+
+        if (selectedImageFile) {
+          formData.set("image_file", selectedImageFile);
+        }
 
         await updateAboutUs(formData);
 
-        // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
         setLastSavedValues(formValues);
-        // Obnoví Next.js cache a re-fetchne dáta na stránke.
+        setSelectedImageFile(null);
         router.refresh();
         toast.success("Sekcia O nás bola aktualizovaná");
       } catch (error) {
@@ -109,9 +127,10 @@ export default function AboutUpdateForm({
     });
   }
 
-  // true ak sa aktuálne hodnoty líšia od posledného uloženia → aktivuje tlačidlá.
+  // Uložiť sa dá pri textovej zmene alebo keď je zvolený nový obrázok.
   const hasChanges =
-    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues);
+    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues) ||
+    selectedImageFile !== null;
 
   // Ak sa dáta z DB nepodarilo načítať, zobrazíme chybovú správu namiesto formulára.
   if (!aboutUsData) {
@@ -191,6 +210,22 @@ export default function AboutUpdateForm({
             readOnly={!isAdmin}
             rows={5}
           />
+
+          <FileField
+            type="file"
+            label="Obrázok (URL)"
+            value={formValues.image_url}
+            onChange={(e) => {
+              const file = e.target.files?.[0] ?? null;
+              setSelectedImageFile(file);
+            }}
+            readOnly={!isAdmin}
+          />
+          {selectedImageFile ? (
+            <p className="text-xs text-greyMain/80">
+              Vybraný súbor: {selectedImageFile.name}
+            </p>
+          ) : null}
 
           <div className="flex flex-col gap-3 border-t border-goldDark/10 pt-5 sm:flex-row sm:items-center sm:justify-end">
             <UndoButton

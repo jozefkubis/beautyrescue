@@ -3,6 +3,7 @@ import { getSupabaseServerClient } from "../supabase/server"
 export type AboutMainProps = {
   aboutUsData: {
     name: string
+    image_url: string
     summary: string
     is_active: boolean
     metadata: {
