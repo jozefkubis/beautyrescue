@@ -1,10 +1,9 @@
 import { brandFont } from "@/app/_components/fonts";
 import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
-import getTknVisibility from "@/app/_lib/data_services/data_tkn_visibility";
 import {
-  applyTknVisibility,
-  tknCategories,
-} from "@/app/_lib/data_services/tkn_catalog";
+  getTknCategories,
+  getTknCategory,
+} from "@/app/_lib/data_services/data_tkn_db";
 import { getTknProductImage } from "@/app/_lib/data_services/tkn_image_map";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,17 +13,16 @@ type CategoryPageProps = {
   params: Promise<{ category: string }>;
 };
 
-export function generateStaticParams() {
-  return tknCategories.map((category) => ({ category: category.slug }));
+// Statické cesty pre kategórie generujeme podľa aktuálneho stavu v databáze.
+export async function generateStaticParams() {
+  const categories = await getTknCategories();
+  return categories.map((category) => ({ category: category.slug }));
 }
 
+// Detail kategórie načíta jednu DB sekciu a zobrazí jej produkty.
 export default async function Page({ params }: CategoryPageProps) {
   const { category: categorySlug } = await params;
-  const tknVisibility = await getTknVisibility();
-  const visibleTknCategories = applyTknVisibility(tknCategories, tknVisibility);
-  const category = visibleTknCategories.find(
-    (item) => item.slug === categorySlug,
-  );
+  const category = await getTknCategory(categorySlug);
 
   if (!category) {
     notFound();
@@ -55,7 +53,7 @@ export default async function Page({ params }: CategoryPageProps) {
 
           return (
             <article
-              key={product.slug}
+              key={product.dbSlug}
               className="section-shell fade-up overflow-hidden p-5 lg:p-8"
             >
               <div className="grid grid-cols-1 gap-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-6 lg:gap-8">

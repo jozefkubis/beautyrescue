@@ -1,6 +1,7 @@
 import fs from "node:fs"
 import path from "node:path"
 
+// Toto je jednoduchá mapa medzi slugom produktu a názvom súboru s obrázkom vo `public/images/tkn`.
 const PRODUCT_IMAGE_BASENAME: Record<string, string> = {
   "hyaluronova-volna-nesietovana": "Kyselina hyaluronová",
   "adjuvans-3-5": "Kyselina hyaluronová",
@@ -32,11 +33,13 @@ const PRODUCT_IMAGE_BASENAME: Record<string, string> = {
   thrinamide: "THRINAMIDE",
   "b-hidroxin": "B-HIDROXIN",
   "polivitamin-bcae": "POLIVITAMIN BCAE",
+  "polivitamin-bcae-2": "POLIVITAMIN BCAE",
 }
 
 const IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"]
 const TKN_IMAGE_DIR = path.join(process.cwd(), "public", "images", "tkn")
 
+// Skúsi nájsť lokálny obrázok produktu podľa slugu; ak neexistuje, vráti `null`.
 export function getTknProductImage(productSlug: string) {
   const basename = PRODUCT_IMAGE_BASENAME[productSlug]
 

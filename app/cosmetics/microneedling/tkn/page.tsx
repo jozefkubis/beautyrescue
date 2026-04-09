@@ -1,15 +1,11 @@
 import { brandFont } from "@/app/_components/fonts";
 import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
-import getTknVisibility from "@/app/_lib/data_services/data_tkn_visibility";
-import {
-  applyTknVisibility,
-  tknCategories,
-} from "@/app/_lib/data_services/tkn_catalog";
+import { getTknCategories } from "@/app/_lib/data_services/data_tkn_db";
 import Link from "next/link";
 
+// Landing page TKN katalógu si vytiahne všetky aktívne kategórie priamo z DB.
 export default async function Page() {
-  const tknVisibility = await getTknVisibility();
-  const visibleTknCategories = applyTknVisibility(tknCategories, tknVisibility);
+  const visibleTknCategories = await getTknCategories();
 
   return (
     <div className="w-full px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">

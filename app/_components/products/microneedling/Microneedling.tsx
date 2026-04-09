@@ -2,11 +2,7 @@
 
 import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
 import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling";
-import {
-  applyTknVisibility,
-  tknCategories,
-  type TknVisibility,
-} from "@/app/_lib/data_services/tkn_catalog";
+import type { TknCategory } from "@/app/_lib/data_services/data_tkn_db";
 import Image from "next/image";
 import Link from "next/link";
 import ExpandText from "../../ExpandText";
@@ -14,20 +10,22 @@ import { brandFont } from "../../fonts";
 import Microneedling_pricing_form from "./Microneedling_pricing_form";
 import Microneedling_text from "./Microneedling_text";
 
+// Verejný Microneedling komponent už dostáva TKN dáta priamo z DB, bez statického katalógu.
 export default function Microneedling({
   microneedlingData,
-  tknVisibility,
+  tknCategories,
   user,
   isAdmin,
 }: MicroneedlingMainProps & {
-  tknVisibility?: TknVisibility;
+  tknCategories: TknCategory[];
   user?: string | null;
   isAdmin?: boolean;
 }) {
   // Ak je v DB nahraný obrázok zo Storage, použijeme ho; inak ostáva lokálny fallback.
   const uploadedImageUrl = microneedlingData.image_url?.trim();
 
-  const visibleTknCategories = applyTknVisibility(tknCategories, tknVisibility);
+  // Zdroj pravdy je DB, takže tu už nič nefiltrované neskladáme cez pomocné statické funkcie.
+  const visibleTknCategories = tknCategories;
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">

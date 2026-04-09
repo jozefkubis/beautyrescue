@@ -1,4 +1,5 @@
-﻿import { getSupabaseServerClient } from "../supabase/server"
+﻿
+import { getSupabaseServerClient } from "../supabase/server"
 
 export type PricingProps = {
   id: string
@@ -40,4 +41,5 @@ export default async function getMicroneedling(slug: string) {
 
   return data
 }
+
 

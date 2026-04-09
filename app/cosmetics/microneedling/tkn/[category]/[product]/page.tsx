@@ -1,10 +1,9 @@
 import { brandFont } from "@/app/_components/fonts";
 import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
-import getTknVisibility from "@/app/_lib/data_services/data_tkn_visibility";
 import {
-  applyTknVisibility,
-  tknCategories,
-} from "@/app/_lib/data_services/tkn_catalog";
+  getTknCategories,
+  getTknProduct,
+} from "@/app/_lib/data_services/data_tkn_db";
 import { getTknProductImage } from "@/app/_lib/data_services/tkn_image_map";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,8 +13,11 @@ type ProductPageProps = {
   params: Promise<{ category: string; product: string }>;
 };
 
-export function generateStaticParams() {
-  return tknCategories.flatMap((category) =>
+// Statické cesty pre produktové detaily skladáme z DB kategórií a produktov.
+export async function generateStaticParams() {
+  const categories = await getTknCategories();
+
+  return categories.flatMap((category) =>
     category.products.map((product) => ({
       category: category.slug,
       product: product.slug,
@@ -23,20 +25,10 @@ export function generateStaticParams() {
   );
 }
 
+// Detail produktu načíta priamo jednu DB položku a jej materskú kategóriu.
 export default async function Page({ params }: ProductPageProps) {
   const { category, product } = await params;
-  const tknVisibility = await getTknVisibility();
-  const visibleTknCategories = applyTknVisibility(tknCategories, tknVisibility);
-  const visibleCategory = visibleTknCategories.find(
-    (item) => item.slug === category,
-  );
-  const visibleProduct = visibleCategory?.products.find(
-    (item) => item.slug === product,
-  );
-  const detail =
-    visibleCategory && visibleProduct
-      ? { category: visibleCategory, product: visibleProduct }
-      : null;
+  const detail = await getTknProduct(category, product);
   const imageSrc = getTknProductImage(product);
 
   if (!detail) {

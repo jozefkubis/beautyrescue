@@ -17,6 +17,19 @@ type TknVisibilityPayload = {
   products: Record<string, boolean>;
 };
 
+type TknDeleteResult =
+  | {
+      ok: true;
+      deletedDbSlugs: string[];
+      hiddenCategorySlug?: string;
+      hiddenProductSlugs?: string[];
+    }
+  | {
+      ok: false;
+      error: string;
+    };
+
+// Z textarea alebo poľa pripravíme čisté odseky bez prázdnych hodnôt.
 function normalizeParagraphs(value: string | string[]) {
   if (Array.isArray(value)) {
     return value
@@ -30,6 +43,7 @@ function normalizeParagraphs(value: string | string[]) {
     .filter(Boolean);
 }
 
+// Jednoduché pomocné čistenie riadkov pre zoznamy ako kontraindikácie.
 function normalizeLines(value: string | string[]) {
   if (Array.isArray(value)) {
     return value
@@ -43,6 +57,7 @@ function normalizeLines(value: string | string[]) {
     .filter(Boolean);
 }
 
+// Jedna centrálna poistka: bez admin účtu sa žiadna zmena v DB nevykoná.
 async function requireAdmin() {
   const supabase = await getSupabaseServerClient();
   const {
@@ -60,6 +75,7 @@ async function requireAdmin() {
   return supabase;
 }
 
+// Uloží hlavný obsah Microneedling sekcie a prípadne nahrá nový obrázok.
 export async function updateMicroneedling(formData: FormData) {
   const supabase = await requireAdmin();
   const slug = formData.get("slug")?.toString() || "microneedling";
@@ -180,64 +196,144 @@ export async function updateMicroneedling(formData: FormData) {
   revalidatePath("/admin/cosmetics_settings/microneedling_settings");
 }
 
+// TKN checkboxy zapisujeme priamo do DB cez `is_active`, bez ďalších obchádzok.
 export async function updateTknVisibility(formData: FormData) {
   const supabase = await requireAdmin();
   const rawData = formData.get("data")?.toString();
 
   if (!rawData) {
-    throw new Error("Chýbajú dáta pre TKN visibility");
+    throw new Error("Chýbajú dáta pre TKN sekcie a produkty");
   }
 
   let payload: TknVisibilityPayload;
   try {
     payload = JSON.parse(rawData);
   } catch {
-    throw new Error("Neplatné dáta formulára TKN visibility");
+    throw new Error("Neplatné dáta formulára TKN sekcií a produktov");
   }
 
-  const { data: existingItem, error: existingItemError } = await supabase
-    .from("service_items")
-    .select("metadata")
-    .eq("slug", "dashboard-ui-content")
-    .single();
+  const updates = [
+    ...Object.entries(payload.categories ?? {}),
+    ...Object.entries(payload.products ?? {}),
+  ];
 
-  if (existingItemError || !existingItem) {
-    throw new Error(`Položka dashboard-ui-content nebola nájdená: ${existingItemError?.message ?? "unknown"}`);
-  }
+  // Každý checkbox zapisujeme priamo do `service_items.is_active`.
+  await Promise.all(
+    updates.map(async ([slug, isActive]) => {
+      const { error } = await supabase
+        .from("service_items")
+        .update({ is_active: Boolean(isActive) })
+        .eq("slug", slug);
 
-  const currentMetadata =
-    existingItem?.metadata && typeof existingItem.metadata === "object"
-      ? (existingItem.metadata as Record<string, unknown>)
-      : {};
+      if (error) {
+        throw new Error(`Chyba pri aktualizácii ${slug}: ${error.message}`);
+      }
+    }),
+  );
 
-  const currentUi =
-    currentMetadata.ui && typeof currentMetadata.ui === "object"
-      ? (currentMetadata.ui as Record<string, unknown>)
-      : {};
-
-  const { error } = await supabase
-    .from("service_items")
-    .update({
-      metadata: {
-        ...currentMetadata,
-        ui: {
-          ...currentUi,
-          tknVisibility: {
-            categories: payload.categories,
-            products: payload.products,
-          },
-        },
-      },
-    })
-    .eq("slug", "dashboard-ui-content");
-
-  if (error) {
-    throw new Error(`Chyba pri aktualizácii TKN visibility: ${error.message}`);
-  }
-
-  // Revalidujeme IBA verejné stránky kde návštevníci vidia TKN katalóg.
-  // Admin stránku zámerне NErevalidujeme — revalidatePath("/", "layout") by spôsobil
-  // remount klient komponentu a reset checkbox state na staré server hodnoty.
   revalidatePath("/cosmetics/microneedling");
   revalidatePath("/cosmetics/microneedling/tkn");
+  revalidatePath("/admin/cosmetics_settings/microneedling_settings");
+}
+
+// Trvalo vymaže jeden TKN produkt z `service_items` a obnoví verejné aj admin stránky.
+export async function deleteTknProduct(
+  productDbSlug: string,
+  categorySlug: string,
+  productSlug: string,
+): Promise<TknDeleteResult> {
+  const supabase = await requireAdmin();
+  const safeProductDbSlug = productDbSlug?.trim();
+  const safeCategorySlug = categorySlug?.trim();
+  const safeProductSlug = productSlug?.trim();
+
+  if (!safeProductDbSlug || !safeCategorySlug || !safeProductSlug) {
+    return {
+      ok: false,
+      error: "Chýba slug produktu alebo kategórie.",
+    };
+  }
+
+  const { error: deleteError } = await supabase
+    .from("service_items")
+    .delete()
+    .eq("slug", safeProductDbSlug);
+
+  if (deleteError) {
+    return {
+      ok: false,
+      error: `Nepodarilo sa vymazať produkt: ${deleteError.message}`,
+    };
+  }
+
+  revalidatePath("/cosmetics/microneedling");
+  revalidatePath("/cosmetics/microneedling/tkn");
+  revalidatePath(`/cosmetics/microneedling/tkn/${safeCategorySlug}`);
+  revalidatePath(
+    `/cosmetics/microneedling/tkn/${safeCategorySlug}/${safeProductSlug}`,
+  );
+  revalidatePath("/admin/cosmetics_settings/microneedling_settings");
+
+  return {
+    ok: true,
+    deletedDbSlugs: [safeProductDbSlug],
+  };
+}
+
+// Trvalo vymaže celú TKN sekciu aj všetky produkty, ktoré pod ňu patria.
+export async function deleteTknCategory(
+  categoryDbSlug: string,
+  categorySlug: string,
+): Promise<TknDeleteResult> {
+  const supabase = await requireAdmin();
+  const safeCategoryDbSlug = categoryDbSlug?.trim();
+  const safeCategorySlug = categorySlug?.trim();
+
+  if (!safeCategoryDbSlug || !safeCategorySlug) {
+    return {
+      ok: false,
+      error: "Chýba slug TKN sekcie.",
+    };
+  }
+
+  const { data: productRows, error: productRowsError } = await supabase
+    .from("service_items")
+    .select("slug")
+    .eq("category", "tkn")
+    .eq("item_type", "product")
+    .eq("subcategory", safeCategorySlug);
+
+  if (productRowsError) {
+    return {
+      ok: false,
+      error: `Nepodarilo sa načítať produkty sekcie: ${productRowsError.message}`,
+    };
+  }
+
+  const dbSlugs = [
+    safeCategoryDbSlug,
+    ...((productRows ?? []) as Array<{ slug: string }>).map((row) => row.slug),
+  ];
+
+  const { error: deleteError } = await supabase
+    .from("service_items")
+    .delete()
+    .in("slug", dbSlugs);
+
+  if (deleteError) {
+    return {
+      ok: false,
+      error: `Nepodarilo sa vymazať sekciu: ${deleteError.message}`,
+    };
+  }
+
+  revalidatePath("/cosmetics/microneedling");
+  revalidatePath("/cosmetics/microneedling/tkn");
+  revalidatePath(`/cosmetics/microneedling/tkn/${safeCategorySlug}`);
+  revalidatePath("/admin/cosmetics_settings/microneedling_settings");
+
+  return {
+    ok: true,
+    deletedDbSlugs: dbSlugs,
+  };
 }

@@ -6,13 +6,12 @@ import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
 import {
+  deleteTknCategory,
+  deleteTknProduct,
   updateMicroneedling,
   updateTknVisibility,
 } from "@/app/_lib/actions/actions_microneedling";
-import {
-  tknCategories,
-  type TknVisibility,
-} from "@/app/_lib/data_services/tkn_catalog";
+import type { TknCategory } from "@/app/_lib/data_services/data_tkn_db";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import { FaRegTrashCan } from "react-icons/fa6";
@@ -35,7 +34,7 @@ type MicroneedlingData = {
 
 type Props = {
   microneedlingData: MicroneedlingData;
-  tknVisibility: TknVisibility;
+  tknCategories: TknCategory[];
   isAdmin?: boolean;
 };
 
@@ -44,23 +43,25 @@ type VisibilityState = {
   products: Record<string, boolean>;
 };
 
-function buildInitialVisibility(visibility?: TknVisibility): VisibilityState {
+// Z DB kategórií si pripravíme jednoduchý map objekt pre checkboxy v admin formulári.
+function buildInitialVisibility(tknCategories: TknCategory[]): VisibilityState {
   const categories: Record<string, boolean> = {};
   const products: Record<string, boolean> = {};
 
   for (const category of tknCategories) {
-    categories[category.slug] = visibility?.categories?.[category.slug] ?? true;
+    categories[category.dbSlug] = category.is_active;
     for (const product of category.products) {
-      products[product.slug] = visibility?.products?.[product.slug] ?? true;
+      products[product.dbSlug] = product.is_active;
     }
   }
 
   return { categories, products };
 }
 
+// Admin formulár pre hlavný obsah Microneedling a DB správu TKN sekcií a produktov.
 export default function Microneedling_update_form({
   microneedlingData,
-  tknVisibility,
+  tknCategories,
   isAdmin,
 }: Props) {
   const [isPendingMain, startTransitionMain] = useTransition();
@@ -85,8 +86,8 @@ export default function Microneedling_update_form({
   // ===== INICIALIZÁCIA PRE TKN VIDITEĽNOSŤ =====
   // Vypočítaj počiatočné hodnoty z props
   const initialVisibilityValues = useMemo(
-    () => buildInitialVisibility(tknVisibility),
-    [tknVisibility],
+    () => buildInitialVisibility(tknCategories),
+    [tknCategories],
   );
 
   // ===== STATE MANAGEMENT PRE HLAVNÝ OBSAH =====
@@ -99,20 +100,23 @@ export default function Microneedling_update_form({
   // Vybraný obrázok držíme samostatne, aby sa poslal ako File vo FormData.
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
-  // ===== STATE MANAGEMENT PRE TKN VIDITEĽNOSŤ =====
+  // ===== STATE MANAGEMENT PRE TKN SEKCIE A PRODUKTY =====
   // visibilityValues = lokálny checkbox state (admin zmeny)
-  // lastSavedVisibilityValues = stav po poslednom uložení (z DB)
-  // PROBLÉM: keď sa props tknVisibility zmenia (po revalidatePath),
-  // initialVisibilityValues sa prepočíta, ale visibilityValues ostane starý!
+  // lastSavedVisibilityValues = posledný uložený stav z databázy
   const [visibilityValues, setVisibilityValues] = useState(
     initialVisibilityValues,
   );
   const [lastSavedVisibilityValues, setLastSavedVisibilityValues] = useState(
     initialVisibilityValues,
   );
+  const [deletedCategorySlugs, setDeletedCategorySlugs] = useState<string[]>(
+    [],
+  );
+  const [deletedProductSlugs, setDeletedProductSlugs] = useState<string[]>([]);
 
   // ===== CHECKBOX ZMENY =====
   // Keď admin klinkne checkbox, zmení sa visibilityValues
+  // Prepne lokálny stav jedného produktu, aby admin videl zmenu hneď bez čakania.
   function handleProductToggle(slug: string, value: boolean) {
     // ✓ Toto funguje — local state sa zmení, checkbox sa zobrazí nový stav
     setVisibilityValues((prev) => ({
@@ -121,6 +125,7 @@ export default function Microneedling_update_form({
     }));
   }
 
+  // Jednoduchý univerzálny setter pre hlavný formulár.
   function handleMainChange(
     field: keyof typeof mainValues,
     value: string | boolean,
@@ -128,6 +133,7 @@ export default function Microneedling_update_form({
     setMainValues((prev) => ({ ...prev, [field]: value }));
   }
 
+  // Prepne lokálny stav celej kategórie.
   function handleCategoryToggle(slug: string, value: boolean) {
     setVisibilityValues((prev) => ({
       ...prev,
@@ -135,18 +141,21 @@ export default function Microneedling_update_form({
     }));
   }
 
+  // Vráti hlavný formulár na poslednú uloženú verziu.
   function handleMainUndo() {
     setMainValues(lastSavedMainValues);
     setSelectedImageFile(null);
     toast.success("Zmeny boli vrátené");
   }
 
+  // Vráti checkboxy na posledný stav, ktorý už bol uložený v databáze.
   function handleVisibilityUndo() {
-    // Vráť na serverové dáta (initialVisibilityValues)
-    setVisibilityValues(initialVisibilityValues);
+    // Undo má vracať posledný uložený stav, nie iba prvý stav po načítaní stránky.
+    setVisibilityValues(lastSavedVisibilityValues);
     toast.success("TKN viditeľnosť bola vrátená");
   }
 
+  // Pošle hlavný obsah na server action a uloží texty + obrázok.
   function handleMainSubmit(formData: FormData) {
     startTransitionMain(async () => {
       try {
@@ -176,6 +185,7 @@ export default function Microneedling_update_form({
     });
   }
 
+  // Uloží stavy kategórií a produktov priamo do DB cez `is_active`.
   function handleVisibilitySubmit(formData: FormData) {
     startTransitionVisibility(async () => {
       try {
@@ -206,6 +216,101 @@ export default function Microneedling_update_form({
   const sections = ["Hlavný obsah", "TKN viditeľnosť"];
   const [index, setIndex] = useState(1);
   const numberOfSections = sections.length;
+
+  // Po jednom potvrdení trvalo vymaže celú sekciu aj všetky produkty v nej.
+  async function deleteCategoryHandleClick(
+    categoryDbSlug: string,
+    categorySlug: string,
+    productDbSlugs: string[],
+  ) {
+    if (
+      !confirm(
+        "Naozaj chcete odstrániť celú TKN sekciu aj všetky produkty v nej?",
+      )
+    ) {
+      return;
+    }
+
+    startTransitionVisibility(async () => {
+      try {
+        const result = await deleteTknCategory(categoryDbSlug, categorySlug);
+
+        if (!result?.ok) {
+          throw new Error(result?.error ?? "Sekciu sa nepodarilo odstrániť.");
+        }
+
+        const hiddenProducts = Object.fromEntries(
+          productDbSlugs.map((slug) => [slug, false]),
+        );
+
+        // Po úspechu sekciu okamžite schováme aj lokálne, aby admin videl výsledok bez reloadu.
+        setDeletedCategorySlugs((prev) =>
+          prev.includes(categoryDbSlug) ? prev : [...prev, categoryDbSlug],
+        );
+        setDeletedProductSlugs((prev) =>
+          Array.from(new Set([...prev, ...productDbSlugs])),
+        );
+        setVisibilityValues((prev) => ({
+          ...prev,
+          categories: { ...prev.categories, [categoryDbSlug]: false },
+          products: { ...prev.products, ...hiddenProducts },
+        }));
+        setLastSavedVisibilityValues((prev) => ({
+          ...prev,
+          categories: { ...prev.categories, [categoryDbSlug]: false },
+          products: { ...prev.products, ...hiddenProducts },
+        }));
+
+        toast.success("Sekcia bola úspešne odstránená");
+      } catch (error) {
+        console.error(error);
+        toast.error("Chyba pri odstraňovaní sekcie");
+      }
+    });
+  }
+
+  // Po jednom potvrdení trvalo vymaže iba konkrétny produkt.
+  async function deleteProductHandleClick(
+    categorySlug: string,
+    productDbSlug: string,
+    productSlug: string,
+  ) {
+    if (!confirm("Naozaj chcete odstrániť tento produkt?")) {
+      return;
+    }
+
+    startTransitionVisibility(async () => {
+      try {
+        const result = await deleteTknProduct(
+          productDbSlug,
+          categorySlug,
+          productSlug,
+        );
+
+        if (!result?.ok) {
+          throw new Error(result?.error ?? "Produkt sa nepodarilo odstrániť.");
+        }
+
+        // Lokálne skryjeme produkt hneď po úspechu, aby admin videl výsledok bez refreshu.
+        setDeletedProductSlugs((prev) =>
+          prev.includes(productDbSlug) ? prev : [...prev, productDbSlug],
+        );
+        setVisibilityValues((prev) => ({
+          ...prev,
+          products: { ...prev.products, [productDbSlug]: false },
+        }));
+        setLastSavedVisibilityValues((prev) => ({
+          ...prev,
+          products: { ...prev.products, [productDbSlug]: false },
+        }));
+
+        toast.success("Produkt bol úspešne odstránený");
+      } catch (error) {
+        console.error(error);
+        toast.error("Chyba pri odstraňovaní produktu");
+      }
+    });
+  }
 
   return (
     <section className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
@@ -323,78 +428,117 @@ export default function Microneedling_update_form({
             </div>
 
             <div className="space-y-4">
-              {tknCategories.map((category) => (
-                <div
-                  key={category.slug}
-                  className="rounded-2xl border border-goldDark/15 bg-[#fffaf5] p-4"
-                >
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <h3 className="text-base font-semibold text-greyMain">
-                        {category.name}
-                      </h3>
-                      <p className="text-xs text-goldDark/70">Sekcia</p>
-                    </div>
-                    <button
-                      type="button"
-                      title="Odstrániť sekciu"
-                      aria-label="Odstrániť sekciu"
-                      disabled={!isAdmin}
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] px-3 text-sm font-medium text-redDark shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20 disabled:cursor-not-allowed disabled:border-red-100 disabled:bg-red-50/50 disabled:text-red-300 disabled:hover:translate-y-0 hover:cursor-pointer"
-                    >
-                      <FaRegTrashCan className="text-[13px]" />
-                      <span className="hidden sm:inline text-xs">
-                        Odstrániť
-                      </span>
-                    </button>
-                    <CheckboxField
-                      labelActive="Aktívne"
-                      labelInactive="Neaktívne"
-                      checked={
-                        visibilityValues.categories[category.slug] ?? true
-                      }
-                      onChange={(e) =>
-                        handleCategoryToggle(category.slug, e.target.checked)
-                      }
-                      disabled={!isAdmin}
-                    />
-                  </div>
+              {tknCategories.map((category) => {
+                if (deletedCategorySlugs.includes(category.dbSlug)) {
+                  return null;
+                }
 
-                  <div className="mt-4 space-y-2 border-t border-goldDark/10 pt-3">
-                    {category.products.map((product) => (
-                      <div
-                        key={product.slug}
-                        className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white px-3 py-2"
-                      >
-                        <p className="text-sm text-greyMain">{product.name}</p>
-                        <button
-                          type="button"
-                          title="Odstrániť produkt"
-                          aria-label={`Odstrániť produkt ${product.name}`}
-                          disabled={!isAdmin}
-                          className="inline-flex h-10 items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] px-3 text-sm font-medium text-redDark shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20 disabled:cursor-not-allowed disabled:border-red-100 disabled:bg-red-50/50 disabled:text-red-300 disabled:hover:translate-y-0 hover:cursor-pointer"
-                        >
-                          <FaRegTrashCan className="text-[13px]" />
-                          <span className="hidden sm:inline text-xs">
-                            Odstrániť
-                          </span>
-                        </button>
-                        <CheckboxField
-                          labelActive="Aktívne"
-                          labelInactive="Neaktívne"
-                          checked={
-                            visibilityValues.products[product.slug] ?? true
-                          }
-                          onChange={(e) =>
-                            handleProductToggle(product.slug, e.target.checked)
-                          }
-                          disabled={!isAdmin}
-                        />
+                const visibleProducts = category.products.filter(
+                  (product) => !deletedProductSlugs.includes(product.dbSlug),
+                );
+
+                return (
+                  <div
+                    key={category.slug}
+                    className="rounded-2xl border border-goldDark/15 bg-[#fffaf5] p-4"
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <h3 className="text-base font-semibold text-greyMain">
+                          {category.name}
+                        </h3>
+                        <p className="text-xs text-goldDark/70">Sekcia</p>
                       </div>
-                    ))}
+                      <button
+                        onClick={() =>
+                          deleteCategoryHandleClick(
+                            category.dbSlug,
+                            category.slug,
+                            category.products.map((product) => product.dbSlug),
+                          )
+                        }
+                        type="button"
+                        title="Odstrániť sekciu"
+                        aria-label={`Odstrániť sekciu ${category.name}`}
+                        disabled={!isAdmin || isPendingVisibility}
+                        className="inline-flex h-10 items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] px-3 text-sm font-medium text-redDark shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20 disabled:cursor-not-allowed disabled:border-red-100 disabled:bg-red-50/50 disabled:text-red-300 disabled:hover:translate-y-0 hover:cursor-pointer"
+                      >
+                        <FaRegTrashCan className="text-[13px]" />
+                        <span className="hidden sm:inline text-xs">
+                          Odstrániť
+                        </span>
+                      </button>
+                      <CheckboxField
+                        labelActive="Aktívne"
+                        labelInactive="Neaktívne"
+                        checked={
+                          visibilityValues.categories[category.dbSlug] ?? true
+                        }
+                        onChange={(e) =>
+                          handleCategoryToggle(
+                            category.dbSlug,
+                            e.target.checked,
+                          )
+                        }
+                        disabled={!isAdmin || isPendingVisibility}
+                      />
+                    </div>
+
+                    <div className="mt-4 space-y-2 border-t border-goldDark/10 pt-3">
+                      {visibleProducts.length === 0 ? (
+                        <p className="rounded-xl bg-white px-3 py-2 text-sm text-greyMain/70">
+                          V tejto sekcii už momentálne nie je žiadny viditeľný
+                          produkt.
+                        </p>
+                      ) : null}
+
+                      {visibleProducts.map((product) => (
+                        <div
+                          key={product.slug}
+                          className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white px-3 py-2"
+                        >
+                          <p className="text-sm text-greyMain">
+                            {product.name}
+                          </p>
+                          <button
+                            onClick={() =>
+                              deleteProductHandleClick(
+                                category.slug,
+                                product.dbSlug,
+                                product.slug,
+                              )
+                            }
+                            type="button"
+                            title="Odstrániť produkt"
+                            aria-label={`Odstrániť produkt ${product.name}`}
+                            disabled={!isAdmin || isPendingVisibility}
+                            className="inline-flex h-10 items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] px-3 text-sm font-medium text-redDark shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20 disabled:cursor-not-allowed disabled:border-red-100 disabled:bg-red-50/50 disabled:text-red-300 disabled:hover:translate-y-0 hover:cursor-pointer"
+                          >
+                            <FaRegTrashCan className="text-[13px]" />
+                            <span className="hidden sm:inline text-xs">
+                              Odstrániť
+                            </span>
+                          </button>
+                          <CheckboxField
+                            labelActive="Aktívne"
+                            labelInactive="Neaktívne"
+                            checked={
+                              visibilityValues.products[product.dbSlug] ?? true
+                            }
+                            onChange={(e) =>
+                              handleProductToggle(
+                                product.dbSlug,
+                                e.target.checked,
+                              )
+                            }
+                            disabled={!isAdmin || isPendingVisibility}
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="flex flex-col gap-3 border-t border-goldDark/10 pt-5 sm:flex-row sm:items-center sm:justify-end">
