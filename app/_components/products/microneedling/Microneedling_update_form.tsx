@@ -15,6 +15,7 @@ import {
 } from "@/app/_lib/data_services/tkn_catalog";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
+import { FaRegTrashCan } from "react-icons/fa6";
 import FileField from "../../FileField";
 import SectionNavigation from "../../SectionNavigation";
 
@@ -334,6 +335,18 @@ export default function Microneedling_update_form({
                       </h3>
                       <p className="text-xs text-goldDark/70">Sekcia</p>
                     </div>
+                    <button
+                      type="button"
+                      title="Odstrániť sekciu"
+                      aria-label="Odstrániť sekciu"
+                      disabled={!isAdmin}
+                      className="inline-flex h-10 items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] px-3 text-sm font-medium text-redDark shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20 disabled:cursor-not-allowed disabled:border-red-100 disabled:bg-red-50/50 disabled:text-red-300 disabled:hover:translate-y-0 hover:cursor-pointer"
+                    >
+                      <FaRegTrashCan className="text-[13px]" />
+                      <span className="hidden sm:inline text-xs">
+                        Odstrániť
+                      </span>
+                    </button>
                     <CheckboxField
                       labelActive="Aktívne"
                       labelInactive="Neaktívne"
@@ -354,6 +367,18 @@ export default function Microneedling_update_form({
                         className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white px-3 py-2"
                       >
                         <p className="text-sm text-greyMain">{product.name}</p>
+                        <button
+                          type="button"
+                          title="Odstrániť produkt"
+                          aria-label={`Odstrániť produkt ${product.name}`}
+                          disabled={!isAdmin}
+                          className="inline-flex h-10 items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] px-3 text-sm font-medium text-redDark shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20 disabled:cursor-not-allowed disabled:border-red-100 disabled:bg-red-50/50 disabled:text-red-300 disabled:hover:translate-y-0 hover:cursor-pointer"
+                        >
+                          <FaRegTrashCan className="text-[13px]" />
+                          <span className="hidden sm:inline text-xs">
+                            Odstrániť
+                          </span>
+                        </button>
                         <CheckboxField
                           labelActive="Aktívne"
                           labelInactive="Neaktívne"
