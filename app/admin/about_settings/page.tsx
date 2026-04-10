@@ -1,6 +1,6 @@
 import AboutUpdateForm from "@/app/_components/about/AboutUpdateForm";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import { getAboutUs } from "@/app/_lib/data_services/data_about_us";
+import { getAboutUs } from "@/app/_lib/data_services_all/data_about";
 
 export default async function Page() {
   const [user, aboutUsData] = await Promise.all([

@@ -6,7 +6,7 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
-import { updateAboutUs } from "@/app/_lib/actions/actions_about";
+import { updateAboutUs } from "@/app/_lib/actions_all/actions_about";
 // useRouter slúži na obnovenie stránky po uložení, aby sa zobrazili nové dáta.
 import { useRouter } from "next/navigation";
 // useMemo – vypočíta počiatočné hodnoty iba raz pri načítaní (nie pri každom renderi).
@@ -17,28 +17,24 @@ import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
 // Typ popisuje, aký tvar majú dáta pre stránku O nás z databázy.
-type AboutData = {
-  slug?: string;
-  name?: string;
-  summary?: string;
-  image_url?: string;
-  is_active?: boolean;
-  metadata?: {
-    quoteAuthor?: string;
-  };
-  content?: {
-    bodyIntro?: string;
-    bodyTeam?: string;
-    bodyServices?: string;
-    bodyPhilosophy?: string;
-  };
+type AboutUsData = {
+  slug: string;
+  title: string;
+  quote: string;
+  quote_author: string;
+  body_intro: string;
+  body_team: string;
+  body_services: string;
+  body_philosophy: string;
+  image_url: string;
+  is_active: boolean;
 };
 
 // Props, ktoré formulár dostane z nadradenej stránky:
 // - aboutUsData: aktuálne dáta z DB (predvyplnia formulár)
 // - isAdmin: či je prihlásený admin (ak nie, inputy sú readOnly a tlačidlá disabled)
 type AboutUpdateFormProps = {
-  aboutUsData: AboutData | null;
+  aboutUsData: AboutUsData | null;
   isAdmin?: boolean;
 };
 
@@ -54,14 +50,14 @@ export default function AboutUpdateForm({
   // Počiatočné hodnoty formulára – naplnené z DB dát.
   const initialValues = useMemo(
     () => ({
-      name: aboutUsData?.name ?? "",
-      summary: aboutUsData?.summary ?? "",
+      title: aboutUsData?.title ?? "",
+      quote: aboutUsData?.quote ?? "",
+      quoteAuthor: aboutUsData?.quote_author ?? "",
+      bodyIntro: aboutUsData?.body_intro ?? "",
+      bodyTeam: aboutUsData?.body_team ?? "",
+      bodyServices: aboutUsData?.body_services ?? "",
+      bodyPhilosophy: aboutUsData?.body_philosophy ?? "",
       image_url: aboutUsData?.image_url ?? "",
-      quoteAuthor: aboutUsData?.metadata?.quoteAuthor ?? "",
-      bodyIntro: aboutUsData?.content?.bodyIntro ?? "",
-      bodyTeam: aboutUsData?.content?.bodyTeam ?? "",
-      bodyServices: aboutUsData?.content?.bodyServices ?? "",
-      bodyPhilosophy: aboutUsData?.content?.bodyPhilosophy ?? "",
       isActive: aboutUsData?.is_active ?? false,
     }),
     [aboutUsData],
@@ -100,13 +96,14 @@ export default function AboutUpdateForm({
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            summary: formValues.summary,
+            title: formValues.title,
+            quote: formValues.quote,
             quoteAuthor: formValues.quoteAuthor,
             bodyIntro: formValues.bodyIntro,
             bodyTeam: formValues.bodyTeam,
             bodyServices: formValues.bodyServices,
             bodyPhilosophy: formValues.bodyPhilosophy,
+            isActive: formValues.isActive,
           }),
         );
 
@@ -159,8 +156,8 @@ export default function AboutUpdateForm({
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <InputField
               label="Názov"
-              value={formValues.name}
-              onChange={(e) => handleChange("name", e.target.value)}
+              value={formValues.title}
+              onChange={(e) => handleChange("title", e.target.value)}
               readOnly={!isAdmin}
             />
             <InputField
@@ -173,8 +170,8 @@ export default function AboutUpdateForm({
 
           <TextareaField
             label="Krátky citát"
-            value={formValues.summary}
-            onChange={(e) => handleChange("summary", e.target.value)}
+            value={formValues.quote}
+            onChange={(e) => handleChange("quote", e.target.value)}
             readOnly={!isAdmin}
             rows={3}
           />

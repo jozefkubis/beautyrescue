@@ -1,8 +1,8 @@
-﻿import AboutMain from "../_components/about/AboutMain"
-import { getAboutUs } from "../_lib/data_services/data_about_us"
+﻿import AboutMain from "../_components/about/AboutMain";
+import { getAboutUs } from "../_lib/data_services_all/data_about";
 
 export default async function Page() {
-  const aboutUsData = await getAboutUs("about-us")
+  const aboutUsData = await getAboutUs("about-us");
 
-  return <AboutMain aboutUsData={aboutUsData} />
+  return <AboutMain aboutUsData={aboutUsData} />;
 }

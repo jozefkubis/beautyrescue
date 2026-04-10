@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "../supabase/server";
 
 type AboutUpdatePayload = {
-  name: string;
-  summary: string;
+  title: string;
+  quote: string;
   quoteAuthor: string;
   bodyIntro: string;
   bodyTeam: string;
@@ -57,7 +57,10 @@ async function uploadImageIfProvided(
     throw new Error("Podporované sú iba formáty JPG, PNG a WEBP");
   }
 
-  const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(/\s/g, "-");
+  const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(
+    /\s/g,
+    "-",
+  );
 
   const { data: uploadData, error: uploadError } = await supabase.storage
     .from("BRImages")
@@ -91,6 +94,7 @@ export async function updateAboutUs(formData: FormData) {
   const rawData = formData.get("data")?.toString();
   const imageFile = formData.get("image_file");
 
+  
   if (!rawData) {
     throw new Error("Chýbajú dáta pre stránku O nás");
   }
@@ -104,8 +108,8 @@ export async function updateAboutUs(formData: FormData) {
   }
 
   if (
-    typeof payload.name !== "string" ||
-    typeof payload.summary !== "string" ||
+    typeof payload.title !== "string" ||
+    typeof payload.quote !== "string" ||
     typeof payload.quoteAuthor !== "string" ||
     typeof payload.bodyIntro !== "string" ||
     typeof payload.bodyTeam !== "string" ||
@@ -120,8 +124,8 @@ export async function updateAboutUs(formData: FormData) {
   const { error } = await supabase.from("about_us").upsert(
     {
       slug,
-      title: getText(payload.name),
-      quote: getText(payload.summary) || null,
+      title: getText(payload.title),
+      quote: getText(payload.quote) || null,
       quote_author: getText(payload.quoteAuthor) || null,
       body_intro: getText(payload.bodyIntro) || null,
       body_team: getText(payload.bodyTeam) || null,
