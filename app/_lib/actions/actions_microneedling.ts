@@ -1,4 +1,4 @@
-"use server";
+ "use server";
 
 import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "../supabase/server";
@@ -198,7 +198,10 @@ export async function updateMicroneedling(formData: FormData) {
 
 // TKN checkboxy zapisujeme priamo do DB cez `is_active`, bez ďalších obchádzok.
 export async function updateTknVisibility(formData: FormData) {
+  // Najprv si otvoríme serverový Supabase klient, ale iba ak je používateľ admin.
   const supabase = await requireAdmin();
+
+  // Z formulára príde jeden JSON string so stavmi kategórií a produktov.
   const rawData = formData.get("data")?.toString();
 
   if (!rawData) {
@@ -207,17 +210,21 @@ export async function updateTknVisibility(formData: FormData) {
 
   let payload: TknVisibilityPayload;
   try {
+    // String z formulára prevedieme naspäť na objekt, s ktorým vieme pracovať.
     payload = JSON.parse(rawData);
   } catch {
     throw new Error("Neplatné dáta formulára TKN sekcií a produktov");
   }
 
+  // Kategórie aj produkty si spojíme do jedného poľa dvojíc [slug, boolean].
+  // Vďaka tomu máme jeden jednoduchý cyklus pre všetky zmeny.
   const updates = [
     ...Object.entries(payload.categories ?? {}),
     ...Object.entries(payload.products ?? {}),
   ];
 
   // Každý checkbox zapisujeme priamo do `service_items.is_active`.
+  // `slug` identifikuje konkrétny riadok a `isActive` hovorí, či má byť aktívny.
   await Promise.all(
     updates.map(async ([slug, isActive]) => {
       const { error } = await supabase
@@ -225,12 +232,14 @@ export async function updateTknVisibility(formData: FormData) {
         .update({ is_active: Boolean(isActive) })
         .eq("slug", slug);
 
+      // Ak zlyhá čo i len jedna položka, radšej spadneme s jasnou chybou.
       if (error) {
         throw new Error(`Chyba pri aktualizácii ${slug}: ${error.message}`);
       }
     }),
   );
 
+  // Po uložení obnovíme verejnú aj admin stránku, aby sa nový stav hneď zobrazil.
   revalidatePath("/cosmetics/microneedling");
   revalidatePath("/cosmetics/microneedling/tkn");
   revalidatePath("/admin/cosmetics_settings/microneedling_settings");
@@ -242,11 +251,15 @@ export async function deleteTknProduct(
   categorySlug: string,
   productSlug: string,
 ): Promise<TknDeleteResult> {
+  // Aj mazanie musí ísť cez admin poistku.
   const supabase = await requireAdmin();
+
+  // Slugy očistíme od medzier, aby sme neporovnávali nepresné hodnoty.
   const safeProductDbSlug = productDbSlug?.trim();
   const safeCategorySlug = categorySlug?.trim();
   const safeProductSlug = productSlug?.trim();
 
+  // Keď chýba identifikátor produktu alebo cesty, nemá zmysel pokračovať.
   if (!safeProductDbSlug || !safeCategorySlug || !safeProductSlug) {
     return {
       ok: false,
@@ -254,11 +267,13 @@ export async function deleteTknProduct(
     };
   }
 
+  // Tu prebehne samotný trvalý delete jedného DB riadku.
   const { error: deleteError } = await supabase
     .from("service_items")
     .delete()
     .eq("slug", safeProductDbSlug);
 
+  // Klientovi vraciame konzistentný výsledok, aby vedel ukázať toast alebo chybu.
   if (deleteError) {
     return {
       ok: false,
@@ -266,6 +281,7 @@ export async function deleteTknProduct(
     };
   }
 
+  // Po zmazaní obnovíme všetky stránky, kde sa tento produkt mohol zobrazovať.
   revalidatePath("/cosmetics/microneedling");
   revalidatePath("/cosmetics/microneedling/tkn");
   revalidatePath(`/cosmetics/microneedling/tkn/${safeCategorySlug}`);
@@ -285,7 +301,10 @@ export async function deleteTknCategory(
   categoryDbSlug: string,
   categorySlug: string,
 ): Promise<TknDeleteResult> {
+  // Najprv si znova overíme admin práva.
   const supabase = await requireAdmin();
+
+  // Očistené slugy použijeme pri hľadaní sekcie aj jej produktov.
   const safeCategoryDbSlug = categoryDbSlug?.trim();
   const safeCategorySlug = categorySlug?.trim();
 
@@ -296,6 +315,8 @@ export async function deleteTknCategory(
     };
   }
 
+  // Najprv si nájdeme všetky produkty, ktoré patria pod danú sekciu.
+  // Potrebujeme ich slugs, aby sme vedeli zmazať všetko naraz jedným dopytom.
   const { data: productRows, error: productRowsError } = await supabase
     .from("service_items")
     .select("slug")
@@ -310,11 +331,13 @@ export async function deleteTknCategory(
     };
   }
 
+  // Do jedného poľa si pripravíme slug sekcie aj slugy všetkých jej produktov.
   const dbSlugs = [
     safeCategoryDbSlug,
     ...((productRows ?? []) as Array<{ slug: string }>).map((row) => row.slug),
   ];
 
+  // Tu prebehne skutočný trvalý delete celej skupiny riadkov.
   const { error: deleteError } = await supabase
     .from("service_items")
     .delete()
@@ -327,6 +350,7 @@ export async function deleteTknCategory(
     };
   }
 
+  // Po úspechu obnovíme stránky, kde sa sekcia mohla zobrazovať.
   revalidatePath("/cosmetics/microneedling");
   revalidatePath("/cosmetics/microneedling/tkn");
   revalidatePath(`/cosmetics/microneedling/tkn/${safeCategorySlug}`);
