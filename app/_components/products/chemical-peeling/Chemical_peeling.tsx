@@ -1,19 +1,28 @@
 "use client";
 
 import type { ChemicalPeelingMainProps } from "@/app/_lib/data_services/data_chemical_peeling";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import ExpandText from "../../ExpandText";
 import { brandFont } from "../../fonts";
 import Chem_peeling_pricing_form from "./Chem_peeling_pricing_form";
 import Chemical_peeling_text from "./Chemical_peeling_text";
 
+type ChemicalPeelingProps = {
+  chemicalPeelingData: ChemicalPeelingMainProps["chemicalPeelingData"];
+  chemPeelingService: ServiceRow | null;
+  user?: string | null;
+  isAdmin?: boolean;
+};
+
 export default function Chemical_peeling({
   chemicalPeelingData,
+  chemPeelingService,
   user,
   isAdmin,
-}: ChemicalPeelingMainProps & { user?: string | null; isAdmin?: boolean }) {
+}: ChemicalPeelingProps) {
   // Ak je v DB nahraný obrázok zo Storage, použijeme ho; inak ostáva lokálny fallback.
-  const uploadedImageUrl = chemicalPeelingData.image_url?.trim();
+  const uploadedImageUrl = chemPeelingService?.image_url?.trim();
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
@@ -24,16 +33,14 @@ export default function Chemical_peeling({
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {chemicalPeelingData.name[0]}
+                {chemPeelingService?.title?.[0]}
               </span>
-              {chemicalPeelingData.name.slice(1)}
+              {chemPeelingService?.title?.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Chemical_peeling_text
-                chemicalPeelingData={chemicalPeelingData}
-              />
+              <Chemical_peeling_text chemPeelingService={chemPeelingService} />
             </ExpandText>
           </div>
         </div>

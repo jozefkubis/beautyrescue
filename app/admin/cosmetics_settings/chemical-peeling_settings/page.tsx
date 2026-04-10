@@ -1,11 +1,11 @@
 import Chemical_peeling_update_form from "@/app/_components/products/chemical-peeling/Chemical_peeling_update_form";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import getChemicalPeeling from "@/app/_lib/data_services/data_chemical_peeling";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const [user, chemicalPeelingData] = await Promise.all([
     getCurrentUser(),
-    getChemicalPeeling("chemical-peeling"),
+    getServiceBySlug("chemical-peeling"),
   ]);
 
   const isAdmin =

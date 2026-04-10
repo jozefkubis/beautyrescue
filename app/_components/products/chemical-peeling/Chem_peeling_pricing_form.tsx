@@ -1,11 +1,17 @@
 import type { ChemicalPeelingMainProps } from "@/app/_lib/data_services/data_chemical_peeling"
 import PricingForm from "../PricingForm"
 
+type Chem_peeling_pricing_formProps = {
+  chemicalPeelingData: ChemicalPeelingMainProps["chemicalPeelingData"]
+  user?: string | null
+  isAdmin?: boolean
+}
+
 export default function Chem_peeling_pricing_form({
   chemicalPeelingData,
   user,
   isAdmin,
-}: ChemicalPeelingMainProps & { user?: string | null }) {
+}: Chem_peeling_pricing_formProps) {
   const treatments = chemicalPeelingData.pricing.map((item) => ({
     id: item.id,
     treatment: item.treatment,

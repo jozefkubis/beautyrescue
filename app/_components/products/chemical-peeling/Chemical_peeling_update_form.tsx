@@ -5,24 +5,15 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
-import { updateChemicalPeeling } from "@/app/_lib/actions/actions_chem_peeling";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import FileField from "../../FileField";
 
-type ChemicalPeelingData = {
-  slug?: string;
-  name?: string;
-  is_active?: boolean;
-  image_url?: string;
-  content?: {
-    paragraphs?: string | string[];
-  };
-};
-
 type ChemicalPeelingUpdateFormProps = {
-  chemicalPeelingData: ChemicalPeelingData | null;
+  chemicalPeelingData: ServiceRow | null;
   isAdmin?: boolean;
 };
 
@@ -39,11 +30,9 @@ export default function Chemical_peeling_update_form({
   // useMemo zabezpečí, že sa tieto hodnoty prepočítajú iba ak sa zmení aboutUsData.
   const initialValues = useMemo(
     () => ({
-      name: chemicalPeelingData?.name ?? "",
+      title: chemicalPeelingData?.title ?? "",
       image_url: chemicalPeelingData?.image_url ?? "",
-      content: Array.isArray(chemicalPeelingData?.content?.paragraphs)
-        ? chemicalPeelingData.content.paragraphs.join("\n\n")
-        : (chemicalPeelingData?.content?.paragraphs ?? ""),
+      text: chemicalPeelingData?.text ?? "",
       isActive: chemicalPeelingData?.is_active ?? false,
     }),
     [chemicalPeelingData],
@@ -51,7 +40,7 @@ export default function Chemical_peeling_update_form({
 
   // formValues = to, čo admin práve píše do formulára (live stav).
   const [formValues, setFormValues] = useState(initialValues);
-  
+
   // Vybraný obrázok držíme samostatne, aby sa poslal ako File vo FormData.
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
@@ -87,8 +76,8 @@ export default function Chemical_peeling_update_form({
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            paragraphs: formValues.content,
+            title: formValues.title,
+            text: formValues.text,
             is_active: formValues.isActive,
           }),
         );
@@ -97,7 +86,10 @@ export default function Chemical_peeling_update_form({
           formData.set("image_file", selectedImageFile);
         }
 
-        await updateChemicalPeeling(formData);
+        await updateServiceBySlug(
+          formData,
+          chemicalPeelingData?.slug ?? "chemical-peeling",
+        );
 
         // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
         setLastSavedValues(formValues);
@@ -133,17 +125,17 @@ export default function Chemical_peeling_update_form({
             {/* Textové pole pre názov */}
             <InputField
               label="Názov"
-              value={formValues.name}
-              onChange={(e) => handleChange("name", e.target.value)}
+              value={formValues.title}
+              onChange={(e) => handleChange("title", e.target.value)}
               readOnly={!isAdmin}
             />
             {/* Textarea pre obsah */}
             <TextareaField
               label="Obsah"
-              value={formValues.content}
-              onChange={(e) => handleChange("content", e.target.value)}
+              value={formValues.text}
+              onChange={(e) => handleChange("text", e.target.value)}
               readOnly={!isAdmin}
-              rows={12}
+              rows={17}
             />
 
             <FileField
