@@ -1,5 +1,6 @@
--- Seed for public.pricing
--- One INSERT per procedure extracted from pricing forms
+﻿-- Seed for public.pricing
+-- Kazdy zaznam sa viaze na `public.services.id`, nie na stare `service_items.id`.
+-- Preto sa `service_id` berie priamo z tabulky `services` cez zodpovedajuci `slug`.
 
 INSERT INTO pricing (
   treatment,
@@ -2328,6 +2329,9 @@ SELECT
   )
 FROM service_items
 WHERE slug = 'profhilo';
+
+
+
 
 
 
