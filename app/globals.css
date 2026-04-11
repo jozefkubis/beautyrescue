@@ -137,3 +137,12 @@ strong {
     transform: translateY(0);
   }
 }
+
+/* Expand text animacia pre desktop – bez konfliktu Tailwind breakpointov */
+.expand-lg-collapsed {
+  max-height: 18rem;
+}
+
+.expand-lg-open {
+  max-height: 120rem;
+}

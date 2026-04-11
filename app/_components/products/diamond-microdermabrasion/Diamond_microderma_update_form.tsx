@@ -1,6 +1,5 @@
 "use client";
 
-import { updateDiamondMicrodermabrasion } from "@/app/_lib/actions/actions_diamond_microderma";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
@@ -10,24 +9,12 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import FileField from "../../FileField";
 
-type diamondMicrodermabrasionData = {
-  slug?: string;
-  name?: string;
-  image_url?: string;
-  content?: {
-    intro?: string;
-    paragraphs?: string[];
-  };
-  attributes?: {
-    benefits?: string[];
-  };
-  is_active?: boolean;
-};
-
 type DiamondMicrodermabrasionUpdateFormProps = {
-  diamondMicrodermabrasionMainData: diamondMicrodermabrasionData;
+  diamondMicrodermabrasionMainData: ServiceRow | null;
   isAdmin?: boolean;
 };
 
@@ -44,19 +31,9 @@ export default function Diamond_microderma_update_form({
   // useMemo zabezpečí, že sa tieto hodnoty prepočítajú iba ak sa zmení aboutUsData.
   const initialValues = useMemo(
     () => ({
-      name: diamondMicrodermabrasionMainData?.name ?? "",
+      title: diamondMicrodermabrasionMainData?.title ?? "",
       image_url: diamondMicrodermabrasionMainData?.image_url ?? "",
-      contentIntro: diamondMicrodermabrasionMainData?.content?.intro ?? "",
-      contentParagraphs: Array.isArray(
-        diamondMicrodermabrasionMainData?.content?.paragraphs,
-      )
-        ? diamondMicrodermabrasionMainData.content.paragraphs.join("\n\n")
-        : "",
-      attributesBenefits: Array.isArray(
-        diamondMicrodermabrasionMainData?.attributes?.benefits,
-      )
-        ? diamondMicrodermabrasionMainData.attributes.benefits.join("\n")
-        : "",
+      text: diamondMicrodermabrasionMainData?.text ?? "",
       isActive: diamondMicrodermabrasionMainData?.is_active ?? false,
     }),
     [diamondMicrodermabrasionMainData],
@@ -103,20 +80,8 @@ export default function Diamond_microderma_update_form({
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            content: {
-              intro: formValues.contentIntro,
-              paragraphs: formValues.contentParagraphs
-                .split("\n\n")
-                .map((paragraph) => paragraph.trim())
-                .filter(Boolean),
-            },
-            attributes: {
-              benefits: formValues.attributesBenefits
-                .split("\n")
-                .map((benefit) => benefit.trim())
-                .filter(Boolean),
-            },
+            title: formValues.title,
+            text: formValues.text,
             is_active: formValues.isActive,
           }),
         );
@@ -125,7 +90,10 @@ export default function Diamond_microderma_update_form({
           formData.set("image_file", selectedImageFile);
         }
 
-        await updateDiamondMicrodermabrasion(formData);
+        await updateServiceBySlug(
+          formData,
+          diamondMicrodermabrasionMainData?.slug ?? "diamond-microdermabrasion",
+        );
 
         // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
         setLastSavedValues(formValues);
@@ -172,40 +140,18 @@ export default function Diamond_microderma_update_form({
             {/* Pole pre názov */}
             <InputField
               label="Názov"
-              value={formValues.name}
-              onChange={(e) => handleChange("name", e.target.value)}
+              value={formValues.title}
+              onChange={(e) => handleChange("title", e.target.value)}
               readOnly={!isAdmin}
             />
 
             {/* Pole pre úvodný obsah */}
             <TextareaField
-              label="Obsah - Úvod"
-              value={formValues.contentIntro}
-              onChange={(e) => handleChange("contentIntro", e.target.value)}
-              readOnly={!isAdmin}
-              rows={6}
-            />
-
-            {/* Pole pre hlavný obsah */}
-            <TextareaField
               label="Obsah"
-              value={formValues.contentParagraphs}
-              onChange={(e) =>
-                handleChange("contentParagraphs", e.target.value)
-              }
+              value={formValues.text}
+              onChange={(e) => handleChange("text", e.target.value)}
               readOnly={!isAdmin}
-              rows={12}
-            />
-
-            {/* Pole pre benefity */}
-            <TextareaField
-              label="Benefity"
-              value={formValues.attributesBenefits}
-              onChange={(e) =>
-                handleChange("attributesBenefits", e.target.value)
-              }
-              readOnly={!isAdmin}
-              rows={6}
+              rows={18}
             />
 
             <FileField

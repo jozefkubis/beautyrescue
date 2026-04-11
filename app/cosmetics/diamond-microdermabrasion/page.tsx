@@ -1,16 +1,20 @@
 import Diamond_microdermabrasion from "@/app/_components/products/diamond-microdermabrasion/Diamond_microdermabrasion";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
 import getDiamondMicrodermabrasion from "@/app/_lib/data_services/data_diamond_microdermabrasion";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const diamondMicrodermabrasionData = await getDiamondMicrodermabrasion(
     "diamond-microdermabrasion",
   );
+
+  const diammondMicroderm = await getServiceBySlug("diamond-microdermabrasion");
+
   const user = await getCurrentUser();
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||
     user?.email === process.env.ADMIN_EMAIL_2;
-  const isActive = diamondMicrodermabrasionData?.is_active ?? false;
+  const isActive = diammondMicroderm?.is_active ?? false;
 
   if (!isActive) {
     return (
@@ -35,6 +39,7 @@ export default async function Page() {
   return (
     <Diamond_microdermabrasion
       diamondMicrodermabrasionData={diamondMicrodermabrasionData}
+      diamondMicroderm={diammondMicroderm}
       user={user?.email ?? null}
       isAdmin={isAdmin}
     />

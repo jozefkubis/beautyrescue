@@ -1,5 +1,5 @@
-import type { OxygeneoMainProps } from "@/app/_lib/data_services/data_oxygeneo"
-import ExpandTextLG from "../../ExpandTextLG"
+import type { OxygeneoMainProps } from "@/app/_lib/data_services/data_oxygeneo";
+import ExpandTextLG from "../../ExpandTextLG";
 
 export default function Oxygeneo_text({ oxygeneoData }: OxygeneoMainProps) {
   return (
@@ -7,16 +7,16 @@ export default function Oxygeneo_text({ oxygeneoData }: OxygeneoMainProps) {
       <div className="space-y-4">
         <ExpandTextLG>
           <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-            <p className="text-gray-700 leading-8">
+            <p className="text-gray-700 leading-7">
               {oxygeneoData.content.intro as string}
             </p>
 
-            <p className="text-gray-700 leading-8">
+            <p className="text-gray-700 leading-7">
               {oxygeneoData.content.description as string}
             </p>
 
             <div>
-              <p className="text-gray-700 leading-8">
+              <p className="text-gray-700 leading-7">
                 {oxygeneoData.content.stepsTitle as string}
               </p>
               <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -40,12 +40,12 @@ export default function Oxygeneo_text({ oxygeneoData }: OxygeneoMainProps) {
               </p>
             </div>
 
-            <p className="text-gray-700 leading-8">
+            <p className="text-gray-700 leading-7">
               {oxygeneoData.content.result as string}
             </p>
           </div>
         </ExpandTextLG>
       </div>
     </div>
-  )
+  );
 }

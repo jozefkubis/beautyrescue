@@ -8,7 +8,7 @@ export default function Chemical_peeling_text({
 }) {
   return (
     <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-      <p className="text-gray-700 leading-8 whitespace-pre-wrap">
+      <p className="text-gray-700 leading-7 whitespace-pre-wrap">
         {chemPeelingService?.text}
       </p>
     </div>

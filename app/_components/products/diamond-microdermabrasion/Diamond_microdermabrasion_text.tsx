@@ -1,36 +1,22 @@
-import type { DiamondMicrodermabrasionMainProps } from "@/app/_lib/data_services/data_diamond_microdermabrasion"
-import ExpandTextLG from "../../ExpandTextLG"
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+
+type DiamondMicrodermabrasionTextProps = {
+  diamondMicroderm?: ServiceRow | null;
+};
 
 export default function Diamond_microdermabrasion_text({
-  diamondMicrodermabrasionData,
-}: DiamondMicrodermabrasionMainProps) {
-  const intro = diamondMicrodermabrasionData.content.intro ?? ""
-  const paragraphs = diamondMicrodermabrasionData.content.paragraphs ?? []
-  const benefits = diamondMicrodermabrasionData.attributes?.benefits ?? []
+  // diamondMicrodermabrasionData,
+  diamondMicroderm,
+}: DiamondMicrodermabrasionTextProps) {
+  const text = diamondMicroderm?.text ?? "";
 
   return (
     <div>
       <div className="space-y-4">
-        <ExpandTextLG>
-          <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-            {intro ? <p className="text-gray-700 leading-8">{intro}</p> : null}
-
-            {benefits.length > 0 ? (
-              <ul className="list-disc list-inside space-y-2 text-gray-700">
-                {benefits.map((benefit) => (
-                  <li key={benefit}>{benefit}</li>
-                ))}
-              </ul>
-            ) : null}
-
-            {paragraphs.map((paragraph, index) => (
-              <p key={index} className="text-gray-700 leading-8">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        </ExpandTextLG>
+        <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify whitespace-pre-wrap">
+          {text ? <p className="text-gray-700 leading-7">{text}</p> : null}
+        </div>
       </div>
     </div>
-  )
+  );
 }

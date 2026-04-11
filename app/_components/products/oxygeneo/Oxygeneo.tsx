@@ -36,7 +36,7 @@ export default function Oxygeneo({
           </div>
         </div>
 
-        <div className="relative mt-10 w-full aspect-auto overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
+        <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <Image
             src={uploadedImageUrl || "/images/oxygeneo.jpeg"}
             alt="Oxygeneo"

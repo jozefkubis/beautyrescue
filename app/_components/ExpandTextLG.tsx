@@ -1,22 +1,22 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
 
 type ExpandTextProps = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 export default function ExpandTextLG({ children }: ExpandTextProps) {
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <div className="w-full">
       {/* Text */}
+      {/* Vyska rbiadena cez CSS triedy v globals.css, nie Tailwind breakpoint utilitami */}
       <div
-        className={`
-          overflow-hidden transition-all duration-1000 ease-in-out
-          ${expanded ? "2xl:max-h-500 lg:max-h-500" : "2xl:max-h-100 lg:max-h-74"}
-        `}
+        className={`overflow-hidden transition-all duration-700 ease-in-out ${
+          expanded ? "expand-lg-open" : "expand-lg-collapsed"
+        }`}
       >
         {children}
       </div>
@@ -30,5 +30,5 @@ export default function ExpandTextLG({ children }: ExpandTextProps) {
         {expanded ? "Zobraziť menej" : "Zobraziť viac..."}
       </button>
     </div>
-  )
+  );
 }

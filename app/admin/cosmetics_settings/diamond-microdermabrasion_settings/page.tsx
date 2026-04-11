@@ -1,12 +1,14 @@
 import Diamond_microderma_update_form from "@/app/_components/products/diamond-microdermabrasion/Diamond_microderma_update_form";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import getDiamondMicrodermabrasion from "@/app/_lib/data_services/data_diamond_microdermabrasion";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const [user, diamondMicrodermabrasionData] = await Promise.all([
     getCurrentUser(),
-    getDiamondMicrodermabrasion("diamond-microdermabrasion"),
+    getServiceBySlug("diamond-microdermabrasion"),
   ]);
+
+  console.log("Diamond Microdermabrasion Data:", diamondMicrodermabrasionData);
 
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||
