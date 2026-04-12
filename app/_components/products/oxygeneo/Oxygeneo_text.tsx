@@ -42,7 +42,7 @@ export default function Oxygeneo_text({ oxygeneo }: Oxygeneo_textProps) {
   const withLinks = oxygeneo?.text
     ?.replace(
       /čítajte viac na: (https:\/\/www\.ncbi\.nlm\.nih\.gov\/pmc\/articles\/PMC5774907\/)/g,
-      "<span style='color:#2f2321;font-size:0.75rem;'>čítajte viac na:</span> <a style='color:#194d8d;font-size:0.75rem;' href='$1' target='_blank' rel='noopener noreferrer'>$1</a>",
+      "<span style='color:#2f2321;font-size:0.75rem;'>čítajte viac na:</span> <a style='color:#8b092c;font-size:0.75rem;font-weight:bold;' href='$1' target='_blank' rel='noopener noreferrer'>$1</a>",
     )
     .replace(
       /Ošetrenie prebieha v niekoľkých náväzných krokoch:/gi,
