@@ -1,37 +1,46 @@
 "use client";
 
 import type { OxygeneoMainProps } from "@/app/_lib/data_services/data_oxygeneo";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import ExpandText from "../../ExpandText";
 import { brandFont } from "../../fonts";
 import Oxygeneo_pricing_form from "./Oxygeneo_pricing_form";
 import Oxygeneo_text from "./Oxygeneo_text";
 
+type OxygeneoProps = {
+  oxygeneoData: OxygeneoMainProps["oxygeneoData"];
+  oxygeneo?: ServiceRow | null;
+  user?: string | null;
+  isAdmin?: boolean;
+};
+
 export default function Oxygeneo({
+  oxygeneo,
   oxygeneoData,
   user,
   isAdmin,
-}: OxygeneoMainProps & { user?: string | null; isAdmin?: boolean }) {
+}: OxygeneoProps) {
   // Ak je v DB nahraný obrázok zo Storage, použijeme ho; inak ostáva lokálny fallback.
-  const uploadedImageUrl = oxygeneoData.image_url?.trim();
+  const uploadedImageUrl = oxygeneo?.image_url?.trim();
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
         <div className="flex flex-col py-10">
           <h1
-            className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
+            className={`premium-title pb-6 text-2xl font-semibold italic 2xl:text-5xl lg:pb-10 ${brandFont.className}`}
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {oxygeneoData.name[0]}
+                {oxygeneo?.title?.[0]}
               </span>
-              {oxygeneoData.name.slice(1)}
+              {oxygeneo?.title?.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Oxygeneo_text oxygeneoData={oxygeneoData} />
+              <Oxygeneo_text oxygeneo={oxygeneo} />
             </ExpandText>
           </div>
         </div>

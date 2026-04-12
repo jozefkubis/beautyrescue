@@ -1,11 +1,11 @@
 import Oxygeneo_update_form from "@/app/_components/products/oxygeneo/Oxygeneo_update_form";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import getOxygeneo from "@/app/_lib/data_services/data_oxygeneo";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const [user, oxygeneoData] = await Promise.all([
     getCurrentUser(),
-    getOxygeneo("oxygeneo"),
+    getServiceBySlug("oxygeneo"),
   ]);
 
   const isAdmin =

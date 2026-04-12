@@ -1,14 +1,17 @@
 import Oxygeneo from "@/app/_components/products/oxygeneo/Oxygeneo";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
 import getOxygeneo from "@/app/_lib/data_services/data_oxygeneo";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const oxygeneoData = await getOxygeneo("oxygeneo");
+  const oxygeneo = await getServiceBySlug("oxygeneo");
+
   const user = await getCurrentUser();
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||
     user?.email === process.env.ADMIN_EMAIL_2;
-  const isActive = oxygeneoData?.is_active ?? false;
+  const isActive = oxygeneo?.is_active ?? false;
 
   if (!isActive) {
     return (
@@ -33,6 +36,7 @@ export default async function Page() {
   return (
     <Oxygeneo
       oxygeneoData={oxygeneoData}
+      oxygeneo={oxygeneo}
       user={user?.email ?? null}
       isAdmin={isAdmin}
     />

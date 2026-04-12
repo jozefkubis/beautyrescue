@@ -135,7 +135,7 @@ export default function Chemical_peeling_update_form({
               value={formValues.text}
               onChange={(e) => handleChange("text", e.target.value)}
               readOnly={!isAdmin}
-              rows={17}
+              rows={18}
             />
 
             <FileField

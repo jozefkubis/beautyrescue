@@ -1,48 +1,66 @@
-import type { OxygeneoMainProps } from "@/app/_lib/data_services/data_oxygeneo";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import ExpandTextLG from "../../ExpandTextLG";
 
-export default function Oxygeneo_text({ oxygeneoData }: OxygeneoMainProps) {
+// Prejde text riadok po riadku — ak riadok začína ✓, zabalí ho do <li>
+// Keď skupina ✓ riadkov skončí, celú skupinu zabalí do <ul>
+function wrapChecklistInUl(text: string): string {
+  const lines = text.split("\n");
+  const result: string[] = [];
+  let checklistBuffer: string[] = [];
+
+  for (const line of lines) {
+    if (line.trimStart().startsWith("✓")) {
+      // Riadok patrí do zoznamu — odlož ho
+      checklistBuffer.push(`<li>${line.trim()}</li>`);
+    } else {
+      // Riadok nie je ✓ — ak bol pred ním zoznam, uzavri ho
+      if (checklistBuffer.length > 0) {
+        result.push(
+          `<ul style='list-style:none;padding:0;margin:0;text-align:left;'>${checklistBuffer.join("")}</ul>`,
+        );
+        checklistBuffer = [];
+      }
+      result.push(line);
+    }
+  }
+
+  // Ak text končí ✓ riadkami, uzavri zoznam na konci
+  if (checklistBuffer.length > 0) {
+    result.push(
+      `<ul style='list-style:none;padding:0;margin:0;text-align:left;'>${checklistBuffer.join("")}</ul>`,
+    );
+  }
+
+  return result.join("\n");
+}
+
+type Oxygeneo_textProps = {
+  oxygeneo?: ServiceRow | null;
+};
+export default function Oxygeneo_text({ oxygeneo }: Oxygeneo_textProps) {
+  // "čítajte viac na:" zobrazí inou farbou, URL za ním ako klikateľný odkaz
+  const withLinks = oxygeneo?.text
+    ?.replace(
+      /čítajte viac na: (https:\/\/www\.ncbi\.nlm\.nih\.gov\/pmc\/articles\/PMC5774907\/)/g,
+      "<span style='color:#2f2321;font-size:0.75rem;'>čítajte viac na:</span> <a style='color:#194d8d;font-size:0.75rem;' href='$1' target='_blank' rel='noopener noreferrer'>$1</a>",
+    )
+    .replace(
+      /Ošetrenie prebieha v niekoľkých náväzných krokoch:/gi,
+      "<span style='color:#9d7410;font-weight:bold;'>Ošetrenie prebieha v niekoľkých náväzných krokoch:</span>",
+    );
+
+  // Zavolá funkciu priamo — žiadny regex, len čistá funkcia na texte
+  const formattedText = withLinks ? wrapChecklistInUl(withLinks) : "";
+
   return (
     <div>
       <div className="space-y-4">
         <ExpandTextLG>
-          <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-            <p className="text-gray-700 leading-7">
-              {oxygeneoData.content.intro as string}
-            </p>
-
-            <p className="text-gray-700 leading-7">
-              {oxygeneoData.content.description as string}
-            </p>
-
-            <div>
-              <p className="text-gray-700 leading-7">
-                {oxygeneoData.content.stepsTitle as string}
-              </p>
-              <ul className="list-disc list-inside space-y-2 text-gray-700">
-                {((oxygeneoData.content.steps as string[]) ?? []).map(
-                  (step) => (
-                    <li key={step}>{step}</li>
-                  ),
-                )}
-              </ul>
-              <p className="text-xs mt-2">
-                ({oxygeneoData.metadata.citationLabel as string}{" "}
-                <a
-                  href={oxygeneoData.metadata.citationUrl as string}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-redDark hover:underline font-semibold"
-                >
-                  {oxygeneoData.metadata.citationUrl as string}
-                </a>
-                )
-              </p>
-            </div>
-
-            <p className="text-gray-700 leading-7">
-              {oxygeneoData.content.result as string}
-            </p>
+          <div className="space-y-3 text-sm 2xl:text-lg text-justify">
+            <div
+              className="text-gray-700 leading-7 whitespace-pre-wrap"
+              dangerouslySetInnerHTML={{ __html: formattedText ?? "" }}
+            />
           </div>
         </ExpandTextLG>
       </div>

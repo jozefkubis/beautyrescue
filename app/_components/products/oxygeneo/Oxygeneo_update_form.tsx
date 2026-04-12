@@ -5,32 +5,15 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
-import { updateOxygeneo } from "@/app/_lib/actions/actions_oxygeneo";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import FileField from "../../FileField";
 
-type OxygeneoData = {
-  slug?: string;
-  name?: string;
-  image_url?: string;
-  content: {
-    intro?: string;
-    description?: string;
-    stepsTitle?: string;
-    steps?: string[];
-    result?: string;
-  };
-  metadata: {
-    citationLabel?: string;
-    citationUrl?: string;
-  };
-  is_active?: boolean;
-};
-
 type OxygeneoUpdateFormProps = {
-  oxygeneoData: OxygeneoData;
+  oxygeneoData: ServiceRow;
   isAdmin?: boolean;
 };
 
@@ -47,17 +30,9 @@ export default function Oxygeneo_update_form({
   // useMemo zabezpečí, že sa tieto hodnoty prepočítajú iba ak sa zmení aboutUsData.
   const initialValues = useMemo(
     () => ({
-      name: oxygeneoData?.name ?? "",
+      title: oxygeneoData?.title ?? "",
+      text: oxygeneoData?.text ?? "",
       image_url: oxygeneoData?.image_url ?? "",
-      intro: oxygeneoData?.content?.intro ?? "",
-      steps: Array.isArray(oxygeneoData?.content?.steps)
-        ? oxygeneoData.content.steps.join("\n")
-        : "",
-      result: oxygeneoData?.content?.result ?? "",
-      stepsTitle: oxygeneoData?.content?.stepsTitle ?? "",
-      description: oxygeneoData?.content?.description ?? "",
-      citationLabel: oxygeneoData?.metadata?.citationLabel ?? "",
-      citationUrl: oxygeneoData?.metadata?.citationUrl ?? "",
       isActive: oxygeneoData?.is_active ?? false,
     }),
     [oxygeneoData],
@@ -99,18 +74,8 @@ export default function Oxygeneo_update_form({
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            content: {
-              intro: formValues.intro,
-              steps: formValues.steps,
-              result: formValues.result,
-              stepsTitle: formValues.stepsTitle,
-              description: formValues.description,
-            },
-            metadata: {
-              citationLabel: formValues.citationLabel,
-              citationUrl: formValues.citationUrl,
-            },
+            title: formValues.title,
+            text: formValues.text,
             is_active: formValues.isActive,
           }),
         );
@@ -119,7 +84,7 @@ export default function Oxygeneo_update_form({
           formData.set("image_file", selectedImageFile);
         }
 
-        await updateOxygeneo(formData);
+        await updateServiceBySlug(formData, oxygeneoData?.slug ?? "oxygeneo");
 
         // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
         setLastSavedValues(formValues);
@@ -166,52 +131,20 @@ export default function Oxygeneo_update_form({
             {/* Textové pole pre názov */}
             <InputField
               label="Názov"
-              value={formValues.name}
-              onChange={(e) => handleChange("name", e.target.value)}
+              value={formValues.title}
+              onChange={(e) => handleChange("title", e.target.value)}
               readOnly={!isAdmin}
             />
-            {/* Textarea pre úvod */}
+            {/* Textarea pre obsah */}
             <TextareaField
-              label="Obsah - Úvod"
-              value={formValues.intro}
-              onChange={(e) => handleChange("intro", e.target.value)}
+              label="Obsah"
+              value={formValues.text}
+              onChange={(e) => handleChange("text", e.target.value)}
               readOnly={!isAdmin}
+              rows={18}
             />
-            {/* Textarea pre popis */}
-            <TextareaField
-              label="Obsah - popis"
-              value={formValues.description}
-              onChange={(e) => handleChange("description", e.target.value)}
-              readOnly={!isAdmin}
-            />
-            {/* Textové pole pre kroky - nadpis */}
-            <InputField
-              label="Kroky - nadpis"
-              value={formValues.stepsTitle}
-              onChange={(e) => handleChange("stepsTitle", e.target.value)}
-              readOnly={!isAdmin}
-            />
-            {/* Textarea pre kroky - popis */}
-            <TextareaField
-              label="Kroky - popis"
-              value={formValues.steps}
-              onChange={(e) => handleChange("steps", e.target.value)}
-              readOnly={!isAdmin}
-            />
+
             {/* Textové pole pre odkaz URL */}
-            <InputField
-              label="Odkaz URL"
-              value={formValues.citationUrl}
-              onChange={(e) => handleChange("citationUrl", e.target.value)}
-              readOnly={!isAdmin}
-            />
-            {/* Textarea pre výsledok */}
-            <TextareaField
-              label="Výsledek"
-              value={formValues.result}
-              onChange={(e) => handleChange("result", e.target.value)}
-              readOnly={!isAdmin}
-            />
 
             <FileField
               type="file"
