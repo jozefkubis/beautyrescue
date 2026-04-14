@@ -1,20 +1,15 @@
-import type { MezoterapiaMainProps } from "@/app/_lib/data_services/data_mezoterapia"
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+
+
 
 export default function Mezoterapia_text({
-  mezoterapiaData,
-}: MezoterapiaMainProps) {
+  mezoterapia,
+}: { mezoterapia: ServiceRow | null }) {
   return (
     <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-      {(mezoterapiaData.content.paragraphs as string[]).map(
-        (paragraph, index) => (
-          <p
-            key={index}
-            className="text-gray-700 leading-8 whitespace-pre-wrap"
-          >
-            {paragraph}
-          </p>
-        ),
-      )}
+      <p className="text-gray-700 leading-7 whitespace-pre-wrap">
+        {mezoterapia?.text}
+      </p>
     </div>
-  )
+  );
 }

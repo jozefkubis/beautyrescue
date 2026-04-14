@@ -1,30 +1,34 @@
-"use client"
+"use client";
 
-import type { MezoterapiaMainProps } from "@/app/_lib/data_services/data_mezoterapia"
-import Image from "next/image"
-import Link from "next/link"
-import ExpandText from "../../ExpandText"
-import { brandFont } from "../../fonts"
-import Mezoterapia_text from "./Mezoterapia_text"
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import Image from "next/image";
+import Link from "next/link";
+import ExpandText from "../../ExpandText";
+import { brandFont } from "../../fonts";
+import Mezoterapia_text from "./Mezoterapia_text";
 
-export default function Mezoterapia({ mezoterapiaData }: MezoterapiaMainProps) {
+type MezoterapiaProps = {
+  mezoterapia: ServiceRow | null;
+};
+
+export default function Mezoterapia({ mezoterapia }: MezoterapiaProps) {
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
         <div className="flex flex-col py-10">
           <h1
-            className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
+            className={`premium-title pb-6 text-2xl font-semibold italic 2xl:text-5xl lg:pb-10 ${brandFont.className}`}
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {mezoterapiaData.name[0]}
+                {mezoterapia?.title?.[0]}
               </span>
-              {mezoterapiaData.name.slice(1)}
+              {mezoterapia?.title?.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Mezoterapia_text mezoterapiaData={mezoterapiaData} />
+              <Mezoterapia_text mezoterapia={mezoterapia} />
             </ExpandText>
           </div>
         </div>
@@ -36,8 +40,8 @@ export default function Mezoterapia({ mezoterapiaData }: MezoterapiaMainProps) {
             className="md:col-start-2 md:row-start-1 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square"
           >
             <Image
-              src={mezoterapiaData.gallery[0].src}
-              alt={mezoterapiaData.gallery[0].alt ?? ""}
+              src={mezoterapia?.image_gallery?.[0]?.src ?? ""}
+              alt={mezoterapia?.image_gallery?.[0]?.alt ?? ""}
               fill
               className="object-fit hover:cursor-pointer hover:scale-105 transition-transform duration-300"
             />
@@ -49,8 +53,8 @@ export default function Mezoterapia({ mezoterapiaData }: MezoterapiaMainProps) {
             className="md:col-start-1 md:row-start-2 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square"
           >
             <Image
-              src={mezoterapiaData.gallery[1].src}
-              alt={mezoterapiaData.gallery[1].alt ?? ""}
+              src={mezoterapia?.image_gallery?.[1]?.src ?? ""}
+              alt={mezoterapia?.image_gallery?.[1]?.alt ?? ""}
               fill
               className="object-fit hover:cursor-pointer hover:scale-105 transition-transform duration-300"
             />
@@ -58,5 +62,5 @@ export default function Mezoterapia({ mezoterapiaData }: MezoterapiaMainProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

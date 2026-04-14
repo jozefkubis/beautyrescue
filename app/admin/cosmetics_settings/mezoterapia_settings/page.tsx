@@ -5,6 +5,7 @@ import {
   getMezoterapiaInvasive,
   getMezoterapiaNonInvasive,
 } from "@/app/_lib/data_services/data_mezoterapia";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const [
@@ -14,9 +15,9 @@ export default async function Page() {
     mezoterapiaNonInvasiveData,
   ] = await Promise.all([
     getCurrentUser(),
-    getMezoterapia("mezoterapia"),
-    getMezoterapiaInvasive("mezoterapia-invasive"),
-    getMezoterapiaNonInvasive("mezoterapia-non-invasive"),
+    getServiceBySlug("mezoterapia"),
+    getServiceBySlug("mezoterapia-invasive"),
+    getServiceBySlug("mezoterapia-non-invasive"),
   ]);
 
   const isAdmin =

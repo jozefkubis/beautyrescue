@@ -22,23 +22,13 @@ import {
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import SectionNavigation from "../../SectionNavigation";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
 
 // --- TYPY PRE DÁTA ---
 export type MezoterapiaData = {
   slug?: string;
-  name?: string;
-  content?: {
-    paragraphs?: string;
-  };
-  is_active?: boolean;
-};
-
-export type MezoterapiaServiceData = {
-  slug?: string;
-  name?: string;
-  content?: {
-    paragraphs?: string;
-  };
+  title?: string;
+  text?: string;
   is_active?: boolean;
 };
 
@@ -46,8 +36,8 @@ export type MezoterapiaServiceData = {
 // Prijíma dáta pre všetky tri sekcie a informáciu, či je užívateľ admin
 type MezoterapiaUpdateFormProps = {
   mezoterapiaData: MezoterapiaData;
-  mezoterapiaInvasiveData: MezoterapiaServiceData;
-  mezoterapiaNonInvasiveData: MezoterapiaServiceData;
+  mezoterapiaInvasiveData: MezoterapiaData;
+  mezoterapiaNonInvasiveData: MezoterapiaData;
   isAdmin?: boolean;
 };
 
@@ -77,7 +67,7 @@ function SingleMezoterapiaForm({
   isAdmin,
   type,
 }: {
-  data: MezoterapiaServiceData;
+  data: MezoterapiaData;
   label: string;
   isAdmin?: boolean;
   type: "main" | "invasive" | "noninvasive";
@@ -85,10 +75,8 @@ function SingleMezoterapiaForm({
   const [isPending, startTransition] = useTransition();
   const initialValues = useMemo(
     () => ({
-      name: data?.name ?? "",
-      paragraphs: Array.isArray(data?.content?.paragraphs)
-        ? data.content?.paragraphs.join("\n\n")
-        : (data?.content?.paragraphs ?? ""),
+      title: data?.title ?? "",
+      text: data?.text ?? "",
       isActive: data?.is_active ?? false,
     }),
     [data],
@@ -112,17 +100,17 @@ function SingleMezoterapiaForm({
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            paragraphs: formValues.paragraphs,
+            title: formValues.title,
+            text: formValues.text,
             is_active: formValues.isActive,
           }),
         );
         if (type === "main") {
-          await updateMezoterapia(formData);
+          await updateServiceBySlug(formData, data?.slug || "mezoterapia");
         } else if (type === "invasive") {
-          await updateMezoterapiaInvasive(formData);
+          await updateServiceBySlug(formData, data?.slug || "mezoterapia-invasive");
         } else if (type === "noninvasive") {
-          await updateMezoterapiaNonInvasive(formData);
+          await updateServiceBySlug(formData, data?.slug || "mezoterapia-noninvasive");
         }
         setLastSavedValues(formValues);
         toast.success("Zmeny boli uložené");
@@ -139,14 +127,14 @@ function SingleMezoterapiaForm({
       <div className="grid grid-cols-1 gap-4">
         <InputField
           label="Názov"
-          value={formValues.name}
-          onChange={(e) => handleChange("name", e.target.value)}
+          value={formValues.title}
+          onChange={(e) => handleChange("title", e.target.value)}
           readOnly={!isAdmin}
         />
         <TextareaField
-          label="Obsah (odseky, oddelené prázdnym riadkom)"
-          value={formValues.paragraphs}
-          onChange={(e) => handleChange("paragraphs", e.target.value)}
+          label="Obsah"
+          value={formValues.text}
+          onChange={(e) => handleChange("text", e.target.value)}
           readOnly={!isAdmin}
           rows={10}
         />
