@@ -29,20 +29,20 @@ export type MezoterapiaNonInvasiveProps = {
   mezoterapiaNonInvasiveData: MezoterapiaServiceData
 }
 
-export async function getMezoterapia(slug: string) {
-  const supabase = await getSupabaseServerClient()
-  const { data, error } = await supabase
-    .from("service_items")
-    .select("*, pricing(*)")
-    .eq("slug", slug)
-    .order("order_index", { referencedTable: "pricing", ascending: true })
-    .single()
-  if (error) {
-    console.error("Error fetching mezoterapia data:", error)
-    return null
-  }
-  return data
-}
+// export async function getMezoterapia(slug: string) {
+//   const supabase = await getSupabaseServerClient()
+//   const { data, error } = await supabase
+//     .from("service_items")
+//     .select("*, pricing(*)")
+//     .eq("slug", slug)
+//     .order("order_index", { referencedTable: "pricing", ascending: true })
+//     .single()
+//   if (error) {
+//     console.error("Error fetching mezoterapia data:", error)
+//     return null
+//   }
+//   return data
+// }
 
 export async function getMezoterapiaInvasive(slug: string) {
   const supabase = await getSupabaseServerClient()

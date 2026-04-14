@@ -9,6 +9,15 @@ import ExpandText from "../../ExpandText";
 import { brandFont } from "../../fonts";
 import Microneedling_pricing_form from "./Microneedling_pricing_form";
 import Microneedling_text from "./Microneedling_text";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+
+type MicroneedlingProps = {
+  microneedlingData: MicroneedlingMainProps["microneedlingData"];
+  tknCategories: TknCategory[];
+  user?: string | null;
+  isAdmin?: boolean;
+  microneedling?: ServiceRow | null;
+};
 
 // Verejný Microneedling komponent už dostáva TKN dáta priamo z DB, bez statického katalógu.
 export default function Microneedling({
@@ -16,13 +25,10 @@ export default function Microneedling({
   tknCategories,
   user,
   isAdmin,
-}: MicroneedlingMainProps & {
-  tknCategories: TknCategory[];
-  user?: string | null;
-  isAdmin?: boolean;
-}) {
+  microneedling,
+}: MicroneedlingProps) {
   // Ak je v DB nahraný obrázok zo Storage, použijeme ho; inak ostáva lokálny fallback.
-  const uploadedImageUrl = microneedlingData.image_url?.trim();
+  const uploadedImageUrl = microneedling?.image_url?.trim();
 
   // Zdroj pravdy je DB, takže tu už nič nefiltrované neskladáme cez pomocné statické funkcie.
   const visibleTknCategories = tknCategories;
@@ -32,18 +38,18 @@ export default function Microneedling({
       <div className="section-shell fade-up grid grid-cols-1 gap-4 p-5 lg:grid-cols-2 lg:gap-8 lg:p-8">
         <div className="flex flex-col py-10">
           <h1
-            className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
+            className={`premium-title pb-6 text-2xl font-semibold italic 2xl:text-5xl lg:pb-10 ${brandFont.className}`}
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {microneedlingData.name[0]}
+                {microneedling?.title?.[0]}
               </span>
-              {microneedlingData.name.slice(1)}
+              {microneedling?.title?.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Microneedling_text microneedlingData={microneedlingData} />
+              <Microneedling_text microneedling={microneedling} />
             </ExpandText>
           </div>
         </div>

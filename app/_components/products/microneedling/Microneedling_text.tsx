@@ -1,44 +1,63 @@
-import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling"
-import ExpandTextLG from "../../ExpandTextLG"
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import ExpandTextLG from "../../ExpandTextLG";
+
+// Prejde text riadok po riadku — ak riadok začína ✓, zabalí ho do <li>
+// Keď skupina ✓ riadkov skončí, celú skupinu zabalí do <ul>
+function wrapChecklistInUl(text: string): string {
+  const lines = text.split("\n");
+  const result: string[] = [];
+  let checklistBuffer: string[] = [];
+
+  for (const line of lines) {
+    if (line.trimStart().startsWith("✓")) {
+      // Riadok patrí do zoznamu — odlož ho
+      checklistBuffer.push(`<li>${line.trim()}</li>`);
+    } else {
+      // Riadok nie je ✓ — ak bol pred ním zoznam, uzavri ho
+      if (checklistBuffer.length > 0) {
+        result.push(
+          `<ul style='list-style:none;padding:0;margin:0;text-align:left;'>${checklistBuffer.join("")}</ul>`,
+        );
+        checklistBuffer = [];
+      }
+      result.push(line);
+    }
+  }
+
+  // Ak text končí ✓ riadkami, uzavri zoznam na konci
+  if (checklistBuffer.length > 0) {
+    result.push(
+      `<ul style='list-style:none;padding:0;margin:0;text-align:left;'>${checklistBuffer.join("")}</ul>`,
+    );
+  }
+
+  return result.join("\n");
+}
 
 export default function Microneedling_text({
-  microneedlingData,
-}: MicroneedlingMainProps) {
+  microneedling,
+}: {
+  microneedling?: ServiceRow | null;
+}) {
+  const withHighlights = microneedling?.text?.replace(
+    /Kontraindikácie:/g,
+    "<span style='color:#9d7410;font-weight:bold;'>Kontraindikácie:</span>",
+  );
+
+  const formattedText = withHighlights ? wrapChecklistInUl(withHighlights) : "";
+
   return (
     <div>
       <div className="space-y-4">
         <ExpandTextLG>
-          <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-            {microneedlingData.content.paragraphs.map((paragraph, index) => (
-              <p key={index} className="text-gray-700 leading-8">
-                {index === 0 ? (
-                  <>
-                    <strong>{microneedlingData.name}</strong>{" "}
-                    {paragraph.replace(/^Microneedling\s+/, "")}
-                  </>
-                ) : (
-                  paragraph
-                )}
-              </p>
-            ))}
-
-            <div>
-              <p className="text-gray-700 leading-8 mb-2">
-                <strong>
-                  {microneedlingData.attributes.contraindicationsTitle}
-                </strong>
-              </p>
-              <ul className="list-disc list-inside space-y-2 text-gray-700">
-                {(microneedlingData.attributes.contraindications ?? []).map(
-                  (item) => (
-                    <li key={item}>{item}</li>
-                  ),
-                )}
-              </ul>
-            </div>
+          <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify whitespace-pre-wrap">
+            <div
+              className="text-gray-700 leading-7"
+              dangerouslySetInnerHTML={{ __html: formattedText }}
+            />
           </div>
         </ExpandTextLG>
       </div>
     </div>
-  )
+  );
 }

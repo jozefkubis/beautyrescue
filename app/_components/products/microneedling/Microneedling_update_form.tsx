@@ -8,34 +8,23 @@ import UndoButton from "@/app/_components/UndoButton";
 import {
   deleteTknCategory,
   deleteTknProduct,
-  updateMicroneedling,
   updateTknVisibility,
 } from "@/app/_lib/actions/actions_microneedling";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
+import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling";
 import type { TknCategory } from "@/app/_lib/data_services/data_tkn_db";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import { FaRegTrashCan } from "react-icons/fa6";
 import FileField from "../../FileField";
 import SectionNavigation from "../../SectionNavigation";
 
-type MicroneedlingData = {
-  slug?: string;
-  name?: string;
-  image_url?: string;
-  content?: {
-    paragraphs?: string[];
-  };
-  attributes?: {
-    contraindicationsTitle?: string;
-    contraindications?: string[];
-  };
-  is_active?: boolean;
-};
-
 type Props = {
-  microneedlingData: MicroneedlingData;
+  microneedling: ServiceRow;
   tknCategories: TknCategory[];
   isAdmin?: boolean;
+  microneedlingData?: MicroneedlingMainProps; // Tento prop je zatial potrebný kvôli kompatibilite s existujúcou logikou, ale postupne by sa mal nahradiť iba ServiceRow dátami.
 };
 
 type VisibilityState = {
@@ -60,7 +49,7 @@ function buildInitialVisibility(tknCategories: TknCategory[]): VisibilityState {
 
 // Admin formulár pre hlavný obsah Microneedling a DB správu TKN sekcií a produktov.
 export default function Microneedling_update_form({
-  microneedlingData,
+  microneedling,
   tknCategories,
   isAdmin,
 }: Props) {
@@ -71,16 +60,12 @@ export default function Microneedling_update_form({
   // Vypočítaj počiatočné hodnoty z props. useMemo zabezpečí, že sa to prepočítá iba keď sa zmenia props
   const initialMainValues = useMemo(
     () => ({
-      name: microneedlingData?.name ?? "",
-      image_url: microneedlingData?.image_url ?? "",
-      paragraphs: microneedlingData?.content?.paragraphs?.join("\n\n") ?? "",
-      contraindicationsTitle:
-        microneedlingData?.attributes?.contraindicationsTitle ?? "",
-      contraindications:
-        microneedlingData?.attributes?.contraindications?.join("\n") ?? "",
-      isActive: microneedlingData?.is_active ?? false,
+      title: microneedling?.title ?? "",
+      text: microneedling?.text ?? "",
+      image_url: microneedling?.image_url ?? "",
+      is_active: microneedling?.is_active ?? false,
     }),
-    [microneedlingData],
+    [microneedling],
   );
 
   // ===== INICIALIZÁCIA PRE TKN VIDITEĽNOSŤ =====
@@ -159,15 +144,13 @@ export default function Microneedling_update_form({
   function handleMainSubmit(formData: FormData) {
     startTransitionMain(async () => {
       try {
-        formData.set("slug", microneedlingData?.slug ?? "microneedling");
+        formData.set("slug", microneedling?.slug ?? "microneedling");
         formData.set(
           "data",
           JSON.stringify({
-            name: mainValues.name,
-            paragraphs: mainValues.paragraphs,
-            contraindicationsTitle: mainValues.contraindicationsTitle,
-            contraindications: mainValues.contraindications,
-            is_active: mainValues.isActive,
+            title: mainValues.title,
+            text: mainValues.text,
+            is_active: mainValues.is_active,
           }),
         );
 
@@ -175,7 +158,10 @@ export default function Microneedling_update_form({
           formData.set("image_file", selectedImageFile);
         }
 
-        await updateMicroneedling(formData);
+        await updateServiceBySlug(
+          formData,
+          microneedling?.slug ?? "microneedling",
+        );
         setLastSavedMainValues(mainValues);
         toast.success("Microneedling bol uložený");
       } catch (error) {
@@ -341,36 +327,18 @@ export default function Microneedling_update_form({
               <div className="grid grid-cols-1 gap-4">
                 <InputField
                   label="Názov"
-                  value={mainValues.name}
-                  onChange={(e) => handleMainChange("name", e.target.value)}
+                  value={mainValues.title}
+                  onChange={(e) => handleMainChange("title", e.target.value)}
                   readOnly={!isAdmin}
                 />
                 <TextareaField
-                  label="Obsah (odseky, oddelené prázdnym riadkom)"
-                  value={mainValues.paragraphs}
-                  onChange={(e) =>
-                    handleMainChange("paragraphs", e.target.value)
-                  }
+                  label="Obsah"
+                  value={mainValues.text}
+                  onChange={(e) => handleMainChange("text", e.target.value)}
                   readOnly={!isAdmin}
-                  rows={10}
+                  rows={18}
                 />
-                <InputField
-                  label="Nadpis kontraindikácií"
-                  value={mainValues.contraindicationsTitle}
-                  onChange={(e) =>
-                    handleMainChange("contraindicationsTitle", e.target.value)
-                  }
-                  readOnly={!isAdmin}
-                />
-                <TextareaField
-                  label="Kontraindikácie (každá na novom riadku)"
-                  value={mainValues.contraindications}
-                  onChange={(e) =>
-                    handleMainChange("contraindications", e.target.value)
-                  }
-                  readOnly={!isAdmin}
-                  rows={7}
-                />
+
                 <FileField
                   type="file"
                   label="Hlavná fotka (image_url)"
@@ -388,9 +356,9 @@ export default function Microneedling_update_form({
                 <CheckboxField
                   labelActive="Aktívne"
                   labelInactive="Neaktívne"
-                  checked={mainValues.isActive}
+                  checked={mainValues.is_active ?? false}
                   onChange={(e) =>
-                    handleMainChange("isActive", e.target.checked)
+                    handleMainChange("is_active", e.target.checked)
                   }
                   disabled={!isAdmin}
                 />

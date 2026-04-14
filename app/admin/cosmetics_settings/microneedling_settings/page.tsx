@@ -2,13 +2,15 @@ import Microneedling_update_form from "@/app/_components/products/microneedling/
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
 import getMicroneedling from "@/app/_lib/data_services/data_microneedling";
 import { getTknCategories } from "@/app/_lib/data_services/data_tkn_db";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 // Admin stránka načíta aj neaktívne TKN položky, aby sa dali znovu zapnúť alebo zmazať.
 export default async function Page() {
-  const [user, microneedlingData, tknCategories] = await Promise.all([
+  const [user, microneedlingData, tknCategories, microneedling] = await Promise.all([
     getCurrentUser(),
     getMicroneedling("microneedling"),
     getTknCategories({ includeInactive: true }),
+    getServiceBySlug("microneedling"),
   ]);
 
   const isAdmin =
@@ -33,6 +35,7 @@ export default async function Page() {
   return (
     <Microneedling_update_form
       microneedlingData={microneedlingData}
+      microneedling={microneedling}
       tknCategories={tknCategories}
       isAdmin={isAdmin}
     />
