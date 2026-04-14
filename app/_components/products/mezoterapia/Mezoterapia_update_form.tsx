@@ -11,18 +11,11 @@ import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
 
-// --- SERVEROVÉ AKCIE NA ULOŽENIE ZMIEN DO DB ---
-import {
-  updateMezoterapia,
-  updateMezoterapiaInvasive,
-  updateMezoterapiaNonInvasive,
-} from "@/app/_lib/actions/actions_mezoterapia";
-
 // --- HOOKY A NOTIFIKÁCIE ---
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import SectionNavigation from "../../SectionNavigation";
-import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
 
 // --- TYPY PRE DÁTA ---
 export type MezoterapiaData = {
@@ -108,9 +101,15 @@ function SingleMezoterapiaForm({
         if (type === "main") {
           await updateServiceBySlug(formData, data?.slug || "mezoterapia");
         } else if (type === "invasive") {
-          await updateServiceBySlug(formData, data?.slug || "mezoterapia-invasive");
+          await updateServiceBySlug(
+            formData,
+            data?.slug || "mezoterapia-invasive",
+          );
         } else if (type === "noninvasive") {
-          await updateServiceBySlug(formData, data?.slug || "mezoterapia-noninvasive");
+          await updateServiceBySlug(
+            formData,
+            data?.slug || "mezoterapia-noninvasive",
+          );
         }
         setLastSavedValues(formValues);
         toast.success("Zmeny boli uložené");
