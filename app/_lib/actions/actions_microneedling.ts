@@ -76,125 +76,125 @@ async function requireAdmin() {
 }
 
 // Uloží hlavný obsah Microneedling sekcie a prípadne nahrá nový obrázok.
-export async function updateMicroneedling(formData: FormData) {
-  const supabase = await requireAdmin();
-  const slug = formData.get("slug")?.toString() || "microneedling";
-  const rawData = formData.get("data")?.toString();
-  const imageFile = formData.get("image_file");
+// export async function updateMicroneedling(formData: FormData) {
+//   const supabase = await requireAdmin();
+//   const slug = formData.get("slug")?.toString() || "microneedling";
+//   const rawData = formData.get("data")?.toString();
+//   const imageFile = formData.get("image_file");
 
-  if (!rawData) {
-    throw new Error("Chýbajú dáta pre Microneedling");
-  }
+//   if (!rawData) {
+//     throw new Error("Chýbajú dáta pre Microneedling");
+//   }
 
-  let payload: MicroneedlingUpdatePayload;
-  try {
-    payload = JSON.parse(rawData);
-  } catch {
-    throw new Error("Neplatné dáta formulára");
-  }
+//   let payload: MicroneedlingUpdatePayload;
+//   try {
+//     payload = JSON.parse(rawData);
+//   } catch {
+//     throw new Error("Neplatné dáta formulára");
+//   }
 
-  if (typeof payload.name !== "string" || typeof payload.is_active !== "boolean") {
-    throw new Error("Neplatná štruktúra dát");
-  }
+//   if (typeof payload.name !== "string" || typeof payload.is_active !== "boolean") {
+//     throw new Error("Neplatná štruktúra dát");
+//   }
 
-  const { data: existingItem, error: existingItemError } = await supabase
-    .from("service_items")
-    .select("content, attributes")
-    .eq("slug", slug)
-    .single();
+//   const { data: existingItem, error: existingItemError } = await supabase
+//     .from("service_items")
+//     .select("content, attributes")
+//     .eq("slug", slug)
+//     .single();
 
-  if (existingItemError || !existingItem) {
-    throw new Error(`Položka Microneedling nebola nájdená: ${existingItemError?.message ?? "unknown"}`);
-  }
+//   if (existingItemError || !existingItem) {
+//     throw new Error(`Položka Microneedling nebola nájdená: ${existingItemError?.message ?? "unknown"}`);
+//   }
 
-  const currentContent =
-    existingItem?.content && typeof existingItem.content === "object"
-      ? (existingItem.content as Record<string, unknown>)
-      : {};
+//   const currentContent =
+//     existingItem?.content && typeof existingItem.content === "object"
+//       ? (existingItem.content as Record<string, unknown>)
+//       : {};
 
-  const currentAttributes =
-    existingItem?.attributes && typeof existingItem.attributes === "object"
-      ? (existingItem.attributes as Record<string, unknown>)
-      : {};
+//   const currentAttributes =
+//     existingItem?.attributes && typeof existingItem.attributes === "object"
+//       ? (existingItem.attributes as Record<string, unknown>)
+//       : {};
 
-  let uploadedImageUrl: string | undefined;
+//   let uploadedImageUrl: string | undefined;
 
-  if (imageFile && imageFile instanceof File && imageFile.size > 0) {
-    // Jednoduchá ochrana pre veľkosť a typ súboru.
-    const maxFileSize = 5 * 1024 * 1024;
-    const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
+//   if (imageFile && imageFile instanceof File && imageFile.size > 0) {
+//     // Jednoduchá ochrana pre veľkosť a typ súboru.
+//     const maxFileSize = 5 * 1024 * 1024;
+//     const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
 
-    if (imageFile.size > maxFileSize) {
-      throw new Error("Obrázok je príliš veľký (max 5 MB)");
-    }
+//     if (imageFile.size > maxFileSize) {
+//       throw new Error("Obrázok je príliš veľký (max 5 MB)");
+//     }
 
-    if (!allowedMimeTypes.includes(imageFile.type)) {
-      throw new Error("Podporované sú iba formáty JPG, PNG a WEBP");
-    }
+//     if (!allowedMimeTypes.includes(imageFile.type)) {
+//       throw new Error("Podporované sú iba formáty JPG, PNG a WEBP");
+//     }
 
-    // Názov súboru skladáme zo slugu + času, aby sme minimalizovali kolízie.
-    // Medzery nahradíme pomlčkami, aby bol názov bezpečný pre URL aj storage.
-    const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(
-      /\s/g,
-      "-",
-    );
+//     // Názov súboru skladáme zo slugu + času, aby sme minimalizovali kolízie.
+//     // Medzery nahradíme pomlčkami, aby bol názov bezpečný pre URL aj storage.
+//     const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(
+//       /\s/g,
+//       "-",
+//     );
 
-    // Obrázok uložíme do bucketu BRImages.
-    // upsert: true znamená, že pri rovnakej ceste sa súbor prepíše.
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from("BRImages")
-      .upload(fileName, imageFile, {
-        cacheControl: "3600",
-        upsert: true,
-      });
+//     // Obrázok uložíme do bucketu BRImages.
+//     // upsert: true znamená, že pri rovnakej ceste sa súbor prepíše.
+//     const { data: uploadData, error: uploadError } = await supabase.storage
+//       .from("BRImages")
+//       .upload(fileName, imageFile, {
+//         cacheControl: "3600",
+//         upsert: true,
+//       });
 
-    if (uploadError) {
-      throw new Error(`Chyba pri nahrávaní obrázka: ${uploadError.message}`);
-    }
+//     if (uploadError) {
+//       throw new Error(`Chyba pri nahrávaní obrázka: ${uploadError.message}`);
+//     }
 
-    // Pre uložený súbor vygenerujeme signed URL s dlhou platnosťou,
-    // ktorú následne uložíme do image_url v databáze.
-    const { data: signedData, error: signedError } = await supabase.storage
-      .from("BRImages")
-      .createSignedUrl(uploadData.path, 157680000);
+//     // Pre uložený súbor vygenerujeme signed URL s dlhou platnosťou,
+//     // ktorú následne uložíme do image_url v databáze.
+//     const { data: signedData, error: signedError } = await supabase.storage
+//       .from("BRImages")
+//       .createSignedUrl(uploadData.path, 157680000);
 
-    if (signedError || !signedData?.signedUrl) {
-      throw new Error(
-        `Chyba pri generovaní signed URL: ${signedError?.message ?? "Neznáma chyba"}`,
-      );
-    }
+//     if (signedError || !signedData?.signedUrl) {
+//       throw new Error(
+//         `Chyba pri generovaní signed URL: ${signedError?.message ?? "Neznáma chyba"}`,
+//       );
+//     }
 
-    uploadedImageUrl = signedData.signedUrl;
-  }
+//     uploadedImageUrl = signedData.signedUrl;
+//   }
 
-  const { error } = await supabase
-    .from("service_items")
-    .update({
-      name: payload.name.trim(),
-      // image_url meníme len vtedy, keď sa reálne nahral nový obrázok.
-      // Ak upload neprebehol, tento kľúč neposielame a pôvodná hodnota zostane zachovaná.
-      ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
-      is_active: payload.is_active,
-      content: {
-        ...currentContent,
-        paragraphs: normalizeParagraphs(payload.paragraphs),
-      },
-      attributes: {
-        ...currentAttributes,
-        contraindicationsTitle: payload.contraindicationsTitle.trim(),
-        contraindications: normalizeLines(payload.contraindications),
-      },
-    })
-    .eq("slug", slug);
+//   const { error } = await supabase
+//     .from("service_items")
+//     .update({
+//       name: payload.name.trim(),
+//       // image_url meníme len vtedy, keď sa reálne nahral nový obrázok.
+//       // Ak upload neprebehol, tento kľúč neposielame a pôvodná hodnota zostane zachovaná.
+//       ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),
+//       is_active: payload.is_active,
+//       content: {
+//         ...currentContent,
+//         paragraphs: normalizeParagraphs(payload.paragraphs),
+//       },
+//       attributes: {
+//         ...currentAttributes,
+//         contraindicationsTitle: payload.contraindicationsTitle.trim(),
+//         contraindications: normalizeLines(payload.contraindications),
+//       },
+//     })
+//     .eq("slug", slug);
 
-  if (error) {
-    throw new Error(`Chyba pri aktualizácii Microneedling: ${error.message}`);
-  }
+//   if (error) {
+//     throw new Error(`Chyba pri aktualizácii Microneedling: ${error.message}`);
+//   }
 
-  revalidatePath("/", "layout");
-  revalidatePath("/cosmetics/microneedling");
-  revalidatePath("/admin/cosmetics_settings/microneedling_settings");
-}
+//   revalidatePath("/", "layout");
+//   revalidatePath("/cosmetics/microneedling");
+//   revalidatePath("/admin/cosmetics_settings/microneedling_settings");
+// }
 
 // TKN checkboxy zapisujeme priamo do DB cez `is_active`, bez ďalších obchádzok.
 export async function updateTknVisibility(formData: FormData) {
