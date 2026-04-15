@@ -1,11 +1,21 @@
 import { brandFont } from "@/app/_components/fonts";
 import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
-import { getTknCategories } from "@/app/_lib/data_services/data_tkn_db";
+import {
+  getTknCategories,
+  getTknProductsByCategory,
+} from "@/app/_lib/data_services_all/data_tkn";
 import Link from "next/link";
 
 // Landing page TKN katalógu si vytiahne všetky aktívne kategórie priamo z DB.
 export default async function Page() {
-  const visibleTknCategories = await getTknCategories();
+  const categories = await getTknCategories();
+
+  const visibleTknCategories = await Promise.all(
+    categories.map(async (category) => ({
+      ...category,
+      products: await getTknProductsByCategory(category.slug),
+    })),
+  );
 
   return (
     <div className="w-full px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
@@ -31,10 +41,10 @@ export default async function Page() {
               {dataDashboard.tknLanding.categoryBadge}
             </p>
             <h2 className="mt-2 text-lg font-semibold text-greyMain lg:text-2xl">
-              {category.name}
+              {category.title}
             </h2>
-            <p className="mt-3 text-sm leading-6 text-greyMain/80 lg:text-base">
-              {category.description}
+            <p className="mt-3 line-clamp-3 whitespace-pre-wrap text-sm leading-6 text-greyMain/80 lg:text-base">
+              {category.text}
             </p>
             <span className="mt-5 inline-flex rounded-full border border-goldDark/25 px-3 py-1 text-sm text-goldDark">
               {category.products.length}{" "}

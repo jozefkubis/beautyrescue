@@ -1,39 +1,61 @@
 import { brandFont } from "@/app/_components/fonts";
 import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
-import {
-  getTknCategories,
-  getTknProduct,
-} from "@/app/_lib/data_services/data_tkn_db";
 import { getTknProductImage } from "@/app/_lib/data_services/tkn_image_map";
+import {
+  getProductBySlug,
+  getTknCategoriesBySlug,
+  type TknProductRow,
+} from "@/app/_lib/data_services_all/data_tkn";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 type ProductPageProps = {
   params: Promise<{ category: string; product: string }>;
 };
 
-// Statické cesty pre produktové detaily skladáme z DB kategórií a produktov.
-export async function generateStaticParams() {
-  const categories = await getTknCategories();
+function getIndications(product: TknProductRow) {
+  const content = product.content;
 
-  return categories.flatMap((category) =>
-    category.products.map((product) => ({
-      category: category.slug,
-      product: product.slug,
-    })),
-  );
+  if (!content || typeof content !== "object" || Array.isArray(content)) {
+    return [] as string[];
+  }
+
+  const maybeIndications = (content as { indications?: unknown }).indications;
+
+  if (!Array.isArray(maybeIndications)) {
+    return [] as string[];
+  }
+
+  return maybeIndications
+    .filter((item): item is string => typeof item === "string")
+    .map((item) => item.trim())
+    .filter(Boolean);
 }
 
 // Detail produktu načíta priamo jednu DB položku a jej materskú kategóriu.
 export default async function Page({ params }: ProductPageProps) {
   const { category, product } = await params;
-  const detail = await getTknProduct(category, product);
-  const imageSrc = getTknProductImage(product);
+  const [categoryData, productData] = await Promise.all([
+    getTknCategoriesBySlug(category),
+    getProductBySlug(product),
+  ]);
 
-  if (!detail) {
+  if (
+    !categoryData ||
+    !productData ||
+    productData.category_id !== categoryData.id
+  ) {
     notFound();
   }
+
+  const imageSrc = productData.image_url || getTknProductImage(product);
+  const productName = productData.name ?? "TKN produkt";
+  const productSummary = productData.summary ?? "";
+  const productDetails = productData.description ?? "";
+  const indications = getIndications(productData);
 
   return (
     <div className="w-full px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
@@ -44,14 +66,14 @@ export default async function Page({ params }: ProductPageProps) {
         <h1
           className={`premium-title mt-2 text-2xl font-semibold italic lg:text-5xl ${brandFont.className}`}
         >
-          {detail.product.name}
+          {productName}
         </h1>
         <div className="mt-3 text-sm text-greyMain/80">
           <Link
-            href={`/cosmetics/microneedling/tkn/${detail.category.slug}`}
+            href={`/cosmetics/microneedling/tkn/${categoryData.slug}`}
             className="font-medium text-redDark"
           >
-            {detail.category.name}
+            {categoryData.title}
           </Link>
         </div>
 
@@ -61,17 +83,17 @@ export default async function Page({ params }: ProductPageProps) {
               {dataDashboard.tknProduct.treatmentHeading}
             </h2>
             <p className="mt-3 text-sm leading-6 text-greyMain/80 lg:text-base">
-              {detail.product.summary}
+              {productSummary}
             </p>
-            <p className="mt-3 text-sm leading-6 text-greyMain/80 lg:text-base">
-              {detail.product.details}
+            <p className="mt-3 text-sm leading-6 text-greyMain/80 lg:text-base whitespace-pre-wrap">
+              {productDetails}
             </p>
 
             <h3 className="mt-6 text-base font-semibold text-greyMain lg:text-lg">
               {dataDashboard.tknProduct.indicationsHeading}
             </h3>
             <ul className="mt-3 space-y-2 text-sm text-greyMain/85 lg:text-base">
-              {detail.product.indications.map((indication) => (
+              {indications.map((indication) => (
                 <li key={indication} className="flex items-start gap-2">
                   <span
                     className="mt-1 h-2 w-2 rounded-full bg-goldDark/80"
@@ -93,7 +115,7 @@ export default async function Page({ params }: ProductPageProps) {
                 <div className="relative aspect-square w-76 overflow-hidden rounded-full border-4 border-goldDark/40 bg-white shadow-[0_10px_30px_rgba(0,0,0,0.08)] sm:w-84 lg:w-[24rem]">
                   <Image
                     src={imageSrc}
-                    alt={detail.product.name}
+                    alt={productName}
                     fill
                     className="object-contain p-3"
                   />

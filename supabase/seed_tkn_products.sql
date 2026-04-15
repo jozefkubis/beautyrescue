@@ -17,7 +17,15 @@ insert into public.tkn_products (
   text,
   image_url,
   is_active,
-  order_index
+  order_index,
+  name,
+  summary,
+  description,
+  subcategory,
+  sort_order,
+  content,
+  attributes,
+  metadata
 )
 select
   tc.id as category_id,
@@ -47,7 +55,15 @@ select
   ) as text,
   si.image_url,
   coalesce(si.is_active, true) as is_active,
-  coalesce(si.sort_order, 0) as order_index
+  coalesce(si.sort_order, 0) as order_index,
+  si.name as name,
+  nullif(si.summary, '') as summary,
+  nullif(si.description, '') as description,
+  si.subcategory,
+  coalesce(si.sort_order, 0) as sort_order,
+  coalesce(si.content, '{}'::jsonb) as content,
+  coalesce(si.attributes, '{}'::jsonb) as attributes,
+  coalesce(si.metadata, '{}'::jsonb) as metadata
 from public.service_items si
 join public.tkn_categories tc
   on tc.slug = si.subcategory
@@ -61,4 +77,12 @@ on conflict (slug) do update set
   text = excluded.text,
   image_url = excluded.image_url,
   is_active = excluded.is_active,
-  order_index = excluded.order_index;
+  order_index = excluded.order_index,
+  name = excluded.name,
+  summary = excluded.summary,
+  description = excluded.description,
+  subcategory = excluded.subcategory,
+  sort_order = excluded.sort_order,
+  content = excluded.content,
+  attributes = excluded.attributes,
+  metadata = excluded.metadata;

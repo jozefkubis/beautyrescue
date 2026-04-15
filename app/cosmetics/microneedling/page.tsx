@@ -6,12 +6,14 @@ import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 // Načíta hlavnú Microneedling stránku spolu s TKN kategóriami priamo z databázy.
 export default async function Page() {
-  const [microneedlingData, user, tknCategories, microneedling] = await Promise.all([
-    getMicroneedling("microneedling"),
-    getCurrentUser(),
-    getTknCategories(),
-    getServiceBySlug("microneedling"),
-  ]);
+  const [microneedlingData, user, tknCategories, microneedling] =
+    await Promise.all([
+      getMicroneedling("microneedling"),
+      getCurrentUser(),
+      getTknCategories(),
+      getServiceBySlug("microneedling"),
+    ]);
+
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||
     user?.email === process.env.ADMIN_EMAIL_2;
