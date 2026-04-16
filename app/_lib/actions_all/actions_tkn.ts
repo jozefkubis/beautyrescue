@@ -23,6 +23,14 @@ type UpdateTknProductPayload = {
   order_index?: number;
 };
 
+type InsertTknProductPayload = {
+  category_slug: string;
+  name: string;
+  summary?: string;
+  description?: string;
+  is_active?: boolean;
+};
+
 type VisibilityPayload = {
   services?: Record<string, boolean>;
   categories?: Record<string, boolean>;
@@ -445,6 +453,123 @@ export async function deleteTknProductRecord(
       ok: true,
       message: "TKN produkt bol zmazaný.",
       deletedSlug: safeSlug,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: getErrorMessage(error),
+    };
+  }
+}
+
+// Prida novy TKN produkt do zvolenej kategorie v co najjednoduchsom tvare.
+export async function insertTknProductRecord(
+  formData: FormData,
+): Promise<CmsActionResult> {
+  try {
+    const supabase = await requireAdmin();
+    const slug = normalizeText(formData.get("slug"));
+    const rawData = formData.get("data")?.toString();
+    const imageFile = formData.get("image_file");
+
+    if (!slug) {
+      throw new Error("Chýba slug nového produktu");
+    }
+
+    if (!rawData) {
+      throw new Error("Chýbajú dáta nového produktu");
+    }
+
+    const payload = JSON.parse(rawData) as InsertTknProductPayload;
+    const categorySlug = normalizeText(payload.category_slug);
+    const name = normalizeText(payload.name);
+    const summary = normalizeText(payload.summary);
+    const description = normalizeText(payload.description);
+
+    if (!categorySlug) {
+      throw new Error("Chýba kategória produktu");
+    }
+
+    if (!name) {
+      throw new Error("Produkt musí mať názov");
+    }
+
+    // Pri vkladani staci najst ID kategorie zo slugu a pouzit ho vo FK.
+    const { data: categoryRow, error: categoryError } = await supabase
+      .from("tkn_categories")
+      .select("id")
+      .eq("slug", categorySlug)
+      .single();
+
+    if (categoryError || !categoryRow?.id) {
+      throw new Error(`TKN kategória ${categorySlug} nebola nájdená`);
+    }
+
+    const categoryId = categoryRow.id as string;
+
+    // Novy produkt vzdy pridame na koniec danej kategorie.
+    const { data: lastProductRows, error: lastProductError } = await supabase
+      .from("tkn_products")
+      .select("order_index")
+      .eq("category_id", categoryId)
+      .order("order_index", { ascending: false })
+      .limit(1);
+
+    if (lastProductError) {
+      throw new Error(`Nepodarilo sa načítať poradie produktov: ${lastProductError.message}`);
+    }
+
+    const lastOrderIndex =
+      (lastProductRows?.[0]?.order_index as number | null | undefined) ?? 0;
+    const nextOrderIndex = lastOrderIndex + 1;
+
+    const uploadedImageUrl = await uploadImageIfProvided(supabase, slug, imageFile);
+
+    const insertData: {
+      category_id: string;
+      slug: string;
+      is_active: boolean;
+      order_index: number;
+      name: string;
+      summary: string | null;
+      description: string | null;
+      subcategory: string;
+      sort_order: number;
+      content: Record<string, unknown>;
+      attributes: Record<string, unknown>;
+      metadata: Record<string, unknown>;
+      image_url?: string;
+    } = {
+      category_id: categoryId,
+      slug,
+      is_active: normalizeBoolean(payload.is_active, true),
+      order_index: nextOrderIndex,
+      name,
+      summary: summary || null,
+      description: description || null,
+      subcategory: categorySlug,
+      sort_order: nextOrderIndex,
+      content: {},
+      attributes: {},
+      metadata: {},
+    };
+
+    if (uploadedImageUrl) {
+      insertData.image_url = uploadedImageUrl;
+    }
+
+    const { error } = await supabase.from("tkn_products").insert(insertData);
+
+    if (error) {
+      throw new Error(`Chyba pri pridávaní produktu: ${error.message}`);
+    }
+
+    revalidateCmsPaths();
+
+    return {
+      ok: true,
+      message: "Produkt bol úspešne pridaný.",
+      ...(uploadedImageUrl ? { imageUrl: uploadedImageUrl } : {}),
     };
   } catch (error) {
     return {

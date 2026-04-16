@@ -14,9 +14,10 @@ import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
 import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import type { TknCategoryWithProducts } from "@/app/_lib/data_services_all/data_tkn";
+import Link from "next/link";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
-import { FaRegTrashCan } from "react-icons/fa6";
+import { FaPlus, FaRegTrashCan } from "react-icons/fa6";
 import FileField from "../../FileField";
 import SectionNavigation from "../../SectionNavigation";
 
@@ -494,6 +495,26 @@ export default function Microneedling_update_form({
                           />
                         </div>
                       ))}
+
+                      <div className="flex justify-end pt-1">
+                        <Link
+                          href={`/admin/cosmetics_settings/microneedling_settings/add_product?category=${category.slug}`}
+                          aria-disabled={!isAdmin || isPendingVisibility}
+                          onClick={(e) => {
+                            if (!isAdmin || isPendingVisibility) {
+                              e.preventDefault();
+                            }
+                          }}
+                          className={`inline-flex h-10 items-center rounded-full border border-goldDark/30 bg-[#fff6ee] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-goldDark transition duration-200 ${
+                            !isAdmin || isPendingVisibility
+                              ? "cursor-not-allowed opacity-60"
+                              : "hover:-translate-y-0.5 hover:bg-[#ffeedf]"
+                          }`}
+                        >
+                          <FaPlus className="mr-1 text-[11px]" />
+                          Pridať produkt
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 );

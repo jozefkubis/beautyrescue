@@ -1,22 +1,22 @@
-"use client"
+"use client";
 
-import { useEffect, type ReactNode } from "react"
-import { IoIosClose } from "react-icons/io"
+import { useEffect, type ReactNode } from "react";
+import { IoIosClose } from "react-icons/io";
 
 type ModalProps = {
-  isOpen: boolean
-  onClose: () => void
-  children: ReactNode
-  title?: string
-  closeOnBackdrop?: boolean
-  closeOnEscape?: boolean
-  showCloseButton?: boolean
-  maxWidthClass?: string
-}
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
+  title?: string;
+  closeOnBackdrop?: boolean;
+  closeOnEscape?: boolean;
+  showCloseButton?: boolean;
+  maxWidthClass?: string;
+};
 
 const OVERLAY_STYLE =
-  "fixed inset-0 z-50 flex items-center justify-center bg-[#1c1214]/70 backdrop-blur-sm"
-const PANEL_BASE_STYLE = "mx-auto rounded-xl bg-transparent px-6 lg:px-0"
+  "fixed inset-0 z-50 flex items-center justify-center bg-[#1c1214]/70 backdrop-blur-sm";
+const PANEL_BASE_STYLE = "mx-auto rounded-xl bg-transparent px-6 lg:px-0";
 
 export default function Modal({
   isOpen,
@@ -29,17 +29,17 @@ export default function Modal({
   maxWidthClass = "max-w-2xl",
 }: ModalProps) {
   useEffect(() => {
-    if (!isOpen || !closeOnEscape) return
+    if (!isOpen || !closeOnEscape) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        onClose()
+        onClose();
       }
-    }
+    };
 
-    window.addEventListener("keydown", onKeyDown)
-    return () => window.removeEventListener("keydown", onKeyDown)
-  }, [isOpen, closeOnEscape, onClose])
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isOpen, closeOnEscape, onClose]);
 
   return (
     <div
@@ -87,5 +87,5 @@ export default function Modal({
         <div>{children}</div>
       </div>
     </div>
-  )
+  );
 }
