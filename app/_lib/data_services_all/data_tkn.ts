@@ -29,6 +29,19 @@ export type TknCategoryWithProducts = TknCategoryRow & {
   products: TknProductRow[];
 };
 
+// Pre verejné stránky necháme iba aktívne kategórie s aktívnymi produktmi.
+export function getVisibleTknCategories(
+  categories: TknCategoryWithProducts[],
+) {
+  return categories
+    .filter((category) => category.is_active)
+    .map((category) => ({
+      ...category,
+      products: category.products.filter((product) => product.is_active),
+    }))
+    .filter((category) => category.products.length > 0);
+}
+
 // Vrati TKN kategorie z DB. Co sa ma zobrazit, riesi az konkretna stranka.
 export async function getTknCategories() {
   const supabase = await getSupabaseServerClient();

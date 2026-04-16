@@ -3,7 +3,10 @@
 import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling";
 import { dataDashboard } from "@/app/_lib/data_services_all/data_dashboard";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
-import type { TknCategoryWithProducts } from "@/app/_lib/data_services_all/data_tkn";
+import {
+  getVisibleTknCategories,
+  type TknCategoryWithProducts,
+} from "@/app/_lib/data_services_all/data_tkn";
 import Image from "next/image";
 import Link from "next/link";
 import ExpandText from "../../ExpandText";
@@ -27,7 +30,9 @@ export default function Microneedling({
   microneedling,
 }: MicroneedlingProps) {
   const uploadedImageUrl = microneedling?.image_url?.trim();
-  const visibleTknCategories = tknCategories;
+
+  // Na verejnej stránke necháme iba aktívne TKN sekcie a ich aktívne produkty.
+  const visibleTknCategories = getVisibleTknCategories(tknCategories);
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">

@@ -3,6 +3,7 @@ import { dataDashboard } from "@/app/_lib/data_services_all/data_dashboard";
 import {
   getTknCategories,
   getTknProductsByCategory,
+  getVisibleTknCategories,
 } from "@/app/_lib/data_services_all/data_tkn";
 import Link from "next/link";
 
@@ -10,12 +11,14 @@ import Link from "next/link";
 export default async function Page() {
   const categories = await getTknCategories();
 
-  const visibleTknCategories = await Promise.all(
+  const tknCategories = await Promise.all(
     categories.map(async (category) => ({
       ...category,
       products: await getTknProductsByCategory(category.slug),
     })),
   );
+
+  const visibleTknCategories = getVisibleTknCategories(tknCategories);
 
   return (
     <div className="w-full px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
