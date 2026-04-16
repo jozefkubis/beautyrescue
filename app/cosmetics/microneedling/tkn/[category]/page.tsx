@@ -37,6 +37,8 @@ function getIndications(product: TknProductRow) {
 // Detail kategórie načíta jednu DB sekciu a zobrazí jej produkty.
 export default async function Page({ params }: CategoryPageProps) {
   const { category: categorySlug } = await params;
+
+  // Kategoriu a produkty tahame naraz, nech je render rychly a citatelny.
   const [category, products] = await Promise.all([
     getTknCategoriesBySlug(categorySlug),
     getTknProductsByCategory(categorySlug),
@@ -46,6 +48,7 @@ export default async function Page({ params }: CategoryPageProps) {
     notFound();
   }
 
+  // Verejny detail ukazuje iba aktivne produkty v aktivnej kategorii.
   const visibleProducts = products.filter((product) => product.is_active);
   const categoryText = category.text?.trim() ?? "";
 

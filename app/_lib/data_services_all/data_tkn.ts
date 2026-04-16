@@ -4,6 +4,7 @@ export type TknCategoryRow = {
   id: string;
   slug: string;
   title: string;
+  intro: string | null;
   text: string | null;
   image_url: string | null;
   is_active: boolean;
@@ -28,19 +29,6 @@ export type TknProductRow = {
 export type TknCategoryWithProducts = TknCategoryRow & {
   products: TknProductRow[];
 };
-
-// Pre verejné stránky necháme iba aktívne kategórie s aktívnymi produktmi.
-export function getVisibleTknCategories(
-  categories: TknCategoryWithProducts[],
-) {
-  return categories
-    .filter((category) => category.is_active)
-    .map((category) => ({
-      ...category,
-      products: category.products.filter((product) => product.is_active),
-    }))
-    .filter((category) => category.products.length > 0);
-}
 
 // Vrati TKN kategorie z DB. Co sa ma zobrazit, riesi az konkretna stranka.
 export async function getTknCategories() {
@@ -80,6 +68,8 @@ export async function getTknCategoriesBySlug(slug: string) {
 // Vrati produkty pre jednu kategoriu z DB. Filtrovanie si riesi stranka.
 export async function getTknProductsByCategory(categorySlug: string) {
   const supabase = await getSupabaseServerClient();
+
+  // Najprv si pre slug najdeme kategoriu, aby sme query robili cez category_id.
   const category = await getTknCategoriesBySlug(categorySlug);
 
   if (!category) {

@@ -37,6 +37,8 @@ function getIndications(product: TknProductRow) {
 // Detail produktu načíta priamo jednu DB položku a jej materskú kategóriu.
 export default async function Page({ params }: ProductPageProps) {
   const { category, product } = await params;
+
+  // Produkt aj kategoriu nacitame paralelne, potom overime, ci spolu naozaj patria.
   const [categoryData, productData] = await Promise.all([
     getTknCategoriesBySlug(category),
     getProductBySlug(product),
@@ -52,6 +54,7 @@ export default async function Page({ params }: ProductPageProps) {
     notFound();
   }
 
+  // Fallback mapu uz nepouzivame, ideme iba cez image_url ulozene v DB.
   const imageSrc = productData.image_url;
   const productName = productData.name ?? "TKN produkt";
   const productSummary = productData.summary ?? "";

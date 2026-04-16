@@ -3,10 +3,8 @@
 import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling";
 import { dataDashboard } from "@/app/_lib/data_services_all/data_dashboard";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
-import {
-  getVisibleTknCategories,
-  type TknCategoryWithProducts,
-} from "@/app/_lib/data_services_all/data_tkn";
+import type { TknCategoryWithProducts } from "@/app/_lib/data_services_all/data_tkn";
+import { getVisibleTknCategories } from "@/app/_lib/data_services_all/tkn_visibility";
 import Image from "next/image";
 import Link from "next/link";
 import ExpandText from "../../ExpandText";
@@ -31,7 +29,7 @@ export default function Microneedling({
 }: MicroneedlingProps) {
   const uploadedImageUrl = microneedling?.image_url?.trim();
 
-  // Na verejnej stránke necháme iba aktívne TKN sekcie a ich aktívne produkty.
+  // Pouzijeme spolocny UI helper, ktory je bezpecny aj pre client komponent.
   const visibleTknCategories = getVisibleTknCategories(tknCategories);
 
   return (
@@ -90,8 +88,9 @@ export default function Microneedling({
                 <h3 className="mt-2 text-lg font-semibold text-greyMain">
                   {category.title}
                 </h3>
+                {/* Kratky uvod ku kategorii, aby uzivatel vedel, co v sekcii najde. */}
                 <p className="mt-2 text-sm leading-6 text-greyMain/80">
-                  {category.text}
+                  {category.intro}
                 </p>
                 <div className="mt-4 flex items-center justify-between text-sm">
                   <span className="rounded-full border border-goldDark/25 px-3 py-1 text-goldDark">

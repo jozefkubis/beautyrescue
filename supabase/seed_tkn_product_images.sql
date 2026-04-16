@@ -1,5 +1,6 @@
 -- Samostatny seed iba pre image_url v public.tkn_products.
 -- Bezpecne aktualizuje len obrazky a nic ine v produktoch neprepise.
+-- Tento seed je manualna poistka pre pripad, ked sa image_url omylom vymaze.
 
 update public.tkn_products
 set image_url = case slug

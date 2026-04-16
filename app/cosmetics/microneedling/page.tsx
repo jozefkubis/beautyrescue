@@ -42,6 +42,8 @@ export default async function Page() {
 
   const categories = await getTknCategories();
 
+  // Do komponentu posielame strom kategorii aj produktov uz poskladany,
+  // aby mal render jednoduchy vstup bez dalsich DB volani.
   const tknCategories = await Promise.all(
     categories.map(async (category) => ({
       ...category,

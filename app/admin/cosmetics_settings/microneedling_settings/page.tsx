@@ -36,6 +36,7 @@ export default async function Page() {
     getServiceBySlug("microneedling"),
   ]);
 
+  // V admin view nechavame aj neaktivne zaznamy, aby ich slo znovu zapnut.
   const tknCategories = await Promise.all(
     categories.map(async (category) => ({
       ...category,

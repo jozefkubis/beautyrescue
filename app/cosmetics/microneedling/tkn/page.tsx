@@ -3,14 +3,15 @@ import { dataDashboard } from "@/app/_lib/data_services_all/data_dashboard";
 import {
   getTknCategories,
   getTknProductsByCategory,
-  getVisibleTknCategories,
 } from "@/app/_lib/data_services_all/data_tkn";
+import { getVisibleTknCategories } from "@/app/_lib/data_services_all/tkn_visibility";
 import Link from "next/link";
 
-// Landing page TKN katalógu si vytiahne všetky aktívne kategórie priamo z DB.
+// Landing page nacita komplet data a viditelnost riesi az v UI helperi.
 export default async function Page() {
   const categories = await getTknCategories();
 
+  // Najprv poskladame kategorie s produktami a az potom aplikujeme UI filter.
   const tknCategories = await Promise.all(
     categories.map(async (category) => ({
       ...category,
