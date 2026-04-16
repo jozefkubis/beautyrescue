@@ -1,9 +1,9 @@
 "use client";
 
-import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
 import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling";
-import type { TknCategory } from "@/app/_lib/data_services/data_tkn_db";
+import { dataDashboard } from "@/app/_lib/data_services_all/data_dashboard";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import type { TknCategoryWithProducts } from "@/app/_lib/data_services_all/data_tkn";
 import Image from "next/image";
 import Link from "next/link";
 import ExpandText from "../../ExpandText";
@@ -13,7 +13,7 @@ import Microneedling_text from "./Microneedling_text";
 
 type MicroneedlingProps = {
   microneedlingData: MicroneedlingMainProps["microneedlingData"];
-  tknCategories: TknCategory[];
+  tknCategories: TknCategoryWithProducts[];
   user?: string | null;
   isAdmin?: boolean;
   microneedling?: ServiceRow | null;
@@ -83,10 +83,10 @@ export default function Microneedling({
                   {dataDashboard.microneedling.categoryBadge}
                 </p>
                 <h3 className="mt-2 text-lg font-semibold text-greyMain">
-                  {category.name}
+                  {category.title}
                 </h3>
                 <p className="mt-2 text-sm leading-6 text-greyMain/80">
-                  {category.description}
+                  {category.text}
                 </p>
                 <div className="mt-4 flex items-center justify-between text-sm">
                   <span className="rounded-full border border-goldDark/25 px-3 py-1 text-goldDark">

@@ -9,11 +9,11 @@ import {
   deleteTknCategory,
   deleteTknProduct,
   updateTknVisibility,
-} from "@/app/_lib/actions/actions_microneedling";
+} from "@/app/_lib/actions_all/actions_microneedling";
 import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
 import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling";
-import type { TknCategory } from "@/app/_lib/data_services/data_tkn_db";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import type { TknCategoryWithProducts } from "@/app/_lib/data_services_all/data_tkn";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import { FaRegTrashCan } from "react-icons/fa6";
@@ -22,7 +22,7 @@ import SectionNavigation from "../../SectionNavigation";
 
 type Props = {
   microneedling: ServiceRow;
-  tknCategories: TknCategory[];
+  tknCategories: TknCategoryWithProducts[];
   isAdmin?: boolean;
   microneedlingData?: MicroneedlingMainProps; // Tento prop je zatial potrebný kvôli kompatibilite s existujúcou logikou, ale postupne by sa mal nahradiť iba ServiceRow dátami.
 };
@@ -33,14 +33,16 @@ type VisibilityState = {
 };
 
 // Z DB kategórií si pripravíme jednoduchý map objekt pre checkboxy v admin formulári.
-function buildInitialVisibility(tknCategories: TknCategory[]): VisibilityState {
+function buildInitialVisibility(
+  tknCategories: TknCategoryWithProducts[],
+): VisibilityState {
   const categories: Record<string, boolean> = {};
   const products: Record<string, boolean> = {};
 
   for (const category of tknCategories) {
-    categories[category.dbSlug] = category.is_active;
+    categories[category.slug] = category.is_active;
     for (const product of category.products) {
-      products[product.dbSlug] = product.is_active;
+      products[product.slug] = product.is_active;
     }
   }
 
@@ -205,9 +207,8 @@ export default function Microneedling_update_form({
 
   // Po jednom potvrdení trvalo vymaže celú sekciu aj všetky produkty v nej.
   async function deleteCategoryHandleClick(
-    categoryDbSlug: string,
     categorySlug: string,
-    productDbSlugs: string[],
+    productSlugs: string[],
   ) {
     if (
       !confirm(
@@ -219,31 +220,31 @@ export default function Microneedling_update_form({
 
     startTransitionVisibility(async () => {
       try {
-        const result = await deleteTknCategory(categoryDbSlug, categorySlug);
+        const result = await deleteTknCategory(categorySlug);
 
         if (!result?.ok) {
           throw new Error(result?.error ?? "Sekciu sa nepodarilo odstrániť.");
         }
 
         const hiddenProducts = Object.fromEntries(
-          productDbSlugs.map((slug) => [slug, false]),
+          productSlugs.map((slug) => [slug, false]),
         );
 
         // Po úspechu sekciu okamžite schováme aj lokálne, aby admin videl výsledok bez reloadu.
         setDeletedCategorySlugs((prev) =>
-          prev.includes(categoryDbSlug) ? prev : [...prev, categoryDbSlug],
+          prev.includes(categorySlug) ? prev : [...prev, categorySlug],
         );
         setDeletedProductSlugs((prev) =>
-          Array.from(new Set([...prev, ...productDbSlugs])),
+          Array.from(new Set([...prev, ...productSlugs])),
         );
         setVisibilityValues((prev) => ({
           ...prev,
-          categories: { ...prev.categories, [categoryDbSlug]: false },
+          categories: { ...prev.categories, [categorySlug]: false },
           products: { ...prev.products, ...hiddenProducts },
         }));
         setLastSavedVisibilityValues((prev) => ({
           ...prev,
-          categories: { ...prev.categories, [categoryDbSlug]: false },
+          categories: { ...prev.categories, [categorySlug]: false },
           products: { ...prev.products, ...hiddenProducts },
         }));
 
@@ -258,7 +259,6 @@ export default function Microneedling_update_form({
   // Po jednom potvrdení trvalo vymaže iba konkrétny produkt.
   async function deleteProductHandleClick(
     categorySlug: string,
-    productDbSlug: string,
     productSlug: string,
   ) {
     if (!confirm("Naozaj chcete odstrániť tento produkt?")) {
@@ -267,11 +267,7 @@ export default function Microneedling_update_form({
 
     startTransitionVisibility(async () => {
       try {
-        const result = await deleteTknProduct(
-          productDbSlug,
-          categorySlug,
-          productSlug,
-        );
+        const result = await deleteTknProduct(productSlug, categorySlug);
 
         if (!result?.ok) {
           throw new Error(result?.error ?? "Produkt sa nepodarilo odstrániť.");
@@ -279,15 +275,15 @@ export default function Microneedling_update_form({
 
         // Lokálne skryjeme produkt hneď po úspechu, aby admin videl výsledok bez refreshu.
         setDeletedProductSlugs((prev) =>
-          prev.includes(productDbSlug) ? prev : [...prev, productDbSlug],
+          prev.includes(productSlug) ? prev : [...prev, productSlug],
         );
         setVisibilityValues((prev) => ({
           ...prev,
-          products: { ...prev.products, [productDbSlug]: false },
+          products: { ...prev.products, [productSlug]: false },
         }));
         setLastSavedVisibilityValues((prev) => ({
           ...prev,
-          products: { ...prev.products, [productDbSlug]: false },
+          products: { ...prev.products, [productSlug]: false },
         }));
 
         toast.success("Produkt bol úspešne odstránený");
@@ -397,12 +393,12 @@ export default function Microneedling_update_form({
 
             <div className="space-y-4">
               {tknCategories.map((category) => {
-                if (deletedCategorySlugs.includes(category.dbSlug)) {
+                if (deletedCategorySlugs.includes(category.slug)) {
                   return null;
                 }
 
                 const visibleProducts = category.products.filter(
-                  (product) => !deletedProductSlugs.includes(product.dbSlug),
+                  (product) => !deletedProductSlugs.includes(product.slug),
                 );
 
                 return (
@@ -413,21 +409,20 @@ export default function Microneedling_update_form({
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <div>
                         <h3 className="text-base font-semibold text-greyMain">
-                          {category.name}
+                          {category.title}
                         </h3>
                         <p className="text-xs text-goldDark/70">Sekcia</p>
                       </div>
                       <button
                         onClick={() =>
                           deleteCategoryHandleClick(
-                            category.dbSlug,
                             category.slug,
-                            category.products.map((product) => product.dbSlug),
+                            category.products.map((product) => product.slug),
                           )
                         }
                         type="button"
                         title="Odstrániť sekciu"
-                        aria-label={`Odstrániť sekciu ${category.name}`}
+                        aria-label={`Odstrániť sekciu ${category.title}`}
                         disabled={!isAdmin || isPendingVisibility}
                         className="inline-flex h-10 items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] px-3 text-sm font-medium text-redDark shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20 disabled:cursor-not-allowed disabled:border-red-100 disabled:bg-red-50/50 disabled:text-red-300 disabled:hover:translate-y-0 hover:cursor-pointer"
                       >
@@ -440,13 +435,10 @@ export default function Microneedling_update_form({
                         labelActive="Aktívne"
                         labelInactive="Neaktívne"
                         checked={
-                          visibilityValues.categories[category.dbSlug] ?? true
+                          visibilityValues.categories[category.slug] ?? true
                         }
                         onChange={(e) =>
-                          handleCategoryToggle(
-                            category.dbSlug,
-                            e.target.checked,
-                          )
+                          handleCategoryToggle(category.slug, e.target.checked)
                         }
                         disabled={!isAdmin || isPendingVisibility}
                       />
@@ -466,19 +458,18 @@ export default function Microneedling_update_form({
                           className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white px-3 py-2"
                         >
                           <p className="text-sm text-greyMain">
-                            {product.name}
+                            {product.name ?? product.slug}
                           </p>
                           <button
                             onClick={() =>
                               deleteProductHandleClick(
                                 category.slug,
-                                product.dbSlug,
                                 product.slug,
                               )
                             }
                             type="button"
                             title="Odstrániť produkt"
-                            aria-label={`Odstrániť produkt ${product.name}`}
+                            aria-label={`Odstrániť produkt ${product.name ?? product.slug}`}
                             disabled={!isAdmin || isPendingVisibility}
                             className="inline-flex h-10 items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] px-3 text-sm font-medium text-redDark shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20 disabled:cursor-not-allowed disabled:border-red-100 disabled:bg-red-50/50 disabled:text-red-300 disabled:hover:translate-y-0 hover:cursor-pointer"
                           >
@@ -491,11 +482,11 @@ export default function Microneedling_update_form({
                             labelActive="Aktívne"
                             labelInactive="Neaktívne"
                             checked={
-                              visibilityValues.products[product.dbSlug] ?? true
+                              visibilityValues.products[product.slug] ?? true
                             }
                             onChange={(e) =>
                               handleProductToggle(
-                                product.dbSlug,
+                                product.slug,
                                 e.target.checked,
                               )
                             }

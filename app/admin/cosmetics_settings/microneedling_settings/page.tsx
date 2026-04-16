@@ -1,17 +1,15 @@
 import Microneedling_update_form from "@/app/_components/products/microneedling/Microneedling_update_form";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
 import getMicroneedling from "@/app/_lib/data_services/data_microneedling";
-import { getTknCategories } from "@/app/_lib/data_services/data_tkn_db";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
+import {
+  getTknCategories,
+  getTknProductsByCategory,
+} from "@/app/_lib/data_services_all/data_tkn";
 
-// Admin stránka načíta aj neaktívne TKN položky, aby sa dali znovu zapnúť alebo zmazať.
+// Admin stránka pre Microneedling nastaví práva a pripraví TKN dáta pre formulár.
 export default async function Page() {
-  const [user, microneedlingData, tknCategories, microneedling] = await Promise.all([
-    getCurrentUser(),
-    getMicroneedling("microneedling"),
-    getTknCategories({ includeInactive: true }),
-    getServiceBySlug("microneedling"),
-  ]);
+  const user = await getCurrentUser();
 
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||
@@ -31,6 +29,19 @@ export default async function Page() {
       </div>
     );
   }
+
+  const [microneedlingData, categories, microneedling] = await Promise.all([
+    getMicroneedling("microneedling"),
+    getTknCategories(),
+    getServiceBySlug("microneedling"),
+  ]);
+
+  const tknCategories = await Promise.all(
+    categories.map(async (category) => ({
+      ...category,
+      products: await getTknProductsByCategory(category.slug),
+    })),
+  );
 
   return (
     <Microneedling_update_form

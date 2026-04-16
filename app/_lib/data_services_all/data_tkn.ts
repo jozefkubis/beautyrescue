@@ -25,14 +25,17 @@ export type TknProductRow = {
   attributes?: Record<string, unknown> | null;
 };
 
-// Vrati vsetky aktivne TKN kategorie.
+export type TknCategoryWithProducts = TknCategoryRow & {
+  products: TknProductRow[];
+};
+
+// Vrati TKN kategorie z DB. Co sa ma zobrazit, riesi az konkretna stranka.
 export async function getTknCategories() {
   const supabase = await getSupabaseServerClient();
 
   const { data, error } = await supabase
     .from("tkn_categories")
     .select("*")
-    .eq("is_active", true)
     .order("order_index", { ascending: true });
 
   if (error) {
@@ -61,10 +64,9 @@ export async function getTknCategoriesBySlug(slug: string) {
   return data as TknCategoryRow;
 }
 
-// Vrati vsetky produkty pre jednu kategoriu (hladane podla category slug).
+// Vrati produkty pre jednu kategoriu z DB. Filtrovanie si riesi stranka.
 export async function getTknProductsByCategory(categorySlug: string) {
   const supabase = await getSupabaseServerClient();
-
   const category = await getTknCategoriesBySlug(categorySlug);
 
   if (!category) {

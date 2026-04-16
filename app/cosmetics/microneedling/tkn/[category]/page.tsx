@@ -1,6 +1,5 @@
 import { brandFont } from "@/app/_components/fonts";
-import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
-import { getTknProductImage } from "@/app/_lib/data_services/tkn_image_map";
+import { dataDashboard } from "@/app/_lib/data_services_all/data_dashboard";
 import {
   getTknCategoriesBySlug,
   getTknProductsByCategory,
@@ -43,10 +42,11 @@ export default async function Page({ params }: CategoryPageProps) {
     getTknProductsByCategory(categorySlug),
   ]);
 
-  if (!category) {
+  if (!category || !category.is_active) {
     notFound();
   }
 
+  const visibleProducts = products.filter((product) => product.is_active);
   const categoryText = category.text?.trim() ?? "";
 
   return (
@@ -68,9 +68,8 @@ export default async function Page({ params }: CategoryPageProps) {
       </section>
 
       <section className="mt-8 grid grid-cols-1 gap-4 lg:gap-6">
-        {products.map((product) => {
-          const imageSrc =
-            product.image_url || getTknProductImage(product.slug);
+        {visibleProducts.map((product) => {
+          const imageSrc = product.image_url;
           const productName = product.name ?? "TKN produkt";
           const productSummary = product.summary ?? product.description ?? "";
           const indications = getIndications(product);

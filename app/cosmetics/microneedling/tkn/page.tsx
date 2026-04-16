@@ -1,5 +1,5 @@
 import { brandFont } from "@/app/_components/fonts";
-import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
+import { dataDashboard } from "@/app/_lib/data_services_all/data_dashboard";
 import {
   getTknCategories,
   getTknProductsByCategory,

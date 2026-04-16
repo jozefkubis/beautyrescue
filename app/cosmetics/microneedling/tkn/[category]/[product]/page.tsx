@@ -1,6 +1,5 @@
 import { brandFont } from "@/app/_components/fonts";
-import { dataDashboard } from "@/app/_lib/data_services/data_dashboard";
-import { getTknProductImage } from "@/app/_lib/data_services/tkn_image_map";
+import { dataDashboard } from "@/app/_lib/data_services_all/data_dashboard";
 import {
   getProductBySlug,
   getTknCategoriesBySlug,
@@ -46,12 +45,14 @@ export default async function Page({ params }: ProductPageProps) {
   if (
     !categoryData ||
     !productData ||
+    !categoryData.is_active ||
+    !productData.is_active ||
     productData.category_id !== categoryData.id
   ) {
     notFound();
   }
 
-  const imageSrc = productData.image_url || getTknProductImage(product);
+  const imageSrc = productData.image_url;
   const productName = productData.name ?? "TKN produkt";
   const productSummary = productData.summary ?? "";
   const productDetails = productData.description ?? "";
