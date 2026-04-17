@@ -1,15 +1,21 @@
-"use client"
+"use client";
 
-import type { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulotoxin"
-import { useState } from "react"
-import { MdKeyboardArrowDown } from "react-icons/md"
+import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import { useState } from "react";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 export default function About_botulotoxin({
-  botulotoxinData,
-}: BotulotoxinMainProps) {
-  const [openBox, setOpenBox] = useState(false)
-  const about = botulotoxinData.content.about
-  const paragraphs = about.paragraphs ?? []
+  botulotoxin,
+}: {
+  botulotoxin: ServiceRow | null;
+}) {
+  const [openBox, setOpenBox] = useState(false);
+  const aboutTitle = botulotoxin?.about_title;
+  const about = botulotoxin?.about;
+
+  if (!aboutTitle || !about) {
+    return null;
+  }
 
   return (
     <section className="w-full items-center justify-center">
@@ -24,7 +30,7 @@ export default function About_botulotoxin({
           >
             <div>
               <h4 className="text-lg font-semibold italic tracking-tight text-goldDark sm:text-xl lg:text-[1.75rem]">
-                {about.title as string}
+                {aboutTitle}
               </h4>
             </div>
 
@@ -54,18 +60,13 @@ export default function About_botulotoxin({
             `}
           >
             <div className="pb-6 pt-1 flex flex-col gap-2 [&_p]:text-justify">
-              {paragraphs.map((paragraph, index) => (
-                <p
-                  key={index}
-                  className="text-xs xl:text-sm leading-relaxed text-zinc-700"
-                >
-                  {paragraph}
-                </p>
-              ))}
+              <p className="text-xs xl:text-sm leading-relaxed text-zinc-700 whitespace-pre-wrap">
+                {about}
+              </p>
             </div>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

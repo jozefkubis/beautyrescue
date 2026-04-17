@@ -1,6 +1,7 @@
 "use client";
 
 import { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulotoxin";
+import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Link from "next/link";
 import ExpandText from "../../ExpandText";
@@ -9,11 +10,19 @@ import About_botulotoxin from "./About_botulotoxin";
 import Botulotoxin_pricing_form from "./Botulotoxin_pricing_form";
 import Botulotoxin_text from "./Botulotoxin_text";
 
+type BotulotoxinProps = {
+  botulotoxinData: BotulotoxinMainProps["botulotoxinData"];
+  botulotoxin: ServiceRow | null;
+  user?: string | null;
+  isAdmin?: boolean;
+};
+
 export default function Botulotoxin({
   botulotoxinData,
+  botulotoxin,
   user,
   isAdmin,
-}: BotulotoxinMainProps & { user?: string | null; isAdmin?: boolean }) {
+}: BotulotoxinProps) {
   if (!botulotoxinData) {
     return (
       <div className="section-shell mx-auto mt-10 w-full max-w-3xl p-6 text-center text-redDark">
@@ -22,50 +31,42 @@ export default function Botulotoxin({
     );
   }
 
+  const uploadedImageUrl = botulotoxin?.image_url?.trim();
+
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
         <div className="flex flex-col py-10">
           <h1
-            className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
+            className={`premium-title pb-6 text-2xl font-semibold italic 2xl:text-5xl lg:pb-10 ${brandFont.className}`}
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {botulotoxinData.name[0]}
+                {botulotoxin?.title?.[0]}
               </span>
-              {botulotoxinData.name.slice(1)}
+              {botulotoxin?.title?.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Botulotoxin_text botulotoxinData={botulotoxinData} />
+              <Botulotoxin_text botulotoxin={botulotoxin} />
             </ExpandText>
           </div>
         </div>
 
         <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           {/* Použijeme URL z DB ak existuje, inak fallback na default obrázok */}
-          {botulotoxinData.image_url?.trim() && (
-            <Image
-              src={botulotoxinData.image_url.trim()}
-              alt="Botulotoxín"
-              fill
-              unoptimized
-              className="object-cover"
-            />
-          )}
-          {!botulotoxinData.image_url?.trim() && (
-            <Image
-              src="/images/botulotoxin.jpg"
-              alt="Botulotoxín"
-              fill
-              className="object-cover"
-            />
-          )}
+          <Image
+            src={uploadedImageUrl || "/images/botulotoxin.jpg"}
+            alt="Botulotoxín"
+            fill
+            unoptimized
+            className="object-cover"
+          />
         </div>
 
         <div className="mt-10 lg:mt-12 lg:col-span-2">
-          <About_botulotoxin botulotoxinData={botulotoxinData} />
+          <About_botulotoxin botulotoxin={botulotoxin} />
         </div>
 
         <div className="fade-up mt-10 lg:mt-12 lg:col-span-2">
