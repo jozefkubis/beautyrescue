@@ -2,17 +2,21 @@
 
 import ExpandTextLG from "@/app/_components/ExpandTextLG";
 import { brandFont } from "@/app/_components/fonts";
-import type { BotulotoxinPotenieMainProps } from "@/app/_lib/data_services/data_botulotoxin";
+import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Botulotoxin_potenie_text from "./Botulotoxin_potenie_text";
 
-export default function Botulotoxin_potenie({
-  botulotoxinPotenieData,
-}: BotulotoxinPotenieMainProps) {
-  // Ak je v DB nahraný obrázok zo Storage, použijeme ho; inak ostáva lokálny fallback.
-  const uploadedImageUrl = botulotoxinPotenieData?.image_url?.trim();
+type BotulotoxinPotenieProps = {
+  botulotoxinPotenie: ServiceRow;
+};
 
-  if (!botulotoxinPotenieData) {
+export default function Botulotoxin_potenie({
+  botulotoxinPotenie,
+}: BotulotoxinPotenieProps) {
+  // Ak je v DB nahraný obrázok zo Storage, použijeme ho; inak ostáva lokálny fallback.
+  const uploadedImageUrl = botulotoxinPotenie?.image_url?.trim();
+
+  if (!botulotoxinPotenie) {
     return (
       <div className="section-shell mx-auto mt-10 w-full max-w-3xl p-6 text-center text-redDark">
         Dáta pre stránku Botulotoxín potenie sa nepodarilo načítať.
@@ -39,16 +43,14 @@ export default function Botulotoxin_potenie({
           >
             <span className="italic text-goldDark">
               <span className="text-3xl 2xl:text-6xl">
-                {botulotoxinPotenieData.name[0]}
+                {botulotoxinPotenie?.title?.[0]}
               </span>
-              {botulotoxinPotenieData.name.slice(1)}
+              {botulotoxinPotenie?.title?.slice(1)}
             </span>
           </h1>
 
           <ExpandTextLG>
-            <Botulotoxin_potenie_text
-              botulotoxinPotenieData={botulotoxinPotenieData}
-            />
+            <Botulotoxin_potenie_text botulotoxinPotenie={botulotoxinPotenie} />
           </ExpandTextLG>
         </div>
       </div>

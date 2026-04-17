@@ -1,16 +1,11 @@
 import Botulotoxin_potenie from "@/app/_components/products/botulotoxin/potenie/botulotoxin_potenie";
-import { getBotulotoxinPotenie } from "@/app/_lib/data_services/data_botulotoxin";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
-  const botulotoxinPotenieData = await getBotulotoxinPotenie(
-    "botulotoxin-potenie",
-  );
+  const botulotoxinPotenie = await getServiceBySlug("botulotoxin-potenie");
+  console.log("Botulotoxin Potenie Data:", botulotoxinPotenie);
 
-  // const user = await getCurrentUser();
-  // const isAdmin =
-  //   user?.email === process.env.ADMIN_EMAIL_1 ||
-  //   user?.email === process.env.ADMIN_EMAIL_2;
-  const isActive = botulotoxinPotenieData?.is_active ?? false;
+  const isActive = botulotoxinPotenie?.is_active ?? false;
 
   if (!isActive) {
     return (
@@ -32,7 +27,5 @@ export default async function Page() {
     );
   }
 
-  return (
-    <Botulotoxin_potenie botulotoxinPotenieData={botulotoxinPotenieData} />
-  );
+  return <Botulotoxin_potenie botulotoxinPotenie={botulotoxinPotenie} />;
 }

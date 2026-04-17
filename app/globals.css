@@ -146,3 +146,9 @@ strong {
 .expand-lg-open {
   max-height: 120rem;
 }
+
+/* Zvýraznenie kľúčových slov v textových sekciách */
+.highlight {
+  color: var(--goldDark);
+  font-weight: 600;
+}
