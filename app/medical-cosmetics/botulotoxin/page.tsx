@@ -7,8 +7,6 @@ export default async function Page() {
   const botulotoxinData = await getBotulotoxin("botulotoxin");
   const botulotoxin = await getServiceBySlug("botulotoxin");
 
-  console.log("botulotoxin", botulotoxin);
-
   const user = await getCurrentUser();
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||

@@ -2,14 +2,18 @@
 
 import ExpandText from "@/app/_components/ExpandText";
 import { brandFont } from "@/app/_components/fonts";
-import type { BotulotoxinVraskyMainProps } from "@/app/_lib/data_services/data_botulotoxin";
 import Image from "next/image";
 import Botulotoxin_vrasky_text from "./Botulotoxin_vrasky_text";
+import { ServiceRow } from "@/app/_lib/data_services_all/data_services";  
+
+type BotulotoxinVraskyProps = {
+  botulotoxinVrasky: ServiceRow;
+};
 
 export default function Botulotoxin_vrasky({
-  botulotoxinVraskyData,
-}: BotulotoxinVraskyMainProps) {
-  if (!botulotoxinVraskyData) {
+  botulotoxinVrasky,
+}: BotulotoxinVraskyProps) {
+  if (!botulotoxinVrasky) {
     return (
       <div className="section-shell mx-auto mt-10 w-full max-w-3xl p-6 text-center text-redDark">
         Dáta pre stránku Botulotoxín vrásky sa nepodarilo načítať.
@@ -18,7 +22,7 @@ export default function Botulotoxin_vrasky({
   }
 
   // Používame URL z DB ak existuje, inak fallback na default obrázok.
-  const uploadedImageUrl = botulotoxinVraskyData?.image_url?.trim();
+  const uploadedImageUrl = botulotoxinVrasky?.image_url?.trim();
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
@@ -35,19 +39,19 @@ export default function Botulotoxin_vrasky({
 
         <div className="flex flex-col py-3 lg:py-8">
           <h1
-            className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
+            className={`premium-title pb-6 text-2xl font-semibold italic 2xl:text-5xl lg:pb-10 ${brandFont.className}`}
           >
             <span className="italic text-goldDark">
               <span className="text-3xl 2xl:text-6xl">
-                {botulotoxinVraskyData.name[0]}
+                {botulotoxinVrasky?.title?.[0]}
               </span>
-              {botulotoxinVraskyData.name.slice(1)}
+              {botulotoxinVrasky?.title?.slice(1)}
             </span>
           </h1>
 
           <ExpandText>
             <Botulotoxin_vrasky_text
-              botulotoxinVraskyData={botulotoxinVraskyData}
+              botulotoxinVrasky={botulotoxinVrasky}
             />
           </ExpandText>
         </div>

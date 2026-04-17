@@ -1,14 +1,10 @@
 import Botulotoxin_vrasky from "@/app/_components/products/botulotoxin/vrasky/Botulotoxin_vrasky";
-import { getBotulotoxinVrasky } from "@/app/_lib/data_services/data_botulotoxin";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
-  const botulotoxinVraskyData =
-    await getBotulotoxinVrasky("botulotoxin-vrasky");
-  // const user = await getCurrentUser();
-  // const isAdmin =
-  //   user?.email === process.env.ADMIN_EMAIL_1 ||
-  //   user?.email === process.env.ADMIN_EMAIL_2;
-  const isActive = botulotoxinVraskyData?.is_active ?? false;
+  const botulotoxinVrasky = await getServiceBySlug("botulotoxin-vrasky");
+
+  const isActive = botulotoxinVrasky?.is_active ?? false;
 
   if (!isActive) {
     return (
@@ -30,5 +26,5 @@ export default async function Page() {
     );
   }
 
-  return <Botulotoxin_vrasky botulotoxinVraskyData={botulotoxinVraskyData} />;
+  return <Botulotoxin_vrasky botulotoxinVrasky={botulotoxinVrasky} />;
 }
