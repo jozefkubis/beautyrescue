@@ -39,7 +39,7 @@ export default function Botulotoxin_potenie({
 
         <div className="flex flex-col py-3 lg:py-8">
           <h1
-            className={`premium-title pb-4 text-2xl font-semibold italic 2xl:text-5xl lg:pb-6 ${brandFont.className}`}
+            className={`premium-title pb-6 text-2xl font-semibold italic 2xl:text-5xl lg:pb-10 ${brandFont.className}`}
           >
             <span className="italic text-goldDark">
               <span className="text-3xl 2xl:text-6xl">
