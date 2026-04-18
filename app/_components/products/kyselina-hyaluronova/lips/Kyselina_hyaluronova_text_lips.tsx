@@ -1,20 +1,15 @@
-import type { KyselinaHyaluronovaLipsProps } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 
 export default function Kyselina_hyaluronova_lips_text({
-  kyselinaHyaluronovaLipsData,
-}: KyselinaHyaluronovaLipsProps) {
+  kyselinaHyaluronovaLips,
+}: {
+  kyselinaHyaluronovaLips: ServiceRow | null;
+}) {
+  const text = kyselinaHyaluronovaLips?.text ?? "";
+
   return (
     <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-      {(kyselinaHyaluronovaLipsData.content.paragraphs as string[]).map(
-        (paragraph, index) => (
-          <p
-            key={index}
-            className="text-gray-700 leading-8 whitespace-pre-wrap"
-          >
-            {paragraph}
-          </p>
-        ),
-      )}
+      <p className="text-gray-700 leading-7 whitespace-pre-wrap">{text}</p>
     </div>
-  )
+  );
 }
