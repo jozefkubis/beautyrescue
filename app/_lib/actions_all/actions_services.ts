@@ -4,11 +4,16 @@ import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "../supabase/server";
 
 
+// Slovenský komentár: Payload je univerzálny, môže obsahovať ľubovoľné polia zo ServiceRow
 type UpdateServicePayload = {
-  title: string;
+  title?: string;
   text?: string;
+  about_title?: string;
+  about?: string;
   image_url?: string;
+  image_gallery?: string[] | { src: string; alt: string }[]; // Môže být pole stringů nebo pole objektů s src a alt
   is_active?: boolean;
+  order_index?: number | null;
 };
 
 export async function updateServiceBySlug(formData: FormData, slug: string) {
@@ -53,11 +58,9 @@ export async function updateServiceBySlug(formData: FormData, slug: string) {
   // Overíme základnú štruktúru payloadu, aby sme na serveri nepracovali
   // s neúplnými alebo nesprávnymi dátami. Server si to kontroluje sám,
   // nestačí sa spoliehať len na klientský formulár.
-  if (
-    typeof payload.title !== "string" ||
-    typeof payload.text !== "string" ||
-    typeof payload.is_active !== "boolean"
-  ) {
+
+  // Slovenský komentár: Ak je prázdny payload alebo chýba aspoň title alebo text alebo about, vyhodíme chybu len ak nie je žiadne pole
+  if (!payload || Object.keys(payload).length === 0) {
     throw new Error("Neplatná štruktúra dát");
   }
  
@@ -115,16 +118,24 @@ export async function updateServiceBySlug(formData: FormData, slug: string) {
   // Uložíme nové hodnoty do databázy. Name a is_active prepíšeme priamo,
   // content poskladáme zo starého objektu a nahradíme len paragraphs,
   // aby sme zbytočne nevymazali iné uložené dáta.
+  // Slovenský komentár: Pripravíme update objekt dynamicky podľa toho, čo je v payload
+  // Slovenský komentár: updateObj má dynamické kľúče podľa ServiceRow
+  const updateObj: Record<string, unknown> = {};
+  if (typeof payload.title === "string") updateObj.title = payload.title.trim();
+  if (typeof payload.text === "string") updateObj.text = payload.text.trim();
+  if (typeof payload.about_title === "string") updateObj.about_title = payload.about_title.trim();
+  if (typeof payload.about === "string") updateObj.about = payload.about.trim();
+  if (typeof payload.is_active === "boolean") updateObj.is_active = payload.is_active;
+  if (typeof payload.order_index === "number" || payload.order_index === null) updateObj.order_index = payload.order_index;
+  // image_gallery je pole objektov podľa ServiceRow, ak je prítomné
+  if (payload.image_gallery) updateObj.image_gallery = payload.image_gallery as { src: string; alt: string }[];
+  // Ak bol uploadnutý nový obrázok, prepíš image_url
+  if (uploadedImageUrl) updateObj.image_url = uploadedImageUrl;
+  else if (typeof payload.image_url === "string") updateObj.image_url = payload.image_url;
+
   const { data: updatedRows, error: updateError } = await supabase
     .from("services")
-    .update({
-      title: payload.title.trim(),
-      text: payload.text.trim(),
-      is_active: payload.is_active,
-      // image_url meníme len vtedy, keď sa reálne nahral nový obrázok.
-      // Ak upload neprebehol, tento kľúč neposielame a pôvodná hodnota zostane zachovaná.
-      ...(uploadedImageUrl ? { image_url: uploadedImageUrl } : {}),      
-    })
+    .update(updateObj)
     .eq("slug", slug)
     .select("slug");
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { updateBotulotoxinMain } from "@/app/_lib/actions/actions_botulotoxin";
-import type { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulotoxin";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
+import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
@@ -13,7 +13,7 @@ import TextareaField from "../../TextareaField";
 import UndoButton from "../../UndoButton";
 
 type BotulotoxinMainPageUpdateFormProps = {
-  botulotoxinData: BotulotoxinMainProps["botulotoxinData"] | null;
+  botulotoxinData: ServiceRow | null;
   isAdmin?: boolean;
 };
 
@@ -30,24 +30,12 @@ export default function BotulotoxinMainPage_update_form({
   // useMemo zabezpečí, že sa tieto hodnoty prepočítajú iba ak sa zmení aboutUsData.
   const initialValues = useMemo(
     () => ({
-      name: botulotoxinData?.name ?? "",
+      title: botulotoxinData?.title ?? "",
       image_url: botulotoxinData?.image_url ?? "",
-      intro: Array.isArray(botulotoxinData?.attributes.intro)
-        ? botulotoxinData.attributes.intro.join("\n\n")
-        : (botulotoxinData?.attributes.intro ?? ""),
-      complications: Array.isArray(botulotoxinData?.attributes.complications)
-        ? botulotoxinData.attributes.complications.join("\n\n")
-        : (botulotoxinData?.attributes.complications ?? ""),
-      contraindications: Array.isArray(
-        botulotoxinData?.attributes.contraindications,
-      )
-        ? botulotoxinData.attributes.contraindications.join("\n\n")
-        : (botulotoxinData?.attributes.contraindications ?? ""),
-      title: botulotoxinData?.content.about.title ?? "",
-      paragraphs: Array.isArray(botulotoxinData?.content.about.paragraphs)
-        ? botulotoxinData.content.about.paragraphs.join("\n\n")
-        : (botulotoxinData?.content.about.paragraphs ?? ""),
+      text: botulotoxinData?.text ?? "",
       isActive: botulotoxinData?.is_active ?? false,
+      aboutTitle: botulotoxinData?.about_title ?? "",
+      about: botulotoxinData?.about ?? "",
     }),
     [botulotoxinData],
   );
@@ -89,18 +77,10 @@ export default function BotulotoxinMainPage_update_form({
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            attributes: {
-              intro: formValues.intro,
-              complications: formValues.complications,
-              contraindications: formValues.contraindications,
-            },
-            content: {
-              about: {
-                title: formValues.title,
-                paragraphs: formValues.paragraphs,
-              },
-            },
+            title: formValues.title,
+            text: formValues.text,
+            about_title: formValues.aboutTitle,
+            about: formValues.about,
             is_active: formValues.isActive,
           }),
         );
@@ -109,7 +89,10 @@ export default function BotulotoxinMainPage_update_form({
           formData.set("image_file", selectedImageFile);
         }
 
-        await updateBotulotoxinMain(formData);
+        await updateServiceBySlug(
+          formData,
+          botulotoxinData?.slug ?? "botulotoxin",
+        );
 
         // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
         setLastSavedValues(formValues);
@@ -142,48 +125,32 @@ export default function BotulotoxinMainPage_update_form({
       <div className="grid grid-cols-1 gap-4">
         <InputField
           label="Názov"
-          value={formValues.name}
-          onChange={(e) => handleChange("name", e.target.value)}
-          readOnly={!isAdmin}
-        />
-
-        <TextareaField
-          label="Uvodný text (intro)"
-          value={formValues.intro}
-          onChange={(e) => handleChange("intro", e.target.value)}
-          readOnly={!isAdmin}
-          rows={8}
-        />
-
-        <TextareaField
-          label="Komplikácie"
-          value={formValues.complications}
-          onChange={(e) => handleChange("complications", e.target.value)}
-          readOnly={!isAdmin}
-          rows={8}
-        />
-
-        <TextareaField
-          label="Kontraindikácie"
-          value={formValues.contraindications}
-          onChange={(e) => handleChange("contraindications", e.target.value)}
-          readOnly={!isAdmin}
-          rows={8}
-        />
-
-        <InputField
-          label="Titulok sekcie O Botulotoxíne"
           value={formValues.title}
           onChange={(e) => handleChange("title", e.target.value)}
           readOnly={!isAdmin}
         />
 
         <TextareaField
-          label="text sekcie O Botulotoxíne"
-          value={formValues.paragraphs}
-          onChange={(e) => handleChange("paragraphs", e.target.value)}
+          label="Obsah"
+          value={formValues.text}
+          onChange={(e) => handleChange("text", e.target.value)}
           readOnly={!isAdmin}
-          rows={8}
+          rows={14}
+        />
+
+        <InputField
+          label="O produkte - titulok"
+          value={formValues.aboutTitle}
+          onChange={(e) => handleChange("aboutTitle", e.target.value)}
+          readOnly={!isAdmin}
+        />
+
+        <TextareaField
+          label="O produkte - text"
+          value={formValues.about}
+          onChange={(e) => handleChange("about", e.target.value)}
+          readOnly={!isAdmin}
+          rows={10}
         />
 
         <FileField

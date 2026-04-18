@@ -1,10 +1,6 @@
 "use client";
 
-import type {
-  BotulotoxinMainProps,
-  BotulotoxinPotenieMainProps,
-  BotulotoxinVraskyMainProps,
-} from "@/app/_lib/data_services/data_botulotoxin";
+import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useState } from "react";
 import SectionNavigation from "../../SectionNavigation";
 import BotulotoxinMainPage_update_form from "./BotulotoxinMainPage_update_form";
@@ -12,13 +8,9 @@ import BotulotoxinPotenie_update_form from "./potenie/BotulotoxinPotenie_update.
 import BotulotoxinVrasky_update_form from "./vrasky/BotulotoxinVrasky_update_form";
 
 type Botulotoxin_update_formProps = {
-  botulotoxinData: BotulotoxinMainProps["botulotoxinData"] | null;
-  botulotoxinPotenieData:
-    | BotulotoxinPotenieMainProps["botulotoxinPotenieData"]
-    | null;
-  botulotoxinVraskyData:
-    | BotulotoxinVraskyMainProps["botulotoxinVraskyData"]
-    | null;
+  botulotoxinData: ServiceRow | null;
+  botulotoxinPotenieData: ServiceRow | null;
+  botulotoxinVraskyData: ServiceRow | null;
   isAdmin?: boolean;
 };
 

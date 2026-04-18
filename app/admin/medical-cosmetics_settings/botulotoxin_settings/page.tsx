@@ -1,18 +1,14 @@
 import Botulotoxin_update_form from "@/app/_components/products/botulotoxin/Botulotoxin_update_form";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import {
-  getBotulotoxin,
-  getBotulotoxinPotenie,
-  getBotulotoxinVrasky,
-} from "@/app/_lib/data_services/data_botulotoxin";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const [user, botulotoxinData, botulotoxinPotenieData, botulotoxinVraskyData] =
     await Promise.all([
       getCurrentUser(),
-      getBotulotoxin("botulotoxin"),
-      getBotulotoxinPotenie("botulotoxin-potenie"),
-      getBotulotoxinVrasky("botulotoxin-vrasky"),
+      getServiceBySlug("botulotoxin"),
+      getServiceBySlug("botulotoxin-potenie"),
+      getServiceBySlug("botulotoxin-vrasky"),
     ]);
 
   const isAdmin =

@@ -5,17 +5,16 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
-import { updateBotulotoxinPotenie } from "@/app/_lib/actions/actions_botulotoxin";
-import type { BotulotoxinPotenieMainProps } from "@/app/_lib/data_services/data_botulotoxin";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import FileField from "../../../FileField";
 
+// Komponent očakáva dáta vo formáte ServiceRow
 type BotulotoxinPotenieUpdateFormProps = {
-  botulotoxinPotenieData:
-    | BotulotoxinPotenieMainProps["botulotoxinPotenieData"]
-    | null;
+  botulotoxinPotenieData: ServiceRow | null;
   isAdmin?: boolean;
 };
 
@@ -30,14 +29,13 @@ export default function BotulotoxinPotenie_update_form({
 
   // Počiatočné hodnoty formulára – naplnené z DB dát.
   // useMemo zabezpečí, že sa tieto hodnoty prepočítajú iba ak sa zmení aboutUsData.
+  // Slovenský komentár: Inicializujeme hodnoty formulára z ServiceRow
   const initialValues = useMemo(
     () => ({
-      name: botulotoxinPotenieData?.name ?? "",
+      name: botulotoxinPotenieData?.title ?? "",
       image_url: botulotoxinPotenieData?.image_url ?? "",
-      paragraphs: Array.isArray(botulotoxinPotenieData?.content.paragraphs)
-        ? botulotoxinPotenieData.content.paragraphs.join("\n\n")
-        : (botulotoxinPotenieData?.content.paragraphs ?? ""),
-      url: botulotoxinPotenieData?.metadata.sourceUrl ?? "",
+      text: botulotoxinPotenieData?.text ?? "",
+      url: "", // ServiceRow nemá URL, nechávame prázdne alebo doplniť podľa potreby
       isActive: botulotoxinPotenieData?.is_active ?? false,
     }),
     [botulotoxinPotenieData],
@@ -76,22 +74,18 @@ export default function BotulotoxinPotenie_update_form({
     startTransition(async () => {
       try {
         // Pridáme slug, aby server vedel, ktorý záznam v DB má aktualizovať.
+        // Slovenský komentár: Pripravíme dáta vo formáte ServiceRow
         formData.set(
           "slug",
           botulotoxinPotenieData?.slug ?? "botulotoxin-potenie",
         );
-        // Celý stav formulára serializujeme do JSON v tvare, ktorý očakáva server action.
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            content: {
-              paragraphs: formValues.paragraphs.split("\n\n"),
-            },
+            title: formValues.name,
+            text: formValues.text,
+            image_url: formValues.image_url,
             is_active: formValues.isActive,
-            metadata: {
-              sourceUrl: formValues.url,
-            },
           }),
         );
 
@@ -99,7 +93,10 @@ export default function BotulotoxinPotenie_update_form({
           formData.set("image_file", selectedImageFile);
         }
 
-        await updateBotulotoxinPotenie(formData);
+        await updateServiceBySlug(
+          formData,
+          botulotoxinPotenieData?.slug ?? "botulotoxin-potenie",
+        );
 
         // Po úspešnom uložení aktualizujeme "zálohu" pre Undo.
         setLastSavedValues(formValues);
@@ -139,10 +136,10 @@ export default function BotulotoxinPotenie_update_form({
 
         <TextareaField
           label="Obsah"
-          value={formValues.paragraphs}
-          onChange={(e) => handleChange("paragraphs", e.target.value)}
+          value={formValues.text}
+          onChange={(e) => handleChange("text", e.target.value)}
           readOnly={!isAdmin}
-          rows={12}
+          rows={18}
         />
 
         <InputField
