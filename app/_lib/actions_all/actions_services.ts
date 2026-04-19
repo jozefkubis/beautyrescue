@@ -16,7 +16,8 @@ type UpdateServicePayload = {
   order_index?: number | null;
 };
 
-export async function updateServiceBySlug(formData: FormData, slug: string) {
+// Slovenský komentár: Funkcia teraz akceptuje aj prípad, keď slug nie je zadaný
+export async function updateServiceBySlug(formData: FormData, slug?: string) {
   // Vytvoríme serverového Supabase klienta, aby sme vedeli pracovať
   // s aktuálnou session používateľa aj s databázou priamo na serveri.
   const supabase = await getSupabaseServerClient();
@@ -33,6 +34,11 @@ export async function updateServiceBySlug(formData: FormData, slug: string) {
       user.email !== process.env.ADMIN_EMAIL_2)
   ) {
     throw new Error("Unauthorized");
+  }
+
+  // Skontrolujeme, či slug existuje, ak nie, vrátime chybu pre volajúceho
+  if (!slug) {
+    return { success: false, message: "Chýba slug." };
   }
 
   // Z formulára si vytiahneme slug záznamu a JSON string s dátami.

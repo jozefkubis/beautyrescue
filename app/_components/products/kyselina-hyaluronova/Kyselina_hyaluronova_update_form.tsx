@@ -7,28 +7,15 @@ import SectionNavigation from "@/app/_components/SectionNavigation";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
-import {
-  updateKyselinaHyaluronova,
-  updateKyselinaHyaluronovaFace,
-  updateKyselinaHyaluronovaLips,
-} from "@/app/_lib/actions/actions_kyselina_hyaluronova";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
-type KyselinaHyaluronovaServiceData = {
-  slug?: string;
-  name?: string;
-  image_url?: string;
-  content?: {
-    paragraphs?: string | string[];
-  };
-  is_active?: boolean;
-};
-
 type KyselinaHyaluronovaUpdateFormProps = {
-  kyselinaHyaluronovaData: KyselinaHyaluronovaServiceData | null;
-  kyselinaHyaluronovaLipsData: KyselinaHyaluronovaServiceData | null;
-  kyselinaHyaluronovaFaceData: KyselinaHyaluronovaServiceData | null;
+  kyselinaHyaluronovaData: ServiceRow | null;
+  kyselinaHyaluronovaLipsData: ServiceRow | null;
+  kyselinaHyaluronovaFaceData: ServiceRow | null;
   isAdmin?: boolean;
 };
 
@@ -57,11 +44,14 @@ function SingleKyselinaForm({
   isAdmin,
   onSubmitAction,
 }: {
-  data: KyselinaHyaluronovaServiceData | null;
+  data: ServiceRow | null;
   sectionLabel: string;
   slugFallback: string;
   isAdmin?: boolean;
-  onSubmitAction: (formData: FormData) => Promise<{
+  onSubmitAction: (
+    formData: FormData,
+    slug?: string,
+  ) => Promise<{
     success: boolean;
     message: string;
   }>;
@@ -70,11 +60,9 @@ function SingleKyselinaForm({
 
   const initialValues = useMemo(
     () => ({
-      name: data?.name ?? "",
+      title: data?.title ?? "",
       image_url: data?.image_url ?? "",
-      content: Array.isArray(data?.content?.paragraphs)
-        ? data.content.paragraphs.join("\n\n")
-        : (data?.content?.paragraphs ?? ""),
+      text: data?.text ?? "",
       isActive: data?.is_active ?? false,
     }),
     [data],
@@ -100,11 +88,12 @@ function SingleKyselinaForm({
     startTransition(async () => {
       try {
         formData.set("slug", data?.slug ?? slugFallback);
+        // Slovenský komentár: Posielame správny kľúč title namiesto name, aby update fungoval
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            paragraphs: formValues.content,
+            title: formValues.title,
+            text: formValues.text,
             is_active: formValues.isActive,
           }),
         );
@@ -113,7 +102,7 @@ function SingleKyselinaForm({
           formData.set("image_file", selectedImageFile);
         }
 
-        await onSubmitAction(formData);
+        await onSubmitAction(formData, data?.slug);
         setLastSavedValues(formValues);
         toast.success(`Sekcia ${sectionLabel} bola aktualizovaná`);
       } catch (error) {
@@ -140,15 +129,15 @@ function SingleKyselinaForm({
       <div className="grid grid-cols-1 gap-4">
         <InputField
           label="Názov"
-          value={formValues.name}
-          onChange={(e) => handleChange("name", e.target.value)}
+          value={formValues.title ?? ""} // nikdy undefined
+          onChange={(e) => handleChange("title", e.target.value)}
           readOnly={!isAdmin}
         />
 
         <TextareaField
           label="Obsah"
-          value={formValues.content}
-          onChange={(e) => handleChange("content", e.target.value)}
+          value={formValues.text ?? ""} // nikdy undefined
+          onChange={(e) => handleChange("text", e.target.value)}
           readOnly={!isAdmin}
           rows={12}
         />
@@ -156,7 +145,7 @@ function SingleKyselinaForm({
         <FileField
           type="file"
           label="Hlavná fotka (image_url)"
-          value={formValues.image_url}
+          value={formValues.image_url ?? ""} // nikdy undefined
           onChange={(e) => setSelectedImageFile(e.target.files?.[0] ?? null)}
           readOnly={!isAdmin}
         />
@@ -223,7 +212,7 @@ export default function Kyselina_hyaluronova_update_form({
               sectionLabel="Kyselina hyalurónová"
               slugFallback="kyselina-hyaluronova"
               isAdmin={isAdmin}
-              onSubmitAction={updateKyselinaHyaluronova}
+              onSubmitAction={updateServiceBySlug}
             />
           </>
         )}
@@ -236,7 +225,7 @@ export default function Kyselina_hyaluronova_update_form({
               sectionLabel="Kyselina hyalurónová lips"
               slugFallback="kyselina-hyaluronova-lips"
               isAdmin={isAdmin}
-              onSubmitAction={updateKyselinaHyaluronovaLips}
+              onSubmitAction={updateServiceBySlug}
             />
           </>
         )}
@@ -249,7 +238,7 @@ export default function Kyselina_hyaluronova_update_form({
               sectionLabel="Kyselina hyalurónová face"
               slugFallback="kyselina-hyaluronova-face"
               isAdmin={isAdmin}
-              onSubmitAction={updateKyselinaHyaluronovaFace}
+              onSubmitAction={updateServiceBySlug}
             />
           </>
         )}

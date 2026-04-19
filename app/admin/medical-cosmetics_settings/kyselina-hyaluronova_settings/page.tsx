@@ -1,10 +1,6 @@
 import Kyselina_hyaluronova_update_form from "@/app/_components/products/kyselina-hyaluronova/Kyselina_hyaluronova_update_form";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import {
-  getKyselinaHyaluronova,
-  getKyselinaHyaluronovaFace,
-  getKyselinaHyaluronovaLips,
-} from "@/app/_lib/data_services/data_kyselina_hyaluronova";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const [
@@ -14,9 +10,9 @@ export default async function Page() {
     kyselinaHyaluronovaFaceData,
   ] = await Promise.all([
     getCurrentUser(),
-    getKyselinaHyaluronova("kyselina-hyaluronova"),
-    getKyselinaHyaluronovaLips("kyselina-hyaluronova-lips"),
-    getKyselinaHyaluronovaFace("kyselina-hyaluronova-face"),
+    getServiceBySlug("kyselina-hyaluronova"),
+    getServiceBySlug("kyselina-hyaluronova-lips"),
+    getServiceBySlug("kyselina-hyaluronova-face"),
   ]);
 
   const isAdmin =
