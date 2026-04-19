@@ -1,6 +1,7 @@
 "use client";
 
 import type { JaluproMainProps } from "@/app/_lib/data_services/data_jalupro";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Link from "next/link";
 import ExpandText from "../../ExpandText";
@@ -9,12 +10,20 @@ import About_jalupro from "./About_jalupro";
 import Jalupro_pricing_form from "./Jalupro_pricing_form";
 import Jalupro_text from "./Jalupro_text";
 
+type JaluproProps = {
+  jaluproData: JaluproMainProps["jaluproData"];
+  jalupro: ServiceRow | null;
+  user?: string | null;
+  isAdmin?: boolean;
+};
+
 export default function Jalupro({
   jaluproData,
+  jalupro,
   user,
   isAdmin,
-}: JaluproMainProps & { user?: string | null; isAdmin?: boolean }) {
-  const uploadedImageUrl = jaluproData.image_url?.trim();
+}: JaluproProps) {
+  const uploadedImageUrl = jalupro?.image_url?.trim();
 
   const jaluproLinks = [
     "/medical-cosmetics/jalupro/classic",
@@ -28,18 +37,18 @@ export default function Jalupro({
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
         <div className="flex flex-col py-10">
           <h1
-            className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
+            className={`premium-title pb-6 text-2xl font-semibold italic 2xl:text-5xl lg:pb-10 ${brandFont.className}`}
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {jaluproData.name[0]}
+                {jalupro?.title?.[0]}
               </span>
-              {jaluproData.name.slice(1)}
+              {jalupro?.title?.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Jalupro_text jaluproData={jaluproData} />
+              <Jalupro_text jalupro={jalupro} />
             </ExpandText>
           </div>
         </div>
@@ -55,12 +64,12 @@ export default function Jalupro({
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <About_jalupro jaluproData={jaluproData} />
+          <About_jalupro jalupro={jalupro} />
         </div>
 
         <div className="fade-up mt-10 2xl:mt-20 lg:col-span-2">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
-            {jaluproData.gallery.map(
+            {jalupro?.image_gallery?.map(
               ({ src, alt }: { src: string; alt?: string }, index: number) => (
                 <Link
                   href={

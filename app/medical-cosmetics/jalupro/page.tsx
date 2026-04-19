@@ -1,14 +1,17 @@
 import Jalupro from "@/app/_components/products/jalupro/Jalupro";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
 import { getJalupro } from "@/app/_lib/data_services/data_jalupro";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const jaluproData = await getJalupro("jalupro");
+  const jalupro = await getServiceBySlug("jalupro");
+
   const user = await getCurrentUser();
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||
     user?.email === process.env.ADMIN_EMAIL_2;
-  const isActive = jaluproData?.is_active ?? false;
+  const isActive = jalupro?.is_active ?? false;
 
   if (!isActive) {
     return (
@@ -33,6 +36,7 @@ export default async function Page() {
   return (
     <Jalupro
       jaluproData={jaluproData}
+      jalupro={jalupro}
       user={user?.email ?? null}
       isAdmin={isAdmin}
     />

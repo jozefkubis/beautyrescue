@@ -1,18 +1,76 @@
-"use client"
+"use client";
 
-import type { JaluproMainProps } from "@/app/_lib/data_services/data_jalupro"
-import { useState } from "react"
-import { MdKeyboardArrowDown } from "react-icons/md"
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import { useState } from "react";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
-export default function About_jalupro({ jaluproData }: JaluproMainProps) {
-  const [openBox, setOpenBox] = useState(false)
-  const content = jaluproData.content ?? {}
-  const attributes = jaluproData.attributes ?? {}
-  const about = (content.about as Record<string, string | string[]>) ?? {}
-  const effects = attributes.effects ?? []
-  const effectSummary = attributes.effectSummary ?? ""
-  const treatmentParagraphs = attributes.treatmentParagraphs ?? []
-  const aftercareParagraphs = attributes.aftercareParagraphs ?? []
+// Prejde text riadok po riadku — ak riadok začína ✓, zabalí ho do <li>
+// Keď skupina ✓ riadkov skončí, celú skupinu zabalí do <ul>
+function wrapChecklistInUl(text: string): string {
+  const lines = text.split("\n");
+  const result: string[] = [];
+  let checklistBuffer: string[] = [];
+
+  for (const line of lines) {
+    if (line.trimStart().startsWith("✓")) {
+      // Riadok patrí do zoznamu — odlož ho
+      checklistBuffer.push(`<li>${line.trim()}</li>`);
+    } else {
+      // Riadok nie je ✓ — ak bol pred ním zoznam, uzavri ho
+      if (checklistBuffer.length > 0) {
+        result.push(
+          `<ul style='list-style:none;padding:0;margin:0;text-align:left;'>${checklistBuffer.join("")}</ul>`,
+        );
+        checklistBuffer = [];
+      }
+      result.push(line);
+    }
+  }
+
+  // Ak text končí ✓ riadkami, uzavri zoznam na konci
+  if (checklistBuffer.length > 0) {
+    result.push(
+      `<ul style='list-style:none;padding:0;margin:0;text-align:left;'>${checklistBuffer.join("")}</ul>`,
+    );
+  }
+
+  return result.join("\n");
+}
+
+export default function About_jalupro({
+  jalupro,
+}: {
+  jalupro: ServiceRow | null;
+}) {
+  const [openBox, setOpenBox] = useState(false);
+  const aboutText = jalupro?.about ?? "";
+  const aboutTitle = jalupro?.about_title ?? "";
+
+  const highLightedAboutText = aboutText
+    .replace(
+      /Účinky/gi,
+      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Účinky</span>",
+    )
+    .replace(
+      /Efekt/gi,
+      "<span style='color:#9d7410;font-weight:bold;'>Efekt</span>",
+    )
+    .replace(
+      /Priebeh ošetrenia/gi,
+      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Priebeh ošetrenia</span>",
+    )
+    .replace(
+      /Po ošetrení/g,
+      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Po ošetrení</span>",
+    )
+    .replace(
+      /Varianty Jalupro:/gi,
+      "<span style='color:#9d7410;font-weight:bold;'>Varianty Jalupro:</span>",
+    );
+
+  const formattedText = highLightedAboutText
+    ? wrapChecklistInUl(highLightedAboutText)
+    : "";
 
   return (
     <section className="w-full items-center justify-center">
@@ -25,7 +83,7 @@ export default function About_jalupro({ jaluproData }: JaluproMainProps) {
           >
             <div>
               <h4 className="text-lg font-semibold italic tracking-tight text-goldDark sm:text-xl lg:text-[1.75rem]">
-                {about.title}
+                {aboutTitle}
               </h4>
             </div>
 
@@ -48,62 +106,20 @@ export default function About_jalupro({ jaluproData }: JaluproMainProps) {
 
           <div
             className={`
-              overflow-hidden px-4 sm:px-5 lg:px-6
+              overflow-hidden px-4 sm:px-5 lg:px-6 pb-4 sm:pb-5 lg:pb-6
               transition-[max-height,opacity] duration-500 ease-in-out
               ${openBox ? "max-h-350 opacity-100" : "max-h-0 opacity-0"}
             `}
           >
-            <div className="pb-6 pt-1 flex flex-col gap-3 [&_p]:text-justify">
-              <div className="space-y-1">
-                <h4 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
-                  {about.effectsTitle}
-                </h4>
-                <ul className="list-disc pl-5 space-y-1 text-xs xl:text-sm leading-relaxed text-zinc-700">
-                  {effects.map((effect) => (
-                    <li key={effect}>{effect}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                <strong>Efekt:</strong> {effectSummary}
-              </p>
-
-              <div className="space-y-2">
-                <h4 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
-                  {about.treatmentTitle}
-                </h4>
-                {treatmentParagraphs.map((paragraph) => (
-                  <p
-                    key={paragraph}
-                    className="text-xs xl:text-sm leading-relaxed text-zinc-700"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
-                  {about.aftercareTitle}
-                </h4>
-                {aftercareParagraphs.map((paragraph) => (
-                  <p
-                    key={paragraph}
-                    className="text-xs xl:text-sm leading-relaxed text-zinc-700"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-
-              <p className="text-xs xl:text-sm leading-relaxed text-zinc-700">
-                <strong>Varianty Jalupro:</strong> {about.variants}
-              </p>
+            <div className=" text-xs 2xl:text-sm [&_p]:text-justify">
+              <p
+                className="text-gray-700 leading-relaxed whitespace-pre-wrap"
+                dangerouslySetInnerHTML={{ __html: formattedText }}
+              />
             </div>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
