@@ -1,16 +1,19 @@
 import Jalupro_super_hydro from "@/app/_components/products/jalupro/super_hydro/Jalupro_super_hydro";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
 import { getJaluproSuperHydro } from "@/app/_lib/data_services/data_jalupro";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const jaluproSuperHydroData = await getJaluproSuperHydro(
     "jalupro-super-hydro",
   );
+const jaluproSuperHydro = await getServiceBySlug("jalupro-super-hydro");
+
   const user = await getCurrentUser();
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||
     user?.email === process.env.ADMIN_EMAIL_2;
-  const isActive = jaluproSuperHydroData?.is_active ?? false;
+  const isActive = jaluproSuperHydro?.is_active ?? false;
 
   if (!isActive) {
     return (
@@ -35,6 +38,7 @@ export default async function Page() {
   return (
     <Jalupro_super_hydro
       jaluproSuperHydroData={jaluproSuperHydroData}
+      jaluproSuperHydro={jaluproSuperHydro}
       user={user?.email ?? null}
       isAdmin={isAdmin}
     />

@@ -1,11 +1,46 @@
-export default function Jalupro_hmw_text({ data }: { data: any }) {
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services"
+
+// Prejde text riadok po riadku — ak riadok začína ✓, zabalí ho do <li>
+// Keď skupina ✓ riadkov skončí, celú skupinu zabalí do <ul>
+function wrapChecklistInUl(text: string): string {
+  const lines = text.split("\n");
+  const result: string[] = [];
+  let checklistBuffer: string[] = [];
+
+  for (const line of lines) {
+    if (line.trimStart().startsWith("✓")) {
+      checklistBuffer.push(`<li>${line.trim()}</li>`);
+    } else {
+      if (checklistBuffer.length > 0) {
+        result.push(
+          `<ul style="list-style:none;padding:0;margin:0;text-align:left;">${checklistBuffer.join("")}</ul>`,
+        );
+        checklistBuffer = [];
+      }
+
+      result.push(line);
+    }
+  }
+
+  if (checklistBuffer.length > 0) {
+    result.push(
+      `<ul style="list-style:none;padding:0;margin:0;text-align:left;">${checklistBuffer.join("")}</ul>`,
+    );
+  }
+
+  return result.join("\n");
+}
+
+export default function Jalupro_hmw_text({ jaluproHMW }: { jaluproHMW?: ServiceRow | null }) {
+  const text = jaluproHMW?.text ?? "";
+  const formattedText = text ? wrapChecklistInUl(text) : "";
+
   return (
-    <ul className="list-disc space-y-2 pl-6 text-sm 2xl:text-lg marker:text-gray-500">
-      {(data.content.paragraphs as string[]).map((paragraph, index) => (
-        <li key={index} className="text-gray-700 leading-8 whitespace-pre-wrap">
-          {paragraph}
-        </li>
-      ))}
-    </ul>
-  )
+    <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
+      <div
+        className="text-gray-700 leading-8 whitespace-pre-wrap"
+        dangerouslySetInnerHTML={{ __html: formattedText }}
+      />
+    </div>
+  );
 }

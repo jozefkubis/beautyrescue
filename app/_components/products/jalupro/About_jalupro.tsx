@@ -112,7 +112,7 @@ export default function About_jalupro({
             `}
           >
             <div className=" text-xs 2xl:text-sm [&_p]:text-justify">
-              <p
+              <div
                 className="text-gray-700 leading-relaxed whitespace-pre-wrap"
                 dangerouslySetInnerHTML={{ __html: formattedText }}
               />

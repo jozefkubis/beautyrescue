@@ -1,31 +1,52 @@
-export default function Jalupro_super_hydro_text({ data }: { data: any }) {
+"use client";
+
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+
+// Prejde text riadok po riadku — ak riadok začína ✓, zabalí ho do <li>
+// Keď skupina ✓ riadkov skončí, celú skupinu zabalí do <ul>
+function wrapChecklistInUl(text: string): string {
+  const lines = text.split("\n");
+  const result: string[] = [];
+  let checklistBuffer: string[] = [];
+
+  for (const line of lines) {
+    if (line.trimStart().startsWith("✓")) {
+      checklistBuffer.push(`<li>${line.trim()}</li>`);
+    } else {
+      if (checklistBuffer.length > 0) {
+        result.push(
+          `<ul style="list-style:none;padding:0;margin:0;text-align:left;">${checklistBuffer.join("")}</ul>`,
+        );
+        checklistBuffer = [];
+      }
+
+      result.push(line);
+    }
+  }
+
+  if (checklistBuffer.length > 0) {
+    result.push(
+      `<ul style="list-style:none;padding:0;margin:0;text-align:left;">${checklistBuffer.join("")}</ul>`,
+    );
+  }
+
+  return result.join("\n");
+}
+
+export default function Jalupro_super_hydro_text({
+  jaluproSuperHydro,
+}: {
+  jaluproSuperHydro?: ServiceRow | null;
+}) {
+  const text = jaluproSuperHydro?.text ?? "";
+  const formattedText = text ? wrapChecklistInUl(text) : "";
+
   return (
-    <div className="space-y-6 text-sm 2xl:text-lg">
-      <ul className="list-disc space-y-2 pl-6 marker:text-gray-500">
-        {(data.content.topBullets as string[]).map((paragraph, index) => (
-          <li
-            key={index}
-            className="text-gray-700 leading-8 whitespace-pre-wrap"
-          >
-            {paragraph}
-          </li>
-        ))}
-      </ul>
-
-      <p className="text-gray-700 leading-8 whitespace-pre-wrap">
-        {data.summary}
-      </p>
-
-      <ul className="list-disc space-y-2 pl-6 marker:text-gray-500">
-        {(data.content.bottomBullets as string[]).map((paragraph, index) => (
-          <li
-            key={index}
-            className="text-gray-700 leading-8 whitespace-pre-wrap"
-          >
-            {paragraph}
-          </li>
-        ))}
-      </ul>
+    <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
+      <div
+        className="text-gray-700 leading-8 whitespace-pre-wrap"
+        dangerouslySetInnerHTML={{ __html: formattedText }}
+      />
     </div>
-  )
+  );
 }

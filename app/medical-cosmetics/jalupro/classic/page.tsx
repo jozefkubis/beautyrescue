@@ -1,14 +1,17 @@
 import Jalupro_classic from "@/app/_components/products/jalupro/classic/Jalupro_classic";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
 import { getJaluproClassic } from "@/app/_lib/data_services/data_jalupro";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const jaluproClassicData = await getJaluproClassic("jalupro-classic");
+  const jaluproClassic = await getServiceBySlug("jalupro-classic");
+
   const user = await getCurrentUser();
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||
     user?.email === process.env.ADMIN_EMAIL_2;
-  const isActive = jaluproClassicData?.is_active ?? false;
+  const isActive = jaluproClassic?.is_active ?? false;
 
   if (!isActive) {
     return (
@@ -33,6 +36,7 @@ export default async function Page() {
   return (
     <Jalupro_classic
       jaluproClassicData={jaluproClassicData}
+      jaluproClassic={jaluproClassic}
       user={user?.email ?? null}
       isAdmin={isAdmin}
     />
