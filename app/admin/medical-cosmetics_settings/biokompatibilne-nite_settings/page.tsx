@@ -1,11 +1,11 @@
 import Biokompatibilne_nite_update_form from "@/app/_components/products/biokompatibilne-nite/Biokompatibilne_nite_update_form";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import getBiokompatibilneNite from "@/app/_lib/data_services/data_biokompatibilne_nite";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const [user, biokompatibilneNiteData] = await Promise.all([
     getCurrentUser(),
-    getBiokompatibilneNite("biokompatibilne-nite"),
+    getServiceBySlug("biokompatibilne-nite"),
   ]);
 
   const isAdmin =

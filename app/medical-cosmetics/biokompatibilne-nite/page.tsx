@@ -1,16 +1,20 @@
 import Biokompatibilne_nite from "@/app/_components/products/biokompatibilne-nite/Biokompatibilne_nite";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
 import getBiokompatibilneNite from "@/app/_lib/data_services/data_biokompatibilne_nite";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const biokompatibilneNiteData = await getBiokompatibilneNite(
     "biokompatibilne-nite",
   );
+
+const biokompatiblineNite = await getServiceBySlug("biokompatibilne-nite");
+
   const user = await getCurrentUser();
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||
     user?.email === process.env.ADMIN_EMAIL_2;
-  const isActive = biokompatibilneNiteData?.is_active ?? false;
+  const isActive = biokompatiblineNite?.is_active ?? false;
 
   if (!isActive) {
     return (
@@ -35,6 +39,7 @@ export default async function Page() {
   return (
     <Biokompatibilne_nite
       biokompatibilneNiteData={biokompatibilneNiteData}
+      biokompatiblineNite={biokompatiblineNite}
       user={user?.email ?? null}
       isAdmin={isAdmin}
     />

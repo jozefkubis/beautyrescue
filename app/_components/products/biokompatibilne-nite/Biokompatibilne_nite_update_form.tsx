@@ -6,22 +6,13 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
-import { updateBiokompatibilneNite } from "@/app/_lib/actions/actions_biokompatibilne_nite";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
-type BiokompatibilneNiteData = {
-  slug?: string;
-  name?: string;
-  image_url?: string;
-  is_active?: boolean;
-  content?: {
-    paragraphs?: string | string[];
-  };
-};
-
 type BiokompatibilneNiteUpdateFormProps = {
-  biokompatibilneNiteData: BiokompatibilneNiteData | null;
+  biokompatibilneNiteData: ServiceRow | null;
   isAdmin?: boolean;
 };
 
@@ -37,11 +28,9 @@ export default function Biokompatibilne_nite_update_form({
   // aby admin videl aktuálne uložené hodnoty hneď po otvorení stránky.
   const initialValues = useMemo(
     () => ({
-      name: biokompatibilneNiteData?.name ?? "",
+      title: biokompatibilneNiteData?.title ?? "",
       image_url: biokompatibilneNiteData?.image_url ?? "",
-      content: Array.isArray(biokompatibilneNiteData?.content?.paragraphs)
-        ? biokompatibilneNiteData.content.paragraphs.join("\n\n")
-        : (biokompatibilneNiteData?.content?.paragraphs ?? ""),
+      text: biokompatibilneNiteData?.text ?? "",
       isActive: biokompatibilneNiteData?.is_active ?? false,
     }),
     [biokompatibilneNiteData],
@@ -73,8 +62,8 @@ export default function Biokompatibilne_nite_update_form({
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            paragraphs: formValues.content,
+            title: formValues.title,
+            text: formValues.text,
             is_active: formValues.isActive,
           }),
         );
@@ -83,7 +72,10 @@ export default function Biokompatibilne_nite_update_form({
           formData.set("image_file", selectedImageFile);
         }
 
-        await updateBiokompatibilneNite(formData);
+        await updateServiceBySlug(
+          formData,
+          biokompatibilneNiteData?.slug ?? "biokompatibilne-nite",
+        );
         setLastSavedValues(formValues);
         toast.success("Sekcia Biokompatibilné nite bola aktualizovaná");
       } catch (error) {
@@ -123,15 +115,15 @@ export default function Biokompatibilne_nite_update_form({
           <div className="grid grid-cols-1 gap-4">
             <InputField
               label="Názov"
-              value={formValues.name}
-              onChange={(e) => handleChange("name", e.target.value)}
+              value={formValues.title}
+              onChange={(e) => handleChange("title", e.target.value)}
               readOnly={!isAdmin}
             />
 
             <TextareaField
               label="Obsah"
-              value={formValues.content}
-              onChange={(e) => handleChange("content", e.target.value)}
+              value={formValues.text}
+              onChange={(e) => handleChange("text", e.target.value)}
               readOnly={!isAdmin}
               rows={12}
             />

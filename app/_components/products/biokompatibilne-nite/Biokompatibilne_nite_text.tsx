@@ -1,15 +1,15 @@
-import type { BiokompatibilneNiteMainProps } from "@/app/_lib/data_services/data_biokompatibilne_nite"
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 
 export default function Biokompatibilne_nite_text({
-  biokompatibilneNiteData,
-}: BiokompatibilneNiteMainProps) {
+  biokompatiblineNite,
+}: {
+  biokompatiblineNite: ServiceRow | null;
+}) {
+  const text = biokompatiblineNite?.text ?? "";
+
   return (
     <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
-      {biokompatibilneNiteData.content.paragraphs.map((paragraph, index) => (
-        <p key={index} className="text-gray-700 leading-8 whitespace-pre-wrap">
-          {index === 1 ? `„${paragraph}“` : paragraph}
-        </p>
-      ))}
+      <p className="text-gray-700 leading-7 whitespace-pre-wrap">{text}</p>
     </div>
-  )
+  );
 }
