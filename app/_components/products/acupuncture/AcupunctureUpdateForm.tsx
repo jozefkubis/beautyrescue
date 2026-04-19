@@ -6,14 +6,14 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
-import { updateAcupuncture } from "@/app/_lib/actions/actions_acupuncture";
-import type { AcupunctureMainProps } from "@/app/_lib/data_services/data_acupuncture";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
 type AcupunctureUpdateFormProps = {
-  acupunctureData: AcupunctureMainProps["acupunctureData"] | null;
+  acupunctureData: ServiceRow | null;
   isAdmin?: boolean;
 };
 
@@ -28,13 +28,10 @@ export default function AcupunctureUpdateForm({
 
   const initialValues = useMemo(
     () => ({
-      name: acupunctureData?.name ?? "",
-      paragraphs: Array.isArray(acupunctureData?.content?.paragraphs)
-        ? acupunctureData.content.paragraphs.join("\n\n")
-        : "",
+      title: acupunctureData?.title ?? "",
+      text: acupunctureData?.text ?? "",
       image_url: acupunctureData?.image_url ?? "",
-      isActive:
-        (acupunctureData as { is_active?: boolean } | null)?.is_active ?? false,
+      isActive: acupunctureData?.is_active ?? false,
     }),
     [acupunctureData],
   );
@@ -65,8 +62,8 @@ export default function AcupunctureUpdateForm({
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            paragraphs: formValues.paragraphs,
+            title: formValues.title,
+            text: formValues.text,
             is_active: formValues.isActive,
           }),
         );
@@ -75,7 +72,10 @@ export default function AcupunctureUpdateForm({
           formData.set("image_file", selectedImageFile);
         }
 
-        await updateAcupuncture(formData);
+        await updateServiceBySlug(
+          formData,
+          acupunctureData?.slug ?? "acupuncture",
+        );
 
         setLastSavedValues(formValues);
         router.refresh();
@@ -117,15 +117,15 @@ export default function AcupunctureUpdateForm({
           <div className="grid grid-cols-1 gap-4">
             <InputField
               label="Názov"
-              value={formValues.name}
-              onChange={(e) => handleChange("name", e.target.value)}
+              value={formValues.title}
+              onChange={(e) => handleChange("title", e.target.value)}
               readOnly={!isAdmin}
             />
 
             <TextareaField
               label="Obsah"
-              value={formValues.paragraphs}
-              onChange={(e) => handleChange("paragraphs", e.target.value)}
+              value={formValues.text}
+              onChange={(e) => handleChange("text", e.target.value)}
               readOnly={!isAdmin}
               rows={10}
             />

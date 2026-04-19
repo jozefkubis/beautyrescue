@@ -1,11 +1,11 @@
 import AcupunctureUpdateForm from "@/app/_components/products/acupuncture/AcupunctureUpdateForm";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import getAcupuncture from "@/app/_lib/data_services/data_acupuncture";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const [user, acupunctureData] = await Promise.all([
     getCurrentUser(),
-    getAcupuncture("acupuncture"),
+    getServiceBySlug("acupuncture"),
   ]);
 
   const isAdmin =

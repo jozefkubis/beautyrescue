@@ -1,15 +1,17 @@
 import Acupuncture from "@/app/_components/products/acupuncture/Acupuncture";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
 import getAcupuncture from "../_lib/data_services/data_acupuncture";
+import getServiceBySlug from "../_lib/data_services_all/data_services";
 
 export default async function Page() {
   const acupunctureData = await getAcupuncture("acupuncture");
+  const acupuncture = await getServiceBySlug("acupuncture");
+
   const user = await getCurrentUser();
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||
     user?.email === process.env.ADMIN_EMAIL_2;
-  const isActive =
-    (acupunctureData as { is_active?: boolean } | null)?.is_active ?? false;
+  const isActive = acupuncture?.is_active ?? false;
 
   if (!isActive) {
     return (
@@ -34,6 +36,7 @@ export default async function Page() {
   return (
     <Acupuncture
       acupunctureData={acupunctureData}
+      acupuncture={acupuncture}
       user={user?.email ?? null}
       isAdmin={isAdmin}
     />
