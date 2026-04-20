@@ -1,6 +1,7 @@
 "use client";
 
 import type { ProfhiloMainProps } from "@/app/_lib/data_services/data_profhilo";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import ExpandText from "../../ExpandText";
 import { brandFont } from "../../fonts";
@@ -8,30 +9,40 @@ import About_profhilo from "./About_profhilo";
 import Profhilo_pricing_form from "./Profhilo_pricing_form";
 import Profhilo_text from "./Profhilo_text";
 
+type ProfhiloProps = {
+  profhiloData: ProfhiloMainProps["profhiloData"];
+  profhilo: ServiceRow | null;
+  profhiloStructura: ServiceRow | null;
+  user?: string | null;
+  isAdmin?: boolean;
+};
+
 export default function Profhilo({
   profhiloData,
+  profhilo,
+  profhiloStructura,
   user,
   isAdmin,
-}: ProfhiloMainProps & { user?: string | null; isAdmin?: boolean }) {
-  const uploadedImageUrl = profhiloData.image_url?.trim();
+}: ProfhiloProps) {
+  const uploadedImageUrl = profhilo?.image_url?.trim();
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up grid grid-cols-1 gap-2 p-5 lg:grid-cols-2 lg:gap-4 lg:p-8">
         <div className="flex flex-col py-10">
           <h1
-            className={`premium-title pb-8 text-2xl font-semibold italic 2xl:text-5xl lg:pb-12 ${brandFont.className}`}
+            className={`premium-title pb-6 text-2xl font-semibold italic 2xl:text-5xl lg:pb-10 ${brandFont.className}`}
           >
             <span className="italic">
               <span className="text-3xl 2xl:text-6xl">
-                {profhiloData.name[0]}
+                {profhilo?.title?.[0]}
               </span>
-              {profhiloData.name.slice(1)}
+              {profhilo?.title?.slice(1)}
             </span>
           </h1>
           <div>
             <ExpandText>
-              <Profhilo_text profhiloData={profhiloData} />
+              <Profhilo_text profhilo={profhilo} />
             </ExpandText>
           </div>
         </div>

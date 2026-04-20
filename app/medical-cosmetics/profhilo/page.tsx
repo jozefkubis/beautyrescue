@@ -1,15 +1,18 @@
 import Profhilo from "@/app/_components/products/profhilo/Profhilo";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
 import { getProfhilo } from "@/app/_lib/data_services/data_profhilo";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const profhiloData = await getProfhilo("profhilo");
+  const profhilo = await getServiceBySlug("profhilo");
+  const profhioStructura = await getServiceBySlug("profhilo_structura");
+
   const user = await getCurrentUser();
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||
     user?.email === process.env.ADMIN_EMAIL_2;
-  const isActive =
-    (profhiloData as { is_active?: boolean } | null)?.is_active ?? false;
+  const isActive = profhilo?.is_active ?? false;
 
   if (!isActive) {
     return (
@@ -34,6 +37,8 @@ export default async function Page() {
   return (
     <Profhilo
       profhiloData={profhiloData}
+      profhilo={profhilo}
+      profhiloStructura={profhioStructura}
       user={user?.email ?? null}
       isAdmin={isAdmin}
     />
