@@ -6,14 +6,14 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
-import { updateJaluproMain } from "@/app/_lib/actions/actions_jalupro";
-import type { JaluproMainProps } from "@/app/_lib/data_services/data_jalupro";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
 type JaluproMainPageUpdateFormProps = {
-  jaluproData: JaluproMainProps["jaluproData"] | null;
+  jaluproData: ServiceRow | null;
   isAdmin?: boolean;
 };
 
@@ -26,40 +26,11 @@ export default function JaluproMainPage_update_form({
 
   const initialValues = useMemo(
     () => ({
-      name: jaluproData?.name ?? "",
+      title: jaluproData?.title ?? "",
       image_url: jaluproData?.image_url ?? "",
-      paragraphs: Array.isArray(jaluproData?.content?.paragraphs)
-        ? jaluproData.content.paragraphs.join("\n\n")
-        : "",
-      aboutTitle:
-        (jaluproData?.content?.about as Record<string, string> | undefined)
-          ?.title ?? "",
-      effectsTitle:
-        (jaluproData?.content?.about as Record<string, string> | undefined)
-          ?.effectsTitle ?? "",
-      treatmentTitle:
-        (jaluproData?.content?.about as Record<string, string> | undefined)
-          ?.treatmentTitle ?? "",
-      aftercareTitle:
-        (jaluproData?.content?.about as Record<string, string> | undefined)
-          ?.aftercareTitle ?? "",
-      variants:
-        (jaluproData?.content?.about as Record<string, string> | undefined)
-          ?.variants ?? "",
-      effects: Array.isArray(jaluproData?.attributes?.effects)
-        ? jaluproData.attributes.effects.join("\n")
-        : "",
-      effectSummary: jaluproData?.attributes?.effectSummary ?? "",
-      treatmentParagraphs: Array.isArray(
-        jaluproData?.attributes?.treatmentParagraphs,
-      )
-        ? jaluproData.attributes.treatmentParagraphs.join("\n\n")
-        : "",
-      aftercareParagraphs: Array.isArray(
-        jaluproData?.attributes?.aftercareParagraphs,
-      )
-        ? jaluproData.attributes.aftercareParagraphs.join("\n\n")
-        : "",
+      text: jaluproData?.text ?? "",
+      about_title: jaluproData?.about_title ?? "",
+      about: jaluproData?.about ?? "",
       isActive: jaluproData?.is_active ?? false,
     }),
     [jaluproData],
@@ -91,21 +62,10 @@ export default function JaluproMainPage_update_form({
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            paragraphs: formValues.paragraphs,
-            about: {
-              title: formValues.aboutTitle,
-              effectsTitle: formValues.effectsTitle,
-              treatmentTitle: formValues.treatmentTitle,
-              aftercareTitle: formValues.aftercareTitle,
-              variants: formValues.variants,
-            },
-            attributes: {
-              effects: formValues.effects,
-              effectSummary: formValues.effectSummary,
-              treatmentParagraphs: formValues.treatmentParagraphs,
-              aftercareParagraphs: formValues.aftercareParagraphs,
-            },
+            title: formValues.title,
+            text: formValues.text,
+            about_title: formValues.about_title,
+            about: formValues.about,
             is_active: formValues.isActive,
           }),
         );
@@ -114,7 +74,7 @@ export default function JaluproMainPage_update_form({
           formData.set("image_file", selectedImageFile);
         }
 
-        await updateJaluproMain(formData);
+        await updateServiceBySlug(formData, jaluproData?.slug ?? "jalupro");
         setLastSavedValues(formValues);
         router.refresh();
         toast.success("Sekcia Jalupro bola aktualizovaná");
@@ -142,85 +102,32 @@ export default function JaluproMainPage_update_form({
       <div className="grid grid-cols-1 gap-4">
         <InputField
           label="Názov"
-          value={formValues.name}
-          onChange={(e) => handleChange("name", e.target.value)}
+          value={formValues.title}
+          onChange={(e) => handleChange("title", e.target.value)}
           readOnly={!isAdmin}
         />
 
         <TextareaField
-          label="Úvodné odseky"
-          value={formValues.paragraphs}
-          onChange={(e) => handleChange("paragraphs", e.target.value)}
+          label="Obsah"
+          value={formValues.text}
+          onChange={(e) => handleChange("text", e.target.value)}
           readOnly={!isAdmin}
-          rows={8}
+          rows={10}
         />
 
         <InputField
-          label="About titulok"
-          value={formValues.aboutTitle}
-          onChange={(e) => handleChange("aboutTitle", e.target.value)}
-          readOnly={!isAdmin}
-        />
-
-        <InputField
-          label="Titulok účinkov"
-          value={formValues.effectsTitle}
-          onChange={(e) => handleChange("effectsTitle", e.target.value)}
+          label="Titulok (O jalupro)"
+          value={formValues.about_title}
+          onChange={(e) => handleChange("about_title", e.target.value)}
           readOnly={!isAdmin}
         />
 
         <TextareaField
-          label="Účinky (riadky)"
-          value={formValues.effects}
-          onChange={(e) => handleChange("effects", e.target.value)}
+          label="Text (O jalupro)"
+          value={formValues.about}
+          onChange={(e) => handleChange("about", e.target.value)}
           readOnly={!isAdmin}
-          rows={6}
-        />
-
-        <TextareaField
-          label="Krátky efekt"
-          value={formValues.effectSummary}
-          onChange={(e) => handleChange("effectSummary", e.target.value)}
-          readOnly={!isAdmin}
-          rows={3}
-        />
-
-        <InputField
-          label="Titulok priebehu ošetrenia"
-          value={formValues.treatmentTitle}
-          onChange={(e) => handleChange("treatmentTitle", e.target.value)}
-          readOnly={!isAdmin}
-        />
-
-        <TextareaField
-          label="Priebeh ošetrenia"
-          value={formValues.treatmentParagraphs}
-          onChange={(e) => handleChange("treatmentParagraphs", e.target.value)}
-          readOnly={!isAdmin}
-          rows={6}
-        />
-
-        <InputField
-          label="Titulok starostlivosti po ošetrení"
-          value={formValues.aftercareTitle}
-          onChange={(e) => handleChange("aftercareTitle", e.target.value)}
-          readOnly={!isAdmin}
-        />
-
-        <TextareaField
-          label="Starostlivosť po ošetrení"
-          value={formValues.aftercareParagraphs}
-          onChange={(e) => handleChange("aftercareParagraphs", e.target.value)}
-          readOnly={!isAdmin}
-          rows={6}
-        />
-
-        <TextareaField
-          label="Varianty Jalupro"
-          value={formValues.variants}
-          onChange={(e) => handleChange("variants", e.target.value)}
-          readOnly={!isAdmin}
-          rows={3}
+          rows={18}
         />
 
         <FileField

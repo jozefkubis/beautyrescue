@@ -1,12 +1,6 @@
 "use client";
 
-import type {
-  JaluproClassicProps,
-  JaluproHMWProps,
-  JaluproMainProps,
-  JaluproSuperHydroProps,
-  JaluproYoungEyeProps,
-} from "@/app/_lib/data_services/data_jalupro";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useState } from "react";
 import SectionNavigation from "../../SectionNavigation";
 import JaluproMainPage_update_form from "./JaluproMainPage_update_form";
@@ -16,11 +10,11 @@ import JaluproSuperHydro_update_form from "./super_hydro/JaluproSuperHydro_updat
 import JaluproYoungEye_update_form from "./young_eye/JaluproYoungEye_update_form";
 
 type Jalupro_update_formProps = {
-  jaluproData: JaluproMainProps["jaluproData"] | null;
-  jaluproClassicData: JaluproClassicProps["jaluproClassicData"] | null;
-  jaluproHMWData: JaluproHMWProps["jaluproHMWData"] | null;
-  jaluproSuperHydroData: JaluproSuperHydroProps["jaluproSuperHydroData"] | null;
-  jaluproYoungEyeData: JaluproYoungEyeProps["jaluproYoungEyeData"] | null;
+  jaluproData: ServiceRow | null;
+  jaluproClassicData: ServiceRow | null;
+  jaluproHMWData: ServiceRow | null;
+  jaluproSuperHydroData: ServiceRow | null;
+  jaluproYoungEyeData: ServiceRow | null;
   isAdmin?: boolean;
 };
 

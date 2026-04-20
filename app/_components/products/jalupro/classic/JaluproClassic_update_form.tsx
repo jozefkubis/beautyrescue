@@ -6,14 +6,14 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
-import { updateJaluproClassic } from "@/app/_lib/actions/actions_jalupro";
-import type { JaluproClassicProps } from "@/app/_lib/data_services/data_jalupro";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
 type JaluproClassicUpdateFormProps = {
-  jaluproClassicData: JaluproClassicProps["jaluproClassicData"] | null;
+  jaluproClassicData: ServiceRow | null;
   isAdmin?: boolean;
 };
 
@@ -26,11 +26,9 @@ export default function JaluproClassic_update_form({
 
   const initialValues = useMemo(
     () => ({
-      name: jaluproClassicData?.name ?? "",
+      title: jaluproClassicData?.title ?? "",
       image_url: jaluproClassicData?.image_url ?? "",
-      paragraphs: Array.isArray(jaluproClassicData?.content.paragraphs)
-        ? jaluproClassicData.content.paragraphs.join("\n\n")
-        : "",
+      text: jaluproClassicData?.text ?? "",
       isActive: jaluproClassicData?.is_active ?? false,
     }),
     [jaluproClassicData],
@@ -63,8 +61,8 @@ export default function JaluproClassic_update_form({
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            paragraphs: formValues.paragraphs,
+            title: formValues.title,
+            text: formValues.text,
             is_active: formValues.isActive,
           }),
         );
@@ -73,7 +71,10 @@ export default function JaluproClassic_update_form({
           formData.set("image_file", selectedImageFile);
         }
 
-        await updateJaluproClassic(formData);
+        await updateServiceBySlug(
+          formData,
+          jaluproClassicData?.slug ?? "jalupro-classic",
+        );
         setLastSavedValues(formValues);
         router.refresh();
         toast.success("Sekcia Jalupro Classic bola aktualizovaná");
@@ -101,14 +102,14 @@ export default function JaluproClassic_update_form({
       <div className="grid grid-cols-1 gap-4">
         <InputField
           label="Názov"
-          value={formValues.name}
-          onChange={(e) => handleChange("name", e.target.value)}
+          value={formValues.title}
+          onChange={(e) => handleChange("title", e.target.value)}
           readOnly={!isAdmin}
         />
         <TextareaField
           label="Obsah"
-          value={formValues.paragraphs}
-          onChange={(e) => handleChange("paragraphs", e.target.value)}
+          value={formValues.text}
+          onChange={(e) => handleChange("text", e.target.value)}
           readOnly={!isAdmin}
           rows={10}
         />

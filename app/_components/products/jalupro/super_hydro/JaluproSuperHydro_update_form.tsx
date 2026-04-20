@@ -6,14 +6,14 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
-import { updateJaluproSuperHydro } from "@/app/_lib/actions/actions_jalupro";
-import type { JaluproSuperHydroProps } from "@/app/_lib/data_services/data_jalupro";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
 type JaluproSuperHydroUpdateFormProps = {
-  jaluproSuperHydroData: JaluproSuperHydroProps["jaluproSuperHydroData"] | null;
+  jaluproSuperHydroData: ServiceRow | null;
   isAdmin?: boolean;
 };
 
@@ -26,26 +26,9 @@ export default function JaluproSuperHydro_update_form({
 
   const initialValues = useMemo(
     () => ({
-      name: jaluproSuperHydroData?.name ?? "",
+      title: jaluproSuperHydroData?.title ?? "",
       image_url: jaluproSuperHydroData?.image_url ?? "",
-      topBullets: Array.isArray(
-        (jaluproSuperHydroData?.content as Record<string, unknown>)?.topBullets,
-      )
-        ? (
-            (jaluproSuperHydroData?.content as Record<string, string[]>)
-              ?.topBullets ?? []
-          ).join("\n\n")
-        : "",
-      summary: jaluproSuperHydroData?.summary ?? "",
-      bottomBullets: Array.isArray(
-        (jaluproSuperHydroData?.content as Record<string, unknown>)
-          ?.bottomBullets,
-      )
-        ? (
-            (jaluproSuperHydroData?.content as Record<string, string[]>)
-              ?.bottomBullets ?? []
-          ).join("\n\n")
-        : "",
+      text: jaluproSuperHydroData?.text ?? "",
       isActive: jaluproSuperHydroData?.is_active ?? false,
     }),
     [jaluproSuperHydroData],
@@ -78,10 +61,8 @@ export default function JaluproSuperHydro_update_form({
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            topBullets: formValues.topBullets,
-            summary: formValues.summary,
-            bottomBullets: formValues.bottomBullets,
+            title: formValues.title,
+            text: formValues.text,
             is_active: formValues.isActive,
           }),
         );
@@ -90,7 +71,10 @@ export default function JaluproSuperHydro_update_form({
           formData.set("image_file", selectedImageFile);
         }
 
-        await updateJaluproSuperHydro(formData);
+        await updateServiceBySlug(
+          formData,
+          jaluproSuperHydroData?.slug ?? "jalupro-super-hydro",
+        );
         setLastSavedValues(formValues);
         router.refresh();
         toast.success("Sekcia Jalupro Super Hydro bola aktualizovaná");
@@ -118,29 +102,16 @@ export default function JaluproSuperHydro_update_form({
       <div className="grid grid-cols-1 gap-4">
         <InputField
           label="Názov"
-          value={formValues.name}
-          onChange={(e) => handleChange("name", e.target.value)}
+          value={formValues.title}
+          onChange={(e) => handleChange("title", e.target.value)}
           readOnly={!isAdmin}
         />
         <TextareaField
-          label="Horné body"
-          value={formValues.topBullets}
-          onChange={(e) => handleChange("topBullets", e.target.value)}
+          label="Obsah"
+          value={formValues.text}
+          onChange={(e) => handleChange("text", e.target.value)}
           readOnly={!isAdmin}
-          rows={6}
-        />
-        <InputField
-          label="Krátky popis (summary)"
-          value={formValues.summary}
-          onChange={(e) => handleChange("summary", e.target.value)}
-          readOnly={!isAdmin}
-        />
-        <TextareaField
-          label="Spodné body"
-          value={formValues.bottomBullets}
-          onChange={(e) => handleChange("bottomBullets", e.target.value)}
-          readOnly={!isAdmin}
-          rows={6}
+          rows={12}
         />
         <FileField
           type="file"

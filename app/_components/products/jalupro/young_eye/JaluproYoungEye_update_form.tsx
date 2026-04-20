@@ -6,14 +6,14 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
-import { updateJaluproYoungEye } from "@/app/_lib/actions/actions_jalupro";
-import type { JaluproYoungEyeProps } from "@/app/_lib/data_services/data_jalupro";
+import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 
 type JaluproYoungEyeUpdateFormProps = {
-  jaluproYoungEyeData: JaluproYoungEyeProps["jaluproYoungEyeData"] | null;
+  jaluproYoungEyeData: ServiceRow | null;
   isAdmin?: boolean;
 };
 
@@ -26,11 +26,9 @@ export default function JaluproYoungEye_update_form({
 
   const initialValues = useMemo(
     () => ({
-      name: jaluproYoungEyeData?.name ?? "",
+      title: jaluproYoungEyeData?.title ?? "",
       image_url: jaluproYoungEyeData?.image_url ?? "",
-      paragraphs: Array.isArray(jaluproYoungEyeData?.content.paragraphs)
-        ? jaluproYoungEyeData.content.paragraphs.join("\n\n")
-        : "",
+      text: jaluproYoungEyeData?.text ?? "",
       isActive: jaluproYoungEyeData?.is_active ?? false,
     }),
     [jaluproYoungEyeData],
@@ -63,8 +61,8 @@ export default function JaluproYoungEye_update_form({
         formData.set(
           "data",
           JSON.stringify({
-            name: formValues.name,
-            paragraphs: formValues.paragraphs,
+            title: formValues.title,
+            text: formValues.text,
             is_active: formValues.isActive,
           }),
         );
@@ -73,7 +71,10 @@ export default function JaluproYoungEye_update_form({
           formData.set("image_file", selectedImageFile);
         }
 
-        await updateJaluproYoungEye(formData);
+        await updateServiceBySlug(
+          formData,
+          jaluproYoungEyeData?.slug ?? "jalupro-young-eye",
+        );
         setLastSavedValues(formValues);
         router.refresh();
         toast.success("Sekcia Jalupro Young Eye bola aktualizovaná");
@@ -101,14 +102,14 @@ export default function JaluproYoungEye_update_form({
       <div className="grid grid-cols-1 gap-4">
         <InputField
           label="Názov"
-          value={formValues.name}
-          onChange={(e) => handleChange("name", e.target.value)}
+          value={formValues.title}
+          onChange={(e) => handleChange("title", e.target.value)}
           readOnly={!isAdmin}
         />
         <TextareaField
           label="Obsah"
-          value={formValues.paragraphs}
-          onChange={(e) => handleChange("paragraphs", e.target.value)}
+          value={formValues.text}
+          onChange={(e) => handleChange("text", e.target.value)}
           readOnly={!isAdmin}
           rows={10}
         />

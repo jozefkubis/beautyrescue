@@ -1,12 +1,6 @@
 import Jalupro_update_form from "@/app/_components/products/jalupro/Jalupro_update_form";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import {
-  getJalupro,
-  getJaluproClassic,
-  getJaluproHMW,
-  getJaluproSuperHydro,
-  getJaluproYoungEye,
-} from "@/app/_lib/data_services/data_jalupro";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const [
@@ -18,11 +12,11 @@ export default async function Page() {
     jaluproYoungEyeData,
   ] = await Promise.all([
     getCurrentUser(),
-    getJalupro("jalupro"),
-    getJaluproClassic("jalupro-classic"),
-    getJaluproHMW("jalupro-hmw"),
-    getJaluproSuperHydro("jalupro-super-hydro"),
-    getJaluproYoungEye("jalupro-young-eye"),
+    getServiceBySlug("jalupro"),
+    getServiceBySlug("jalupro-classic"),
+    getServiceBySlug("jalupro-hmw"),
+    getServiceBySlug("jalupro-super-hydro"),
+    getServiceBySlug("jalupro-young-eye"),
   ]);
 
   const isAdmin =
