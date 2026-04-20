@@ -21,7 +21,7 @@ export default function Jalupro_hmw({
   user,
   isAdmin,
 }: Jalupro_hmwProps) {
-  const uploadedImageUrl = jaluproHMWData?.image_url?.trim();
+  const uploadedImageUrl = jaluproHMW?.image_url?.trim();
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">

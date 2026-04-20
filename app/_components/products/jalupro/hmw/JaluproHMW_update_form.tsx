@@ -112,6 +112,7 @@ export default function JaluproHMW_update_form({
           readOnly={!isAdmin}
           rows={10}
         />
+
         <FileField
           type="file"
           label="Hlavná fotka (image_url)"
