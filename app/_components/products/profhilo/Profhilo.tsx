@@ -58,7 +58,10 @@ export default function Profhilo({
         </div>
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
-          <About_profhilo profhiloData={profhiloData} />
+          <About_profhilo
+            profhilo={profhilo}
+            profhiloStructura={profhiloStructura}
+          />
         </div>
 
         {/* <div className="fade-up mt-10 lg:mt-12">

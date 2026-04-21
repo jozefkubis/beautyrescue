@@ -1,201 +1,215 @@
 "use client";
 
-import type { ProfhiloMainProps } from "@/app/_lib/data_services/data_profhilo";
-import Image from "next/image";
+import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-type ProfhiloSection = {
-  product: string;
-  image_url?: string;
-  whatTitle: string;
-  whatItems: string[];
-  howTitle: string;
-  howItems: string[];
-  benefitsTitle: string;
-  benefitsItems: string[];
-  suitableTitle: string;
-  suitableItems: string[];
-};
+// Prejde text riadok po riadku — ak riadok začína ✓, zabalí ho do <li>
+// Keď skupina ✓ riadkov skončí, celú skupinu zabalí do <ul>
+function wrapChecklistInUl(text: string): string {
+  const lines = text.split("\n");
+  const result: string[] = [];
+  let checklistBuffer: string[] = [];
 
-export default function About_profhilo({ profhiloData }: ProfhiloMainProps) {
-  const [openBox, setOpenBox] = useState<number | null>(null);
-
-  const sectionDescriptions = [
-    "Hydratácia, spevnenie a prirodzené omladenie pleti.",
-    "Obnova strateného objemu a spevnenie kontúr tváre.",
-  ];
-
-  const sectionImages = [
-    { src: "/images/profhilo_main.jpeg", alt: "Profhilo" },
-    { src: "/images/profhilo-3.jpeg", alt: "Profhilo Structura" },
-  ];
-
-  function handleToggle(index: number) {
-    setOpenBox((current) => (current === index ? null : index));
+  for (const line of lines) {
+    if (line.trimStart().startsWith("✓")) {
+      // Riadok patrí do zoznamu — odlož ho
+      checklistBuffer.push(`<li>${line.trim()}</li>`);
+    } else {
+      // Riadok nie je ✓ — ak bol pred ním zoznam, uzavri ho
+      if (checklistBuffer.length > 0) {
+        result.push(
+          `<ul style='list-style:none;padding:0;margin:0;text-align:left;'>${checklistBuffer.join("")}</ul>`,
+        );
+        checklistBuffer = [];
+      }
+      result.push(line);
+    }
   }
 
-  const sections =
-    (profhiloData.content.about as unknown as { sections?: ProfhiloSection[] })
-      ?.sections ?? [];
+  // Ak text končí ✓ riadkami, uzavri zoznam na konci
+  if (checklistBuffer.length > 0) {
+    result.push(
+      `<ul style='list-style:none;padding:0;margin:0;text-align:left;'>${checklistBuffer.join("")}</ul>`,
+    );
+  }
+
+  return result.join("\n");
+}
+
+export default function About_profhilo({
+  profhilo,
+  profhiloStructura,
+}: {
+  profhilo: ServiceRow | null;
+  profhiloStructura: ServiceRow | null;
+}) {
+  const [openBox, setOpenBox] = useState(false);
+  const [openBoxStructura, setOpenBoxStructura] = useState(false);
+
+  const aboutTitle = profhilo?.about_title;
+  const about = profhilo?.about;
+
+  const aboutTitleStructura = profhiloStructura?.title;
+  const aboutStructura = profhiloStructura?.text;
+
+  if (!aboutTitle || !about) {
+    return null;
+  }
+
+  if (!aboutTitleStructura || !aboutStructura) {
+    return null;
+  }
+
+  const highLightedAboutTextProfhilo = about
+    .replace(
+      /Čo je Profhilo\?/gi,
+      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Čo je Profhilo?</span>",
+    )
+    .replace(
+      /Ako Profhilo funguje\?/gi,
+      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Ako Profhilo funguje?</span>",
+    )
+    .replace(
+      /Aké sú výhody Profhilo\?/gi,
+      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Aké sú výhody Profhilo?</span>",
+    )
+    .replace(
+      /Pre koho je Profhilo vhodné\?/g,
+      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Pre koho je Profhilo vhodné?</span>",
+    );
+
+  const highLightedAboutTextProfhiloStructura = aboutStructura
+    .replace(
+      /Čo je Profhilo Structura\?/gi,
+      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Čo je Profhilo Structura?</span>",
+    )
+    .replace(
+      /Ako Profhilo Structura funguje\?/gi,
+      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Ako Profhilo Structura funguje?</span>",
+    )
+    .replace(
+      /Ošetrenie Profhilo Structura\?/gi,
+      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Ošetrenie Profhilo Structura</span>",
+    )
+    .replace(
+      /Pre koho je Profhilo Structura vhodné\?/g,
+      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Pre koho je Profhilo Structura vhodné?</span>",
+    );
+
+  const formattedText = highLightedAboutTextProfhilo
+    ? wrapChecklistInUl(highLightedAboutTextProfhilo)
+    : "";
+
+  const formattedTextStructura = highLightedAboutTextProfhiloStructura
+    ? wrapChecklistInUl(highLightedAboutTextProfhiloStructura)
+    : "";
 
   return (
-    <section className="w-full items-center justify-center">
-      <div className="w-full space-y-4 lg:space-y-5">
-        {sections.map((section, index) => {
-          const isOpen = openBox === index;
+    <div className="flex flex-col gap-4">
+      <section className="w-full items-center justify-center">
+        <div className="w-full">
+          <div className="section-shell fade-up rounded-lg border border-goldDark/25 bg-white shadow-md shadow-goldDark/15">
+            {/* Header */}
+            <button
+              type="button"
+              onClick={() => setOpenBox((v) => !v)}
+              className="group flex w-full items-center justify-between gap-2 p-4 text-left hover:cursor-pointer sm:p-5 lg:p-6"
+              // aria-expanded={openBox}
+            >
+              <div>
+                <h4 className="text-lg font-semibold italic tracking-tight text-goldDark sm:text-xl lg:text-[1.75rem]">
+                  {aboutTitle}
+                </h4>
+              </div>
 
-          return (
-            <article
-              key={section.product}
+              <span
+                className="
+              inline-flex h-10 w-10 items-center justify-center rounded-full
+                border border-goldDark/35 bg-white/75
+                shadow-sm shadow-goldDark/15
+                transition-transform duration-300 ease-out
+                group-hover:scale-105
+              "
+              >
+                <MdKeyboardArrowDown
+                  className={`text-2xl text-goldDark transition-transform duration-300 ease-out ${
+                    openBox ? "rotate-180" : "rotate-0"
+                  }`}
+                />
+              </span>
+            </button>
+
+            {/* Animated content */}
+            <div
               className={`
-                section-shell fade-up overflow-hidden rounded-[28px] border backdrop-blur-sm
-                transition-all duration-300
-                ${
-                  isOpen
-                    ? "border-redMain/20 bg-[linear-gradient(180deg,rgba(255,250,244,0.96)_0%,rgba(255,246,238,0.98)_100%)] shadow-[0_22px_50px_rgba(157,116,16,0.14)]"
-                    : "border-goldDark/15 bg-white/75 shadow-[0_10px_24px_rgba(157,116,16,0.08)] hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(157,116,16,0.12)]"
-                }
+              overflow-hidden px-4 sm:px-5 lg:px-6
+              transition-[max-height,opacity] duration-500 ease-in-out
+              ${openBox ? "max-h-250 opacity-100" : "max-h-0 opacity-0"}
               `}
             >
-              <button
-                type="button"
-                onClick={() => handleToggle(index)}
-                className="group w-full text-left"
-              >
-                <div className="flex items-center justify-between gap-4 px-5 py-5 sm:px-7 sm:py-6 lg:px-8 hover:cursor-pointer">
-                  <div className="flex min-w-0 items-start gap-4">
-                    <span
-                      className={`
-                        mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-xs font-semibold
-                        transition-all duration-300
-                        ${
-                          isOpen
-                            ? "border-redMain/30 bg-redMain/10 text-redDark"
-                            : "border-goldDark/20 bg-goldLight/10 text-goldDark"
-                        }
-                      `}
-                    >
-                      {index + 1}
-                    </span>
-
-                    <div className="min-w-0">
-                      <h4 className="text-lg font-semibold italic tracking-tight text-goldDark sm:text-xl lg:text-[1.75rem]">
-                        {section.product}
-                      </h4>
-
-                      <p
-                        className={`
-                          mt-1 max-w-2xl text-sm leading-relaxed transition-colors duration-500 sm:text-[15px]
-                          ${isOpen ? "text-neutral-700" : "text-neutral-500"}
-                        `}
-                      >
-                        {sectionDescriptions[index] ?? section.whatTitle}
-                      </p>
-                    </div>
-                  </div>
-
-                  <span
-                    className={`
-                      inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border bg-white/90
-                      shadow-sm transition-all duration-300 group-hover:scale-105
-                      ${
-                        isOpen
-                          ? "border-redMain/30 shadow-redMain/10"
-                          : "border-goldDark/20 shadow-goldDark/10"
-                      }
-                    `}
-                  >
-                    <MdKeyboardArrowDown
-                      className={`
-                        text-2xl transition-transform duration-300 ease-out
-                        ${
-                          isOpen
-                            ? "rotate-180 text-redDark"
-                            : "rotate-0 text-goldDark"
-                        }
-                      `}
-                    />
-                  </span>
-                </div>
-              </button>
-
-              <div
-                className={`
-                  grid transition-all duration-500 ease-in-out
-                  ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}
-                `}
-              >
-                <div className="overflow-hidden">
-                  <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] px-5 pb-5 sm:px-7 sm:pb-6 lg:px-8 [&_p]:text-justify">
-                    <div className="flex flex-col gap-5 border-t border-goldDark/12 pt-4 pr-24 lg:pr-32 pb-20 sm:pb-24">
-                      <div className="space-y-1">
-                        <h5 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
-                          {section.whatTitle}
-                        </h5>
-                        <ul className="list-disc pl-5 space-y-1 text-xs xl:text-sm leading-relaxed text-zinc-700">
-                          {section.whatItems.map((item) => (
-                            <li key={item}>{item}</li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="space-y-1">
-                        <h5 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
-                          {section.howTitle}
-                        </h5>
-                        <ul className="list-disc pl-5 space-y-1 text-xs xl:text-sm leading-relaxed text-zinc-700">
-                          {section.howItems.map((item) => (
-                            <li key={item}>{item}</li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="space-y-1">
-                        <h5 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
-                          {section.benefitsTitle}
-                        </h5>
-                        <ul className="list-disc pl-5 space-y-1 text-xs xl:text-sm leading-relaxed text-zinc-700">
-                          {section.benefitsItems.map((item) => (
-                            <li key={item}>{item}</li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="space-y-1">
-                        <h5 className="text-xs xl:text-sm font-semibold tracking-wide uppercase text-zinc-900">
-                          {section.suitableTitle}
-                        </h5>
-                        <ul className="list-disc pl-5 space-y-1 text-xs xl:text-sm leading-relaxed text-zinc-700">
-                          {section.suitableItems.map((item) => (
-                            <li key={item}>{item}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col justify-end">
-                      <div className="relative w-full aspect-square overflow-hidden rounded-xl border border-goldDark/20 shadow-md shadow-goldDark/15">
-                        <Image
-                          src={
-                            (section.image_url?.trim() ||
-                              sectionImages[index]?.src) ??
-                            "/images/profhilo_main.jpeg"
-                          }
-                          alt={sectionImages[index]?.alt ?? section.product}
-                          fill
-                          unoptimized
-                          className="object-cover"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="pb-6 pt-1 flex flex-col gap-2 [&_p]:text-justify">
+                <div
+                  className="text-xs xl:text-sm leading-relaxed text-zinc-700 whitespace-pre-wrap"
+                  dangerouslySetInnerHTML={{ __html: formattedText }}
+                />
               </div>
-            </article>
-          );
-        })}
-      </div>
-    </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="w-full items-center justify-center">
+        <div className="w-full">
+          <div className="section-shell fade-up rounded-lg border border-goldDark/25 bg-white shadow-md shadow-goldDark/15">
+            {/* Header */}
+            <button
+              type="button"
+              onClick={() => setOpenBoxStructura((v) => !v)}
+              className="group flex w-full items-center justify-between gap-2 p-4 text-left hover:cursor-pointer sm:p-5 lg:p-6"
+              // aria-expanded={openBoxStructura}
+            >
+              <div>
+                <h4 className="text-lg font-semibold italic tracking-tight text-goldDark sm:text-xl lg:text-[1.75rem]">
+                  {aboutTitleStructura}
+                </h4>
+              </div>
+
+              <span
+                className="
+                inline-flex h-10 w-10 items-center justify-center rounded-full
+                border border-goldDark/35 bg-white/75
+                shadow-sm shadow-goldDark/15
+                transition-transform duration-300 ease-out
+                group-hover:scale-105
+              "
+              >
+                <MdKeyboardArrowDown
+                  className={`text-2xl text-goldDark transition-transform duration-300 ease-out ${
+                    openBoxStructura ? "rotate-180" : "rotate-0"
+                  }`}
+                />
+              </span>
+            </button>
+
+            {/* Animated content */}
+            <div
+              className={`
+              overflow-hidden px-4 sm:px-5 lg:px-6
+              transition-[max-height,opacity] duration-500 ease-in-out
+              ${openBoxStructura ? "max-h-250 opacity-100" : "max-h-0 opacity-0"}
+            `}
+            >
+              <div className="pb-6 pt-1 flex flex-col gap-2 [&_p]:text-justify">
+                <div
+                  className="text-xs xl:text-sm leading-relaxed text-zinc-700 whitespace-pre-wrap"
+                  dangerouslySetInnerHTML={{ __html: formattedTextStructura }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
