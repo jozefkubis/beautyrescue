@@ -1,5 +1,6 @@
 import type { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulotoxin"
 import PricingForm from "../PricingForm"
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services"
 
 // const treatments = [
 //   {
@@ -94,12 +95,18 @@ import PricingForm from "../PricingForm"
 //   },
 // ]
 
+type Botulotoxin_pricing_formProps = {
+  botulotoxin: ServiceRow | null;
+  user?: string | null;
+  isAdmin?: boolean;
+}
+
 export default function Botulotoxin_pricing_form({
-  botulotoxinData,
+  botulotoxin,
   user,
   isAdmin,
-}: BotulotoxinMainProps & { user?: string | null; isAdmin?: boolean }) {
-  const treatments = botulotoxinData.pricing.map((item) => ({
+}: Botulotoxin_pricing_formProps) {
+  const treatments = (botulotoxin?.pricing ?? []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
     price: `${item.price_before_discount},- €`,

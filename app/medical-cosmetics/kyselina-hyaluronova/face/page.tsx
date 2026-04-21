@@ -1,13 +1,8 @@
 import Kyselina_hyaluronova_face from "@/app/_components/products/kyselina-hyaluronova/face/Kyselina_hyaluronova_face";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import { getKyselinaHyaluronovaFace } from "@/app/_lib/data_services/data_kyselina_hyaluronova";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
-  const kyselinaHyaluronovaFaceData = await getKyselinaHyaluronovaFace(
-    "kyselina-hyaluronova-face",
-  );
-
   const kyselinaHyaluronovaFace = await getServiceBySlug(
     "kyselina-hyaluronova-face",
   );
@@ -16,7 +11,7 @@ export default async function Page() {
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||
     user?.email === process.env.ADMIN_EMAIL_2;
-  const isActive = kyselinaHyaluronovaFace.is_active ?? false;
+  const isActive = kyselinaHyaluronovaFace?.is_active ?? false;
 
   if (!isActive) {
     return (
@@ -40,7 +35,6 @@ export default async function Page() {
 
   return (
     <Kyselina_hyaluronova_face
-      kyselinaHyaluronovaFaceData={kyselinaHyaluronovaFaceData}
       kyaselinaHyaluronovaFace={kyselinaHyaluronovaFace}
       user={user?.email ?? null}
       isAdmin={isAdmin}

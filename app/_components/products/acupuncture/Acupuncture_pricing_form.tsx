@@ -1,12 +1,18 @@
-import type { AcupunctureMainProps } from "@/app/_lib/data_services/data_acupuncture"
-import PricingForm from "../PricingForm"
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import PricingForm from "../PricingForm";
+
+type Acupuncture_pricing_formProps = {
+  acupuncture: ServiceRow | null | undefined;
+  user?: string | null;
+  isAdmin?: boolean;
+};
 
 export default function Acupuncture_pricing_form({
-  acupunctureData,
+  acupuncture,
   user,
   isAdmin,
-}: AcupunctureMainProps & { user?: string | null; isAdmin?: boolean }) {
-  const treatments = acupunctureData.pricing.map((item) => ({
+}: Acupuncture_pricing_formProps) {
+  const treatments = (acupuncture?.pricing ?? []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
     price: `${item.price_before_discount},- €`,
@@ -14,7 +20,7 @@ export default function Acupuncture_pricing_form({
       item.price_after_discount < item.price_before_discount
         ? `${item.price_after_discount},- €`
         : "",
-  }))
+  }));
 
   return (
     <PricingForm
@@ -23,5 +29,5 @@ export default function Acupuncture_pricing_form({
       user={user}
       isAdmin={isAdmin}
     />
-  )
+  );
 }

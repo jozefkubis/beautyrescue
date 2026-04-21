@@ -3,7 +3,7 @@ import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 export default function Biokompatibilne_nite_text({
   biokompatiblineNite,
 }: {
-  biokompatiblineNite: ServiceRow | null;
+  biokompatiblineNite: ServiceRow | null | undefined;
 }) {
   const text = biokompatiblineNite?.text ?? "";
 

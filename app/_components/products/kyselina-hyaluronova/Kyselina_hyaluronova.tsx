@@ -1,6 +1,5 @@
 "use client";
 
-import type { KyselinaHyaluronovaMainProps } from "@/app/_lib/data_services/data_kyselina_hyaluronova";
 import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,14 +9,12 @@ import Kyselina_hyaluronova_pricing_form from "./Kyselina_hyaluronova_pricing_fo
 import Kyselina_hyaluronova_text from "./Kyselina_hyaluronova_text";
 
 type Kyselina_hyaluronovaProps = {
-  kyselinaHyaluronovaData: KyselinaHyaluronovaMainProps["kyselinaHyaluronovaData"];
-  kyselinaHyaluronova?: ServiceRow | null;
+  kyselinaHyaluronova?: ServiceRow | null | undefined;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Kyselina_hyaluronova({
-  kyselinaHyaluronovaData,
   kyselinaHyaluronova,
   user,
   isAdmin,
@@ -88,7 +85,7 @@ export default function Kyselina_hyaluronova({
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Kyselina_hyaluronova_pricing_form
-            kyselinaHyaluronovaData={kyselinaHyaluronovaData}
+            kyselinaHyaluronova={kyselinaHyaluronova}
             user={user}
             isAdmin={isAdmin}
           />

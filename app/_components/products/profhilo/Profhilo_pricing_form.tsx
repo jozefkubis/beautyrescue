@@ -1,12 +1,18 @@
-﻿import type { ProfhiloMainProps } from "@/app/_lib/data_services/data_profhilo"
-import PricingForm from "../PricingForm"
+﻿import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import PricingForm from "../PricingForm";
 
 export default function Profhilo_pricing_form({
-  profhiloData,
+  profhilo,
+  profhiloStructura,
   user,
   isAdmin,
-}: ProfhiloMainProps & { user?: string | null; isAdmin?: boolean }) {
-  const treatments = (profhiloData.pricing ?? []).map((item) => ({
+}: {
+  profhilo: ServiceRow | null | undefined;
+  profhiloStructura: ServiceRow | null | undefined;
+  user?: string | null;
+  isAdmin?: boolean;
+}) {
+  const treatments = (profhilo?.pricing ?? []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
     price: `${item.price_before_discount},- €`,
@@ -14,7 +20,7 @@ export default function Profhilo_pricing_form({
       item.price_after_discount < item.price_before_discount
         ? `${item.price_after_discount},- €`
         : "",
-  }))
+  }));
 
   return (
     <PricingForm
@@ -23,5 +29,5 @@ export default function Profhilo_pricing_form({
       user={user}
       isAdmin={isAdmin}
     />
-  )
+  );
 }

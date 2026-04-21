@@ -2,21 +2,18 @@
 
 import ExpandText from "@/app/_components/ExpandText";
 import { brandFont } from "@/app/_components/fonts";
-import type { KyselinaHyaluronovaFaceProps } from "@/app/_lib/data_services/data_kyselina_hyaluronova";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Kyselina_hyaluronova_pricing_form_face from "./Kyselina_hyaluronova_pricing_form_face";
 import Kyselina_hyaluronova_text_face from "./Kyselina_hyaluronova_text_face";
 
 type Kyselina_hyaluronova_faceProps = {
-  kyselinaHyaluronovaFaceData: KyselinaHyaluronovaFaceProps["kyselinaHyaluronovaFaceData"];
-  kyaselinaHyaluronovaFace: ServiceRow;
+  kyaselinaHyaluronovaFace: ServiceRow | null | undefined;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Kyselina_hyaluronova_face({
-  kyselinaHyaluronovaFaceData,
   kyaselinaHyaluronovaFace,
   user,
   isAdmin,
@@ -58,7 +55,7 @@ export default function Kyselina_hyaluronova_face({
 
         <div className="mt-10 2xl:mt-20 col-span-2">
           <Kyselina_hyaluronova_pricing_form_face
-            kyselinaHyaluronovaFaceData={kyselinaHyaluronovaFaceData}
+            kyselinaHyaluronovaFace={kyaselinaHyaluronovaFace}
             user={user}
             isAdmin={isAdmin}
           />

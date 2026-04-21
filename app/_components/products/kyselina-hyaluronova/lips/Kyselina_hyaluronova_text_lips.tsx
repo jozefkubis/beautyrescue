@@ -3,7 +3,7 @@ import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 export default function Kyselina_hyaluronova_lips_text({
   kyselinaHyaluronovaLips,
 }: {
-  kyselinaHyaluronovaLips: ServiceRow | null;
+  kyselinaHyaluronovaLips: ServiceRow | null | undefined;
 }) {
   const text = kyselinaHyaluronovaLips?.text ?? "";
 

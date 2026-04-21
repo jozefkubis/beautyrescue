@@ -3,7 +3,7 @@ import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 export default function Profhilo_text({
   profhilo,
 }: {
-  profhilo: ServiceRow | null;
+  profhilo: ServiceRow | null | undefined;
 }) {
   const text = profhilo?.text || "";
 

@@ -1,12 +1,18 @@
-﻿import type { KyselinaHyaluronovaMainProps } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
-import PricingForm from "../PricingForm"
+﻿import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import PricingForm from "../PricingForm";
+
+type Kyselina_hyaluronova_pricing_formProps = {
+  kyselinaHyaluronova: ServiceRow | null | undefined;
+  user?: string | null;
+  isAdmin?: boolean;
+};
 
 export default function Kyselina_hyaluronova_pricing_form({
-  kyselinaHyaluronovaData,
+  kyselinaHyaluronova,
   user,
   isAdmin,
-}: KyselinaHyaluronovaMainProps & { user?: string | null; isAdmin?: boolean }) {
-  const treatments = (kyselinaHyaluronovaData.pricing ?? []).map((item) => ({
+}: Kyselina_hyaluronova_pricing_formProps) {
+  const treatments = (kyselinaHyaluronova?.pricing ?? []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
     price: `${item.price_before_discount},- €`,
@@ -14,7 +20,7 @@ export default function Kyselina_hyaluronova_pricing_form({
       item.price_after_discount < item.price_before_discount
         ? `${item.price_after_discount},- €`
         : "",
-  }))
+  }));
 
   return (
     <PricingForm
@@ -23,5 +29,5 @@ export default function Kyselina_hyaluronova_pricing_form({
       user={user}
       isAdmin={isAdmin}
     />
-  )
+  );
 }

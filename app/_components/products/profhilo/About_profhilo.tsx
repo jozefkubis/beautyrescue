@@ -41,8 +41,8 @@ export default function About_profhilo({
   profhilo,
   profhiloStructura,
 }: {
-  profhilo: ServiceRow | null;
-  profhiloStructura: ServiceRow | null;
+  profhilo: ServiceRow | null | undefined;
+  profhiloStructura: ServiceRow | null | undefined;
 }) {
   const isActive = profhiloStructura?.is_active ?? false;
   const [openBox, setOpenBox] = useState(false);

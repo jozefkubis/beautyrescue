@@ -11,19 +11,17 @@ import Botulotoxin_pricing_form from "./Botulotoxin_pricing_form";
 import Botulotoxin_text from "./Botulotoxin_text";
 
 type BotulotoxinProps = {
-  botulotoxinData: BotulotoxinMainProps["botulotoxinData"];
   botulotoxin: ServiceRow | null;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Botulotoxin({
-  botulotoxinData,
   botulotoxin,
   user,
   isAdmin,
 }: BotulotoxinProps) {
-  if (!botulotoxinData) {
+  if (!botulotoxin) {
     return (
       <div className="section-shell mx-auto mt-10 w-full max-w-3xl p-6 text-center text-redDark">
         Dáta pre stránku Botulotoxín sa nepodarilo načítať.
@@ -71,7 +69,7 @@ export default function Botulotoxin({
 
         <div className="fade-up mt-10 lg:mt-12 lg:col-span-2">
           <div className="flex justify-around gap-3 sm:gap-4 lg:gap-5">
-            {botulotoxinData.gallery.map(
+            {botulotoxin?.image_gallery?.map(
               ({ src, alt }: { src: string; alt?: string }, index: number) => (
                 <Link
                   key={src}
@@ -96,7 +94,7 @@ export default function Botulotoxin({
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Botulotoxin_pricing_form
-            botulotoxinData={botulotoxinData}
+            botulotoxin={botulotoxin}
             user={user}
             isAdmin={isAdmin}
           />

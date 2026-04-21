@@ -10,15 +10,13 @@ import Profhilo_pricing_form from "./Profhilo_pricing_form";
 import Profhilo_text from "./Profhilo_text";
 
 type ProfhiloProps = {
-  profhiloData: ProfhiloMainProps["profhiloData"];
-  profhilo: ServiceRow | null;
-  profhiloStructura: ServiceRow | null;
+  profhilo: ServiceRow | null | undefined;
+  profhiloStructura: ServiceRow | null | undefined;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Profhilo({
-  profhiloData,
   profhilo,
   profhiloStructura,
   user,
@@ -84,7 +82,8 @@ export default function Profhilo({
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Profhilo_pricing_form
-            profhiloData={profhiloData}
+            profhilo={profhilo}
+            profhiloStructura={profhiloStructura}
             user={user}
             isAdmin={isAdmin}
           />

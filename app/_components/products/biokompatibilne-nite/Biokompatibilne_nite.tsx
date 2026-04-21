@@ -9,14 +9,12 @@ import Biokompatibilne_nite_pricing_form from "./Biokompatibilne_nite_pricing_fo
 import Biokompatibilne_nite_text from "./Biokompatibilne_nite_text";
 
 type BiokompatibilneNiteProps = {
-  biokompatibilneNiteData: BiokompatibilneNiteMainProps["biokompatibilneNiteData"];
-  biokompatiblineNite: ServiceRow | null;
+  biokompatiblineNite: ServiceRow | null | undefined;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Biokompatibilne_nite({
-  biokompatibilneNiteData,
   biokompatiblineNite,
   user,
   isAdmin,
@@ -58,7 +56,7 @@ export default function Biokompatibilne_nite({
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Biokompatibilne_nite_pricing_form
-            biokompatibilneNiteData={biokompatibilneNiteData}
+            biokompatiblineNite={biokompatiblineNite}
             user={user}
             isAdmin={isAdmin}
           />

@@ -3,10 +3,9 @@ import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 export default function Acupuncture_text({
   acupuncture,
 }: {
-  acupuncture: ServiceRow | null;
+  acupuncture: ServiceRow | null | undefined;
 }) {
-
-const text = acupuncture?.text ?? "";
+  const text = acupuncture?.text ?? "";
 
   return (
     <section

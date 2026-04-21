@@ -1,10 +1,8 @@
 import Botulotoxin from "@/app/_components/products/botulotoxin/Botulotoxin";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import { getBotulotoxin } from "@/app/_lib/data_services/data_botulotoxin";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
-  const botulotoxinData = await getBotulotoxin("botulotoxin");
   const botulotoxin = await getServiceBySlug("botulotoxin");
 
   const user = await getCurrentUser();
@@ -35,7 +33,6 @@ export default async function Page() {
 
   return (
     <Botulotoxin
-      botulotoxinData={botulotoxinData}
       botulotoxin={botulotoxin}
       user={user?.email ?? null}
       isAdmin={isAdmin}

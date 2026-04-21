@@ -1,6 +1,5 @@
 "use client";
 
-import type { AcupunctureMainProps } from "@/app/_lib/data_services/data_acupuncture";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import ExpandText from "../../ExpandText";
@@ -9,14 +8,12 @@ import Acupuncture_pricing_form from "./Acupuncture_pricing_form";
 import Acupuncture_text from "./Acupuncture_text";
 
 type AcupunctureProps = {
-  acupunctureData: AcupunctureMainProps["acupunctureData"];
-  acupuncture: ServiceRow | null;
+  acupuncture: ServiceRow | null | undefined;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Acupuncture({
-  acupunctureData,
   acupuncture,
   user,
   isAdmin,
@@ -56,7 +53,7 @@ export default function Acupuncture({
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Acupuncture_pricing_form
-            acupunctureData={acupunctureData}
+            acupuncture={acupuncture}
             user={user}
             isAdmin={isAdmin}
           />

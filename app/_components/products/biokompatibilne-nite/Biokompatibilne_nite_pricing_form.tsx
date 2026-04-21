@@ -1,5 +1,5 @@
-import type { BiokompatibilneNiteMainProps } from "@/app/_lib/data_services/data_biokompatibilne_nite"
-import PricingForm from "../PricingForm"
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import PricingForm from "../PricingForm";
 
 // const treatments = [
 //   {
@@ -46,12 +46,18 @@ import PricingForm from "../PricingForm"
 //   },
 // ]
 
+type BiokompatibilneNitePricingFormProps = {
+  biokompatiblineNite: ServiceRow | null | undefined;
+  user?: string | null;
+  isAdmin?: boolean;
+};
+
 export default function Biokompatibilne_nite_pricing_form({
-  biokompatibilneNiteData,
+  biokompatiblineNite,
   user,
   isAdmin,
-}: BiokompatibilneNiteMainProps & { user?: string | null; isAdmin?: boolean }) {
-  const treatments = biokompatibilneNiteData.pricing.map((item) => ({
+}: BiokompatibilneNitePricingFormProps) {
+  const treatments = (biokompatiblineNite?.pricing ?? []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
     price: `${item.price_before_discount},- €`,
@@ -59,7 +65,7 @@ export default function Biokompatibilne_nite_pricing_form({
       item.price_after_discount < item.price_before_discount
         ? `${item.price_after_discount},- €`
         : "",
-  }))
+  }));
 
   return (
     <PricingForm
@@ -68,5 +74,5 @@ export default function Biokompatibilne_nite_pricing_form({
       user={user}
       isAdmin={isAdmin}
     />
-  )
+  );
 }

@@ -1,10 +1,8 @@
 import Profhilo from "@/app/_components/products/profhilo/Profhilo";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import { getProfhilo } from "@/app/_lib/data_services/data_profhilo";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
-  const profhiloData = await getProfhilo("profhilo");
   const profhilo = await getServiceBySlug("profhilo");
   const profhioStructura = await getServiceBySlug("profhilo_structura");
 
@@ -36,7 +34,6 @@ export default async function Page() {
 
   return (
     <Profhilo
-      profhiloData={profhiloData}
       profhilo={profhilo}
       profhiloStructura={profhioStructura}
       user={user?.email ?? null}

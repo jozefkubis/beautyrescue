@@ -2,21 +2,18 @@
 
 import ExpandText from "@/app/_components/ExpandText";
 import { brandFont } from "@/app/_components/fonts";
-import type { KyselinaHyaluronovaLipsProps } from "@/app/_lib/data_services/data_kyselina_hyaluronova";
 import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Kyselina_hyaluronova_pricing_form_lips from "./Kyselina_hyaluronova_pricing_form_lips";
 import Kyselina_hyaluronova_lips_text from "./Kyselina_hyaluronova_text_lips";
 
 type Kyselina_hyaluronova_lipsProps = {
-  kyselinaHyaluronovaLipsData: KyselinaHyaluronovaLipsProps["kyselinaHyaluronovaLipsData"];
-  kyselinaHyaluronovaLips: ServiceRow | null;
+  kyselinaHyaluronovaLips: ServiceRow | null | undefined;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Kyselina_hyaluronova_lips({
-  kyselinaHyaluronovaLipsData,
   kyselinaHyaluronovaLips,
   user,
   isAdmin,
@@ -58,7 +55,7 @@ export default function Kyselina_hyaluronova_lips({
 
         <div className="mt-10 2xl:mt-20 col-span-2">
           <Kyselina_hyaluronova_pricing_form_lips
-            kyselinaHyaluronovaLipsData={kyselinaHyaluronovaLipsData}
+            kyselinaHyaluronovaLips={kyselinaHyaluronovaLips}
             user={user}
             isAdmin={isAdmin}
           />
