@@ -89,7 +89,7 @@ export default function About_profhilo({
       "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Ako Profhilo Structura funguje?</span>",
     )
     .replace(
-      /Ošetrenie Profhilo Structura\?/gi,
+      /Ošetrenie Profhilo Structura/gi,
       "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Ošetrenie Profhilo Structura</span>",
     )
     .replace(
@@ -113,7 +113,10 @@ export default function About_profhilo({
             {/* Header */}
             <button
               type="button"
-              onClick={() => setOpenBox((v) => !v)}
+              onClick={() => {
+                setOpenBox((v) => !v);
+                setOpenBoxStructura(false);
+              }}
               className="group flex w-full items-center justify-between gap-2 p-4 text-left hover:cursor-pointer sm:p-5 lg:p-6"
               // aria-expanded={openBox}
             >
@@ -165,7 +168,10 @@ export default function About_profhilo({
             {/* Header */}
             <button
               type="button"
-              onClick={() => setOpenBoxStructura((v) => !v)}
+              onClick={() => {
+                setOpenBoxStructura((v) => !v);
+                setOpenBox(false);
+              }}
               className="group flex w-full items-center justify-between gap-2 p-4 text-left hover:cursor-pointer sm:p-5 lg:p-6"
               // aria-expanded={openBoxStructura}
             >
