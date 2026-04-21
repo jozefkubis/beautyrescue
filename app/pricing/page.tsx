@@ -1,15 +1,5 @@
-import PricingMain from "../_components/pricing/PricingMain"
-import getAcupuncture from "../_lib/data_services/data_acupuncture"
-import getBiokompatibilneNite from "../_lib/data_services/data_biokompatibilne_nite"
-import { getBotulotoxin } from "../_lib/data_services/data_botulotoxin"
-import getChemicalPeeling from "../_lib/data_services/data_chemical_peeling"
-import { getKyselinaHyaluronova } from "../_lib/data_services/data_kyselina_hyaluronova"
-import {
-  getMezoterapiaInvasive,
-  getMezoterapiaNonInvasive,
-} from "../_lib/data_services/data_mezoterapia"
-import getOxygeneo from "../_lib/data_services/data_oxygeneo"
-import { getProfhilo } from "../_lib/data_services/data_profhilo"
+import PricingMain from "../_components/pricing/PricingMain";
+import getServiceBySlug from "../_lib/data_services_all/data_services";
 
 export default async function Page() {
   const [
@@ -23,16 +13,16 @@ export default async function Page() {
     profhiloData,
     acupunctureData,
   ] = await Promise.all([
-    getChemicalPeeling("chemical-peeling"),
-    getOxygeneo("oxygeneo"),
-    getMezoterapiaNonInvasive("mezoterapia-non-invasive"),
-    getMezoterapiaInvasive("mezoterapia-invasive"),
-    getBotulotoxin("botulotoxin"),
-    getKyselinaHyaluronova("kyselina-hyaluronova"),
-    getBiokompatibilneNite("biokompatibilne-nite"),
-    getProfhilo("profhilo"),
-    getAcupuncture("acupuncture"),
-  ])
+    getServiceBySlug("chemical-peeling"),
+    getServiceBySlug("oxygeneo"),
+    getServiceBySlug("mezoterapia-non-invasive"),
+    getServiceBySlug("mezoterapia-invasive"),
+    getServiceBySlug("botulotoxin"),
+    getServiceBySlug("kyselina-hyaluronova"),
+    getServiceBySlug("biokompatibilne-nite"),
+    getServiceBySlug("profhilo"),
+    getServiceBySlug("acupuncture"),
+  ]);
 
   return (
     <PricingMain
@@ -46,5 +36,5 @@ export default async function Page() {
       profhiloData={profhiloData}
       acupunctureData={acupunctureData}
     />
-  )
+  );
 }

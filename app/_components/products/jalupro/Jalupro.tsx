@@ -1,6 +1,5 @@
 "use client";
 
-import type { JaluproMainProps } from "@/app/_lib/data_services/data_jalupro";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,18 +10,12 @@ import Jalupro_pricing_form from "./Jalupro_pricing_form";
 import Jalupro_text from "./Jalupro_text";
 
 type JaluproProps = {
-  jaluproData: JaluproMainProps["jaluproData"];
-  jalupro: ServiceRow | null;
+  jalupro: ServiceRow | null | undefined;
   user?: string | null;
   isAdmin?: boolean;
 };
 
-export default function Jalupro({
-  jaluproData,
-  jalupro,
-  user,
-  isAdmin,
-}: JaluproProps) {
+export default function Jalupro({ jalupro, user, isAdmin }: JaluproProps) {
   const uploadedImageUrl = jalupro?.image_url?.trim();
 
   const jaluproLinks = [
@@ -92,7 +85,7 @@ export default function Jalupro({
 
         <div className="mt-10 lg:mt-12 lg:col-span-2">
           <Jalupro_pricing_form
-            jaluproData={jaluproData}
+            jalupro={jalupro}
             user={user}
             isAdmin={isAdmin}
           />

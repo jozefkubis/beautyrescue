@@ -1,47 +1,42 @@
-"use client"
+"use client";
 
-import type { AcupunctureMainProps } from "@/app/_lib/data_services/data_acupuncture"
-import type { BiokompatibilneNiteMainProps } from "@/app/_lib/data_services/data_biokompatibilne_nite"
-import type { BotulotoxinMainProps } from "@/app/_lib/data_services/data_botulotoxin"
-import type { ChemicalPeelingMainProps } from "@/app/_lib/data_services/data_chemical_peeling"
-import type { KyselinaHyaluronovaMainProps } from "@/app/_lib/data_services/data_kyselina_hyaluronova"
-import type {
-  MezoterapiaInvasiveProps,
-  MezoterapiaNonInvasiveProps,
-} from "@/app/_lib/data_services/data_mezoterapia"
-import type { OxygeneoMainProps } from "@/app/_lib/data_services/data_oxygeneo"
-import type { ProfhiloMainProps } from "@/app/_lib/data_services/data_profhilo"
-import { useState } from "react"
-import { MdKeyboardArrowDown } from "react-icons/md"
-import Acupuncture_pricing_form from "../products/acupuncture/Acupuncture_pricing_form"
-import Biokompatibilne_nite_pricing_form from "../products/biokompatibilne-nite/Biokompatibilne_nite_pricing_form"
-import Botulotoxin_pricing_form from "../products/botulotoxin/Botulotoxin_pricing_form"
-import Chem_peeling_pricing_form from "../products/chemical-peeling/Chem_peeling_pricing_form"
-import Kyselina_hyaluronova_pricing_form from "../products/kyselina-hyaluronova/Kyselina_hyaluronova_pricing_form"
-import Mezoterapia_pricing_form_invasive from "../products/mezoterapia/invasive/Mezoterapia_pricing_form_invasive"
-import Mezoterapia_pricing_form_non_invasive from "../products/mezoterapia/non-invasive/mezoterapia_pricing_form_non_invasive"
-import Oxygeneo_pricing_form from "../products/oxygeneo/Oxygeneo_pricing_form"
-import Profhilo_pricing_form from "../products/profhilo/Profhilo_pricing_form"
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import { useState } from "react";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import Acupuncture_pricing_form from "../products/acupuncture/Acupuncture_pricing_form";
+import Biokompatibilne_nite_pricing_form from "../products/biokompatibilne-nite/Biokompatibilne_nite_pricing_form";
+import Botulotoxin_pricing_form from "../products/botulotoxin/Botulotoxin_pricing_form";
+import Chem_peeling_pricing_form from "../products/chemical-peeling/Chem_peeling_pricing_form";
+import Dimond_micro_pricing_form from "../products/diamond-microdermabrasion/Dimond_micro_pricing_form";
+import Kyselina_hyaluronova_pricing_form from "../products/kyselina-hyaluronova/Kyselina_hyaluronova_pricing_form";
+import Mezoterapia_pricing_form_invasive from "../products/mezoterapia/invasive/Mezoterapia_pricing_form_invasive";
+import Mezoterapia_pricing_form_non_invasive from "../products/mezoterapia/non-invasive/mezoterapia_pricing_form_non_invasive";
+import Oxygeneo_pricing_form from "../products/oxygeneo/Oxygeneo_pricing_form";
+import Profhilo_pricing_form from "../products/profhilo/Profhilo_pricing_form";
 
 type PricingFormItem = {
-  id: number
-  title: string
-  description: string
-  value: React.ReactNode
-}
+  id: number;
+  title: string;
+  description: string;
+  value: React.ReactNode;
+};
 
-type PricingMainProps = AcupunctureMainProps &
-  BiokompatibilneNiteMainProps &
-  BotulotoxinMainProps &
-  ChemicalPeelingMainProps &
-  KyselinaHyaluronovaMainProps &
-  MezoterapiaInvasiveProps &
-  MezoterapiaNonInvasiveProps &
-  OxygeneoMainProps &
-  ProfhiloMainProps
+type PricingMainProps = {
+  acupunctureData: ServiceRow | null | undefined;
+  diamondMicrodermabraziaData: ServiceRow | null | undefined;
+  biokompatibilneNiteData: ServiceRow | null | undefined;
+  botulotoxinData: ServiceRow | null | undefined;
+  chemicalPeelingData: ServiceRow | null | undefined;
+  kyselinaHyaluronovaData: ServiceRow | null | undefined;
+  mezoterapiaInvasiveData: ServiceRow | null | undefined;
+  mezoterapiaNonInvasiveData: ServiceRow | null | undefined;
+  oxygeneoData: ServiceRow | null | undefined;
+  profhiloData: ServiceRow | null | undefined;
+};
 
 export default function PricingMain({
   acupunctureData,
+  diamondMicrodermabraziaData,
   biokompatibilneNiteData,
   botulotoxinData,
   chemicalPeelingData,
@@ -51,7 +46,7 @@ export default function PricingMain({
   oxygeneoData,
   profhiloData,
 }: PricingMainProps) {
-  const [openBox, setOpenBox] = useState<number | null>(null)
+  const [openBox, setOpenBox] = useState<number | null>(null);
 
   const pricingFormData: PricingFormItem[] = [
     {
@@ -67,7 +62,9 @@ export default function PricingMain({
       title: "Diamantová mikrodermabrázia",
       description: "Šetrná exfoliácia pre hladší a sviežejší vzhľad.",
       value: (
-        <Chem_peeling_pricing_form chemicalPeelingData={chemicalPeelingData} />
+        <Dimond_micro_pricing_form
+          diamondMicrodermabraziaData={diamondMicrodermabraziaData}
+        />
       ),
     },
     {
@@ -134,10 +131,10 @@ export default function PricingMain({
       description: "Podpora regenerácie a harmonizácie organizmu.",
       value: <Acupuncture_pricing_form acupunctureData={acupunctureData} />,
     },
-  ]
+  ];
 
   function handleClick(id: number) {
-    setOpenBox((currentId) => (currentId === id ? null : id))
+    setOpenBox((currentId) => (currentId === id ? null : id));
   }
 
   return (
@@ -159,7 +156,7 @@ export default function PricingMain({
 
       <div className="space-y-4 lg:space-y-5">
         {pricingFormData.map((item) => {
-          const isOpen = openBox === item.id
+          const isOpen = openBox === item.id;
 
           return (
             <article
@@ -250,9 +247,9 @@ export default function PricingMain({
                 </div>
               </div>
             </article>
-          )
+          );
         })}
       </div>
     </section>
-  )
+  );
 }

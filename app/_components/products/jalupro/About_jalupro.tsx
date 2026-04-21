@@ -40,7 +40,7 @@ function wrapChecklistInUl(text: string): string {
 export default function About_jalupro({
   jalupro,
 }: {
-  jalupro: ServiceRow | null;
+  jalupro: ServiceRow | null | undefined;
 }) {
   const [openBox, setOpenBox] = useState(false);
   const aboutText = jalupro?.about ?? "";

@@ -3,7 +3,7 @@ import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 export default function Jalupro_text({
   jalupro,
 }: {
-  jalupro: ServiceRow | null;
+  jalupro: ServiceRow | null | undefined;
 }) {
   const text = jalupro?.text ?? "";
 
