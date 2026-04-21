@@ -1,6 +1,5 @@
 "use client";
 
-import type { DiamondMicrodermabrasionMainProps } from "@/app/_lib/data_services/data_diamond_microdermabrasion";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import ExpandText from "../../ExpandText";
@@ -10,14 +9,12 @@ import Diamond_microdermabrasion_text from "./Diamond_microdermabrasion_text";
 import Dimond_micro_pricing_form from "./Dimond_micro_pricing_form";
 
 type DiamondMicrodermabrasionProps = {
-  diamondMicrodermabrasionData: DiamondMicrodermabrasionMainProps["diamondMicrodermabrasionData"];
   diamondMicroderm?: ServiceRow | null;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Diamond_microdermabrasion({
-  diamondMicrodermabrasionData,
   diamondMicroderm,
   user,
   isAdmin,
@@ -68,7 +65,7 @@ export default function Diamond_microdermabrasion({
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Dimond_micro_pricing_form
-            diamondMicrodermabrasionData={diamondMicrodermabrasionData}
+            diamondMicroderm={diamondMicroderm}
             user={user}
             isAdmin={isAdmin}
           />

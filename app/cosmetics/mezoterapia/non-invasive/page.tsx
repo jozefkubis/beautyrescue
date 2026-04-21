@@ -1,13 +1,11 @@
 import Mezoterapia_non_invasive from "@/app/_components/products/mezoterapia/non-invasive/mezoterapia_non_invasive";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import { getMezoterapiaNonInvasive } from "@/app/_lib/data_services/data_mezoterapia";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
-  const mezoterapiaNonInvasiveData = await getMezoterapiaNonInvasive(
+  const mezoterapiaNonInvasive = await getServiceBySlug(
     "mezoterapia-non-invasive",
   );
-const mezoterapiaNonInvasive = await getServiceBySlug("mezoterapia-non-invasive");
 
   const user = await getCurrentUser();
   const isAdmin =
@@ -37,7 +35,6 @@ const mezoterapiaNonInvasive = await getServiceBySlug("mezoterapia-non-invasive"
 
   return (
     <Mezoterapia_non_invasive
-      mezoterapiaNonInvasiveData={mezoterapiaNonInvasiveData}
       mezoterapiaNonInvasive={mezoterapiaNonInvasive}
       user={user?.email ?? null}
       isAdmin={isAdmin}

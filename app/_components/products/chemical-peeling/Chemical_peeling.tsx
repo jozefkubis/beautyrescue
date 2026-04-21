@@ -9,14 +9,12 @@ import Chem_peeling_pricing_form from "./Chem_peeling_pricing_form";
 import Chemical_peeling_text from "./Chemical_peeling_text";
 
 type ChemicalPeelingProps = {
-  chemicalPeelingData: ChemicalPeelingMainProps["chemicalPeelingData"];
   chemPeelingService: ServiceRow | null;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Chemical_peeling({
-  chemicalPeelingData,
   chemPeelingService,
   user,
   isAdmin,
@@ -57,7 +55,7 @@ export default function Chemical_peeling({
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Chem_peeling_pricing_form
-            chemicalPeelingData={chemicalPeelingData}
+            chemicalPeelingService={chemPeelingService}
             user={user}
             isAdmin={isAdmin}
           />

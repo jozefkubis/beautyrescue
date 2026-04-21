@@ -1,10 +1,8 @@
 import Chemical_peeling from "@/app/_components/products/chemical-peeling/Chemical_peeling";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import getChemicalPeeling from "@/app/_lib/data_services/data_chemical_peeling";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
-  const chemicalPeelingData = await getChemicalPeeling("chemical-peeling");
   const chemPeeling = await getServiceBySlug("chemical-peeling");
 
   const user = await getCurrentUser();
@@ -35,7 +33,6 @@ export default async function Page() {
 
   return (
     <Chemical_peeling
-      chemicalPeelingData={chemicalPeelingData}
       chemPeelingService={chemPeeling}
       user={user?.email ?? null}
       isAdmin={isAdmin}

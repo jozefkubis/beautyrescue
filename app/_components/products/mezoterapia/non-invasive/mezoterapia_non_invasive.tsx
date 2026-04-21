@@ -2,21 +2,18 @@
 
 import ExpandText from "@/app/_components/ExpandText";
 import { brandFont } from "@/app/_components/fonts";
-import type { MezoterapiaNonInvasiveProps } from "@/app/_lib/data_services/data_mezoterapia";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Mezoterapia_pricing_form_non_invasive from "./mezoterapia_pricing_form_non_invasive";
 import Mezoterapia_text_non_invasive from "./mezoterapia_text_non_invasive";
 
 type MezoterapiaNonInvasivePageProps = {
-  mezoterapiaNonInvasiveData: MezoterapiaNonInvasiveProps["mezoterapiaNonInvasiveData"];
   mezoterapiaNonInvasive: ServiceRow | null;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Mezoterapia_non_invasive({
-  mezoterapiaNonInvasiveData,
   mezoterapiaNonInvasive,
   user,
   isAdmin,
@@ -64,7 +61,7 @@ export default function Mezoterapia_non_invasive({
 
         <div className="mt-10 2xl:mt-20">
           <Mezoterapia_pricing_form_non_invasive
-            mezoterapiaNonInvasiveData={mezoterapiaNonInvasiveData}
+            mezoterapiaNonInvasive={mezoterapiaNonInvasive}
             user={user}
             isAdmin={isAdmin}
           />

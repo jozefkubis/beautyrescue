@@ -5,6 +5,14 @@ type ImageGalleryItem = {
   alt: string;
 };
 
+export type PricingProps = {
+  id: string
+  treatment: string
+  price_before_discount: number
+  price_after_discount: number
+  discount: number | null
+}
+
 export type ServiceRow = {
   id?: string;
   slug?: string;
@@ -16,6 +24,7 @@ export type ServiceRow = {
   image_gallery?: ImageGalleryItem[] | null; // JSONB pole v DB, bude parsované do ImageGalleryItem[]
   is_active?: boolean;
   order_index?: number | null;
+  pricing?: PricingProps[] | null; // Relace na tabulku "pricing", bude parsována do pole PricingProps[]
 };
 
 export default async function getServiceBySlug(slug: string) {
@@ -23,10 +32,10 @@ export default async function getServiceBySlug(slug: string) {
 
   const { data, error } = await supabase
     .from("services")
-    // .select("*, pricing(*)")
-    .select("*")
+    .select("*, pricing(*)")
+    // .select("*")
     .eq("slug", slug)
-    // .order("order_index", { referencedTable: "pricing", ascending: true })
+    .order("order_index", { referencedTable: "pricing", ascending: true })
     .single()
 
   if (error) {
@@ -34,6 +43,6 @@ export default async function getServiceBySlug(slug: string) {
     return null
   }
 
-  return data
+  return data as ServiceRow | null;
 }
 

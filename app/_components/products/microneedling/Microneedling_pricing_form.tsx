@@ -1,12 +1,16 @@
-import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling"
-import PricingForm from "../PricingForm"
+import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import PricingForm from "../PricingForm";
 
 export default function Microneedling_pricing_form({
-  microneedlingData,
+  microneedling,
   user,
   isAdmin,
-}: MicroneedlingMainProps & { user?: string | null; isAdmin?: boolean }) {
-  const treatments = microneedlingData.pricing.map((item) => ({
+}: {
+  microneedling: ServiceRow | null | undefined;
+  user?: string | null;
+  isAdmin?: boolean;
+}) {
+  const treatments = (microneedling?.pricing ?? []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
     price: `${item.price_before_discount},- €`,
@@ -14,7 +18,7 @@ export default function Microneedling_pricing_form({
       item.price_after_discount < item.price_before_discount
         ? `${item.price_after_discount},- €`
         : "",
-  }))
+  }));
 
   return (
     <PricingForm
@@ -23,5 +27,5 @@ export default function Microneedling_pricing_form({
       user={user}
       isAdmin={isAdmin}
     />
-  )
+  );
 }

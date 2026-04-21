@@ -1,6 +1,5 @@
 import Microneedling from "@/app/_components/products/microneedling/Microneedling";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import getMicroneedling from "@/app/_lib/data_services/data_microneedling";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 import {
   getTknCategories,
@@ -9,8 +8,7 @@ import {
 
 // Hlavná Microneedling stránka načíta len to, čo naozaj potrebuje.
 export default async function Page() {
-  const [microneedlingData, user, microneedling] = await Promise.all([
-    getMicroneedling("microneedling"),
+  const [user, microneedling] = await Promise.all([
     getCurrentUser(),
     getServiceBySlug("microneedling"),
   ]);
@@ -53,7 +51,6 @@ export default async function Page() {
 
   return (
     <Microneedling
-      microneedlingData={microneedlingData}
       microneedling={microneedling}
       tknCategories={tknCategories}
       user={user?.email ?? null}

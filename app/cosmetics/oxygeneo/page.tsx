@@ -1,10 +1,8 @@
 import Oxygeneo from "@/app/_components/products/oxygeneo/Oxygeneo";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import getOxygeneo from "@/app/_lib/data_services/data_oxygeneo";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
-  const oxygeneoData = await getOxygeneo("oxygeneo");
   const oxygeneo = await getServiceBySlug("oxygeneo");
 
   const user = await getCurrentUser();
@@ -35,7 +33,6 @@ export default async function Page() {
 
   return (
     <Oxygeneo
-      oxygeneoData={oxygeneoData}
       oxygeneo={oxygeneo}
       user={user?.email ?? null}
       isAdmin={isAdmin}

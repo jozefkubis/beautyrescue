@@ -1,6 +1,5 @@
 "use client";
 
-import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling";
 import { dataDashboard } from "@/app/_lib/data_services_all/data_dashboard";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import type { TknCategoryWithProducts } from "@/app/_lib/data_services_all/data_tkn";
@@ -13,7 +12,6 @@ import Microneedling_pricing_form from "./Microneedling_pricing_form";
 import Microneedling_text from "./Microneedling_text";
 
 type MicroneedlingProps = {
-  microneedlingData: MicroneedlingMainProps["microneedlingData"];
   tknCategories: TknCategoryWithProducts[];
   user?: string | null;
   isAdmin?: boolean;
@@ -21,7 +19,6 @@ type MicroneedlingProps = {
 };
 
 export default function Microneedling({
-  microneedlingData,
   tknCategories,
   user,
   isAdmin,
@@ -108,7 +105,7 @@ export default function Microneedling({
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Microneedling_pricing_form
-            microneedlingData={microneedlingData}
+            microneedling={microneedling}
             user={user}
             isAdmin={isAdmin}
           />

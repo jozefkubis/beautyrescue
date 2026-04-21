@@ -1,12 +1,16 @@
-﻿import type { OxygeneoMainProps } from "@/app/_lib/data_services/data_oxygeneo"
-import PricingForm from "../PricingForm"
+﻿import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import PricingForm from "../PricingForm";
 
 export default function Oxygeneo_pricing_form({
-  oxygeneoData,
+  oxygeneo,
   user,
   isAdmin,
-}: OxygeneoMainProps & { user?: string | null; isAdmin?: boolean }) {
-  const treatments = (oxygeneoData.pricing ?? []).map((item) => ({
+}: {
+  oxygeneo?: ServiceRow | null;
+  user?: string | null;
+  isAdmin?: boolean;
+}) {
+  const treatments = (oxygeneo?.pricing ?? []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
     price: `${item.price_before_discount},- €`,
@@ -14,7 +18,7 @@ export default function Oxygeneo_pricing_form({
       item.price_after_discount < item.price_before_discount
         ? `${item.price_after_discount},- €`
         : "",
-  }))
+  }));
 
   return (
     <PricingForm
@@ -23,5 +27,5 @@ export default function Oxygeneo_pricing_form({
       user={user}
       isAdmin={isAdmin}
     />
-  )
+  );
 }

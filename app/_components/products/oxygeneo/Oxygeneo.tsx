@@ -9,7 +9,6 @@ import Oxygeneo_pricing_form from "./Oxygeneo_pricing_form";
 import Oxygeneo_text from "./Oxygeneo_text";
 
 type OxygeneoProps = {
-  oxygeneoData: OxygeneoMainProps["oxygeneoData"];
   oxygeneo?: ServiceRow | null;
   user?: string | null;
   isAdmin?: boolean;
@@ -17,7 +16,6 @@ type OxygeneoProps = {
 
 export default function Oxygeneo({
   oxygeneo,
-  oxygeneoData,
   user,
   isAdmin,
 }: OxygeneoProps) {
@@ -57,7 +55,7 @@ export default function Oxygeneo({
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Oxygeneo_pricing_form
-            oxygeneoData={oxygeneoData}
+            oxygeneo={oxygeneo}
             user={user}
             isAdmin={isAdmin}
           />
