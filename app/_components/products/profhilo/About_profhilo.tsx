@@ -153,7 +153,7 @@ export default function About_profhilo({
             >
               <div className="pb-6 pt-1 flex flex-col gap-2 [&_p]:text-justify">
                 <div
-                  className="text-xs xl:text-sm leading-relaxed text-zinc-700 whitespace-pre-wrap"
+                  className="text-xs 2xl:text-sm leading-relaxed text-zinc-700 whitespace-pre-wrap pb-4"
                   dangerouslySetInnerHTML={{ __html: formattedText }}
                 />
               </div>
@@ -208,7 +208,7 @@ export default function About_profhilo({
             >
               <div className="pb-6 pt-1 flex flex-col gap-2 [&_p]:text-justify">
                 <div
-                  className="text-xs xl:text-sm leading-relaxed text-zinc-700 whitespace-pre-wrap"
+                  className="text-xs 2xl:text-sm leading-relaxed text-zinc-700 whitespace-pre-wrap pb-4"
                   dangerouslySetInnerHTML={{ __html: formattedTextStructura }}
                 />
               </div>

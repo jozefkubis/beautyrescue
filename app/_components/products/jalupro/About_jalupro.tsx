@@ -106,14 +106,14 @@ export default function About_jalupro({
 
           <div
             className={`
-              overflow-hidden px-4 sm:px-5 lg:px-6 pb-4 sm:pb-5 lg:pb-6
+              overflow-hidden px-4 sm:px-5 lg:px-6
               transition-[max-height,opacity] duration-500 ease-in-out
-              ${openBox ? "max-h-350 opacity-100" : "max-h-0 opacity-0"}
-            `}
+              ${openBox ? "max-h-250 opacity-100" : "max-h-0 opacity-0"}
+              `}
           >
             <div className=" text-xs 2xl:text-sm [&_p]:text-justify">
               <div
-                className="text-gray-700 leading-relaxed whitespace-pre-wrap"
+                className="text-gray-700 leading-relaxed whitespace-pre-wrap pb-4"
                 dangerouslySetInnerHTML={{ __html: formattedText }}
               />
             </div>

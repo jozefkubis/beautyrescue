@@ -60,7 +60,7 @@ export default function About_botulotoxin({
             `}
           >
             <div className="pb-6 pt-1 flex flex-col gap-2 [&_p]:text-justify">
-              <p className="text-xs xl:text-sm leading-relaxed text-zinc-700 whitespace-pre-wrap">
+              <p className="text-xs 2xl:text-sm leading-relaxed text-zinc-700 whitespace-pre-wrap pb-4">
                 {about}
               </p>
             </div>
