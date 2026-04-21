@@ -6,9 +6,11 @@ import SectionNavigation from "../../SectionNavigation";
 import ProfhiloMain_update_form from "./ProfhiloMain_update_form";
 import ProfhiloSectionOne_update_form from "./ProfhiloSectionOne_update_form";
 import ProfhiloSectionTwo_update_form from "./ProfhiloSectionTwo_update_form";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 
 type Profhilo_update_formProps = {
-  profhiloData: ProfhiloMainProps["profhiloData"] | null;
+  profhiloData: ServiceRow | null;
+  profhiloStructuraData: ServiceRow | null;
   isAdmin?: boolean;
 };
 
@@ -31,6 +33,7 @@ function SectionHeader({ title }: { title: string }) {
 // Wrapper prepína 3 samostatné Profhilo formuláre cez SectionNavigation.
 export default function Profhilo_update_form({
   profhiloData,
+  profhiloStructuraData,
   isAdmin,
 }: Profhilo_update_formProps) {
   const [index, setIndex] = useState(1);
@@ -70,9 +73,9 @@ export default function Profhilo_update_form({
 
         {index === 3 && (
           <>
-            <SectionHeader title="Profhilo (sekcia 2)" />
+            <SectionHeader title="Profhilo Structura (sekcia 2)" />
             <ProfhiloSectionTwo_update_form
-              profhiloData={profhiloData}
+              profhiloStructuraData={profhiloStructuraData}
               isAdmin={isAdmin}
             />
           </>

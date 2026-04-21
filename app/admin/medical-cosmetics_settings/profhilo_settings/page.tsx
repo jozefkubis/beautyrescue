@@ -1,11 +1,12 @@
 import Profhilo_update_form from "@/app/_components/products/profhilo/Profhilo_update_form";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import { getProfhilo } from "@/app/_lib/data_services/data_profhilo";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
-  const [user, profhiloData] = await Promise.all([
+  const [user, profhiloData, profhiloStructuraData] = await Promise.all([
     getCurrentUser(),
-    getProfhilo("profhilo"),
+    getServiceBySlug("profhilo"),
+    getServiceBySlug("profhilo_structura"),
   ]);
 
   const isAdmin =
@@ -27,5 +28,5 @@ export default async function Page() {
     );
   }
 
-  return <Profhilo_update_form profhiloData={profhiloData} isAdmin={isAdmin} />;
+  return <Profhilo_update_form profhiloData={profhiloData} profhiloStructuraData={profhiloStructuraData} isAdmin={isAdmin} />;
 }
