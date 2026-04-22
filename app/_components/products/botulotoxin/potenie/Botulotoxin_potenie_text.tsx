@@ -4,7 +4,7 @@ import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 export default function Botulotoxin_potenie_text({
   botulotoxinPotenie,
 }: {
-  botulotoxinPotenie: ServiceRow;
+  botulotoxinPotenie: ServiceRow | null | undefined;
 }) {
   let text = botulotoxinPotenie?.text || "";
 
