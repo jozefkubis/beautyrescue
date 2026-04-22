@@ -1,38 +1,39 @@
-"use client"
+"use client";
 
-import { updatePricing } from "@/app/_lib/actions_all/actions_pricing"
-import { useRouter } from "next/navigation"
-import { useEffect, useState, useTransition } from "react"
-import toast from "react-hot-toast"
+import { updatePricing } from "@/app/_lib/actions_all/actions_pricing";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, useTransition } from "react";
+import toast from "react-hot-toast";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 type Treatment = {
-  id: number | string
-  treatment: string
-  price: string
-  sale: string
-}
+  id: number | string;
+  treatment: string;
+  price: string;
+  sale: string;
+};
 
 type PricingFormProps = {
-  title: string
-  treatments: Treatment[]
-  user?: string | null
-  isAdmin?: boolean
-}
+  title: string;
+  treatments: Treatment[];
+  user?: string | null;
+  isAdmin?: boolean;
+};
 
 export default function PricingForm({
   // title,
   treatments,
   isAdmin,
 }: PricingFormProps) {
-  const router = useRouter()
-  const [formTreatments, setFormTreatments] = useState(treatments)
-  const [lastSavedTreatments, setLastSavedTreatments] = useState(treatments)
-  const [isPending, startTransition] = useTransition()
+  const router = useRouter();
+  const [formTreatments, setFormTreatments] = useState(treatments);
+  const [lastSavedTreatments, setLastSavedTreatments] = useState(treatments);
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    setFormTreatments(treatments)
-    setLastSavedTreatments(treatments)
-  }, [treatments])
+    setFormTreatments(treatments);
+    setLastSavedTreatments(treatments);
+  }, [treatments]);
 
   function handleChange(
     id: number | string,
@@ -41,22 +42,22 @@ export default function PricingForm({
   ) {
     setFormTreatments((prev) =>
       prev.map((item) => (item.id === id ? { ...item, [field]: value } : item)),
-    )
+    );
   }
 
   function copyRowToClipboard(item: Treatment) {
     const text = `${item.treatment}
 Cena: ${item.price}
-Akcia: ${item.sale || "-"}`
+Akcia: ${item.sale || "-"}`;
 
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        toast.success("Skopírované ✨")
+        toast.success("Skopírované ✨");
       })
       .catch(() => {
-        toast.error("Nepodarilo sa kopírovať")
-      })
+        toast.error("Nepodarilo sa kopírovať");
+      });
   }
 
   function copyAllToClipboard() {
@@ -65,41 +66,41 @@ Akcia: ${item.sale || "-"}`
         (item) =>
           `${item.treatment}\nCena: ${item.price}\nAkcia: ${item.sale || "-"}`,
       )
-      .join("\n\n")
+      .join("\n\n");
 
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        toast.success("Celý cenník bol skopírovaný ✨")
+        toast.success("Celý cenník bol skopírovaný ✨");
       })
       .catch(() => {
-        toast.error("Nepodarilo sa kopírovať celý cenník")
-      })
+        toast.error("Nepodarilo sa kopírovať celý cenník");
+      });
   }
 
   function handleUndo() {
-    setFormTreatments(lastSavedTreatments)
-    toast.success("Zmeny boli vrátené ↩️")
+    setFormTreatments(lastSavedTreatments);
+    toast.success("Zmeny boli vrátené ↩️");
   }
 
   function handleSubmit(formData: FormData) {
     startTransition(async () => {
       try {
-        formData.set("data", JSON.stringify(formTreatments))
-        await updatePricing(formData)
+        formData.set("data", JSON.stringify(formTreatments));
+        await updatePricing(formData);
 
-        setLastSavedTreatments(formTreatments)
-        router.refresh()
-        toast.success("Cenník bol aktualizovaný ✨")
+        setLastSavedTreatments(formTreatments);
+        router.refresh();
+        toast.success("Cenník bol aktualizovaný ✨");
       } catch (error) {
-        console.error(error)
-        toast.error("Chyba pri ukladaní ❌")
+        console.error(error);
+        toast.error("Chyba pri ukladaní ❌");
       }
-    })
+    });
   }
 
   const hasChanges =
-    JSON.stringify(formTreatments) !== JSON.stringify(lastSavedTreatments)
+    JSON.stringify(formTreatments) !== JSON.stringify(lastSavedTreatments);
 
   return (
     <section className="w-full px-4">
@@ -202,20 +203,46 @@ Akcia: ${item.sale || "-"}`
                     </div>
 
                     {isAdmin && (
-                      <button
-                        type="button"
-                        onClick={() => copyRowToClipboard(item)}
-                        className="inline-flex h-12 items-center justify-center rounded-xl border border-goldDark/15 bg-white px-3 text-sm text-goldDark transition hover:cursor-pointer hover:border-goldDark/25 hover:bg-[#fffaf2] 2xl:h-14"
-                        title="Kopírovať riadok"
-                        aria-label={`Kopírovať riadok ${item.treatment}`}
-                      >
-                        📋
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => copyRowToClipboard(item)}
+                          className="inline-flex h-12 items-center justify-center rounded-xl border border-goldDark/15 bg-white px-3 text-sm text-goldDark transition hover:cursor-pointer hover:border-goldDark/25 hover:bg-[#fffaf2] 2xl:h-14"
+                          title="Kopírovať riadok"
+                          aria-label={`Kopírovať riadok ${item.treatment}`}
+                        >
+                          📋
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => console.log("deleted item", item.id)}
+                          className="inline-flex h-12 items-center justify-center rounded-xl border border-goldDark/15 bg-white px-3 text-sm text-redDark font-bold transition hover:cursor-pointer hover:border-goldDark/25 hover:bg-redMain/10 2xl:h-14"
+                          title="Vymazať položku"
+                          aria-label={`Vymazať položku ${item.treatment}`}
+                        >
+                          <RiDeleteBin6Line />
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>
               ))}
             </div>
+
+            {/* Pridať položku – vpravo, štýlovo */}
+            {isAdmin && (
+              <div className="flex justify-end mt-4">
+                <button
+                  type="button"
+                  onClick={() => console.log("položka pridaná")}
+                  className="inline-flex items-center gap-2 rounded-full border border-goldDark/20 bg-gradient-to-br from-[#fff6ee] to-[#fffdf9] px-5 py-2 text-sm font-semibold text-goldDark shadow-sm transition hover:border-goldDark/40 hover:bg-[#fffaf2] hover:-translate-y-0.5 active:scale-95 hover:cursor-pointer"
+                  title="Pridať položku"
+                >
+                  <span className="text-lg 2xl:text-xl">+</span> Pridať položku
+                </button>
+              </div>
+            )}
 
             {isAdmin && (
               <div className="mt-6 flex flex-col gap-4 border-t border-goldDark/10 px-2 pt-5 md:flex-row md:items-center md:justify-between">
@@ -258,5 +285,5 @@ Akcia: ${item.sale || "-"}`
         </div>
       </div>
     </section>
-  )
+  );
 }
