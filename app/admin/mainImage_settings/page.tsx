@@ -1,5 +1,5 @@
 import MainImage_update_form from "@/app/_components/home/main/news/news_on_image/MainImage_update_form";
-import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
+import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
 import getHomeImage from "@/app/_lib/data_services/data_home_image";
 
 export default async function Page() {

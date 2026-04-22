@@ -4,6 +4,7 @@ import getServiceBySlug from "../_lib/data_services_all/data_services";
 export default async function Page() {
   const [
     chemicalPeelingData,
+    diamondMicrodermabraziaData,
     oxygeneoData,
     mezoterapiaNonInvasiveData,
     mezoterapiaInvasiveData,
@@ -14,6 +15,7 @@ export default async function Page() {
     acupunctureData,
   ] = await Promise.all([
     getServiceBySlug("chemical-peeling"),
+    getServiceBySlug("diamond-microdermabrasion"),
     getServiceBySlug("oxygeneo"),
     getServiceBySlug("mezoterapia-non-invasive"),
     getServiceBySlug("mezoterapia-invasive"),
@@ -27,6 +29,7 @@ export default async function Page() {
   return (
     <PricingMain
       chemicalPeelingData={chemicalPeelingData}
+      diamondMicrodermabraziaData={diamondMicrodermabraziaData}
       oxygeneoData={oxygeneoData}
       mezoterapiaNonInvasiveData={mezoterapiaNonInvasiveData}
       mezoterapiaInvasiveData={mezoterapiaInvasiveData}

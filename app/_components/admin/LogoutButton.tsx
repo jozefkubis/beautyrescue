@@ -1,37 +1,37 @@
-"use client"
+"use client";
 
-import { logOut } from "@/app/_lib/actions/auth_actions"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import toast from "react-hot-toast"
-import { IoMdLogOut } from "react-icons/io"
+import { logOut } from "@/app/_lib/actions_all/auth_actions";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { IoMdLogOut } from "react-icons/io";
 
 export default function LogoutButton() {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleLogout() {
-    const confirmed = window.confirm("Naozaj sa chcete odhlásiť?")
-    if (!confirmed) return
+    const confirmed = window.confirm("Naozaj sa chcete odhlásiť?");
+    if (!confirmed) return;
 
     try {
-      setIsLoading(true)
+      setIsLoading(true);
 
-      const result = await logOut()
+      const result = await logOut();
 
       if (!result?.success) {
-        toast.error(result?.message || "Odhlásenie nebolo úspešné!")
-        return
+        toast.error(result?.message || "Odhlásenie nebolo úspešné!");
+        return;
       }
 
-      toast.success("Odhlásenie bolo úspešné!")
-      router.replace("/")
-      router.refresh()
+      toast.success("Odhlásenie bolo úspešné!");
+      router.replace("/");
+      router.refresh();
     } catch (error) {
-      console.error("Logout error:", error)
-      toast.error("Nastala chyba pri odhlasovaní.")
+      console.error("Logout error:", error);
+      toast.error("Nastala chyba pri odhlasovaní.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
@@ -46,5 +46,5 @@ export default function LogoutButton() {
     >
       <IoMdLogOut />
     </button>
-  )
+  );
 }

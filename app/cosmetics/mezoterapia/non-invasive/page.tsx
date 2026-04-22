@@ -1,5 +1,5 @@
 import Mezoterapia_non_invasive from "@/app/_components/products/mezoterapia/non-invasive/mezoterapia_non_invasive";
-import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
+import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {

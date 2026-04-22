@@ -53,17 +53,21 @@ export default function PricingMain({
       id: 1,
       title: "Chemický peeling",
       description: "Obnova textúry pleti a jemné rozjasnenie.",
+      // Komponent očakáva prop chemicalPeelingService
       value: (
-        <Chem_peeling_pricing_form chemicalPeelingData={chemicalPeelingData} />
+        <Chem_peeling_pricing_form
+          chemicalPeelingService={chemicalPeelingData ?? null}
+        />
       ),
     },
     {
       id: 2,
       title: "Diamantová mikrodermabrázia",
       description: "Šetrná exfoliácia pre hladší a sviežejší vzhľad.",
+      // Komponent očakáva prop diamondMicroderm
       value: (
         <Dimond_micro_pricing_form
-          diamondMicrodermabraziaData={diamondMicrodermabraziaData}
+          diamondMicroderm={diamondMicrodermabraziaData}
         />
       ),
     },
@@ -71,15 +75,17 @@ export default function PricingMain({
       id: 3,
       title: "Oxygeneo",
       description: "Okamžité rozjasnenie, okysličenie a výživa pleti.",
-      value: <Oxygeneo_pricing_form oxygeneoData={oxygeneoData} />,
+      // Komponent očakáva prop oxygeneo
+      value: <Oxygeneo_pricing_form oxygeneo={oxygeneoData} />,
     },
     {
       id: 4,
       title: "Mezoterapia - neinvazívna",
       description: "Bezihlová mezoterapia pre hydratáciu a regeneráciu pleti.",
+      // Komponent očakáva prop mezoterapiaNonInvasive
       value: (
         <Mezoterapia_pricing_form_non_invasive
-          mezoterapiaNonInvasiveData={mezoterapiaNonInvasiveData}
+          mezoterapiaNonInvasive={mezoterapiaNonInvasiveData ?? null}
         />
       ),
     },
@@ -87,9 +93,10 @@ export default function PricingMain({
       id: 5,
       title: "Mezoterapia - invazívna",
       description: "Hĺbková mezoterapia Vitalinjector pre intenzívny efekt.",
+      // Komponent očakáva prop mezoterapiaInvasive
       value: (
         <Mezoterapia_pricing_form_invasive
-          mezoterapiaInvasiveData={mezoterapiaInvasiveData}
+          mezoterapiaInvasive={mezoterapiaInvasiveData}
         />
       ),
     },
@@ -97,15 +104,17 @@ export default function PricingMain({
       id: 6,
       title: "Botulotoxín",
       description: "Vyhladenie mimických vrások s prirodzeným výsledkom.",
-      value: <Botulotoxin_pricing_form botulotoxinData={botulotoxinData} />,
+      // Komponent očakáva prop botulotoxin
+      value: <Botulotoxin_pricing_form botulotoxin={botulotoxinData ?? null} />,
     },
     {
       id: 7,
       title: "Kyselina hyalurónová",
       description: "Hydratácia, objem a jemné kontúrovanie tváre.",
+      // Komponent očakáva prop kyselinaHyaluronova
       value: (
         <Kyselina_hyaluronova_pricing_form
-          kyselinaHyaluronovaData={kyselinaHyaluronovaData}
+          kyselinaHyaluronova={kyselinaHyaluronovaData}
         />
       ),
     },
@@ -113,9 +122,10 @@ export default function PricingMain({
       id: 8,
       title: "Biokompatibilné nite",
       description: "Spevnenie kontúr a liftingový efekt bez chirurgie.",
+      // Komponent očakáva prop biokompatiblineNite
       value: (
         <Biokompatibilne_nite_pricing_form
-          biokompatibilneNiteData={biokompatibilneNiteData}
+          biokompatiblineNite={biokompatibilneNiteData}
         />
       ),
     },
@@ -123,13 +133,20 @@ export default function PricingMain({
       id: 9,
       title: "Profhilo",
       description: "Hydratácia a regenerácia pleti pre mladistvý vzhľad.",
-      value: <Profhilo_pricing_form profhiloData={profhiloData} />,
+      // Komponent očakáva prop profhilo
+      value: (
+        <Profhilo_pricing_form
+          profhilo={profhiloData}
+          profhiloStructura={undefined}
+        />
+      ),
     },
     {
       id: 10,
       title: "Lekárska akupunktúra",
       description: "Podpora regenerácie a harmonizácie organizmu.",
-      value: <Acupuncture_pricing_form acupunctureData={acupunctureData} />,
+      // Komponent očakáva prop acupuncture
+      value: <Acupuncture_pricing_form acupuncture={acupunctureData} />,
     },
   ];
 

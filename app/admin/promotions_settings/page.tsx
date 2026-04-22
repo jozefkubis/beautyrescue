@@ -1,5 +1,5 @@
 import PromotionUpdateForm from "@/app/_components/admin/PromotionUpdateForm";
-import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
+import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
 import getPromotion from "@/app/_lib/data_services/data_promotion";
 
 export default async function Page() {

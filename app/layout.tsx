@@ -10,7 +10,7 @@ import Footer from "./_components/footer/Footer";
 import Header from "./_components/home/header/Header";
 import MobileHeader from "./_components/home/header/MobileHeader";
 import Navigation from "./_components/navigation/Navigation";
-import { getCurrentUser } from "./_lib/actions/auth_actions";
+import { getCurrentUser } from "./_lib/actions_all/auth_actions";
 import "./globals.css";
 
 const poppins = Poppins({

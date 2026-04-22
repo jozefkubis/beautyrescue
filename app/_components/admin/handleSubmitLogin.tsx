@@ -1,4 +1,4 @@
-import { logIn } from "@/app/_lib/actions/auth_actions";
+import { logIn } from "@/app/_lib/actions_all/auth_actions";
 import toast from "react-hot-toast";
 
 type Props = {

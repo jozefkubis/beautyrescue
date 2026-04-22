@@ -1,5 +1,5 @@
 import Insert_product_form from "@/app/_components/products/microneedling/Insert_product_form";
-import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
+import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
 import { getTknCategories } from "@/app/_lib/data_services_all/data_tkn";
 import Link from "next/link";
 

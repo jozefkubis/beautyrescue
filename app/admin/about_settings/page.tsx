@@ -1,5 +1,5 @@
 import AboutUpdateForm from "@/app/_components/about/AboutUpdateForm";
-import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
+import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
 import { getAboutUs } from "@/app/_lib/data_services_all/data_about";
 
 export default async function Page() {

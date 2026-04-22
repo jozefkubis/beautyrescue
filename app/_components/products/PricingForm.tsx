@@ -1,6 +1,6 @@
 "use client"
 
-import { updatePricing } from "@/app/_lib/actions/actions_pricing"
+import { updatePricing } from "@/app/_lib/actions_all/actions_pricing"
 import { useRouter } from "next/navigation"
 import { useEffect, useState, useTransition } from "react"
 import toast from "react-hot-toast"
