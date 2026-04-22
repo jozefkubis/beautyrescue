@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 import FileField from "../../FileField";
 
 type OxygeneoUpdateFormProps = {
-  oxygeneoData: ServiceRow;
+  oxygeneoData: ServiceRow | null | undefined;
   isAdmin?: boolean;
 };
 
