@@ -1,6 +1,5 @@
 "use client";
 
-import { BiokompatibilneNiteMainProps } from "@/app/_lib/data_services/data_biokompatibilne_nite";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import ExpandText from "../../ExpandText";
