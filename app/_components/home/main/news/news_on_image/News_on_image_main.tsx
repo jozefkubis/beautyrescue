@@ -1,16 +1,16 @@
 "use client"; // musí byť, lebo používame animácie na klientovi
 
 import { luxuriousScript } from "@/app/_components/fonts";
-import type { PromotionMainProps } from "@/app/_lib/data_services/data_promotion";
 import type { HomeImageProps } from "@/app/_lib/data_services_all/data_home_image";
 import { motion } from "framer-motion"; // import z framer-motion
 import Image from "next/image";
 import { useState } from "react";
 import EcgLine from "../ecg_effect/EcgLine";
 
+// Props pre News_on_image_main – typy zjednodušené podľa reálneho použitia
 type News_on_image_mainProps = {
-  promotionSummary: PromotionMainProps["promotionData"]["summary"];
-  isActive: PromotionMainProps["promotionData"]["is_active"];
+  promotionSummary: string | null | undefined;
+  isActive: boolean | null | undefined;
   homeImg: HomeImageProps;
 };
 
