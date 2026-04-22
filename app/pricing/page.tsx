@@ -13,6 +13,7 @@ export default async function Page() {
     biokompatibilneNiteData,
     profhiloData,
     acupunctureData,
+    microneedlingData,
   ] = await Promise.all([
     getServiceBySlug("chemical-peeling"),
     getServiceBySlug("diamond-microdermabrasion"),
@@ -24,6 +25,7 @@ export default async function Page() {
     getServiceBySlug("biokompatibilne-nite"),
     getServiceBySlug("profhilo"),
     getServiceBySlug("acupuncture"),
+    getServiceBySlug("microneedling"),
   ]);
 
   return (
@@ -38,6 +40,7 @@ export default async function Page() {
       biokompatibilneNiteData={biokompatibilneNiteData}
       profhiloData={profhiloData}
       acupunctureData={acupunctureData}
+      microneedlingData={microneedlingData}
     />
   );
 }

@@ -11,6 +11,7 @@ import Dimond_micro_pricing_form from "../products/diamond-microdermabrasion/Dim
 import Kyselina_hyaluronova_pricing_form from "../products/kyselina-hyaluronova/Kyselina_hyaluronova_pricing_form";
 import Mezoterapia_pricing_form_invasive from "../products/mezoterapia/invasive/Mezoterapia_pricing_form_invasive";
 import Mezoterapia_pricing_form_non_invasive from "../products/mezoterapia/non-invasive/mezoterapia_pricing_form_non_invasive";
+import Microneedling_pricing_form from "../products/microneedling/Microneedling_pricing_form";
 import Oxygeneo_pricing_form from "../products/oxygeneo/Oxygeneo_pricing_form";
 import Profhilo_pricing_form from "../products/profhilo/Profhilo_pricing_form";
 
@@ -32,6 +33,7 @@ type PricingMainProps = {
   mezoterapiaNonInvasiveData: ServiceRow | null | undefined;
   oxygeneoData: ServiceRow | null | undefined;
   profhiloData: ServiceRow | null | undefined;
+  microneedlingData: ServiceRow | null | undefined;
 };
 
 export default function PricingMain({
@@ -45,6 +47,7 @@ export default function PricingMain({
   mezoterapiaNonInvasiveData,
   oxygeneoData,
   profhiloData,
+  microneedlingData,
 }: PricingMainProps) {
   const [openBox, setOpenBox] = useState<number | null>(null);
 
@@ -147,6 +150,13 @@ export default function PricingMain({
       description: "Podpora regenerácie a harmonizácie organizmu.",
       // Komponent očakáva prop acupuncture
       value: <Acupuncture_pricing_form acupuncture={acupunctureData} />,
+    },
+    {
+      id: 11,
+      title: "Microneedling",
+      description: "Omladenie a regenerácia pleti pomocou mikronáhľadov.",
+      // Komponent očakáva prop microneedling
+      value: <Microneedling_pricing_form microneedling={microneedlingData} />,
     },
   ];
 
