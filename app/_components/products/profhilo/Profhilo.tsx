@@ -1,6 +1,5 @@
 "use client";
 
-import type { ProfhiloMainProps } from "@/app/_lib/data_services/data_profhilo";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import ExpandText from "../../ExpandText";
@@ -83,7 +82,7 @@ export default function Profhilo({
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Profhilo_pricing_form
             profhilo={profhilo}
-            profhiloStructura={profhiloStructura}
+            // profhiloStructura={profhiloStructura}
             user={user}
             isAdmin={isAdmin}
           />

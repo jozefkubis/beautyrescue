@@ -3,12 +3,12 @@ import PricingForm from "../PricingForm";
 
 export default function Profhilo_pricing_form({
   profhilo,
-  profhiloStructura,
+  // profhiloStructura,
   user,
   isAdmin,
 }: {
   profhilo: ServiceRow | null | undefined;
-  profhiloStructura: ServiceRow | null | undefined;
+  // profhiloStructura: ServiceRow | null | undefined;
   user?: string | null;
   isAdmin?: boolean;
 }) {
