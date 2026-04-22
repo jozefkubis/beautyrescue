@@ -9,14 +9,12 @@ import Jalupro_super_hydro_text from "./Jalupro_super_hydro_text";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 
 type Jalupro_super_hydroProps = {
-  jaluproSuperHydroData: JaluproSuperHydroProps["jaluproSuperHydroData"];
-  jaluproSuperHydro?: ServiceRow | null;
+  jaluproSuperHydro?: ServiceRow | null | undefined;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Jalupro_super_hydro({
-  jaluproSuperHydroData,
   jaluproSuperHydro,
   user,
   isAdmin,
@@ -56,7 +54,7 @@ export default function Jalupro_super_hydro({
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Jalupro_super_hydro_pricing_form
-            jaluproSuperHydroData={jaluproSuperHydroData}
+            jaluproSuperHydro={jaluproSuperHydro}
             user={user}
             isAdmin={isAdmin}
           />

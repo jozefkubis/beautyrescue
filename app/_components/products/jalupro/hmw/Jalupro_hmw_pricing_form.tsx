@@ -1,12 +1,16 @@
-import type { JaluproHMWProps } from "@/app/_lib/data_services/data_jalupro"
-import PricingForm from "../../PricingForm"
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import PricingForm from "../../PricingForm";
+
+type Jalupro_hmwProps = {
+  jaluproHMW?: ServiceRow | null | undefined;
+};
 
 export default function Jalupro_hmw_pricing_form({
-  jaluproHMWData,
+  jaluproHMW,
   user,
   isAdmin,
-}: JaluproHMWProps & { user?: string | null; isAdmin?: boolean }) {
-  const treatments = jaluproHMWData.pricing.map((item) => ({
+}: Jalupro_hmwProps & { user?: string | null; isAdmin?: boolean }) {
+  const treatments = (jaluproHMW?.pricing || []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
     price: `${item.price_before_discount},- €`,
@@ -14,7 +18,7 @@ export default function Jalupro_hmw_pricing_form({
       item.price_after_discount < item.price_before_discount
         ? `${item.price_after_discount},- €`
         : "",
-  }))
+  }));
 
   return (
     <PricingForm
@@ -23,5 +27,5 @@ export default function Jalupro_hmw_pricing_form({
       user={user}
       isAdmin={isAdmin}
     />
-  )
+  );
 }

@@ -1,10 +1,8 @@
 import Jalupro_classic from "@/app/_components/products/jalupro/classic/Jalupro_classic";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import { getJaluproClassic } from "@/app/_lib/data_services/data_jalupro";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
-  const jaluproClassicData = await getJaluproClassic("jalupro-classic");
   const jaluproClassic = await getServiceBySlug("jalupro-classic");
 
   const user = await getCurrentUser();
@@ -35,7 +33,6 @@ export default async function Page() {
 
   return (
     <Jalupro_classic
-      jaluproClassicData={jaluproClassicData}
       jaluproClassic={jaluproClassic}
       user={user?.email ?? null}
       isAdmin={isAdmin}

@@ -1,12 +1,18 @@
-import type { JaluproClassicProps } from "@/app/_lib/data_services/data_jalupro"
-import PricingForm from "../../PricingForm"
+import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import PricingForm from "../../PricingForm";
+
+type JaluproClassicProps = {
+  jaluproClassic?: ServiceRow | null | undefined;
+  user?: string | null;
+  isAdmin?: boolean;
+};
 
 export default function Jalupro_pricing_form({
-  jaluproClassicData,
+  jaluproClassic,
   user,
   isAdmin,
-}: JaluproClassicProps & { user?: string | null; isAdmin?: boolean }) {
-  const treatments = jaluproClassicData.pricing.map((item) => ({
+}: JaluproClassicProps) {
+  const treatments = (jaluproClassic?.pricing || []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
     price: `${item.price_before_discount},- €`,
@@ -14,7 +20,7 @@ export default function Jalupro_pricing_form({
       item.price_after_discount < item.price_before_discount
         ? `${item.price_after_discount},- €`
         : "",
-  }))
+  }));
 
   return (
     <PricingForm
@@ -23,5 +29,5 @@ export default function Jalupro_pricing_form({
       user={user}
       isAdmin={isAdmin}
     />
-  )
+  );
 }

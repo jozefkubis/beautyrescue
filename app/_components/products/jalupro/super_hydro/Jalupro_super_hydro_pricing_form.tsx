@@ -1,12 +1,18 @@
-import type { JaluproSuperHydroProps } from "@/app/_lib/data_services/data_jalupro"
-import PricingForm from "../../PricingForm"
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import PricingForm from "../../PricingForm";
+
+type Jalupro_super_hydro_pricing_formProps = {
+  jaluproSuperHydro?: ServiceRow | null | undefined;
+  user?: string | null;
+  isAdmin?: boolean;
+};
 
 export default function Jalupro_super_hydro_pricing_form({
-  jaluproSuperHydroData,
+  jaluproSuperHydro,
   user,
   isAdmin,
-}: JaluproSuperHydroProps & { user?: string | null; isAdmin?: boolean }) {
-  const treatments = jaluproSuperHydroData.pricing.map((item) => ({
+}: Jalupro_super_hydro_pricing_formProps) {
+  const treatments = (jaluproSuperHydro?.pricing || []).map((item) => ({
     id: item.id,
     treatment: item.treatment,
     price: `${item.price_before_discount},- €`,
@@ -14,14 +20,14 @@ export default function Jalupro_super_hydro_pricing_form({
       item.price_after_discount < item.price_before_discount
         ? `${item.price_after_discount},- €`
         : "",
-  }))
+  }));
 
   return (
     <PricingForm
-      title="Jalupro"
+      title="Jalupro Super Hydro"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
     />
-  )
+  );
 }

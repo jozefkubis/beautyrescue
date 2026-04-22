@@ -9,14 +9,12 @@ import Jalupro_young_eye_text from "./Jalupro_young_eye_text";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 
 type Jalupro_young_eyeProps = {
-  jaluproYoungEyeData: JaluproYoungEyeProps["jaluproYoungEyeData"];
-  jaluproYoungEye?: ServiceRow | null;
+  jaluproYoungEye?: ServiceRow | null | undefined;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Jalupro_young_eye({
-  jaluproYoungEyeData,
   jaluproYoungEye,
   user,
   isAdmin,
@@ -56,7 +54,7 @@ export default function Jalupro_young_eye({
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Jalupro_young_eye_pricing_form
-            jaluproYoungEyeData={jaluproYoungEyeData}
+            jaluproYoungEye={jaluproYoungEye}
             user={user}
             isAdmin={isAdmin}
           />

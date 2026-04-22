@@ -1,10 +1,8 @@
 import Jalupro_young_eye from "@/app/_components/products/jalupro/young_eye/Jalupro_young_eye";
 import { getCurrentUser } from "@/app/_lib/actions/auth_actions";
-import { getJaluproYoungEye } from "@/app/_lib/data_services/data_jalupro";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
-  const jaluproYoungEyeData = await getJaluproYoungEye("jalupro-young-eye");
   const jaluproYoungEye = await getServiceBySlug("jalupro-young-eye");
 
   const user = await getCurrentUser();
@@ -35,7 +33,6 @@ export default async function Page() {
 
   return (
     <Jalupro_young_eye
-      jaluproYoungEyeData={jaluproYoungEyeData}
       jaluproYoungEye={jaluproYoungEye}
       user={user?.email ?? null}
       isAdmin={isAdmin}

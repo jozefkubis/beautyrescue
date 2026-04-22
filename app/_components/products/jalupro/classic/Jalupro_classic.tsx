@@ -9,14 +9,12 @@ import Jalupro_classic_pricing_form from "./Jalupro_classic_pricing_form";
 import Jalupro_classic_text from "./Jalupro_classic_text";
 
 type Jalupro_classicProps = {
-  jaluproClassicData: JaluproClassicProps["jaluproClassicData"];
-  jaluproClassic?: ServiceRow | null;
+  jaluproClassic?: ServiceRow | null | undefined;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Jalupro_classic({
-  jaluproClassicData,
   jaluproClassic,
   user,
   isAdmin,
@@ -57,7 +55,7 @@ export default function Jalupro_classic({
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Jalupro_classic_pricing_form
-            jaluproClassicData={jaluproClassicData}
+            jaluproClassic={jaluproClassic}
             user={user}
             isAdmin={isAdmin}
           />

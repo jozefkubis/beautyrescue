@@ -2,21 +2,18 @@
 
 import ExpandText from "@/app/_components/ExpandText";
 import { brandFont } from "@/app/_components/fonts";
-import type { JaluproHMWProps } from "@/app/_lib/data_services/data_jalupro";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Jalupro_hmw_pricing_form from "./Jalupro_hmw_pricing_form";
 import Jalupro_hmw_text from "./Jalupro_hmw_text";
 
 type Jalupro_hmwProps = {
-  jaluproHMWData: JaluproHMWProps["jaluproHMWData"];
   jaluproHMW?: ServiceRow | null;
   user?: string | null;
   isAdmin?: boolean;
 };
 
 export default function Jalupro_hmw({
-  jaluproHMWData,
   jaluproHMW,
   user,
   isAdmin,
@@ -56,7 +53,7 @@ export default function Jalupro_hmw({
 
         <div className="mt-10 2xl:mt-20 lg:col-span-2">
           <Jalupro_hmw_pricing_form
-            jaluproHMWData={jaluproHMWData}
+            jaluproHMW={jaluproHMW}
             user={user}
             isAdmin={isAdmin}
           />
