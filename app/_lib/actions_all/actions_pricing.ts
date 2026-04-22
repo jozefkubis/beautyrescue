@@ -111,7 +111,7 @@ export async function insertTreatment(service_id: string) {
         .from("pricing")
         .insert({
           service_id, // pridáme service_id
-          treatment: "Nová procedúra",
+          treatment: "",
           price_before_discount: 0,
           price_after_discount: 0,
           // Zľavu uložíme iba ak je akčná cena nižšia ako pôvodná.
