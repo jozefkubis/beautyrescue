@@ -207,7 +207,7 @@ Akcia: ${item.sale || "-"}`;
                         <button
                           type="button"
                           onClick={() => copyRowToClipboard(item)}
-                          className="inline-flex h-12 items-center justify-center rounded-xl border border-goldDark/15 bg-white px-3 text-sm text-goldDark transition hover:cursor-pointer hover:border-goldDark/25 hover:bg-[#fffaf2] 2xl:h-14"
+                          className="inline-flex h-12 items-center justify-center rounded-xl border border-goldDark/15 bg-white px-3 text-sm text-goldDark transition hover:cursor-pointer hover:border-goldDark/25 hover:bg-[#fffaf2] 2xl:h-14 active:scale-95"
                           title="Kopírovať riadok"
                           aria-label={`Kopírovať riadok ${item.treatment}`}
                         >
@@ -217,7 +217,7 @@ Akcia: ${item.sale || "-"}`;
                         <button
                           type="button"
                           onClick={() => console.log("deleted item", item.id)}
-                          className="inline-flex h-12 items-center justify-center rounded-xl border border-goldDark/15 bg-white px-3 text-sm text-redDark font-bold transition hover:cursor-pointer hover:border-goldDark/25 hover:bg-redMain/10 2xl:h-14"
+                          className="inline-flex h-12 items-center justify-center rounded-xl border border-goldDark/15 bg-white px-3 text-sm text-redDark font-bold transition hover:cursor-pointer hover:border-goldDark/25 hover:bg-redMain/10 2xl:h-14 active:scale-95"
                           title="Vymazať položku"
                           aria-label={`Vymazať položku ${item.treatment}`}
                         >
