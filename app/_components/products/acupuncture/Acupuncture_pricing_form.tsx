@@ -22,12 +22,14 @@ export default function Acupuncture_pricing_form({
         : "",
   }));
 
+  // Slovensky: Exportujeme serviceId do PricingForm, aby vedel, pre ktorú službu pracuje.
   return (
     <PricingForm
       title="Lekárska akupunktúra"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={acupuncture?.id || ""}
     />
   );
 }

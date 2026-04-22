@@ -85,3 +85,66 @@ export async function updatePricing(formData: FormData) {
   // Obnovi cache, aby sa po refreshi hned zobrazili nove data.
   revalidatePath("/", "layout")
 }
+
+// MARK: INSERT TREATMENT
+export async function insertTreatment(service_id: string) {
+   // Klient pre Supabase na serveri (pracuje s aktualnou session).
+  const supabase = await getSupabaseServerClient()
+
+    // Cennik moze menit len admin.
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (
+    !user ||
+    (user.email !== process.env.ADMIN_EMAIL_1 &&
+      user.email !== process.env.ADMIN_EMAIL_2)
+  ) {
+    throw new Error("Unauthorized")
+  }
+
+
+      // Pri vkladaní novej procedúry pridáme service_id priamo do objektu.
+      // Trigger v databáze automaticky nastaví order_index podľa poradia v rámci service_id.
+      const { error } = await supabase
+        .from("pricing")
+        .insert({
+          service_id, // pridáme service_id
+          treatment: "Nová procedúra",
+          price_before_discount: 0,
+          price_after_discount: 0,
+          // Zľavu uložíme iba ak je akčná cena nižšia ako pôvodná.
+          discount: null,
+        })
+
+    if (error) {
+      throw new Error(`Chyba pri vkladani novej procedury: ${error.message}`)
+    }  
+}
+
+// MARK: DELETE TREATMENT
+export async function deleteTreatment(treatmentId: string) {
+  // Klient pre Supabase na serveri (pracuje s aktualnou session).
+  const supabase = await getSupabaseServerClient()
+  // Cennik moze menit len admin.
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (
+    !user ||
+    (user.email !== process.env.ADMIN_EMAIL_1 &&
+      user.email !== process.env.ADMIN_EMAIL_2)
+  ) {
+    throw new Error("Unauthorized")
+  }
+
+  const { error } = await supabase
+    .from("pricing")
+    .delete()
+    .eq("id", treatmentId)
+
+  if (error) {
+    throw new Error(`Chyba pri mazani procedury: ${error.message}`)
+  }
+}

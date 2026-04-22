@@ -1,13 +1,17 @@
 "use client";
 
-import { updatePricing } from "@/app/_lib/actions_all/actions_pricing";
+import {
+  deleteTreatment,
+  insertTreatment,
+  updatePricing,
+} from "@/app/_lib/actions_all/actions_pricing";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 type Treatment = {
-  id: number | string;
+  id: string;
   treatment: string;
   price: string;
   sale: string;
@@ -18,33 +22,60 @@ type PricingFormProps = {
   treatments: Treatment[];
   user?: string | null;
   isAdmin?: boolean;
+  serviceId?: string;
 };
 
 export default function PricingForm({
   // title,
   treatments,
   isAdmin,
+  serviceId,
 }: PricingFormProps) {
   const router = useRouter();
   const [formTreatments, setFormTreatments] = useState(treatments);
   const [lastSavedTreatments, setLastSavedTreatments] = useState(treatments);
   const [isPending, startTransition] = useTransition();
-
-  function handleInsertTreatment() {
-    console.log("inserted new treatment");
-  }
-
-  function handleDeleteTreatment(id: number | string) {
-    console.log("deleted treatment", id);
-  }
+  // Stav pre vizuálnu spätnú väzbu pri mazaní konkrétnej položky
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     setFormTreatments(treatments);
     setLastSavedTreatments(treatments);
   }, [treatments]);
 
+  function handleInsertTreatment() {
+    startTransition(async () => {
+      try {
+        await insertTreatment(serviceId || "");
+        router.refresh();
+        toast.success("Nová procedúra bola pridaná ✨");
+      } catch (error) {
+        console.error(error);
+        toast.error("Chyba pri pridávaní novej procedúry ❌");
+      }
+    });
+  }
+
+  // Funkcia na mazanie procedúry musí byť async, aby sme mohli použiť await.
+  // Funkcia na mazanie procedúry s vizuálnou spätnou väzbou
+  async function handleDeleteTreatment(id: string) {
+    if (!confirm("Naozaj chcete odstrániť túto procedúru?")) return;
+    setDeletingId(id);
+    try {
+      await deleteTreatment(id);
+      router.refresh();
+      toast.success("Procedúra bola odstránená ✨");
+    } catch (error) {
+      console.error(error);
+      toast.error("Chyba pri odstraňovaní procedúry ❌");
+    } finally {
+      setDeletingId(null);
+    }
+  }
+
   function handleChange(
-    id: number | string,
+    id: string,
+
     field: "treatment" | "price" | "sale",
     value: string,
   ) {
@@ -228,8 +259,13 @@ Akcia: ${item.sale || "-"}`;
                           className="inline-flex h-12 items-center justify-center rounded-xl border border-goldDark/15 bg-white px-3 text-sm text-redDark font-bold transition hover:cursor-pointer hover:border-goldDark/25 hover:bg-redMain/10 2xl:h-14 active:scale-95"
                           title="Vymazať položku"
                           aria-label={`Vymazať položku ${item.treatment}`}
+                          disabled={isPending || deletingId === item.id}
                         >
-                          <RiDeleteBin6Line />
+                          {deletingId === item.id ? (
+                            <span className="animate-spin mr-1 w-5 h-5 border-2 border-red-300 border-t-transparent rounded-full"></span>
+                          ) : (
+                            <RiDeleteBin6Line />
+                          )}
                         </button>
                       </div>
                     )}
@@ -244,10 +280,13 @@ Akcia: ${item.sale || "-"}`;
                 <button
                   type="button"
                   onClick={handleInsertTreatment}
-                  className="inline-flex items-center gap-2 rounded-full border border-goldDark/20 bg-gradient-to-br from-[#fff6ee] to-[#fffdf9] px-5 py-2 text-sm font-semibold text-goldDark shadow-sm transition hover:border-goldDark/40 hover:bg-[#fffaf2] hover:-translate-y-0.5 active:scale-95 hover:cursor-pointer"
+                  className={`inline-flex items-center gap-2 rounded-full border border-goldDark/20 bg-gradient-to-br from-[#fff6ee] to-[#fffdf9] px-5 py-2 text-sm font-semibold text-goldDark shadow-sm transition hover:border-goldDark/40 hover:bg-[#fffaf2] hover:-translate-y-0.5 active:scale-95 hover:cursor-pointer ${isPending ? 'cursor-not-allowed opacity-60 hover:translate-y-0' : ''}`}
                   title="Pridať položku"
+                  disabled={isPending}
+                  aria-label="Pridať položku"
                 >
-                  <span className="text-lg 2xl:text-xl">+</span> Pridať položku
+                  <span className="text-lg 2xl:text-xl">+</span>{" "}
+                  {isPending ? "Pridávam..." : "Pridať položku"}
                 </button>
               </div>
             )}

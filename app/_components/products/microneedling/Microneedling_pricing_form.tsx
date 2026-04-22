@@ -20,12 +20,14 @@ export default function Microneedling_pricing_form({
         : "",
   }));
 
+  // Slovensky: Exportujeme serviceId do PricingForm, aby vedel, pre ktorú službu pracuje.
   return (
     <PricingForm
       title="Microneedling"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={microneedling?.id || ""}
     />
   );
 }

@@ -7,6 +7,7 @@ type ImageGalleryItem = {
 
 export type PricingProps = {
   id: string
+  service_id: string
   treatment: string
   price_before_discount: number
   price_after_discount: number

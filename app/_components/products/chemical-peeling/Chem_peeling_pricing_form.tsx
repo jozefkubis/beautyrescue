@@ -5,6 +5,7 @@ type Chem_peeling_pricing_formProps = {
   chemicalPeelingService: ServiceRow | null;
   user?: string | null;
   isAdmin?: boolean;
+  serviceId?: string;
 };
 
 export default function Chem_peeling_pricing_form({
@@ -29,6 +30,7 @@ export default function Chem_peeling_pricing_form({
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={chemicalPeelingService?.id || ""}
     />
   );
 }

@@ -20,12 +20,14 @@ export default function Oxygeneo_pricing_form({
         : "",
   }));
 
+  // Slovensky: Exportujeme serviceId do PricingForm, aby vedel, pre ktorú službu pracuje.
   return (
     <PricingForm
       title="Oxygeneo - okysličenie pleti"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={oxygeneo?.id || ""}
     />
   );
 }

@@ -22,12 +22,14 @@ export default function Profhilo_pricing_form({
         : "",
   }));
 
+  // Slovensky: Exportujeme serviceId do PricingForm, aby vedel, pre ktorú službu pracuje.
   return (
     <PricingForm
       title="Profhilo"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={profhilo?.id || ""}
     />
   );
 }
