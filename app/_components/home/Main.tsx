@@ -1,7 +1,7 @@
 "use client";
 
-import type { HomeImageProps } from "@/app/_lib/data_services/data_home_image";
 import type { PromotionMainProps } from "@/app/_lib/data_services/data_promotion";
+import type { HomeImageProps } from "@/app/_lib/data_services_all/data_home_image";
 import { motion } from "framer-motion";
 import Interior from "./main/interior/Interior";
 import Location from "./main/location/Location";

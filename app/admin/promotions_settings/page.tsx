@@ -1,11 +1,11 @@
 import PromotionUpdateForm from "@/app/_components/admin/PromotionUpdateForm";
 import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
-import getPromotion from "@/app/_lib/data_services/data_promotion";
+import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
-  const [user, promotionData] = await Promise.all([
+  const [user, promotion] = await Promise.all([
     getCurrentUser(),
-    getPromotion("novinky"),
+    getServiceBySlug("novinky"),
   ]);
 
   const isAdmin =
@@ -27,7 +27,5 @@ export default async function Page() {
     );
   }
 
-  return (
-    <PromotionUpdateForm promotionData={promotionData} isAdmin={isAdmin} />
-  );
+  return <PromotionUpdateForm promotion={promotion} isAdmin={isAdmin} />;
 }

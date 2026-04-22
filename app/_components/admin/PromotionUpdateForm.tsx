@@ -5,50 +5,40 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
-import type { PromotionMainProps } from "@/app/_lib/data_services/data_promotion";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import { updatePromotion } from "../../_lib/actions/actions_promotion";
 
 type PromotionUpdateFormProps = {
-  promotionData: PromotionMainProps["promotionData"] | null;
+  promotion: ServiceRow | null | undefined;
   isAdmin?: boolean;
-};
-
-type PromotionFormValues = {
-  name: string;
-  summary: string;
-  paragraphs: string;
-  isActive: boolean;
 };
 
 // Admin formulár pre úpravu noviniek/akcie (názov, perex a odseky obsahu).
 export default function PromotionUpdateForm({
-  promotionData,
+  promotion,
   isAdmin,
 }: PromotionUpdateFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const initialValues = useMemo<PromotionFormValues>(
+  const initialValues = useMemo(
     () => ({
-      name: promotionData?.name ?? "",
-      summary: promotionData?.summary ?? "",
-      paragraphs: Array.isArray(promotionData?.content?.paragraphs)
-        ? promotionData.content.paragraphs.join("\n\n")
-        : "",
-      isActive: promotionData?.is_active ?? false,
+      title: promotion?.title ?? "",
+      text: promotion?.text ?? "",
+      isActive: promotion?.is_active ?? false,
     }),
-    [promotionData],
+    [promotion],
   );
 
   const [formValues, setFormValues] = useState(initialValues);
   const [lastSavedValues, setLastSavedValues] = useState(initialValues);
 
-  function handleChange<K extends keyof PromotionFormValues>(
+  function handleChange<K extends keyof typeof initialValues>(
     field: K,
-    value: PromotionFormValues[K],
+    value: (typeof initialValues)[K],
   ) {
     setFormValues((prev) => ({ ...prev, [field]: value }));
   }
@@ -62,7 +52,7 @@ export default function PromotionUpdateForm({
     startTransition(async () => {
       formData.set(
         "slug",
-        (promotionData as { slug?: string } | null)?.slug ?? "novinky",
+        (promotion as { slug?: string } | null)?.slug ?? "novinky",
       );
       formData.set("data", JSON.stringify(formValues));
 
@@ -82,7 +72,7 @@ export default function PromotionUpdateForm({
   const hasChanges =
     JSON.stringify(formValues) !== JSON.stringify(lastSavedValues);
 
-  if (!promotionData) {
+  if (!promotion) {
     return (
       <div className="section-shell mx-auto w-full max-w-3xl p-6 text-center text-redDark">
         Dáta pre Novinky sa nepodarilo načítať.
@@ -105,27 +95,19 @@ export default function PromotionUpdateForm({
         </div>
 
         <form action={handleSubmit} className="space-y-5 px-5 pb-6 md:px-8">
-          <TextareaField
-            label="Summary"
-            value={formValues.summary}
-            onChange={(e) => handleChange("summary", e.target.value)}
-            readOnly={!isAdmin}
-            rows={4}
-          />
-
           <InputField
             label="Názov"
-            value={formValues.name}
-            onChange={(e) => handleChange("name", e.target.value)}
+            value={formValues.title}
+            onChange={(e) => handleChange("title", e.target.value)}
             readOnly={!isAdmin}
           />
 
           <TextareaField
-            label="Odseky obsahu"
-            value={formValues.paragraphs}
-            onChange={(e) => handleChange("paragraphs", e.target.value)}
+            label="Text"
+            value={formValues.text}
+            onChange={(e) => handleChange("text", e.target.value)}
             readOnly={!isAdmin}
-            rows={10}
+            rows={18}
           />
 
           <CheckboxField

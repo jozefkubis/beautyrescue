@@ -1,6 +1,5 @@
 import Microneedling_update_form from "@/app/_components/products/microneedling/Microneedling_update_form";
 import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
-import getMicroneedling from "@/app/_lib/data_services/data_microneedling";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 import {
   getTknCategories,
