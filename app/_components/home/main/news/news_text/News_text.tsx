@@ -1,11 +1,7 @@
 import { brandFont } from "@/app/_components/fonts";
-import type { PromotionMainProps } from "@/app/_lib/data_services/data_promotion";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 
-type News_textProps = {
-  paragraphs: PromotionMainProps["promotionData"]["content"]["paragraphs"];
-  promotionName: PromotionMainProps["promotionData"]["name"];
-  isActive: PromotionMainProps["promotionData"]["is_active"];
-};
+type NewsTextProps = ServiceRow & { isActive: boolean };
 
 function IfNoPromotion() {
   return (
@@ -21,11 +17,8 @@ function IfNoPromotion() {
   );
 }
 
-export default function News_text({
-  paragraphs,
-  promotionName,
-  isActive,
-}: News_textProps) {
+// Komponent zobrazí text novinky alebo informáciu, že nie je aktívna akcia
+export default function News_text({ text, title, isActive }: NewsTextProps) {
   return (
     <div className="w-full justify-center flex">
       <div className="section-shell fade-up mt-10 flex w-full max-w-4xl flex-col items-center px-4 text-center py-8 sm:px-6 lg:px-12 lg:py-12 2xl:px-16">
@@ -33,7 +26,7 @@ export default function News_text({
         <h1
           className={`premium-title pb-3 text-4xl font-semibold tracking-tight text-goldDark sm:text-5xl lg:pb-4 2xl:text-6xl ${brandFont.className}`}
         >
-          <span className="italic">{promotionName}</span>
+          <span className="italic">{title}</span>
         </h1>
 
         {/* Dekoratívna linka pod nadpisom */}
@@ -41,10 +34,7 @@ export default function News_text({
 
         {/* Každý odsek má vlastný element pre správne medzery a sémantiku */}
         <div className="flex max-w-2xl flex-col text-center text-sm leading-7 text-greyMain/80 gap-4 sm:gap-3 sm:text-base sm:leading-8 2xl:text-lg italic">
-          {isActive &&
-            paragraphs.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
+          <p>{text}</p>
           {!isActive && <IfNoPromotion />}
         </div>
       </div>
