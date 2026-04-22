@@ -22,8 +22,8 @@ import FileField from "../../FileField";
 import SectionNavigation from "../../SectionNavigation";
 
 type Props = {
-  microneedling: ServiceRow;
-  tknCategories: TknCategoryWithProducts[];
+  microneedling: ServiceRow | null | undefined;
+  tknCategories: TknCategoryWithProducts[] | [];
   isAdmin?: boolean;
   microneedlingData?: MicroneedlingMainProps; // Tento prop je zatial potrebný kvôli kompatibilite s existujúcou logikou, ale postupne by sa mal nahradiť iba ServiceRow dátami.
 };
