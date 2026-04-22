@@ -1,12 +1,11 @@
 "use client";
 
-import type { ProfhiloMainProps } from "@/app/_lib/data_services/data_profhilo";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useState } from "react";
 import SectionNavigation from "../../SectionNavigation";
 import ProfhiloMain_update_form from "./ProfhiloMain_update_form";
 import ProfhiloSectionOne_update_form from "./ProfhiloSectionOne_update_form";
 import ProfhiloSectionTwo_update_form from "./ProfhiloSectionTwo_update_form";
-import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 
 type Profhilo_update_formProps = {
   profhiloData: ServiceRow | null;

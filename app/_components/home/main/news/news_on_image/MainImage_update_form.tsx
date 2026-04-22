@@ -3,7 +3,7 @@
 import FileField from "@/app/_components/FileField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import UndoButton from "@/app/_components/UndoButton";
-import { updateMainImage } from "@/app/_lib/actions/actions_main_image";
+import { updateMainImage } from "@/app/_lib/actions_all/actions_main_image";
 import type { HomeImageProps } from "@/app/_lib/data_services_all/data_home_image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
