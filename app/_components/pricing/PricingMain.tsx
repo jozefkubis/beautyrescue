@@ -154,7 +154,8 @@ export default function PricingMain({
     {
       id: 11,
       title: "Microneedling",
-      description: "Omladenie a regenerácia pleti pomocou mikronáhľadov.",
+      description:
+        "Omladenie a regenerácia pleti pomocou DermaPen technológie.",
       // Komponent očakáva prop microneedling
       value: <Microneedling_pricing_form microneedling={microneedlingData} />,
     },
