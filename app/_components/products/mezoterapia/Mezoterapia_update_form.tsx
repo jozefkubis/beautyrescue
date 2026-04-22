@@ -10,6 +10,7 @@ import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
 import UndoButton from "@/app/_components/UndoButton";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 
 // --- HOOKY A NOTIFIKÁCIE ---
 import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
@@ -17,20 +18,12 @@ import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import SectionNavigation from "../../SectionNavigation";
 
-// --- TYPY PRE DÁTA ---
-export type MezoterapiaData = {
-  slug?: string;
-  title?: string;
-  text?: string;
-  is_active?: boolean;
-};
-
 // --- PROPS PRE HLAVNÝ FORMULÁR ---
 // Prijíma dáta pre všetky tri sekcie a informáciu, či je užívateľ admin
 type MezoterapiaUpdateFormProps = {
-  mezoterapiaData: MezoterapiaData;
-  mezoterapiaInvasiveData: MezoterapiaData;
-  mezoterapiaNonInvasiveData: MezoterapiaData;
+  mezoterapiaData: ServiceRow | null | undefined;
+  mezoterapiaInvasiveData: ServiceRow | null | undefined;
+  mezoterapiaNonInvasiveData: ServiceRow | null | undefined;
   isAdmin?: boolean;
 };
 
@@ -60,7 +53,7 @@ function SingleMezoterapiaForm({
   isAdmin,
   type,
 }: {
-  data: MezoterapiaData;
+  data: ServiceRow | null | undefined;
   label: string;
   isAdmin?: boolean;
   type: "main" | "invasive" | "noninvasive";
