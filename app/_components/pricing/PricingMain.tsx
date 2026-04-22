@@ -137,7 +137,7 @@ export default function PricingMain({
       value: (
         <Profhilo_pricing_form
           profhilo={profhiloData}
-          profhiloStructura={undefined}
+          // profhiloStructura={undefined}
         />
       ),
     },
