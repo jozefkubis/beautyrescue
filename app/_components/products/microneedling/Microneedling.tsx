@@ -15,7 +15,7 @@ type MicroneedlingProps = {
   tknCategories: TknCategoryWithProducts[];
   user?: string | null;
   isAdmin?: boolean;
-  microneedling?: ServiceRow | null;
+  microneedling?: ServiceRow | null | undefined;
 };
 
 export default function Microneedling({

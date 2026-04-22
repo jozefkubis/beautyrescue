@@ -30,8 +30,7 @@ export default async function Page() {
     );
   }
 
-  const [microneedlingData, categories, microneedling] = await Promise.all([
-    getMicroneedling("microneedling"),
+  const [categories, microneedling] = await Promise.all([
     getTknCategories(),
     getServiceBySlug("microneedling"),
   ]);
@@ -46,7 +45,6 @@ export default async function Page() {
 
   return (
     <Microneedling_update_form
-      microneedlingData={microneedlingData}
       microneedling={microneedling}
       tknCategories={tknCategories}
       isAdmin={isAdmin}
