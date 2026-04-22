@@ -1,6 +1,5 @@
 "use client";
 
-import type { ChemicalPeelingMainProps } from "@/app/_lib/data_services/data_chemical_peeling";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import ExpandText from "../../ExpandText";

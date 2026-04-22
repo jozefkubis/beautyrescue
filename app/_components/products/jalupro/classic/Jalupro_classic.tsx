@@ -2,7 +2,6 @@
 
 import ExpandText from "@/app/_components/ExpandText";
 import { brandFont } from "@/app/_components/fonts";
-import type { JaluproClassicProps } from "@/app/_lib/data_services/data_jalupro";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Jalupro_classic_pricing_form from "./Jalupro_classic_pricing_form";

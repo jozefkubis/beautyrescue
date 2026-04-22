@@ -1,11 +1,10 @@
 "use client";
 
-// import { dataAboutUs } from "@/app/_lib/data_services/data_about_us"
+import { AboutMainProps } from "@/app/_lib/data_services_all/data_about";
 import Image from "next/image";
 import ExpandText from "../ExpandText";
 import { brandFont } from "../fonts";
 import AboutText from "./AboutText";
-import { AboutMainProps } from "@/app/_lib/data_services_all/data_about";
 
 export default function AboutMain({ aboutUsData }: AboutMainProps) {
   const uploadedImageUrl = aboutUsData.image_url?.trim();

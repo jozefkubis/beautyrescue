@@ -2,11 +2,10 @@
 
 import ExpandText from "@/app/_components/ExpandText";
 import { brandFont } from "@/app/_components/fonts";
-import type { JaluproSuperHydroProps } from "@/app/_lib/data_services/data_jalupro";
+import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Jalupro_super_hydro_pricing_form from "./Jalupro_super_hydro_pricing_form";
 import Jalupro_super_hydro_text from "./Jalupro_super_hydro_text";
-import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 
 type Jalupro_super_hydroProps = {
   jaluproSuperHydro?: ServiceRow | null | undefined;

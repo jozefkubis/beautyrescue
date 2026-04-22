@@ -11,7 +11,6 @@ import {
   updateTknVisibility,
 } from "@/app/_lib/actions_all/actions_microneedling";
 import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
-import type { MicroneedlingMainProps } from "@/app/_lib/data_services/data_microneedling";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import type { TknCategoryWithProducts } from "@/app/_lib/data_services_all/data_tkn";
 import Link from "next/link";
@@ -25,7 +24,6 @@ type Props = {
   microneedling: ServiceRow | null | undefined;
   tknCategories: TknCategoryWithProducts[] | [];
   isAdmin?: boolean;
-  microneedlingData?: MicroneedlingMainProps; // Tento prop je zatial potrebný kvôli kompatibilite s existujúcou logikou, ale postupne by sa mal nahradiť iba ServiceRow dátami.
 };
 
 type VisibilityState = {

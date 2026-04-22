@@ -1,4 +1,3 @@
-// import { dataAboutUs } from "@/app/_lib/data_services/data_about_us"
 import type { AboutMainProps } from "@/app/_lib/data_services_all/data_about";
 
 export default function AboutText({ aboutUsData }: AboutMainProps) {

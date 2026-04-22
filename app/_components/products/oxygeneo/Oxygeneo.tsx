@@ -1,6 +1,5 @@
 "use client";
 
-import type { OxygeneoMainProps } from "@/app/_lib/data_services/data_oxygeneo";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import ExpandText from "../../ExpandText";
@@ -14,11 +13,7 @@ type OxygeneoProps = {
   isAdmin?: boolean;
 };
 
-export default function Oxygeneo({
-  oxygeneo,
-  user,
-  isAdmin,
-}: OxygeneoProps) {
+export default function Oxygeneo({ oxygeneo, user, isAdmin }: OxygeneoProps) {
   // Ak je v DB nahraný obrázok zo Storage, použijeme ho; inak ostáva lokálny fallback.
   const uploadedImageUrl = oxygeneo?.image_url?.trim();
 
