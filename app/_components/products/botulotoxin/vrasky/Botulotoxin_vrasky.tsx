@@ -2,12 +2,12 @@
 
 import ExpandText from "@/app/_components/ExpandText";
 import { brandFont } from "@/app/_components/fonts";
+import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Botulotoxin_vrasky_text from "./Botulotoxin_vrasky_text";
-import { ServiceRow } from "@/app/_lib/data_services_all/data_services";  
 
 type BotulotoxinVraskyProps = {
-  botulotoxinVrasky: ServiceRow;
+  botulotoxinVrasky: ServiceRow | null | undefined;
 };
 
 export default function Botulotoxin_vrasky({
@@ -50,9 +50,7 @@ export default function Botulotoxin_vrasky({
           </h1>
 
           <ExpandText>
-            <Botulotoxin_vrasky_text
-              botulotoxinVrasky={botulotoxinVrasky}
-            />
+            <Botulotoxin_vrasky_text botulotoxinVrasky={botulotoxinVrasky} />
           </ExpandText>
         </div>
       </div>
