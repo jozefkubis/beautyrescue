@@ -30,6 +30,14 @@ export default function PricingForm({
   const [lastSavedTreatments, setLastSavedTreatments] = useState(treatments);
   const [isPending, startTransition] = useTransition();
 
+  function handleInsertTreatment() {
+    console.log("inserted new treatment");
+  }
+
+  function handleDeleteTreatment(id: number | string) {
+    console.log("deleted treatment", id);
+  }
+
   useEffect(() => {
     setFormTreatments(treatments);
     setLastSavedTreatments(treatments);
@@ -216,7 +224,7 @@ Akcia: ${item.sale || "-"}`;
 
                         <button
                           type="button"
-                          onClick={() => console.log("deleted item", item.id)}
+                          onClick={() => handleDeleteTreatment(item.id)}
                           className="inline-flex h-12 items-center justify-center rounded-xl border border-goldDark/15 bg-white px-3 text-sm text-redDark font-bold transition hover:cursor-pointer hover:border-goldDark/25 hover:bg-redMain/10 2xl:h-14 active:scale-95"
                           title="Vymazať položku"
                           aria-label={`Vymazať položku ${item.treatment}`}
@@ -235,7 +243,7 @@ Akcia: ${item.sale || "-"}`;
               <div className="flex justify-end mt-4">
                 <button
                   type="button"
-                  onClick={() => console.log("položka pridaná")}
+                  onClick={handleInsertTreatment}
                   className="inline-flex items-center gap-2 rounded-full border border-goldDark/20 bg-gradient-to-br from-[#fff6ee] to-[#fffdf9] px-5 py-2 text-sm font-semibold text-goldDark shadow-sm transition hover:border-goldDark/40 hover:bg-[#fffaf2] hover:-translate-y-0.5 active:scale-95 hover:cursor-pointer"
                   title="Pridať položku"
                 >
