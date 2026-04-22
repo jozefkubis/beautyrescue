@@ -7,7 +7,7 @@ import Image from "next/image";
 import Botulotoxin_potenie_text from "./Botulotoxin_potenie_text";
 
 type BotulotoxinPotenieProps = {
-  botulotoxinPotenie: ServiceRow;
+  botulotoxinPotenie: ServiceRow | null | undefined;
 };
 
 export default function Botulotoxin_potenie({

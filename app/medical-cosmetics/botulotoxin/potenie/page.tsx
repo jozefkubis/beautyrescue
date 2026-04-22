@@ -3,7 +3,6 @@ import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
 
 export default async function Page() {
   const botulotoxinPotenie = await getServiceBySlug("botulotoxin-potenie");
-  console.log("Botulotoxin Potenie Data:", botulotoxinPotenie);
 
   const isActive = botulotoxinPotenie?.is_active ?? false;
 
