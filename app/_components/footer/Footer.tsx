@@ -63,7 +63,10 @@ export default function Footer() {
         </div>
 
         {/* Form */}
-        <div className="rounded-2xl border border-goldLight/25 bg-white/5 p-4 backdrop-blur-sm">
+        <div
+          id="kontakt"
+          className="rounded-2xl border border-goldLight/25 bg-white/5 p-4 backdrop-blur-sm"
+        >
           <ContactForm />
         </div>
       </div>
