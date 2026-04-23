@@ -57,7 +57,7 @@ const scriptSrc = [
   "'self'",
   "'unsafe-inline'",
   "'unsafe-eval'",
-  "https://vercel.live", // Vercel Toolbar / Feedback / preview tools
+  "https://vercel.live", // Vercel Toolbar / Feedback / Comments
   "https://va.vercel-scripts.com", // Vercel Analytics script
 ];
 
@@ -69,9 +69,17 @@ const connectSrc = [
   "'self'",
   "https://*.supabase.co",
   "wss://*.supabase.co",
-  "https://vitals.vercel-insights.com", // Vercel Speed Insights
-  "https://vercel.live", // Vercel Toolbar / Feedback
+  "https://vitals.vercel-insights.com", // Vercel Analytics / Speed Insights
+  "https://vercel.live", // Vercel Toolbar / Feedback / Comments
   "wss://ws-us3.pusher.com", // Vercel Toolbar realtime
+];
+
+
+// Zoznam povolených zdrojov pre frame-src v Content-Security-Policy.
+// Umožňuje vkladať iframe len z vlastného webu a z Vercel Toolbaru (napr. pre feedback).
+const frameSrc = [
+  "'self'",
+  "https://vercel.live", // Vercel Toolbar / Feedback iframe
 ];
 
 
@@ -114,6 +122,7 @@ const securityHeaders = [
       `img-src ${imgSrc.join(" ")}`,
       "font-src 'self' data:",
       `connect-src ${connectSrc.join(" ")}`,
+      `frame-src ${frameSrc.join(" ")}`,
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
