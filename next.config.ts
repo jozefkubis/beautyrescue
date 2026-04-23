@@ -51,13 +51,14 @@ const supabaseHostname = getRequiredHostname(supabaseUrl);
 
 
 // Zoznam povolených zdrojov pre script-src v Content-Security-Policy.
-// Umožňuje spúšťať skripty len z vlastného webu, prípadne Vercel Toolbar a preview tools.
+// Umožňuje spúšťať skripty len z vlastného webu, prípadne Vercel Toolbar, preview tools a Vercel Analytics.
 // 'unsafe-inline' a 'unsafe-eval' sú povolené kvôli Next.js a niektorým knižniciam, ale v ideálnom prípade by sa mali minimalizovať.
 const scriptSrc = [
   "'self'",
   "'unsafe-inline'",
   "'unsafe-eval'",
   "https://vercel.live", // Vercel Toolbar / Feedback / preview tools
+  "https://va.vercel-scripts.com", // Vercel Analytics script
 ];
 
 
@@ -68,9 +69,19 @@ const connectSrc = [
   "'self'",
   "https://*.supabase.co",
   "wss://*.supabase.co",
-  "https://vitals.vercel-insights.com", // Vercel Analytics / Speed Insights
+  "https://vitals.vercel-insights.com", // Vercel Speed Insights
   "https://vercel.live", // Vercel Toolbar / Feedback
   "wss://ws-us3.pusher.com", // Vercel Toolbar realtime
+];
+
+
+// Zoznam povolených zdrojov pre img-src v Content-Security-Policy.
+// Umožňuje načítavať obrázky z vlastného webu, Supabase storage, a tiež podporuje data: a blob: pre uploady a generované obrázky.
+const imgSrc = [
+  "'self'",
+  "data:",
+  "blob:",
+  `https://${supabaseHostname}`,
 ];
 
 
@@ -100,7 +111,7 @@ const securityHeaders = [
       "default-src 'self'",
       `script-src ${scriptSrc.join(" ")}`,
       "style-src 'self' 'unsafe-inline'",
-      `img-src 'self' data: blob: https://${supabaseHostname}`,
+      `img-src ${imgSrc.join(" ")}`,
       "font-src 'self' data:",
       `connect-src ${connectSrc.join(" ")}`,
       "frame-ancestors 'none'",
