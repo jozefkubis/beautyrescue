@@ -12,6 +12,7 @@ import MobileHeader from "./_components/home/header/MobileHeader";
 import Navigation from "./_components/navigation/Navigation";
 import { getCurrentUser } from "./_lib/actions_all/auth_actions";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -66,6 +67,7 @@ export default async function RootLayout({
           <Header />
         </div>
         {children}
+        <Analytics />
         {/* 🔔 Toasty */}
         <Toaster
           position="top-right"
