@@ -4,6 +4,7 @@ npm install @supabase/supabase-js
 npm install @supabase/ssr
 npm install react-hot-toast
 npm install resend
+npm install @vercel/analytics
 
 ADMIN_EMAIL=kubis.jozef@outlook.com
 
