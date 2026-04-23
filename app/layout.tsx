@@ -12,7 +12,7 @@ import MobileHeader from "./_components/home/header/MobileHeader";
 import Navigation from "./_components/navigation/Navigation";
 import { getCurrentUser } from "./_lib/actions_all/auth_actions";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
 
 const poppins = Poppins({
   subsets: ["latin"],
