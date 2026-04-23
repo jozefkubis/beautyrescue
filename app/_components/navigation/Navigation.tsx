@@ -189,9 +189,19 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
             )}
           </div>
 
-          <div className="flex items-center justify-center rounded-r-xl bg-linear-to-r from-goldDark via-goldLight to-goldDark px-12 py-4 text-xl font-medium tracking-wide text-greyMain transition duration-300 hover:cursor-pointer hover:brightness-110">
+          {/* Slovensky: Kontakt je teraz link, ktorý plynulo scrolluje na sekciu s kontaktným formulárom v pätičke */}
+          <button
+            type="button"
+            className="flex items-center justify-center rounded-r-xl bg-linear-to-r from-goldDark via-goldLight to-goldDark px-12 py-4 text-xl font-medium tracking-wide text-greyMain transition duration-300 hover:cursor-pointer hover:brightness-110"
+            onClick={() => {
+              const el = document.getElementById("kontakt");
+              if (el) {
+                el.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
             <h4>Kontakt</h4>
-          </div>
+          </button>
         </div>
       </div>
 
