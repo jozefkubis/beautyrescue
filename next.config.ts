@@ -1,5 +1,6 @@
 
 // Importujeme typ NextConfig, aby sme mali typovú kontrolu pre konfiguráciu Next.js
+// (pomáha nám to s autocomplete a chybami v konfigurácii)
 import type { NextConfig } from "next";
 
 
@@ -30,9 +31,7 @@ function getRequiredHostname(url?: string) {
 
   // Povolený je iba HTTPS protokol kvôli bezpečnosti.
   if (parsed.protocol !== "https:") {
-    throw new Error(
-      "NEXT_PUBLIC_SUPABASE_URL must use https."
-    );
+    throw new Error("NEXT_PUBLIC_SUPABASE_URL must use https.");
   }
 
   // Povolené sú len domény *.supabase.co (štandardný Supabase hosting).
@@ -49,6 +48,16 @@ function getRequiredHostname(url?: string) {
 
 // Získame hostname z validovanej Supabase URL, ktorý potom použijeme v ďalšej konfigurácii.
 const supabaseHostname = getRequiredHostname(supabaseUrl);
+
+
+// Zoznam povolených zdrojov pre connect-src v Content-Security-Policy.
+// Umožňuje komunikáciu len s vlastným backendom, Supabase a (voliteľne) Vercel Analytics.
+const connectSrc = [
+  "'self'",
+  "https://*.supabase.co",
+  "wss://*.supabase.co",
+  "https://vitals.vercel-insights.com", // iba ak používaš Vercel Analytics/Speed Insights
+];
 
 
 // Bezpečnostné HTTP hlavičky, ktoré chránia web pred bežnými útokmi a únikmi údajov.
@@ -79,7 +88,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline'",
       `img-src 'self' data: blob: https://${supabaseHostname}`,
       "font-src 'self' data:",
-      "connect-src 'self' https://*.supabase.co wss://*.supabase.co",
+      `connect-src ${connectSrc.join(" ")}`,
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
