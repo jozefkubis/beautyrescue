@@ -22,12 +22,14 @@ export default function Kyselina_hyaluronova_pricing_form({
         : "",
   }));
 
+  // Slovensky: Exportujeme serviceId do PricingForm, aby vedel, pre ktorú službu pracuje.
   return (
     <PricingForm
       title="Kyselina hyaluronová"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={kyselinaHyaluronova?.id || ""}
     />
   );
 }

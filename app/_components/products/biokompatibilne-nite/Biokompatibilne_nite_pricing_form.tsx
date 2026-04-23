@@ -67,12 +67,14 @@ export default function Biokompatibilne_nite_pricing_form({
         : "",
   }));
 
+  // Slovensky: Exportujeme serviceId do PricingForm, aby vedel, pre ktorú službu pracuje.
   return (
     <PricingForm
       title="Biokompatibilné nite"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={biokompatiblineNite?.id || ""}
     />
   );
 }

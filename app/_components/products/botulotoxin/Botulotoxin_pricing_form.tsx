@@ -115,12 +115,14 @@ export default function Botulotoxin_pricing_form({
         : "",
   }));
 
+  // Slovensky: Exportujeme serviceId do PricingForm, aby vedel, pre ktorú službu pracuje.
   return (
     <PricingForm
       title="Botulotoxín"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={botulotoxin?.id || ""}
     />
   );
 }
