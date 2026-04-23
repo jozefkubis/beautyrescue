@@ -50,13 +50,27 @@ function getRequiredHostname(url?: string) {
 const supabaseHostname = getRequiredHostname(supabaseUrl);
 
 
+// Zoznam povolených zdrojov pre script-src v Content-Security-Policy.
+// Umožňuje spúšťať skripty len z vlastného webu, prípadne Vercel Toolbar a preview tools.
+// 'unsafe-inline' a 'unsafe-eval' sú povolené kvôli Next.js a niektorým knižniciam, ale v ideálnom prípade by sa mali minimalizovať.
+const scriptSrc = [
+  "'self'",
+  "'unsafe-inline'",
+  "'unsafe-eval'",
+  "https://vercel.live", // Vercel Toolbar / Feedback / preview tools
+];
+
+
 // Zoznam povolených zdrojov pre connect-src v Content-Security-Policy.
-// Umožňuje komunikáciu len s vlastným backendom, Supabase a (voliteľne) Vercel Analytics.
+// Umožňuje komunikáciu len s vlastným backendom, Supabase, Vercel Analytics a Vercel Toolbar.
+// Pusher je tu kvôli realtime funkciám Vercel Toolbaru.
 const connectSrc = [
   "'self'",
   "https://*.supabase.co",
   "wss://*.supabase.co",
-  "https://vitals.vercel-insights.com", // iba ak používaš Vercel Analytics/Speed Insights
+  "https://vitals.vercel-insights.com", // Vercel Analytics / Speed Insights
+  "https://vercel.live", // Vercel Toolbar / Feedback
+  "wss://ws-us3.pusher.com", // Vercel Toolbar realtime
 ];
 
 
@@ -84,7 +98,7 @@ const securityHeaders = [
     value: [
       // Povolené zdroje pre rôzne typy obsahu (ochrana pred XSS, data leak, atď.)
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      `script-src ${scriptSrc.join(" ")}`,
       "style-src 'self' 'unsafe-inline'",
       `img-src 'self' data: blob: https://${supabaseHostname}`,
       "font-src 'self' data:",
