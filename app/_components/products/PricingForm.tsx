@@ -43,16 +43,21 @@ export default function PricingForm({
     setLastSavedTreatments(treatments);
   }, [treatments]);
 
-  function handleInsertTreatment() {
+  async function handleInsertTreatment() {
     startTransition(async () => {
-      try {
-        await insertTreatment(serviceId || "");
-        router.refresh();
-        toast.success("Nová procedúra bola pridaná ✨");
-      } catch (error) {
-        console.error(error);
-        toast.error("Chyba pri pridávaní novej procedúry ❌");
-      }
+      const newTreatment = await insertTreatment(serviceId || "");
+
+      setFormTreatments((prev) => [
+        ...prev,
+        {
+          id: newTreatment.id,
+          treatment: newTreatment.treatment ?? "",
+          price: String(newTreatment.price_before_discount ?? ""),
+          sale: String(newTreatment.price_after_discount ?? ""),
+        },
+      ]);
+
+      toast.success("Nová procedúra bola pridaná ✨");
     });
   }
 
@@ -280,7 +285,7 @@ Akcia: ${item.sale || "-"}`;
                 <button
                   type="button"
                   onClick={handleInsertTreatment}
-                  className={`inline-flex items-center gap-2 rounded-full border border-goldDark/20 bg-gradient-to-br from-[#fff6ee] to-[#fffdf9] px-5 py-2 text-sm font-semibold text-goldDark shadow-sm transition hover:border-goldDark/40 hover:bg-[#fffaf2] hover:-translate-y-0.5 active:scale-95 hover:cursor-pointer ${isPending ? 'cursor-not-allowed opacity-60 hover:translate-y-0' : ''}`}
+                  className={`inline-flex items-center gap-2 rounded-full border border-goldDark/20 bg-gradient-to-br from-[#fff6ee] to-[#fffdf9] px-5 py-2 text-sm font-semibold text-goldDark shadow-sm transition hover:border-goldDark/40 hover:bg-[#fffaf2] hover:-translate-y-0.5 active:scale-95 hover:cursor-pointer ${isPending ? "cursor-not-allowed opacity-60 hover:translate-y-0" : ""}`}
                   title="Pridať položku"
                   disabled={isPending}
                   aria-label="Pridať položku"
