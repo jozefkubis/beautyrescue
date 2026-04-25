@@ -68,7 +68,8 @@ export default function PricingForm({
     setDeletingId(id);
     try {
       await deleteTreatment(id);
-      router.refresh();
+      setFormTreatments((prev) => prev.filter((item) => item.id !== id));
+      // router.refresh();
       toast.success("Procedúra bola odstránená ✨");
     } catch (error) {
       console.error(error);
@@ -219,6 +220,7 @@ Akcia: ${item.sale || "-"}`;
                         }
                         readOnly={!isAdmin}
                         aria-label="Cena"
+                        placeholder="-"
                         className={`h-12 w-full rounded-xl border border-goldDark/20 bg-[#fff9ef] px-4 text-sm font-semibold text-goldDark outline-none transition placeholder:text-goldDark/50 focus:border-goldDark/35 2xl:h-14 2xl:text-base ${
                           item.sale ? "line-through decoration-1" : ""
                         }`}
