@@ -1,28 +1,52 @@
-import { createClient } from "@supabase/supabase-js";
+import { createServerClient } from "@supabase/ssr";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { updateSession } from "./app/_lib/supabase/middleware";
 
 export async function proxy(request: NextRequest) {
-  // najprv refresh session (Supabase)
-  const response = await updateSession(request);
+  let response = NextResponse.next({
+    request,
+  });
 
-  // vytvorenie Supabase klienta (server-side)
-  const supabase = createClient(
+  const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) => {
+            request.cookies.set(name, value);
+          });
+
+          response = NextResponse.next({
+            request,
+          });
+
+          cookiesToSet.forEach(({ name, value, options }) => {
+            response.cookies.set(name, value, options);
+          });
+        },
+      },
+    }
   );
 
-  // zisti aktuálneho usera
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
+  console.log(
+    user ? `Authenticated as ${user.email}` : "No authenticated user"
+  );
+
   const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
 
-  // ak ide o /admin a user NIE JE prihlásený → redirect
   if (isAdminRoute && !user) {
     const homeUrl = new URL("/", request.url);
+    homeUrl.searchParams.set("login", "1");
+    homeUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
+
     return NextResponse.redirect(homeUrl);
   }
 
