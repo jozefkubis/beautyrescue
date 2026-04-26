@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useState } from "react"
-import { FiChevronDown, FiMenu, FiX } from "react-icons/fi"
-import { robotoCondensed } from "../../fonts"
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { FiChevronDown, FiMenu, FiX } from "react-icons/fi";
+import { robotoCondensed } from "../../fonts";
 
 type MobileNavItem = {
-  name: string
-  href: string
-  dropdown?: { name: string; href: string }[]
-}
+  name: string;
+  href: string;
+  dropdown?: { name: string; href: string }[];
+};
 
 const navigationLinks: MobileNavItem[] = [
   {
@@ -68,24 +68,24 @@ const navigationLinks: MobileNavItem[] = [
     name: "Akcia",
     href: "/promotion",
   },
-]
+];
 
 export default function MobileHeader() {
-  const pathname = usePathname()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const toggleDropdown = (name: string) => {
-    setOpenDropdown((prev) => (prev === name ? null : name))
-  }
+    setOpenDropdown((prev) => (prev === name ? null : name));
+  };
 
   const isLinkActive = (href: string, hasDropdown: boolean) => {
     if (hasDropdown) {
-      return pathname === href || pathname.startsWith(`${href}/`)
+      return pathname === href || pathname.startsWith(`${href}/`);
     }
 
-    return pathname === href
-  }
+    return pathname === href;
+  };
 
   return (
     <header className="relative z-40 lg:hidden">
@@ -196,5 +196,5 @@ export default function MobileHeader() {
         </nav>
       </div>
     </header>
-  )
+  );
 }
