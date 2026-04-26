@@ -1,5 +1,9 @@
 import { brandFont } from "@/app/_components/fonts";
 import AdminDashboardCard from "./AdminDashboardCard";
+import { RiCornerUpLeftDoubleLine, RiDropLine, RiImageLine, RiInformationLine, RiScissorsLine, RiSyringeLine, RiWindyLine } from "react-icons/ri";
+import { GiChemicalDrop } from "react-icons/gi";
+import { IoDiamondOutline } from "react-icons/io5";
+import { BsStars } from "react-icons/bs";
 
 const adminSections = [
   {
@@ -7,7 +11,7 @@ const adminSections = [
     title: "O nás",
     // description: "Úprava úvodných textov, podtextov a prezentačného obsahu značky.",
     label: "O nás",
-    // icon: RiInformationLine, // info → sedí pre about
+    icon: RiInformationLine, // info → sedí pre about
   },
 
   // 🧴 Kozmetika
@@ -16,35 +20,35 @@ const adminSections = [
     title: "Chemický peeling",
     // description: "Úprava textov, podtextov a prezentačných detailov procedúry.",
     label: "Kozmetika",
-    // icon: GiChemicalDrop, // chemický proces 👍
+    icon: GiChemicalDrop, // chemický proces 👍
   },
   {
     href: "/admin/cosmetics_settings/diamond-microdermabrasion_settings",
     title: "Diamantová mikrodermabrázia",
     // description: "Úprava textov, podtextov a prezentačného obsahu procedúry.",
     label: "Kozmetika",
-    // icon: IoDiamondOutline, // diamant 💎 → perfektné
+    icon: IoDiamondOutline, // diamant 💎 → perfektné
   },
   {
     href: "/admin/cosmetics_settings/mezoterapia_settings",
     title: "Mezoterapia",
     // description: "Úprava textov, podtextov a prezentačných detailov mezoterapie.",
     label: "Kozmetika",
-    // icon: RiSyringeLine, // injekcie 👍
+    icon: RiSyringeLine, // injekcie 👍
   },
   {
     href: "/admin/cosmetics_settings/microneedling_settings",
     title: "Microneedling",
     // description: "Úprava textov, podtextov a detailov microneedling sekcie.",
     label: "Kozmetika",
-    // icon: RiCornerUpLeftDoubleLine, // ideálne pre ihličky 👍
+    icon: RiCornerUpLeftDoubleLine, // ideálne pre ihličky 👍
   },
   {
     href: "/admin/cosmetics_settings/oxygeneo_settings",
     title: "Oxygeneo",
     // description: "Úprava textov, podtextov a benefitov Oxygeneo procedúry.",
     label: "Kozmetika",
-    // icon: RiWindyLine, // kyslík / vzduch 🌬️ → sedí lepšie
+    icon: RiWindyLine, // kyslík / vzduch 🌬️ → sedí lepšie
   },
 
   // 🏥 Lekárska kozmetika
@@ -53,50 +57,53 @@ const adminSections = [
     title: "Biokompatibilné Nite",
     // description: "Úprava textov, podtextov a prezentačných detailov procedúry.",
     label: "Lekárska Kozmetika",
-    // icon: RiScissorsLine, // jemne evokuje zákrok
+    icon: RiScissorsLine, // jemne evokuje zákrok
   },
   {
     href: "/admin/medical-cosmetics_settings/botulotoxin_settings",
     title: "Botulotoxín",
     // description: "Úprava textov, podkladových informácií a popisov botulotoxínu.",
     label: "Lekárska Kozmetika",
-    // icon: RiSyringeLine, // jasná voľba 👍
+    icon: RiSyringeLine, // jasná voľba 👍
   },
   {
     href: "/admin/medical-cosmetics_settings/jalupro_settings",
     title: "Jalupro",
     // description: "Úprava textov, podtextov a prezentačných detailov Jalupro sekcie.",
     label: "Lekárska Kozmetika",
-    // icon: RiDropLine, // hydratácia 💧
+    icon: RiDropLine, // hydratácia 💧
   },
   {
     href: "/admin/medical-cosmetics_settings/kyselina-hyaluronova_settings",
     title: "Kyselina Hyalurónová",
     // description: "Úprava textov, podtextov a obsahu pre výplne a hydratáciu.",
     label: "Lekárska Kozmetika",
-    // icon: RiDropLine, // hydratácia 💧 (konzistentné)
+    icon: RiDropLine, // hydratácia 💧 (konzistentné)
   },
   {
     href: "/admin/medical-cosmetics_settings/profhilo_settings",
     title: "Profhilo",
     // description: "Úprava textov, podtextov a prezentačných detailov Profhilo ošetrenia.",
     label: "Lekárska Kozmetika",
-    // icon: RiSyringeLine, // stále injekčná procedúra 👍
+    icon: RiSyringeLine, // stále injekčná procedúra 👍
   },
   {
     href: "/admin/acupuncture_settings",
     title: "Lekárska akupunktúra",
     label: "Akupunktúra",
+    icon: RiCornerUpLeftDoubleLine, // opäť ideálne pro ihličky 👍
   },
   {
     href: "/admin/promotions_settings",
     title: "Novinky a akcie",
     label: "Promotions",
+    icon: BsStars, // obecné info 👍
   },
   {
     href: "/admin/mainImage_settings",
     title: "Hlavný obrázok",
     label: "Hlavný obrázok",
+    icon: RiImageLine, // hlavný obrázok 🖼️
   },
 ] as const;
 
@@ -148,7 +155,7 @@ export default function AdminDashboard() {
                 title={section.title}
                 // description={section.description}
                 label={section.label}
-                // icon={section.icon}
+                icon={section.icon}
               />
             ))}
           </div>
