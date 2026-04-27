@@ -578,3 +578,47 @@ export async function insertTknProductRecord(
     };
   }
 }
+
+export async function insertTknCategoryRecord(
+  formData: FormData,
+): Promise<CmsActionResult> {
+
+
+  try {
+    const supabase = await requireAdmin();
+
+    const slug = normalizeText(formData.get("slug"));
+    const title = normalizeText(formData.get("title"));
+    const intro = normalizeText(formData.get("intro"));
+    const text = normalizeText(formData.get("text"));
+    const isActive = normalizeBoolean(formData.get("isActive"), true);
+
+    const insertData = {
+      slug,
+      title,
+      intro,
+      text,
+      is_active: isActive,
+    };
+    
+    const { error } = await supabase.from("tkn_categories").insert(insertData);
+    
+    if (error) {
+      throw new Error(`Chyba pri pridávaní kategórie: ${error.message}`);
+    }
+
+    revalidateCmsPaths();
+
+    return {
+      ok: true,
+      message: "Kategória bola úspešne pridaná.",
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: getErrorMessage(error),
+    };
+  }
+
+}
+
