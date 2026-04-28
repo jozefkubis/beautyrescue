@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 
 type UpdateProductFormProps = {
   product: TknProductRow | null;
-  initialCategorySlug?: string;
+  // initialCategorySlug?: string;
   onSaved?: () => void;
 };
 
@@ -100,7 +100,10 @@ export default function Update_product_form({
   }
 
   const isSubmitDisabled =
-    isSubmitting || !product?.slug || !values.name.trim();
+    initialValues === values ||
+    isSubmitting ||
+    !product?.slug ||
+    !values.name.trim();
 
   return (
     <form

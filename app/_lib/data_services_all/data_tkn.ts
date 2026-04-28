@@ -107,3 +107,5 @@ export async function getProductBySlug(slug: string) {
 
   return data as TknProductRow;
 }
+
+

@@ -1,15 +1,14 @@
+import Update_category_form from "@/app/_components/products/microneedling/Update_category_form";
 import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
-// import { getTknCategories } from "@/app/_lib/data_services_all/data_tkn";
-import Update_product_form from "@/app/_components/products/microneedling/Update_product_form";
-import { getProductBySlug } from "@/app/_lib/data_services_all/data_tkn";
+import { getTknCategoriesBySlug } from "@/app/_lib/data_services_all/data_tkn";
 import Link from "next/link";
 
-type UpdateProductPageProps = {
+type UpdateCategoryPageProps = {
   searchParams: Promise<{ category?: string; product?: string }>;
 };
 
-// Jednoducha admin stranka iba pre aktualizáciu existujúceho produktu v TKN kategorie.
-export default async function Page({ searchParams }: UpdateProductPageProps) {
+// Jednoducha admin stranka iba pre aktualizáciu existujúcej kategórie v TKN kategorie.
+export default async function Page({ searchParams }: UpdateCategoryPageProps) {
   const user = await getCurrentUser();
 
   const isAdmin =
@@ -24,7 +23,7 @@ export default async function Page({ searchParams }: UpdateProductPageProps) {
             Prístup zamietnutý
           </h1>
           <p className="text-sm text-greyMain">
-            Na aktualizáciu produktu sa musíš prihlásiť ako administrátor.
+            Na aktualizáciu kategórie sa musíš prihlásiť ako administrátor.
           </p>
         </div>
       </div>
@@ -32,15 +31,14 @@ export default async function Page({ searchParams }: UpdateProductPageProps) {
   }
 
   const params = await searchParams;
-  const product = await getProductBySlug(params?.product || "");
-  console.log("Nájdený produkt:", product);
+  const category = await getTknCategoriesBySlug(params?.category || "");
 
   return (
     <section className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up mx-auto w-full max-w-4xl p-5 lg:p-8">
         <div className="mb-5 flex items-center justify-between gap-3">
           <h1 className="text-2xl font-semibold italic text-goldDark lg:text-3xl">
-            Aktualizovať produkt
+            Aktualizovať kategóriu
           </h1>
           <Link
             href="/admin/cosmetics_settings/microneedling_settings"
@@ -50,7 +48,7 @@ export default async function Page({ searchParams }: UpdateProductPageProps) {
           </Link>
         </div>
 
-        <Update_product_form product={product} />
+        <Update_category_form category={category} />
       </div>
     </section>
   );

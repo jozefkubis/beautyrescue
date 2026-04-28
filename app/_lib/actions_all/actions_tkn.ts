@@ -727,3 +727,43 @@ export async function updateTknProductBySlug(
     };
   }
 }
+
+export async function updateTknCategoryBySlug(
+  formData: FormData,
+  slug: string, // pôvodný slug, len na nájdenie kategórie
+): Promise<CmsActionResult> {
+  try {
+    const supabase = await requireAdmin();
+
+    const title = normalizeText(formData.get("title"));
+    const intro = normalizeText(formData.get("intro"));
+    const text = normalizeText(formData.get("text"));
+
+    const updateData = {
+      title,
+      intro,
+      text,
+    };
+
+    const { error } = await supabase
+      .from("tkn_categories")
+      .update(updateData)
+      .eq("slug", slug);
+
+    if (error) {
+      throw new Error(`Chyba pri aktualizácii kategórie: ${error.message}`);
+    }
+
+    revalidateCmsPaths();
+
+    return {
+      ok: true,
+      message: "Kategória bola úspešne aktualizovaná.",
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: getErrorMessage(error),
+    };
+  }
+}
