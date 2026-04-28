@@ -110,17 +110,6 @@ export default function Update_product_form({
       onSubmit={handleSubmit}
       className="space-y-5 rounded-2xl border border-goldDark/15 bg-white p-5 md:p-6"
     >
-      <div className="space-y-2">
-        <h2 className="text-xl font-semibold italic text-goldDark sm:text-2xl">
-          Aktualizovať produkt
-        </h2>
-
-        <p className="text-sm text-greyMain/80">
-          Uprav údaje produktu. Slug sa nemení, používa sa iba na nájdenie
-          produktu v databáze.
-        </p>
-      </div>
-
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <InputField
           label="Názov produktu"
