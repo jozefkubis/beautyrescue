@@ -5,90 +5,83 @@ import FileField from "@/app/_components/FileField";
 import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
-import { insertTknProductRecord } from "@/app/_lib/actions_all/actions_tkn";
-import { useMemo, useState } from "react";
+import { updateTknProductBySlug } from "@/app/_lib/actions_all/actions_tkn";
+import type { TknProductRow } from "@/app/_lib/data_services_all/data_tkn";
+import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 
-type CategoryOption = {
-  slug: string;
-  title: string;
-};
-
-export type InsertProductFormValues = {
-  categorySlug: string;
-  name: string;
-  slug: string;
-  summary: string;
-  description: string;
-  isActive: boolean;
-  indications: string; // textarea = string
-};
-
-type InsertProductFormProps = {
-  categories: CategoryOption[];
+type UpdateProductFormProps = {
+  product: TknProductRow | null;
   initialCategorySlug?: string;
   onSaved?: () => void;
 };
 
-export default function Insert_product_form({
-  categories,
-  initialCategorySlug,
+export default function Update_product_form({
+  product,
   onSaved,
-}: InsertProductFormProps) {
-  const resolvedInitialCategorySlug =
-    categories.find((category) => category.slug === initialCategorySlug)
-      ?.slug ??
-    categories[0]?.slug ??
-    "";
-
-  const initialValues = useMemo<InsertProductFormValues>(
+}: UpdateProductFormProps) {
+  const initialValues = useMemo(
     () => ({
-      categorySlug: resolvedInitialCategorySlug,
-      name: "",
-      slug: "",
-      summary: "",
-      description: "",
-      isActive: true,
-      indications: "", // musí byť string, nie []
+      slug: product?.slug ?? "",
+      name: product?.name ?? "",
+      summary: product?.summary ?? "",
+      description: product?.description ?? "",
+      // content.indications je pole stringov:
+      // ["mastná pleť", "pleť so sklonom k akné"]
+      // do textarea to prevedieme na text, každý riadok jedna indikácia
+      indications: Array.isArray(product?.content?.indications)
+        ? product.content.indications.join("\n")
+        : "",
+
+      isActive: product?.is_active ?? true,
     }),
-    [resolvedInitialCategorySlug],
+    [product],
   );
 
-  const [values, setValues] = useState<InsertProductFormValues>(initialValues);
+  const [values, setValues] = useState(initialValues);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleChange<K extends keyof InsertProductFormValues>(
-    field: K,
-    value: InsertProductFormValues[K],
+  // Keď príde nový produkt, prepíš hodnoty vo formulári
+  useEffect(() => {
+    setValues(initialValues);
+    setImageFile(null);
+  }, [initialValues]);
+
+  function handleChange<K extends keyof typeof values>(
+    key: K,
+    value: (typeof values)[K],
   ) {
-    setValues((prev) => ({ ...prev, [field]: value }));
+    setValues((prev) => ({ ...prev, [key]: value }));
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    // Bez produktu nemáme podľa čoho updateovať
+    if (!product?.slug) {
+      toast.error("Chýba slug produktu.");
+      return;
+    }
 
     try {
       setIsSubmitting(true);
 
       const formData = new FormData();
 
-      formData.set("slug", values.slug.trim());
-      formData.set("category_slug", values.categorySlug ?? "");
+      // Slug sem neposielame, lebo ho nechceme meniť
       formData.set("name", values.name.trim());
       formData.set("summary", values.summary ?? "");
       formData.set("description", values.description ?? "");
-      formData.set("isActive", String(values.isActive));
-
-      // textarea ostáva ako string
-      // backend si to rozdelí cez .split("\n")
       formData.set("indications", values.indications ?? "");
+      formData.set("isActive", String(values.isActive));
 
       if (imageFile) {
         formData.set("image_file", imageFile);
       }
 
-      const result = await insertTknProductRecord(formData);
+      // product.slug je pôvodný slug, slúži iba ako identifikátor
+      const result = await updateTknProductBySlug(formData, product.slug);
 
       if (!result.ok) {
         toast.error(result.error);
@@ -97,17 +90,9 @@ export default function Insert_product_form({
 
       toast.success(result.message);
 
-      setValues((prev) => ({
-        ...prev,
-        name: "",
-        slug: "",
-        summary: "",
-        description: "",
-        isActive: true,
-        indications: "", // reset tiež string
-      }));
-
+      // Pri update formulár nečistíme, nech ostanú aktuálne hodnoty
       setImageFile(null);
+
       onSaved?.();
     } finally {
       setIsSubmitting(false);
@@ -115,10 +100,7 @@ export default function Insert_product_form({
   }
 
   const isSubmitDisabled =
-    isSubmitting ||
-    !values.categorySlug ||
-    !values.name.trim() ||
-    !values.slug.trim();
+    isSubmitting || !product?.slug || !values.name.trim();
 
   return (
     <form
@@ -127,33 +109,14 @@ export default function Insert_product_form({
     >
       <div className="space-y-2">
         <h2 className="text-xl font-semibold italic text-goldDark sm:text-2xl">
-          Pridať nový produkt
+          Aktualizovať produkt
         </h2>
+
         <p className="text-sm text-greyMain/80">
-          Vyplň základné údaje produktu.
+          Uprav údaje produktu. Slug sa nemení, používa sa iba na nájdenie
+          produktu v databáze.
         </p>
       </div>
-
-      <label className="flex flex-col gap-2">
-        <span className="text-xs font-semibold uppercase tracking-[0.14em] text-goldDark/80">
-          Kategória
-        </span>
-        <select
-          value={values.categorySlug}
-          onChange={(e) => handleChange("categorySlug", e.target.value)}
-          className="h-12 rounded-xl border border-goldDark/20 bg-white px-4 text-sm text-gray-800 outline-none transition focus:border-goldDark/35"
-        >
-          {categories.length === 0 ? (
-            <option value="">Najprv vytvor kategóriu</option>
-          ) : (
-            categories.map((category) => (
-              <option key={category.slug} value={category.slug}>
-                {category.title}
-              </option>
-            ))
-          )}
-        </select>
-      </label>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <InputField
@@ -161,11 +124,24 @@ export default function Insert_product_form({
           value={values.name}
           onChange={(e) => handleChange("name", e.target.value)}
         />
-        <InputField
-          label="Slug"
-          value={values.slug}
-          onChange={(e) => handleChange("slug", e.target.value)}
-        />
+
+        <div className="space-y-1">
+          <label
+            htmlFor="slug-input"
+            className="text-sm font-medium text-greyMain/80"
+          >
+            Slug - identifikátor produktu, nedá sa meniť
+          </label>
+
+          <input
+            id="slug-input"
+            value={values.slug}
+            disabled
+            title="Slug - identifikátor produktu, nedá sa meniť"
+            placeholder="Slug produktu"
+            className="h-12 rounded-xl border border-goldDark/20 bg-gray-100 px-4 text-sm text-greyMain/70 outline-none transition focus:border-goldDark/35"
+          />
+        </div>
       </div>
 
       <TextareaField
@@ -211,7 +187,7 @@ export default function Insert_product_form({
 
       <div className="flex justify-end border-t border-goldDark/10 pt-4">
         <SubmitButton loading={isSubmitting} disabled={isSubmitDisabled}>
-          Pridať produkt
+          Aktualizovať produkt
         </SubmitButton>
       </div>
     </form>

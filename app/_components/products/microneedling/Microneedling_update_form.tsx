@@ -459,24 +459,39 @@ export default function Microneedling_update_form({
                           <p className="text-sm text-greyMain">
                             {product.name ?? product.slug}
                           </p>
-                          <button
-                            onClick={() =>
-                              deleteProductHandleClick(
-                                category.slug,
-                                product.slug,
-                              )
-                            }
-                            type="button"
-                            title="Odstrániť produkt"
-                            aria-label={`Odstrániť produkt ${product.name ?? product.slug}`}
-                            disabled={!isAdmin || isPendingVisibility}
-                            className="inline-flex h-10 items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] px-3 text-sm font-medium text-redDark shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20 disabled:cursor-not-allowed disabled:border-red-100 disabled:bg-red-50/50 disabled:text-red-300 disabled:hover:translate-y-0 hover:cursor-pointer"
-                          >
-                            <FaRegTrashCan className="text-[13px]" />
-                            <span className="hidden sm:inline text-xs">
-                              Odstrániť
-                            </span>
-                          </button>
+
+                          {/* Flex kontajner pre Editovať a košík na mazanie vedľa seba */}
+                          <div className="flex items-center gap-2">
+                            <Link
+                              href={`/admin/cosmetics_settings/microneedling_settings/update_product?product=${product.slug}`}
+                              className={`inline-flex h-10 items-center rounded-full border border-goldDark/30 bg-[#fff6ee] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-goldDark transition duration-200 ${
+                                !isAdmin || isPendingVisibility
+                                  ? "cursor-not-allowed opacity-60"
+                                  : "hover:-translate-y-0.5 hover:bg-[#ffeedf]"
+                              }`}
+                            >
+                              <span>Editovať</span>
+                            </Link>
+                            <button
+                              onClick={() =>
+                                deleteProductHandleClick(
+                                  category.slug,
+                                  product.slug,
+                                )
+                              }
+                              type="button"
+                              title="Odstrániť produkt"
+                              aria-label={`Odstrániť produkt ${product.name ?? product.slug}`}
+                              disabled={!isAdmin || isPendingVisibility}
+                              className={`inline-flex items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] p-2 text-sm font-medium text-redDark shadow-sm transition duration-200 ${
+                                !isAdmin || isPendingVisibility
+                                  ? "cursor-not-allowed opacity-60"
+                                  : "hover:-translate-y-0.5 hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20 hover:cursor-pointer"
+                              }`}
+                            >
+                              <FaRegTrashCan className="text-[13px]" />
+                            </button>
+                          </div>
                           <CheckboxField
                             labelActive="Aktívne"
                             labelInactive="Neaktívne"

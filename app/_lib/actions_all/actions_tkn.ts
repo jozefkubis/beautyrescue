@@ -468,23 +468,24 @@ export async function insertTknProductRecord(
 ): Promise<CmsActionResult> {
   try {
     const supabase = await requireAdmin();
+
     const slug = normalizeText(formData.get("slug"));
-    const rawData = formData.get("data")?.toString();
+    const categorySlug = normalizeText(formData.get("category_slug"));
+    const name = normalizeText(formData.get("name"));
+    const summary = normalizeText(formData.get("summary"));
+    const description = normalizeText(formData.get("description"));
+    const isActive = normalizeBoolean(formData.get("isActive"), true);
+
     const imageFile = formData.get("image_file");
+
+    const indications = normalizeText(formData.get("indications"))
+      .split("\n")
+      .map((item) => item.trim())
+      .filter(Boolean);
 
     if (!slug) {
       throw new Error("Chýba slug nového produktu");
     }
-
-    if (!rawData) {
-      throw new Error("Chýbajú dáta nového produktu");
-    }
-
-    const payload = JSON.parse(rawData) as InsertTknProductPayload;
-    const categorySlug = normalizeText(payload.category_slug);
-    const name = normalizeText(payload.name);
-    const summary = normalizeText(payload.summary);
-    const description = normalizeText(payload.description);
 
     if (!categorySlug) {
       throw new Error("Chýba kategória produktu");
@@ -494,7 +495,6 @@ export async function insertTknProductRecord(
       throw new Error("Produkt musí mať názov");
     }
 
-    // Pri vkladani staci najst ID kategorie zo slugu a pouzit ho vo FK.
     const { data: categoryRow, error: categoryError } = await supabase
       .from("tkn_categories")
       .select("id")
@@ -507,7 +507,6 @@ export async function insertTknProductRecord(
 
     const categoryId = categoryRow.id as string;
 
-    // Novy produkt vzdy pridame na koniec danej kategorie.
     const { data: lastProductRows, error: lastProductError } = await supabase
       .from("tkn_products")
       .select("order_index")
@@ -516,14 +515,21 @@ export async function insertTknProductRecord(
       .limit(1);
 
     if (lastProductError) {
-      throw new Error(`Nepodarilo sa načítať poradie produktov: ${lastProductError.message}`);
+      throw new Error(
+        `Nepodarilo sa načítať poradie produktov: ${lastProductError.message}`,
+      );
     }
 
     const lastOrderIndex =
       (lastProductRows?.[0]?.order_index as number | null | undefined) ?? 0;
+
     const nextOrderIndex = lastOrderIndex + 1;
 
-    const uploadedImageUrl = await uploadImageIfProvided(supabase, slug, imageFile);
+    const uploadedImageUrl = await uploadImageIfProvided(
+      supabase,
+      slug,
+      imageFile,
+    );
 
     const insertData: {
       category_id: string;
@@ -542,14 +548,19 @@ export async function insertTknProductRecord(
     } = {
       category_id: categoryId,
       slug,
-      is_active: normalizeBoolean(payload.is_active, true),
+      is_active: isActive,
       order_index: nextOrderIndex,
       name,
       summary: summary || null,
       description: description || null,
       subcategory: categorySlug,
       sort_order: nextOrderIndex,
-      content: {},
+
+      // tu sa uloží content.indications
+      content: {
+        indications,
+      },
+
       attributes: {},
       metadata: {},
     };
@@ -558,7 +569,9 @@ export async function insertTknProductRecord(
       insertData.image_url = uploadedImageUrl;
     }
 
-    const { error } = await supabase.from("tkn_products").insert(insertData);
+    const { error } = await supabase
+      .from("tkn_products")
+      .insert(insertData);
 
     if (error) {
       throw new Error(`Chyba pri pridávaní produktu: ${error.message}`);
@@ -622,3 +635,95 @@ export async function insertTknCategoryRecord(
 
 }
 
+export async function updateTknProductBySlug(
+  formData: FormData,
+  slug: string, // pôvodný slug, len na nájdenie produktu
+): Promise<CmsActionResult> {
+  try {
+    const supabase = await requireAdmin();
+
+    const name = normalizeText(formData.get("name"));
+    const summary = normalizeText(formData.get("summary"));
+    const description = normalizeText(formData.get("description"));
+    const isActive = normalizeBoolean(formData.get("isActive"), true);
+    const indications = normalizeText(formData.get("indications"))
+  .split("\n")
+  .map((item) => item.trim())
+  .filter(Boolean);
+
+    const imageFile = formData.get("image_file") as File | null;
+    let imageUrl = formData.get("image_url")?.toString().trim();
+
+    if (imageFile && imageFile.size > 0) {
+      const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(/\s/g, "-");
+
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from("BRImages")
+        .upload(fileName, imageFile, {
+          cacheControl: "3600",
+          upsert: true,
+        });
+
+      if (uploadError) {
+        throw new Error(`Chyba pri nahrávaní obrázka: ${uploadError.message}`);
+      }
+
+      const { data: signedData, error: signedError } = await supabase.storage
+        .from("BRImages")
+        .createSignedUrl(uploadData.path, 157680000);
+
+      if (signedError || !signedData?.signedUrl) {
+        throw new Error("Nepodarilo sa vytvoriť URL obrázka");
+      }
+
+      imageUrl = signedData.signedUrl;
+    }
+
+    // ✅ slug tu NIE JE, čiže sa nebude meniť
+    const updateData: {
+  name: string;
+  summary: string;
+  description: string;
+  is_active: boolean;
+  image_url?: string;
+  content: {
+    indications: string[];
+  };
+} = {
+  name,
+  summary,
+  description,
+  is_active: isActive,
+  content: {
+    indications,
+  },
+};
+
+    if (imageUrl) {
+      updateData.image_url = imageUrl;
+    }
+
+    // ✅ slug slúži iba ako identifikátor produktu
+    const { error } = await supabase
+      .from("tkn_products")
+      .update(updateData)
+      .eq("slug", slug);
+
+    if (error) {
+      throw new Error(`Chyba pri aktualizácii produktu: ${error.message}`);
+    }
+
+    revalidateCmsPaths();
+
+    return {
+      ok: true,
+      message: "Produkt bol úspešne aktualizovaný.",
+      ...(imageUrl ? { imageUrl } : {}),
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: getErrorMessage(error),
+    };
+  }
+}

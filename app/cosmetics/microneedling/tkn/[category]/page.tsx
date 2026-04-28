@@ -75,7 +75,8 @@ export default async function Page({ params }: CategoryPageProps) {
           const imageSrc = product.image_url;
           const productName = product.name ?? "TKN produkt";
           const productSummary = product.summary ?? product.description ?? "";
-          const indications = getIndications(product);
+          // Odstráň duplicity z indications, aby boli React keys unikátne
+          const indications = Array.from(new Set(getIndications(product)));
 
           return (
             <article
