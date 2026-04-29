@@ -8,7 +8,6 @@ export default async function Page() {
     getServiceBySlug("diamond-microdermabrasion"),
   ]);
 
-  console.log("Diamond Microdermabrasion Data:", diamondMicrodermabrasionData);
 
   const isAdmin =
     user?.email === process.env.ADMIN_EMAIL_1 ||

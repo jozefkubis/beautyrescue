@@ -19,7 +19,6 @@ export default function Jalupro_classic({
   isAdmin,
 }: Jalupro_classicProps) {
   const uploadedImageUrl = jaluproClassic?.image_url?.trim();
-  console.log(uploadedImageUrl);
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">

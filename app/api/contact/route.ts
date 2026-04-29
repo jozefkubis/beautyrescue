@@ -24,7 +24,6 @@ export async function POST(request: Request) {
     const resend = new Resend(apiKey)
 
     const body: ContactRequestBody = await request.json()
-    console.log('BODY:', body)
 
     const { name, email, message } = body
 
@@ -42,7 +41,6 @@ export async function POST(request: Request) {
       text: `Meno: ${name}\nEmail: ${email}\nSpráva: ${message}`,
     })
 
-    console.log('RESEND RESULT:', result)
 
     if (result.error) {
       console.error('RESEND ERROR:', result.error)

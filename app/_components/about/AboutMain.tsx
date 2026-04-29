@@ -8,7 +8,6 @@ import AboutText from "./AboutText";
 
 export default function AboutMain({ aboutUsData }: AboutMainProps) {
   const uploadedImageUrl = aboutUsData.image_url?.trim();
-  console.log("AboutMain received data:", aboutUsData);
 
   return (
     <div className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">

@@ -33,7 +33,6 @@ export default async function Page({ searchParams }: UpdateProductPageProps) {
 
   const params = await searchParams;
   const product = await getProductBySlug(params?.product || "");
-  console.log("Nájdený produkt:", product);
 
   return (
     <section className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">

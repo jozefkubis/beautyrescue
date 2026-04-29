@@ -25,7 +25,6 @@ export default function PromotionUpdateForm({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  console.log("PromotionUpdateForm render - promotion:", promotion);
 
   // Počiatočné hodnoty formulára – naplnené z DB dát
   const initialValues = useMemo(
