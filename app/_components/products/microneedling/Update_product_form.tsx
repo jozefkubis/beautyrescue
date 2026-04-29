@@ -1,6 +1,5 @@
 "use client";
 
-import CheckboxField from "@/app/_components/CheckboxField";
 import FileField from "@/app/_components/FileField";
 import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
@@ -32,8 +31,6 @@ export default function Update_product_form({
       indications: Array.isArray(product?.content?.indications)
         ? product.content.indications.join("\n")
         : "",
-
-      isActive: product?.is_active ?? true,
     }),
     [product],
   );
@@ -74,7 +71,6 @@ export default function Update_product_form({
       formData.set("summary", values.summary ?? "");
       formData.set("description", values.description ?? "");
       formData.set("indications", values.indications ?? "");
-      formData.set("isActive", String(values.isActive));
 
       if (imageFile) {
         formData.set("image_file", imageFile);
@@ -169,13 +165,6 @@ export default function Update_product_form({
           Vybraný súbor: {imageFile.name}
         </p>
       ) : null}
-
-      <CheckboxField
-        labelActive="Aktívny"
-        labelInactive="Neaktívny"
-        checked={values.isActive}
-        onChange={(e) => handleChange("isActive", e.target.checked)}
-      />
 
       <div className="flex justify-end border-t border-goldDark/10 pt-4">
         <SubmitButton loading={isSubmitting} disabled={isSubmitDisabled}>

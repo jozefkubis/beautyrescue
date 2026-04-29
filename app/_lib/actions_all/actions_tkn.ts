@@ -645,7 +645,6 @@ export async function updateTknProductBySlug(
     const name = normalizeText(formData.get("name"));
     const summary = normalizeText(formData.get("summary"));
     const description = normalizeText(formData.get("description"));
-    const isActive = normalizeBoolean(formData.get("isActive"), true);
     const indications = normalizeText(formData.get("indications"))
   .split("\n")
   .map((item) => item.trim())
@@ -684,7 +683,6 @@ export async function updateTknProductBySlug(
   name: string;
   summary: string;
   description: string;
-  is_active: boolean;
   image_url?: string;
   content: {
     indications: string[];
@@ -693,7 +691,6 @@ export async function updateTknProductBySlug(
   name,
   summary,
   description,
-  is_active: isActive,
   content: {
     indications,
   },
