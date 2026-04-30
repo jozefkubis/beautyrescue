@@ -30,7 +30,7 @@ export default function Botulotoxin_potenie({
         <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <Image
             src={uploadedImageUrl || "/images/botulotoxin_potenie.jpeg"}
-            alt="Botulotoxín nadmerné potenie"
+            alt="Botulotoxín na nadmerné potenie v Beauty Rescue Žilina"
             fill
             unoptimized
             className="object-cover"

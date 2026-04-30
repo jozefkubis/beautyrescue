@@ -5,6 +5,7 @@ import {
   getTknProductsByCategory,
   type TknProductRow,
 } from "@/app/_lib/data_services_all/data_tkn";
+import { createDynamicPageMetadata } from "@/app/_lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -14,6 +15,18 @@ export const dynamic = "force-dynamic";
 type CategoryPageProps = {
   params: Promise<{ category: string }>;
 };
+
+export async function generateMetadata({ params }: CategoryPageProps) {
+  const { category: categorySlug } = await params;
+  const category = await getTknCategoriesBySlug(categorySlug);
+  const title = category?.title ?? "TKN kategória";
+
+  return createDynamicPageMetadata({
+    path: `/cosmetics/microneedling/tkn/${categorySlug}`,
+    title,
+    description: `${title} pri microneedlingu v kozmetickom salóne Beauty Rescue v Žiline na Hájiku.`,
+  });
+}
 
 function getIndications(product: TknProductRow) {
   const content = product.content;
@@ -119,7 +132,7 @@ export default async function Page({ params }: CategoryPageProps) {
                       <div className="relative aspect-square w-36 overflow-hidden rounded-full border-4 border-goldDark/40 bg-white shadow-[0_10px_30px_rgba(0,0,0,0.08)] sm:w-40 lg:w-44">
                         <Image
                           src={imageSrc}
-                          alt={productName}
+                          alt={`${productName} v Beauty Rescue Žilina`}
                           fill
                           className="object-contain p-3"
                         />

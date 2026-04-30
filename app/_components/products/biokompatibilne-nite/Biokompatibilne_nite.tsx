@@ -46,7 +46,7 @@ export default function Biokompatibilne_nite({
         <div className="relative mt-10 h-56 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 md:h-125 lg:h-[90%] lg:w-full">
           <Image
             src={uploadedImageUrl || "/images/biokompatibilne_nite.jpeg"}
-            alt="Biokompatibilné nite"
+            alt="Biokompatibilné nite v Beauty Rescue Žilina"
             fill
             unoptimized
             className="object-cover"

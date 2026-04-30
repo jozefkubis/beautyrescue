@@ -10,19 +10,19 @@ export default function Logo() {
       <div className="">
         <Image
           src="/images/logo_br_redMain.png"
-          alt="logo_br_redMain.png"
+          alt="Beauty Rescue Žilina logo"
           width={88}
           height={88}
           className="rounded-full ring-2 ring-goldLight/70"
         />
       </div>
       <div className="flex flex-col -space-y-2">
-        <h1 className="text-3xl lg:text-4xl font-semibold tracking-tight text-redDark transition-colors duration-300 group-hover:text-redMain">
+        <span className="text-3xl lg:text-4xl font-semibold tracking-tight text-redDark transition-colors duration-300 group-hover:text-redMain">
           BEAUTY
-        </h1>
-        <h1 className="text-3xl lg:text-4xl font-semibold tracking-tight text-goldDark transition-colors duration-300 group-hover:text-goldLight">
+        </span>
+        <span className="text-3xl lg:text-4xl font-semibold tracking-tight text-goldDark transition-colors duration-300 group-hover:text-goldLight">
           RESCUE
-        </h1>
+        </span>
       </div>
     </Link>
   )

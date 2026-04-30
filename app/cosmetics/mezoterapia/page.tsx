@@ -1,5 +1,8 @@
 import Mezoterapia from "@/app/_components/products/mezoterapia/Mezoterapia";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
+import { createPageMetadata } from "@/app/_lib/seo";
+
+export const metadata = createPageMetadata("mezoterapia");
 
 export default async function Page() {
   const mezoterapia = await getServiceBySlug("mezoterapia");

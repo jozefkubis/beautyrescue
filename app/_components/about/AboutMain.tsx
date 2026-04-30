@@ -40,7 +40,7 @@ export default function AboutMain({ aboutUsData }: AboutMainProps) {
         <div className="relative mt-10 h-56 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 md:h-125 lg:h-[90%] lg:w-full">
           <Image
             src={uploadedImageUrl || "/images/about_us.jpg"}
-            alt="About Us"
+            alt="Beauty Rescue kozmetický salón Žilina"
             fill
             unoptimized
             className="object-cover"

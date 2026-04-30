@@ -50,7 +50,7 @@ export default function Mezoterapia_invasive({
               {image?.src && (
                 <Image
                   src={image.src}
-                  alt={image.alt ?? ""}
+                  alt={image.alt ? `${image.alt} v Beauty Rescue Žilina` : ""}
                   fill
                   className="object-fit"
                 />

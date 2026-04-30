@@ -32,15 +32,15 @@ const textVariants = {
 function IfNotPromotionActive() {
   return (
     <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center">
-      <h1 className="text-4xl lg:text-5xl font-semibold italic text-redMain">
+      <p className="text-4xl lg:text-5xl font-semibold italic text-redMain">
         RESCUE YOUR BODY
-      </h1>
-      <h1 className="text-4xl lg:text-5xl font-semibold italic text-redMain">
+      </p>
+      <p className="text-4xl lg:text-5xl font-semibold italic text-redMain">
         RESCUE YOUR BEAUTY
-      </h1>
-      <h1 className="text-4xl lg:text-5xl font-semibold italic text-redMain">
+      </p>
+      <p className="text-4xl lg:text-5xl font-semibold italic text-redMain">
         RESCUE YOUR SELF
-      </h1>
+      </p>
     </div>
   );
 }
@@ -58,7 +58,7 @@ export default function News_on_image_main({
       {/* Pozadie */}
       <Image
         src={uploadedImageUrl || "/images/home_main.jpg"}
-        alt="Beauty Rescue"
+        alt="Beauty Rescue kozmetický salón Žilina"
         fill
         priority
         className="object-cover object-right"
@@ -80,11 +80,11 @@ export default function News_on_image_main({
         onAnimationComplete={() => setShowEcg(true)}
       >
         {isActive ? (
-          <h1
+          <p
             className={`mb-1 text-3xl font-bold text-redDark drop-shadow-[0_6px_22px_rgba(141,10,45,0.24)] lg:text-7xl xl:text-[9rem] ${luxuriousScript.className}`}
           >
             <span className="text-[8rem] xl:text-[15rem]">A</span>kcia
-          </h1>
+          </p>
         ) : (
           <IfNotPromotionActive />
         )}

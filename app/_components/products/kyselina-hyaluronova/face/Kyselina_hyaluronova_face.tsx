@@ -46,7 +46,7 @@ export default function Kyselina_hyaluronova_face({
         <div className="relative mt-10 h-85 overflow-hidden rounded-lg border border-goldDark/25 bg-white shadow-md shadow-goldDark/15 md:h-125 lg:h-150 lg:w-full">
           <Image
             src={uploadedImageUrl || "/images/kyselina_hyaluronova_face.jpeg"}
-            alt="Kyselina hyaluronová - Výplne na tvári"
+            alt="Kyselina hyaluronová - výplne na tvári v Beauty Rescue Žilina"
             fill
             unoptimized
             className="object-cover object-left"

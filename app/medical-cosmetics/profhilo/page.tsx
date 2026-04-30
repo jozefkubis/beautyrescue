@@ -1,6 +1,9 @@
 import Profhilo from "@/app/_components/products/profhilo/Profhilo";
 import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
+import { createPageMetadata } from "@/app/_lib/seo";
+
+export const metadata = createPageMetadata("profhilo");
 
 export default async function Page() {
   const profhilo = await getServiceBySlug("profhilo");

@@ -55,7 +55,7 @@ export default function Botulotoxin({
           {/* Použijeme URL z DB ak existuje, inak fallback na default obrázok */}
           <Image
             src={uploadedImageUrl || "/images/botulotoxin.jpg"}
-            alt="Botulotoxín"
+            alt="Botulotoxín v Beauty Rescue Žilina"
             fill
             unoptimized
             className="object-cover"
@@ -81,7 +81,7 @@ export default function Botulotoxin({
                 >
                   <Image
                     src={src}
-                    alt={alt ?? ""}
+                    alt={alt ? `${alt} v Beauty Rescue Žilina` : ""}
                     fill
                     className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
                   />

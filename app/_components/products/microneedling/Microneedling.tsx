@@ -54,7 +54,7 @@ export default function Microneedling({
           <div className="absolute inset-0 bg-linear-to-br from-white via-white/10 to-white z-50"></div>
           <Image
             src={uploadedImageUrl || "/images/microneedling.jpg"}
-            alt="Microneedling"
+            alt="Microneedling v Beauty Rescue Žilina"
             fill
             unoptimized
             className="object-cover"

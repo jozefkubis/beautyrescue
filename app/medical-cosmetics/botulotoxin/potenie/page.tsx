@@ -1,5 +1,8 @@
 import Botulotoxin_potenie from "@/app/_components/products/botulotoxin/potenie/botulotoxin_potenie";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
+import { createPageMetadata } from "@/app/_lib/seo";
+
+export const metadata = createPageMetadata("botulotoxinPotenie");
 
 export default async function Page() {
   const botulotoxinPotenie = await getServiceBySlug("botulotoxin-potenie");

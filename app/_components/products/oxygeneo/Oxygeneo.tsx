@@ -41,7 +41,7 @@ export default function Oxygeneo({ oxygeneo, user, isAdmin }: OxygeneoProps) {
         <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <Image
             src={uploadedImageUrl || "/images/oxygeneo.jpeg"}
-            alt="Oxygeneo"
+            alt="Oxygeneo v Beauty Rescue Žilina"
             fill
             unoptimized
             className="object-cover"

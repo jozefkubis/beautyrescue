@@ -1,6 +1,9 @@
 import Mezoterapia_invasive from "@/app/_components/products/mezoterapia/invasive/Mezoterapia_invasive";
 import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
+import { createPageMetadata } from "@/app/_lib/seo";
+
+export const metadata = createPageMetadata("mezoterapiaInvasive");
 
 export default async function Page() {
   const mezoterapiaInvasive = await getServiceBySlug("mezoterapia-invasive");

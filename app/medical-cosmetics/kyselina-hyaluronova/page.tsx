@@ -1,6 +1,9 @@
 import Kyselina_hyaluronova from "@/app/_components/products/kyselina-hyaluronova/Kyselina_hyaluronova";
 import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
+import { createPageMetadata } from "@/app/_lib/seo";
+
+export const metadata = createPageMetadata("kyselinaHyaluronova");
 
 export default async function Page() {
   const kyselinaHyaluronova = await getServiceBySlug("kyselina-hyaluronova");

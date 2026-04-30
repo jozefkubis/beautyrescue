@@ -8,17 +8,17 @@ const INTERIOR_IMAGES = [
   {
     id: 1,
     src: "/images/studio1.jpg",
-    alt: "Studio 1",
+    alt: "Interiér Beauty Rescue Žilina",
   },
   {
     id: 2,
     src: "/images/studio2.jpg",
-    alt: "Studio 2",
+    alt: "Kozmetický salón Beauty Rescue Žilina",
   },
   {
     id: 3,
     src: "/images/studio3.jpg",
-    alt: "Studio 3",
+    alt: "Beauty Rescue Žilina Hájik interiér",
   },
 ]
 

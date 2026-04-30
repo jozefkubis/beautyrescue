@@ -47,7 +47,7 @@ export default function Kyselina_hyaluronova({
         <div className="relative mt-10 h-56 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 md:h-125 lg:h-[90%] lg:w-full aspect-auto">
           <Image
             src={uploadedImageUrl || "/images/kyselina_hyaluronova.jpeg"}
-            alt="Kyselina hyaluronová"
+            alt="Kyselina hyaluronová v Beauty Rescue Žilina"
             fill
             unoptimized
             className="object-cover"
@@ -71,7 +71,7 @@ export default function Kyselina_hyaluronova({
                   >
                     <Image
                       src={src}
-                      alt={alt ?? ""}
+                      alt={alt ? `${alt} v Beauty Rescue Žilina` : ""}
                       fill
                       className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
                       priority={false}

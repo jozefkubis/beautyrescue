@@ -1,5 +1,8 @@
 import Botulotoxin_vrasky from "@/app/_components/products/botulotoxin/vrasky/Botulotoxin_vrasky";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
+import { createPageMetadata } from "@/app/_lib/seo";
+
+export const metadata = createPageMetadata("botulotoxinVrasky");
 
 export default async function Page() {
   const botulotoxinVrasky = await getServiceBySlug("botulotoxin-vrasky");

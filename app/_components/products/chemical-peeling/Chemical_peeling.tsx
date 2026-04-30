@@ -45,7 +45,7 @@ export default function Chemical_peeling({
         <div className="relative mt-10 h-56 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 md:h-125 lg:h-[90%] lg:w-full">
           <Image
             src={uploadedImageUrl || "/images/chemical_peeling.jpeg"}
-            alt="Chemical peeling"
+            alt="Chemický peeling v Beauty Rescue Žilina"
             fill
             unoptimized
             className="object-cover"

@@ -1,6 +1,9 @@
 import Diamond_microdermabrasion from "@/app/_components/products/diamond-microdermabrasion/Diamond_microdermabrasion";
 import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
+import { createPageMetadata } from "@/app/_lib/seo";
+
+export const metadata = createPageMetadata("diamondMicrodermabrasion");
 
 export default async function Page() {
   const diammondMicroderm = await getServiceBySlug("diamond-microdermabrasion");

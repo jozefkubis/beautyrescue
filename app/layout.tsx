@@ -13,6 +13,34 @@ import Navigation from "./_components/navigation/Navigation";
 import { getCurrentUser } from "./_lib/actions_all/auth_actions";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import type { Metadata } from "next";
+import LocalBusinessJsonLd from "./_components/seo/LocalBusinessJsonLd";
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_URL } from "./_lib/seo";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: DEFAULT_TITLE,
+    template: "%s | Beauty Rescue Žilina",
+  },
+  description: DEFAULT_DESCRIPTION,
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    url: SITE_URL,
+    siteName: "Beauty Rescue Žilina",
+    locale: "sk_SK",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+  },
+};
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -57,10 +85,11 @@ export default async function RootLayout({
     user?.email === process.env.ADMIN_EMAIL_2;
 
   return (
-    <html lang="en">
+    <html lang="sk">
       <body
         className={`${poppins.variable} ${openSans.variable} ${robotoCondensed.variable} ${roboto.variable} ${playfairDisplaySC.variable}`}
       >
+        <LocalBusinessJsonLd />
         <MobileHeader />
         <div className="hidden lg:block">
           <Navigation isAdmin={isAdmin} />

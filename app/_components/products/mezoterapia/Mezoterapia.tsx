@@ -41,7 +41,11 @@ export default function Mezoterapia({ mezoterapia }: MezoterapiaProps) {
           >
             <Image
               src={mezoterapia?.image_gallery?.[0]?.src ?? ""}
-              alt={mezoterapia?.image_gallery?.[0]?.alt ?? ""}
+              alt={
+                mezoterapia?.image_gallery?.[0]?.alt
+                  ? `${mezoterapia.image_gallery[0].alt} v Beauty Rescue Žilina`
+                  : ""
+              }
               fill
               className="object-fit hover:cursor-pointer hover:scale-105 transition-transform duration-300"
             />
@@ -54,7 +58,11 @@ export default function Mezoterapia({ mezoterapia }: MezoterapiaProps) {
           >
             <Image
               src={mezoterapia?.image_gallery?.[1]?.src ?? ""}
-              alt={mezoterapia?.image_gallery?.[1]?.alt ?? ""}
+              alt={
+                mezoterapia?.image_gallery?.[1]?.alt
+                  ? `${mezoterapia.image_gallery[1].alt} v Beauty Rescue Žilina`
+                  : ""
+              }
               fill
               className="object-fit hover:cursor-pointer hover:scale-105 transition-transform duration-300"
             />

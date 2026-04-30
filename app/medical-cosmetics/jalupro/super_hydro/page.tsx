@@ -1,6 +1,9 @@
 import Jalupro_super_hydro from "@/app/_components/products/jalupro/super_hydro/Jalupro_super_hydro";
 import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
+import { createPageMetadata } from "@/app/_lib/seo";
+
+export const metadata = createPageMetadata("jaluproSuperHydro");
 
 export default async function Page() {
   const jaluproSuperHydro = await getServiceBySlug("jalupro-super-hydro");

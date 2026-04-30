@@ -1,6 +1,9 @@
 import Botulotoxin from "@/app/_components/products/botulotoxin/Botulotoxin";
 import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
+import { createPageMetadata } from "@/app/_lib/seo";
+
+export const metadata = createPageMetadata("botulotoxin");
 
 export default async function Page() {
   const botulotoxin = await getServiceBySlug("botulotoxin");

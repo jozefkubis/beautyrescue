@@ -1,6 +1,9 @@
 import Acupuncture from "@/app/_components/products/acupuncture/Acupuncture";
 import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
 import getServiceBySlug from "../_lib/data_services_all/data_services";
+import { createPageMetadata } from "../_lib/seo";
+
+export const metadata = createPageMetadata("acupuncture");
 
 export default async function Page() {
   const acupuncture = await getServiceBySlug("acupuncture");

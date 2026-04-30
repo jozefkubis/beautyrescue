@@ -69,7 +69,7 @@ export default function Location() {
                 <div className="relative h-52 aspect-4/3 overflow-hidden rounded-2xl border border-goldDark/25 bg-white shadow-md shadow-goldDark/15 sm:h-56 lg:h-60 xl:h-64">
                   <Image
                     src="/images/studio_location1.jpeg"
-                    alt="Studio location 1"
+                    alt="Beauty Rescue Žilina Hájik exteriér štúdia"
                     fill
                     className="h-52 w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer sm:h-56 lg:h-60 xl:h-64"
                     priority={false}
@@ -79,7 +79,7 @@ export default function Location() {
                 <div className="relative h-52 aspect-4/3 overflow-hidden rounded-2xl border border-goldDark/25 bg-white shadow-md shadow-goldDark/15 sm:h-56 lg:h-60 xl:h-64">
                   <Image
                     src="/images/studio_location2.jpeg"
-                    alt="Studio location 2"
+                    alt="Beauty Rescue Žilina Hájik vstup k štúdiu"
                     fill
                     className="h-52 w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer sm:h-56 lg:h-60 xl:h-64"
                     priority={false}
@@ -95,7 +95,7 @@ export default function Location() {
                   >
                     <Image
                       src="/images/studio_location3.jpeg"
-                      alt="Studio location 3"
+                      alt="Beauty Rescue Žilina Hájik mapa a okolie"
                       fill
                       className="h-52 w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer sm:h-56 lg:h-60 xl:h-64"
                       priority={false}

@@ -94,7 +94,7 @@ export default function MobileHeader() {
           <div className="rounded-full bg-white/90 p-1.5 shadow-sm shadow-black/15">
             <Image
               src="/images/butterflyGoldDark.png"
-              alt="Beauty Rescue logo"
+              alt="Beauty Rescue Žilina logo"
               width={34}
               height={34}
             />

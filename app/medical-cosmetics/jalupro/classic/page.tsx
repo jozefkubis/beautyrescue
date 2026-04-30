@@ -1,6 +1,9 @@
 import Jalupro_classic from "@/app/_components/products/jalupro/classic/Jalupro_classic";
 import { getCurrentUser } from "@/app/_lib/actions_all/auth_actions";
 import getServiceBySlug from "@/app/_lib/data_services_all/data_services";
+import { createPageMetadata } from "@/app/_lib/seo";
+
+export const metadata = createPageMetadata("jaluproClassic");
 
 export default async function Page() {
   const jaluproClassic = await getServiceBySlug("jalupro-classic");

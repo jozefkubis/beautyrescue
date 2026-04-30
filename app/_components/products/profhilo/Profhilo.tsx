@@ -47,7 +47,7 @@ export default function Profhilo({
         <div className="relative mt-10 w-full aspect-4/3 overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15">
           <Image
             src={uploadedImageUrl || "/images/profhilo_main.jpeg"}
-            alt="Profhilo"
+            alt="Profhilo v Beauty Rescue Žilina"
             fill
             unoptimized
             className="object-cover"
@@ -70,7 +70,7 @@ export default function Profhilo({
             >
               <Image
                 src={src}
-                alt={alt ?? ""}
+                alt={alt ? `${alt} v Beauty Rescue Žilina` : ""}
                 fill
                 className="object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer"
               />

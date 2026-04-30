@@ -5,7 +5,10 @@ import {
   getTknProductsByCategory,
 } from "@/app/_lib/data_services_all/data_tkn";
 import { getVisibleTknCategories } from "@/app/_lib/data_services_all/tkn_visibility";
+import { createPageMetadata } from "@/app/_lib/seo";
 import Link from "next/link";
+
+export const metadata = createPageMetadata("tkn");
 
 // Landing page nacita komplet data a viditelnost riesi az v UI helperi.
 export default async function Page() {
