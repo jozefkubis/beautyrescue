@@ -1,5 +1,4 @@
 import { logIn } from "@/app/_lib/actions_all/auth_actions";
-import toast from "react-hot-toast";
 
 type Props = {
   e: React.SubmitEvent<HTMLFormElement>;
@@ -7,7 +6,7 @@ type Props = {
 };
 
 export default async function handleSubmitLogin({ e, setError }: Props) {
-  const form = e.currentTarget as HTMLFormElement;
+  const form = e.currentTarget;
   const formData = new FormData(form);
 
   const email = formData.get("email") as string;
@@ -15,21 +14,25 @@ export default async function handleSubmitLogin({ e, setError }: Props) {
 
   if (!email?.trim() || !password?.trim()) {
     setError("Email a heslo sú povinné.");
-    return { success: false };
+    return {
+      success: false,
+      message: "Email a heslo sú povinné.",
+    };
   }
 
   const result = await logIn({ email, password });
 
   if (result?.success) {
-    toast.success("Prihlásenie bolo úspešné!");
-    return { success: true };
+    return {
+      success: true,
+      message: "Prihlásenie bolo úspešné!",
+    };
   }
 
-  if (!result?.success) {
-    toast.error("Prihlásenie nebolo úspešné!");
-    setError(result?.message || "Prihlasovacie údaje sú nesprávne.");
-    return { success: false };
-  }
+  setError(result?.message || "Prihlasovacie údaje sú nesprávne.");
 
-  return { success: false };
+  return {
+    success: false,
+    message: result?.message || "Prihlásenie nebolo úspešné!",
+  };
 }

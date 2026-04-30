@@ -2,10 +2,15 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { brandFont } from "../fonts";
 import handleSubmitLogin from "./handleSubmitLogin";
 
-export default function LoginForm() {
+type LoginFormProps = {
+  onSuccess?: () => void;
+};
+
+export default function LoginForm({ onSuccess }: LoginFormProps) {
   const router = useRouter();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -20,8 +25,11 @@ export default function LoginForm() {
 
       // Po uspesnom logine hned obnovime layout, aby sa ukazal Admin/Logout.
       if (result.success) {
-        router.replace("/");
+        toast.success(result.message);
+        onSuccess?.(); // zavrie modal
         router.refresh();
+      } else {
+        toast.error(result.message);
       }
     } finally {
       setIsLoading(false);
@@ -29,8 +37,8 @@ export default function LoginForm() {
   }
 
   return (
-    <section className="mx-auto w-full max-w-md px-5">
-      <div className="section-shell fade-up rounded-[28px] p-6 sm:p-8">
+    <section className="mx-auto w-full max-w-md">
+      <div className="section-shell fade-up rounded-[28px] sm:p-8">
         <div className="mb-6 text-center sm:mb-8">
           <p className="mx-auto mb-3 inline-flex rounded-full border border-redMain/20 bg-redMain/8 px-4 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-redDark">
             Admin prihlásenie

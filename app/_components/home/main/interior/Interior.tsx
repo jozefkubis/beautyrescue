@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import Modal from "@/app/_components/Modal"
-import Image from "next/image"
-import { useState } from "react"
+import Modal from "@/app/_components/Modal";
+import Image from "next/image";
+import { useState } from "react";
 
 const INTERIOR_IMAGES = [
   {
@@ -20,14 +20,14 @@ const INTERIOR_IMAGES = [
     src: "/images/studio3.jpg",
     alt: "Beauty Rescue Žilina Hájik interiér",
   },
-]
+];
 
 export default function Interior() {
-  const [activeImageId, setActiveImageId] = useState<number | null>(null)
+  const [activeImageId, setActiveImageId] = useState<number | null>(null);
 
   const activeImage = INTERIOR_IMAGES.find(
     (image) => image.id === activeImageId,
-  )
+  );
 
   return (
     <>
@@ -74,5 +74,5 @@ export default function Interior() {
         )}
       </Modal>
     </>
-  )
+  );
 }

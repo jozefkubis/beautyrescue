@@ -1,3 +1,5 @@
+import { Analytics } from "@vercel/analytics/react";
+import type { Metadata } from "next";
 import {
   Open_Sans,
   Playfair_Display_SC,
@@ -10,11 +12,9 @@ import Footer from "./_components/footer/Footer";
 import Header from "./_components/home/header/Header";
 import MobileHeader from "./_components/home/header/MobileHeader";
 import Navigation from "./_components/navigation/Navigation";
-import "./globals.css";
-import { Analytics } from "@vercel/analytics/react";
-import type { Metadata } from "next";
 import LocalBusinessJsonLd from "./_components/seo/LocalBusinessJsonLd";
 import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_URL } from "./_lib/seo";
+import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -90,10 +90,16 @@ export default async function RootLayout({
           <Header />
         </div>
         {children}
+
+        <Footer />
+
         <Analytics />
-        {/* 🔔 Toasty */}
+
         <Toaster
           position="top-right"
+          containerStyle={{
+            zIndex: 999999,
+          }}
           toastOptions={{
             duration: 4000,
             style: {
@@ -102,7 +108,6 @@ export default async function RootLayout({
             },
           }}
         />
-        <Footer />
       </body>
     </html>
   );

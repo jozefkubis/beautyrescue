@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { IoIosClose } from "react-icons/io";
 
 type ModalProps = {
@@ -14,15 +15,10 @@ type ModalProps = {
   maxWidthClass?: string;
 };
 
-const OVERLAY_STYLE =
-  "fixed inset-0 z-50 flex items-center justify-center bg-[#1c1214]/70 backdrop-blur-sm";
-const PANEL_BASE_STYLE = "mx-auto rounded-xl bg-transparent px-6 lg:px-0";
-
 export default function Modal({
   isOpen,
   onClose,
   children,
-  title,
   closeOnBackdrop = true,
   closeOnEscape = true,
   showCloseButton = true,
@@ -32,60 +28,39 @@ export default function Modal({
     if (!isOpen || !closeOnEscape) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
+      if (event.key === "Escape") onClose();
     };
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isOpen, closeOnEscape, onClose]);
 
-  return (
+  if (!isOpen) return null;
+
+  return createPortal(
     <div
-      className={`${OVERLAY_STYLE} transition-opacity duration-500 ease-out ${
-        isOpen
-          ? "pointer-events-auto opacity-100"
-          : "pointer-events-none opacity-0"
-      }`}
+      className="fixed inset-0 z-[9999] flex min-h-dvh w-screen items-center justify-center bg-[#1c1214]/70 px-5 backdrop-blur-sm"
       onClick={closeOnBackdrop ? onClose : undefined}
       role="presentation"
     >
       <div
-        className={`${PANEL_BASE_STYLE} ${maxWidthClass} transition-transform duration-500 ease-out ${
-          isOpen ? "translate-y-0 scale-100" : "translate-y-8 scale-95"
-        }`}
+        className={`relative p-5 ${maxWidthClass} rounded-xl bg-transparent`}
         onClick={(event) => event.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-label={title ?? "Modal"}
       >
-        {(title || showCloseButton) && (
-          <div className="w-full flex justify-end pb-2">
-            {/* {title ? (
-              <h2 className="text-lg font-semibold leading-tight">{title}</h2>
-            ) : (
-              <span />
-            )} */}
-
-            {showCloseButton && (
-              <button
-                type="button"
-                onClick={onClose}
-                className="rounded-full border border-goldDark/35 bg-goldLight/80 text-sm text-goldDark shadow-sm shadow-goldDark/20 hover:bg-goldLight focus:outline-none focus:ring-2 focus:ring-goldDark focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-300"
-                aria-label="Close modal"
-              >
-                <IoIosClose
-                  size={40}
-                  className="hover:cursor-pointer hover:scale-105 transition-transform duration-200 ease-out text-goldDark"
-                />
-              </button>
-            )}
-          </div>
+        {showCloseButton && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute -right-4 -top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-goldDark/35 bg-goldLight text-goldDark shadow-lg hover:cursor-pointer hover:border-goldDark hover:bg-goldDark hover:text-goldLight transition-colors duration-200 active:scale-95"
+            aria-label="Close modal"
+          >
+            <IoIosClose size={36} />
+          </button>
         )}
 
-        <div>{children}</div>
+        {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

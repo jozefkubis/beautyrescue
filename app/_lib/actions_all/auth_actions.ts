@@ -35,7 +35,7 @@ export async function logOut() {
     return { success: false, message: error.message }
   }
 
-  revalidatePath("/", "layout")
+  // revalidatePath("/", "layout")
   return { success: true, message: "Odhlásenie bolo úspešné." }
 }
 

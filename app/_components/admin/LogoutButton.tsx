@@ -1,13 +1,11 @@
 "use client";
 
 import { logOut } from "@/app/_lib/actions_all/auth_actions";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { IoMdLogOut } from "react-icons/io";
 
 export default function LogoutButton() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleLogout() {
@@ -24,9 +22,8 @@ export default function LogoutButton() {
         return;
       }
 
+      window.location.href = "/";
       toast.success("Odhlásenie bolo úspešné!");
-      router.replace("/");
-      router.refresh();
     } catch (error) {
       console.error("Logout error:", error);
       toast.error("Nastala chyba pri odhlasovaní.");
