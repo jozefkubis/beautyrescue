@@ -80,6 +80,7 @@ const connectSrc = [
 const frameSrc = [
   "'self'",
   "https://vercel.live", // Vercel Toolbar / Feedback iframe
+  "https://www.youtube.com", // YouTube embedded videos
 ];
 
 

@@ -151,7 +151,7 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
                       className={`absolute left-1/2 top-full z-20 -translate-x-1/2 pt-3 transition-all duration-200 ease-out ${
                         openDropdown === link.name
                           ? "pointer-events-auto translate-y-0 opacity-100"
-                          : "pointer-events-none -translate-y-1 opacity-0 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100"
+                          : "pointer-events-none -translate-y-1 opacity-0"
                       }`}
                     >
                       <div className="flex justify-center">

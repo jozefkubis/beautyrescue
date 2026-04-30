@@ -88,7 +88,7 @@ export default function MobileHeader() {
   };
 
   return (
-    <header className="relative z-40 lg:hidden">
+    <header className="relative z-[100] lg:hidden">
       <div className="flex items-center justify-between border-b border-goldLight/30 bg-linear-to-r from-redDark via-redMain to-redDark px-4 py-3 shadow-lg shadow-redDark/30">
         <Link href="/" className="flex items-center gap-2">
           <div className="rounded-full bg-white/90 p-1.5 shadow-sm shadow-black/15">
@@ -120,7 +120,7 @@ export default function MobileHeader() {
       </div>
 
       <div
-        className={`absolute inset-x-0 top-full z-40 grid transition-[grid-template-rows,opacity] duration-300 ease-out ${isMenuOpen ? "pointer-events-auto grid-rows-[1fr] opacity-100" : "pointer-events-none grid-rows-[0fr] opacity-0"}`}
+        className={`absolute inset-x-0 top-full z-[100] grid transition-[grid-template-rows,opacity] duration-300 ease-out ${isMenuOpen ? "pointer-events-auto grid-rows-[1fr] opacity-100" : "pointer-events-none grid-rows-[0fr] opacity-0"}`}
       >
         <nav
           className={`${robotoCondensed.className} overflow-hidden border-b border-goldLight/25 bg-linear-to-b from-[#372628] to-[#2b1e20] px-4 py-4 shadow-lg shadow-black/25`}
