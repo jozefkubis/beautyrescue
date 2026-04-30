@@ -1,5 +1,3 @@
-"use client";
-
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Link from "next/link";

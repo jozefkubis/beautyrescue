@@ -1,8 +1,7 @@
 import { brandFont } from "@/app/_components/fonts";
 import { dataDashboard } from "@/app/_lib/data_services_all/data_dashboard";
 import {
-  getTknCategories,
-  getTknProductsByCategory,
+  getTknCategoriesWithProducts,
 } from "@/app/_lib/data_services_all/data_tkn";
 import { getVisibleTknCategories } from "@/app/_lib/data_services_all/tkn_visibility";
 import { createPageMetadata } from "@/app/_lib/seo";
@@ -12,15 +11,7 @@ export const metadata = createPageMetadata("tkn");
 
 // Landing page nacita komplet data a viditelnost riesi az v UI helperi.
 export default async function Page() {
-  const categories = await getTknCategories();
-
-  // Najprv poskladame kategorie s produktami a az potom aplikujeme UI filter.
-  const tknCategories = await Promise.all(
-    categories.map(async (category) => ({
-      ...category,
-      products: await getTknProductsByCategory(category.slug),
-    })),
-  );
+  const tknCategories = await getTknCategoriesWithProducts();
 
   const visibleTknCategories = getVisibleTknCategories(tknCategories);
 

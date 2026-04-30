@@ -1,5 +1,3 @@
-"use client";
-
 import { dataDashboard } from "@/app/_lib/data_services_all/data_dashboard";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import type { TknCategoryWithProducts } from "@/app/_lib/data_services_all/data_tkn";
@@ -56,7 +54,7 @@ export default function Microneedling({
             src={uploadedImageUrl || "/images/microneedling.jpg"}
             alt="Microneedling v Beauty Rescue Žilina"
             fill
-            unoptimized
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover"
           />
         </div>

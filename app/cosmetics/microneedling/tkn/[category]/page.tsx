@@ -2,7 +2,7 @@ import { brandFont } from "@/app/_components/fonts";
 import { dataDashboard } from "@/app/_lib/data_services_all/data_dashboard";
 import {
   getTknCategoriesBySlug,
-  getTknProductsByCategory,
+  getTknProductsByCategoryId,
   type TknProductRow,
 } from "@/app/_lib/data_services_all/data_tkn";
 import { createDynamicPageMetadata } from "@/app/_lib/seo";
@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 type CategoryPageProps = {
   params: Promise<{ category: string }>;
@@ -51,15 +51,13 @@ function getIndications(product: TknProductRow) {
 export default async function Page({ params }: CategoryPageProps) {
   const { category: categorySlug } = await params;
 
-  // Kategoriu a produkty tahame naraz, nech je render rychly a citatelny.
-  const [category, products] = await Promise.all([
-    getTknCategoriesBySlug(categorySlug),
-    getTknProductsByCategory(categorySlug),
-  ]);
+  const category = await getTknCategoriesBySlug(categorySlug);
 
   if (!category || !category.is_active) {
     notFound();
   }
+
+  const products = await getTknProductsByCategoryId(category.id);
 
   // Verejny detail ukazuje iba aktivne produkty v aktivnej kategorii.
   const visibleProducts = products.filter((product) => product.is_active);

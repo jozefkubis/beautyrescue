@@ -4,17 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { IoTriangle } from "react-icons/io5";
-import AdminLink from "../admin/AdminLink";
-import LoginForm from "../admin/LoginForm";
-import LoginLink from "../admin/LoginLink";
-import LogoutButton from "../admin/LogoutButton";
 import { robotoCondensed } from "../fonts";
-import Modal from "../Modal";
+import AuthNavControls from "./AuthNavControls";
 
-export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
+export default function Navigation() {
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [openModal, setOpenModal] = useState(false);
   const navRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -180,13 +175,7 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
               </div>
             ))}
 
-            {isAdmin && <AdminLink />}
-
-            {!isAdmin ? (
-              <LoginLink setOpenModal={setOpenModal} />
-            ) : (
-              <LogoutButton />
-            )}
+            <AuthNavControls />
           </div>
 
           {/* Slovensky: Kontakt je teraz link, ktorý plynulo scrolluje na sekciu s kontaktným formulárom v pätičke */}
@@ -204,16 +193,6 @@ export default function Navigation({ isAdmin }: { isAdmin?: boolean }) {
           </button>
         </div>
       </div>
-
-      {!isAdmin && (
-        <Modal
-          isOpen={openModal}
-          onClose={() => setOpenModal(false)}
-          maxWidthClass="max-w-4xl"
-        >
-          {openModal && <LoginForm />}
-        </Modal>
-      )}
     </>
   );
 }

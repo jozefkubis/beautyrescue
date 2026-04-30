@@ -1,5 +1,3 @@
-"use client";
-
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import ExpandText from "../../ExpandText";
@@ -46,7 +44,7 @@ export default function Acupuncture({
             src={uploadedImageUrl || "/images/acupuncture_main.jpeg"}
             alt="Lekárska akupunktúra v Beauty Rescue Žilina"
             fill
-            unoptimized
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover"
           />
         </div>

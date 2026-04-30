@@ -5,7 +5,7 @@ import {
 } from "./_lib/seo";
 import {
   getTknCategories,
-  getTknProductsByCategory,
+  getTknProductsByCategoryId,
 } from "./_lib/data_services_all/data_tkn";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const productGroups = await Promise.all(
     activeCategories.map(async (category) => {
-      const products = await getTknProductsByCategory(category.slug);
+      const products = await getTknProductsByCategoryId(category.id);
 
       return products
         .filter((product) => product.is_active)

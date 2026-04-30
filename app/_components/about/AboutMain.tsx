@@ -1,5 +1,3 @@
-"use client";
-
 import { AboutMainProps } from "@/app/_lib/data_services_all/data_about";
 import Image from "next/image";
 import ExpandText from "../ExpandText";
@@ -42,7 +40,7 @@ export default function AboutMain({ aboutUsData }: AboutMainProps) {
             src={uploadedImageUrl || "/images/about_us.jpg"}
             alt="Beauty Rescue kozmetický salón Žilina"
             fill
-            unoptimized
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover"
           />
         </div>

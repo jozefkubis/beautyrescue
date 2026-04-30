@@ -10,7 +10,6 @@ import Footer from "./_components/footer/Footer";
 import Header from "./_components/home/header/Header";
 import MobileHeader from "./_components/home/header/MobileHeader";
 import Navigation from "./_components/navigation/Navigation";
-import { getCurrentUser } from "./_lib/actions_all/auth_actions";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
@@ -79,11 +78,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getCurrentUser();
-  const isAdmin =
-    user?.email === process.env.ADMIN_EMAIL_1 ||
-    user?.email === process.env.ADMIN_EMAIL_2;
-
   return (
     <html lang="sk">
       <body
@@ -92,7 +86,7 @@ export default async function RootLayout({
         <LocalBusinessJsonLd />
         <MobileHeader />
         <div className="hidden lg:block">
-          <Navigation isAdmin={isAdmin} />
+          <Navigation />
           <Header />
         </div>
         {children}

@@ -1,5 +1,3 @@
-"use client";
-
 import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Link from "next/link";
@@ -49,7 +47,7 @@ export default function Kyselina_hyaluronova({
             src={uploadedImageUrl || "/images/kyselina_hyaluronova.jpeg"}
             alt="Kyselina hyaluronová v Beauty Rescue Žilina"
             fill
-            unoptimized
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover"
           />
         </div>

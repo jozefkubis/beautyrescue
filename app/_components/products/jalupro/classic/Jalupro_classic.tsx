@@ -1,5 +1,3 @@
-"use client";
-
 import ExpandText from "@/app/_components/ExpandText";
 import { brandFont } from "@/app/_components/fonts";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
@@ -46,7 +44,7 @@ export default function Jalupro_classic({
             src={uploadedImageUrl || "/images/jalupro_main.jpeg"}
             alt="Jalupro Classic v Beauty Rescue Žilina"
             fill
-            unoptimized
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover"
           />
         </div>

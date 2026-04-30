@@ -1,8 +1,22 @@
 import PricingMain from "../_components/pricing/PricingMain";
-import getServiceBySlug from "../_lib/data_services_all/data_services";
+import { getServicesBySlugs } from "../_lib/data_services_all/data_services";
 import { createPageMetadata } from "../_lib/seo";
 
 export const metadata = createPageMetadata("pricing");
+
+const pricingServiceSlugs = [
+  "chemical-peeling",
+  "diamond-microdermabrasion",
+  "oxygeneo",
+  "mezoterapia-non-invasive",
+  "mezoterapia-invasive",
+  "botulotoxin",
+  "kyselina-hyaluronova",
+  "biokompatibilne-nite",
+  "profhilo",
+  "acupuncture",
+  "microneedling",
+];
 
 export default async function Page() {
   const [
@@ -17,19 +31,7 @@ export default async function Page() {
     profhiloData,
     acupunctureData,
     microneedlingData,
-  ] = await Promise.all([
-    getServiceBySlug("chemical-peeling"),
-    getServiceBySlug("diamond-microdermabrasion"),
-    getServiceBySlug("oxygeneo"),
-    getServiceBySlug("mezoterapia-non-invasive"),
-    getServiceBySlug("mezoterapia-invasive"),
-    getServiceBySlug("botulotoxin"),
-    getServiceBySlug("kyselina-hyaluronova"),
-    getServiceBySlug("biokompatibilne-nite"),
-    getServiceBySlug("profhilo"),
-    getServiceBySlug("acupuncture"),
-    getServiceBySlug("microneedling"),
-  ]);
+  ] = await getServicesBySlugs(pricingServiceSlugs);
 
   return (
     <PricingMain

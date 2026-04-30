@@ -6,8 +6,10 @@ import { createPageMetadata } from "./_lib/seo";
 export const metadata = createPageMetadata("home");
 
 export default async function Page() {
-  const promotion = await getServiceBySlug("novinky");
-  const homeImg = await getHomeImage();
+  const [promotion, homeImg] = await Promise.all([
+    getServiceBySlug("novinky"),
+    getHomeImage(),
+  ]);
 
   return (
     <div className="relative">

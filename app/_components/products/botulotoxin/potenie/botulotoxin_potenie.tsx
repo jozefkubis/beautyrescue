@@ -1,5 +1,3 @@
-"use client";
-
 import ExpandTextLG from "@/app/_components/ExpandTextLG";
 import { brandFont } from "@/app/_components/fonts";
 import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
@@ -32,7 +30,7 @@ export default function Botulotoxin_potenie({
             src={uploadedImageUrl || "/images/botulotoxin_potenie.jpeg"}
             alt="Botulotoxín na nadmerné potenie v Beauty Rescue Žilina"
             fill
-            unoptimized
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover"
           />
         </div>

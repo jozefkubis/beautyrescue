@@ -1,4 +1,5 @@
-import { getSupabaseServerClient } from "../supabase/server";
+import { cache } from "react";
+import { getSupabasePublicServerClient } from "../supabase/publicServer";
 
 export type AboutMainProps = {
   aboutUsData: {
@@ -17,8 +18,8 @@ export type AboutMainProps = {
 
 // Jednoduché načítanie z novej tabuľky `about_us`.
 // Rovnako ako v pôvodnom súbore vraciame riadok priamo z databázy.
-export async function getAboutUs(slug: string) {
-  const supabase = await getSupabaseServerClient();
+export const getAboutUs = cache(async (slug: string) => {
+  const supabase = getSupabasePublicServerClient();
 
   const { data, error } = await supabase
     .from("about_us")
@@ -32,4 +33,4 @@ export async function getAboutUs(slug: string) {
   }
 
   return data;
-}
+});

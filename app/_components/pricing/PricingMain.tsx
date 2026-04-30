@@ -1,7 +1,7 @@
 "use client";
 
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import Acupuncture_pricing_form from "../products/acupuncture/Acupuncture_pricing_form";
 import Biokompatibilne_nite_pricing_form from "../products/biokompatibilne-nite/Biokompatibilne_nite_pricing_form";
@@ -51,7 +51,7 @@ export default function PricingMain({
 }: PricingMainProps) {
   const [openBox, setOpenBox] = useState<number | null>(null);
 
-  const pricingFormData: PricingFormItem[] = [
+  const pricingFormData: PricingFormItem[] = useMemo(() => [
     {
       id: 1,
       title: "Chemický peeling",
@@ -159,7 +159,19 @@ export default function PricingMain({
       // Komponent očakáva prop microneedling
       value: <Microneedling_pricing_form microneedling={microneedlingData} />,
     },
-  ];
+  ], [
+    acupunctureData,
+    biokompatibilneNiteData,
+    botulotoxinData,
+    chemicalPeelingData,
+    diamondMicrodermabraziaData,
+    kyselinaHyaluronovaData,
+    mezoterapiaInvasiveData,
+    mezoterapiaNonInvasiveData,
+    microneedlingData,
+    oxygeneoData,
+    profhiloData,
+  ]);
 
   function handleClick(id: number) {
     setOpenBox((currentId) => (currentId === id ? null : id));

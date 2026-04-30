@@ -1,5 +1,3 @@
-"use client";
-
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Link from "next/link";
@@ -51,7 +49,7 @@ export default function Jalupro({ jalupro, user, isAdmin }: JaluproProps) {
             src={uploadedImageUrl || "/images/jalupro_main.jpeg"}
             alt="Jalupro v Beauty Rescue Žilina"
             fill
-            unoptimized
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover"
           />
         </div>

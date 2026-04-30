@@ -86,3 +86,15 @@ export async function getCurrentUser() {
     return null
   }
 }
+
+export async function getCurrentAdminStatus() {
+  const user = await getCurrentUser()
+  const isAdmin =
+    user?.email === process.env.ADMIN_EMAIL_1 ||
+    user?.email === process.env.ADMIN_EMAIL_2
+
+  return {
+    isAuthenticated: Boolean(user),
+    isAdmin,
+  }
+}

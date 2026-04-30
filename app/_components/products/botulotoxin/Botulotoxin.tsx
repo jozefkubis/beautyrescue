@@ -1,5 +1,3 @@
-"use client";
-
 import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import Link from "next/link";
@@ -57,7 +55,7 @@ export default function Botulotoxin({
             src={uploadedImageUrl || "/images/botulotoxin.jpg"}
             alt="Botulotoxín v Beauty Rescue Žilina"
             fill
-            unoptimized
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover"
           />
         </div>

@@ -1,5 +1,3 @@
-"use client";
-
 import ExpandText from "@/app/_components/ExpandText";
 import { brandFont } from "@/app/_components/fonts";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";

@@ -1,4 +1,5 @@
-import { getSupabaseServerClient } from "../supabase/server";
+import { cache } from "react";
+import { getSupabasePublicServerClient } from "../supabase/publicServer";
 
 export type TknCategoryRow = {
   id: string;
@@ -31,8 +32,8 @@ export type TknCategoryWithProducts = TknCategoryRow & {
 };
 
 // Vrati TKN kategorie z DB. Co sa ma zobrazit, riesi az konkretna stranka.
-export async function getTknCategories() {
-  const supabase = await getSupabaseServerClient();
+export const getTknCategories = cache(async () => {
+  const supabase = getSupabasePublicServerClient();
 
   const { data, error } = await supabase
     .from("tkn_categories")
@@ -45,11 +46,11 @@ export async function getTknCategories() {
   }
 
   return (data ?? []) as TknCategoryRow[];
-}
+});
 
 // Vrati TKN kategoriu podla slugu.
-export async function getTknCategoriesBySlug(slug: string) {
-  const supabase = await getSupabaseServerClient();
+export const getTknCategoriesBySlug = cache(async (slug: string) => {
+  const supabase = getSupabasePublicServerClient();
 
   const { data, error } = await supabase
     .from("tkn_categories")
@@ -63,23 +64,26 @@ export async function getTknCategoriesBySlug(slug: string) {
   }
 
   return data as TknCategoryRow;
-}
+});
 
 // Vrati produkty pre jednu kategoriu z DB. Filtrovanie si riesi stranka.
-export async function getTknProductsByCategory(categorySlug: string) {
-  const supabase = await getSupabaseServerClient();
-
-  // Najprv si pre slug najdeme kategoriu, aby sme query robili cez category_id.
+export const getTknProductsByCategory = cache(async (categorySlug: string) => {
   const category = await getTknCategoriesBySlug(categorySlug);
 
   if (!category) {
     return [] as TknProductRow[];
   }
 
+  return getTknProductsByCategoryId(category.id);
+});
+
+export const getTknProductsByCategoryId = cache(async (categoryId: string) => {
+  const supabase = getSupabasePublicServerClient();
+
   const { data, error } = await supabase
     .from("tkn_products")
     .select("*")
-    .eq("category_id", category.id)
+    .eq("category_id", categoryId)
     .order("order_index", { ascending: true });
 
   if (error) {
@@ -88,11 +92,22 @@ export async function getTknProductsByCategory(categorySlug: string) {
   }
 
   return (data ?? []) as TknProductRow[];
-}
+});
+
+export const getTknCategoriesWithProducts = cache(async () => {
+  const categories = await getTknCategories();
+
+  return Promise.all(
+    categories.map(async (category) => ({
+      ...category,
+      products: await getTknProductsByCategoryId(category.id),
+    })),
+  );
+});
 
 // Vrati jeden produkt podla slugu.
-export async function getProductBySlug(slug: string) {
-  const supabase = await getSupabaseServerClient();
+export const getProductBySlug = cache(async (slug: string) => {
+  const supabase = getSupabasePublicServerClient();
 
   const { data, error } = await supabase
     .from("tkn_products")
@@ -106,6 +121,6 @@ export async function getProductBySlug(slug: string) {
   }
 
   return data as TknProductRow;
-}
+});
 
 

@@ -1,5 +1,3 @@
-"use client";
-
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import Image from "next/image";
 import ExpandText from "../../ExpandText";
@@ -49,7 +47,7 @@ export default function Profhilo({
             src={uploadedImageUrl || "/images/profhilo_main.jpeg"}
             alt="Profhilo v Beauty Rescue Žilina"
             fill
-            unoptimized
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover"
           />
         </div>

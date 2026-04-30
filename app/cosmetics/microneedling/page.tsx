@@ -5,8 +5,7 @@ import { createPageMetadata } from "@/app/_lib/seo";
 
 export const metadata = createPageMetadata("microneedling");
 import {
-  getTknCategories,
-  getTknProductsByCategory,
+  getTknCategoriesWithProducts,
 } from "@/app/_lib/data_services_all/data_tkn";
 
 // Hlavná Microneedling stránka načíta len to, čo naozaj potrebuje.
@@ -41,16 +40,7 @@ export default async function Page() {
     );
   }
 
-  const categories = await getTknCategories();
-
-  // Do komponentu posielame strom kategorii aj produktov uz poskladany,
-  // aby mal render jednoduchy vstup bez dalsich DB volani.
-  const tknCategories = await Promise.all(
-    categories.map(async (category) => ({
-      ...category,
-      products: await getTknProductsByCategory(category.slug),
-    })),
-  );
+  const tknCategories = await getTknCategoriesWithProducts();
 
   return (
     <Microneedling
