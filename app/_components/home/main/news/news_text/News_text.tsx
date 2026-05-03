@@ -1,5 +1,6 @@
 import { brandFont } from "@/app/_components/fonts";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import { highlightKeywords } from "@/app/_lib/helpers";
 
 type NewsTextProps = ServiceRow & { isActive: boolean };
 
@@ -33,8 +34,8 @@ export default function News_text({ text, title, isActive }: NewsTextProps) {
         <span className="mb-6 block h-px w-16 bg-goldDark/40 lg:mb-8 lg:w-24" />
 
         {/* Každý odsek má vlastný element pre správne medzery a sémantiku */}
-        <div className="flex max-w-2xl flex-col text-center text-sm leading-7 text-greyMain/80 gap-4 sm:gap-3 sm:text-base sm:leading-8 2xl:text-lg italic">
-          <p>{text}</p>
+        <div className="flex max-w-2xl flex-col text-justify text-sm leading-7 text-greyMain/80 sm:text-base 2xl:text-lg italic whitespace-pre-wrap">
+          <p dangerouslySetInnerHTML={{ __html: highlightKeywords(text) }} />
           {!isActive && <IfNoPromotion />}
         </div>
       </div>
