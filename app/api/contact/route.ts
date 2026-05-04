@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     }
 
     const result = await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: 'noreply@beautyrescue.sk',
       to: [toEmail],
       subject: 'Test contact form',
       text: `Meno: ${name}\nEmail: ${email}\nSpráva: ${message}`,
