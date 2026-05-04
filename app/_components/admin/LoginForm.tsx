@@ -23,10 +23,13 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
     try {
       const result = await handleSubmitLogin({ e, setError });
 
-      // Po uspesnom logine hned obnovime layout, aby sa ukazal Admin/Logout.
+      // Po uspesnom logine obnovime layout a na samostatnej login stranke usera posleme na homepage.
       if (result.success) {
         toast.success(result.message);
         onSuccess?.(); // zavrie modal
+        if (!onSuccess) {
+          router.push("/");
+        }
         router.refresh();
       } else {
         toast.error(result.message);
@@ -39,7 +42,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
   return (
     <section className="mx-auto w-full max-w-md">
       <div className="section-shell fade-up rounded-[28px] sm:p-8">
-        <div className="mb-6 text-center sm:mb-8">
+        <div className="mb-6 text-center sm:mb-8 p-6 md:p-0">
           <p className="mx-auto mb-3 inline-flex rounded-full border border-redMain/20 bg-redMain/8 px-4 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-redDark">
             Admin prihlásenie
           </p>
@@ -53,7 +56,11 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} noValidate className="space-y-5">
+        <form
+          onSubmit={handleSubmit}
+          noValidate
+          className="space-y-5 p-6 md:p-0"
+        >
           {error && (
             <div className="rounded-lg border border-redMain/30 bg-redMain/8 p-4 text-sm text-redDark">
               {error}
