@@ -1,41 +1,9 @@
 "use client";
 
 import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import { highlightKeywords, wrapChecklistInUl } from "@/app/_lib/helpers";
 import { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
-
-// Prejde text riadok po riadku — ak riadok začína ✓, zabalí ho do <li>
-// Keď skupina ✓ riadkov skončí, celú skupinu zabalí do <ul>
-function wrapChecklistInUl(text: string): string {
-  const lines = text.split("\n");
-  const result: string[] = [];
-  let checklistBuffer: string[] = [];
-
-  for (const line of lines) {
-    if (line.trimStart().startsWith("✓")) {
-      // Riadok patrí do zoznamu — odlož ho
-      checklistBuffer.push(`<li>${line.trim()}</li>`);
-    } else {
-      // Riadok nie je ✓ — ak bol pred ním zoznam, uzavri ho
-      if (checklistBuffer.length > 0) {
-        result.push(
-          `<ul style='list-style:none;padding:0;margin:0;text-align:left;'>${checklistBuffer.join("")}</ul>`,
-        );
-        checklistBuffer = [];
-      }
-      result.push(line);
-    }
-  }
-
-  // Ak text končí ✓ riadkami, uzavri zoznam na konci
-  if (checklistBuffer.length > 0) {
-    result.push(
-      `<ul style='list-style:none;padding:0;margin:0;text-align:left;'>${checklistBuffer.join("")}</ul>`,
-    );
-  }
-
-  return result.join("\n");
-}
 
 export default function About_profhilo({
   profhilo,
@@ -62,41 +30,10 @@ export default function About_profhilo({
     return null;
   }
 
-  const highLightedAboutTextProfhilo = about
-    .replace(
-      /Čo je Profhilo\?/gi,
-      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Čo je Profhilo?</span>",
-    )
-    .replace(
-      /Ako Profhilo funguje\?/gi,
-      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Ako Profhilo funguje?</span>",
-    )
-    .replace(
-      /Aké sú výhody Profhilo\?/gi,
-      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Aké sú výhody Profhilo?</span>",
-    )
-    .replace(
-      /Pre koho je Profhilo vhodné\?/g,
-      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Pre koho je Profhilo vhodné?</span>",
-    );
+  const highLightedAboutTextProfhilo = highlightKeywords(about);
 
-  const highLightedAboutTextProfhiloStructura = aboutStructura
-    .replace(
-      /Čo je Profhilo Structura\?/gi,
-      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Čo je Profhilo Structura?</span>",
-    )
-    .replace(
-      /Ako Profhilo Structura funguje\?/gi,
-      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Ako Profhilo Structura funguje?</span>",
-    )
-    .replace(
-      /Ošetrenie Profhilo Structura/gi,
-      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Ošetrenie Profhilo Structura</span>",
-    )
-    .replace(
-      /Pre koho je Profhilo Structura vhodné\?/g,
-      "<span style='color:#9d7410;font-weight:bold;text-transform:uppercase'>Pre koho je Profhilo Structura vhodné?</span>",
-    );
+  const highLightedAboutTextProfhiloStructura =
+    highlightKeywords(aboutStructura);
 
   const formattedText = highLightedAboutTextProfhilo
     ? wrapChecklistInUl(highLightedAboutTextProfhilo)

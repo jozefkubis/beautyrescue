@@ -1,5 +1,5 @@
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
-import { wrapChecklistInUl } from "@/app/_lib/helpers";
+import { highlightKeywords, wrapChecklistInUl } from "@/app/_lib/helpers";
 
 type DiamondMicrodermabrasionTextProps = {
   diamondMicroderm?: ServiceRow | null;
@@ -10,7 +10,8 @@ export default function Diamond_microdermabrasion_text({
   diamondMicroderm,
 }: DiamondMicrodermabrasionTextProps) {
   const text = diamondMicroderm?.text ?? "";
-  const checklistHtml = wrapChecklistInUl(text);
+  const highlightedText = highlightKeywords(text);
+  const checklistHtml = wrapChecklistInUl(highlightedText);
 
   return (
     <div>

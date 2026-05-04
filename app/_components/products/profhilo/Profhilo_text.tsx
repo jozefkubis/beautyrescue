@@ -1,4 +1,5 @@
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
+import { highlightKeywords, wrapChecklistInUl } from "@/app/_lib/helpers";
 
 export default function Profhilo_text({
   profhilo,
@@ -6,8 +7,12 @@ export default function Profhilo_text({
   profhilo: ServiceRow | null | undefined;
 }) {
   const text = profhilo?.text || "";
+  const highlightedText = highlightKeywords(text);
+  const formattedText = highlightedText
+    ? wrapChecklistInUl(highlightedText)
+    : "";
 
-  const formattedParagraph = text.replace(
+  const formattedParagraph = formattedText.replace(
     /Dostupné varianty:/g,
     "<strong>Dostupné varianty:</strong>",
   );

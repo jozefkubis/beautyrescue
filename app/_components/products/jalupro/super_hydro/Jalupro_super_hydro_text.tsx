@@ -1,45 +1,17 @@
 "use client";
 
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
-
-// Prejde text riadok po riadku — ak riadok začína ✓, zabalí ho do <li>
-// Keď skupina ✓ riadkov skončí, celú skupinu zabalí do <ul>
-function wrapChecklistInUl(text: string): string {
-  const lines = text.split("\n");
-  const result: string[] = [];
-  let checklistBuffer: string[] = [];
-
-  for (const line of lines) {
-    if (line.trimStart().startsWith("✓")) {
-      checklistBuffer.push(`<li>${line.trim()}</li>`);
-    } else {
-      if (checklistBuffer.length > 0) {
-        result.push(
-          `<ul style="list-style:none;padding:0;margin:0;text-align:left;">${checklistBuffer.join("")}</ul>`,
-        );
-        checklistBuffer = [];
-      }
-
-      result.push(line);
-    }
-  }
-
-  if (checklistBuffer.length > 0) {
-    result.push(
-      `<ul style="list-style:none;padding:0;margin:0;text-align:left;">${checklistBuffer.join("")}</ul>`,
-    );
-  }
-
-  return result.join("\n");
-}
+import { highlightKeywords, wrapChecklistInUl } from "@/app/_lib/helpers";
 
 export default function Jalupro_super_hydro_text({
   jaluproSuperHydro,
 }: {
   jaluproSuperHydro?: ServiceRow | null;
 }) {
-  const text = jaluproSuperHydro?.text ?? "";
-  const formattedText = text ? wrapChecklistInUl(text) : "";
+  const highlightedText = highlightKeywords(jaluproSuperHydro?.text ?? "");
+  const formattedText = highlightedText
+    ? wrapChecklistInUl(highlightedText)
+    : "";
 
   return (
     <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
