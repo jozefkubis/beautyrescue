@@ -1,5 +1,5 @@
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
-import { wrapChecklistInUl } from "@/app/_lib/helpers";
+import { highlightKeywords, wrapChecklistInUl } from "@/app/_lib/helpers";
 import ExpandTextLG from "../../ExpandTextLG";
 
 export default function Microneedling_text({
@@ -7,11 +7,9 @@ export default function Microneedling_text({
 }: {
   microneedling?: ServiceRow | null;
 }) {
-  const withHighlights = microneedling?.text?.replace(
-    /Kontraindikácie:/g,
-    "<span style='color:#9d7410;font-weight:bold;'>Kontraindikácie:</span>",
-  );
-
+  const withHighlights = microneedling?.text
+    ? highlightKeywords(microneedling.text)
+    : "";
   const formattedText = withHighlights ? wrapChecklistInUl(withHighlights) : "";
 
   return (

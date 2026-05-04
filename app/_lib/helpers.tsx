@@ -1,6 +1,7 @@
 export function highlightKeywords(text: string | null | undefined): string {
   if (!text) return "";
-  const lines = text.split("\n");
+  // Zjednoti konce riadkov, aby zvýraznenie fungovalo rovnako po úprave z Windows aj z webu.
+  const lines = text.replace(/\r\n?/g, "\n").split("\n");
   const highlightedLines = lines.map((line) => {
     if (line.trimStart().endsWith(":") || line.trimStart().endsWith("?")) {
       return `<strong>${line}</strong>`;
