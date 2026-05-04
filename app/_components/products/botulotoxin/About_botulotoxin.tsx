@@ -3,6 +3,7 @@
 import { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { highlightKeywords, wrapChecklistInUl } from "@/app/_lib/helpers";
 
 export default function About_botulotoxin({
   botulotoxin,
@@ -16,6 +17,9 @@ export default function About_botulotoxin({
   if (!aboutTitle || !about) {
     return null;
   }
+
+  const highlightedText = highlightKeywords(about);
+  const formattedText = highlightedText ? wrapChecklistInUl(highlightedText) : "";
 
   return (
     <section className="w-full items-center justify-center">
@@ -61,7 +65,7 @@ export default function About_botulotoxin({
           >
             <div className="pb-6 pt-1 flex flex-col gap-2 [&_p]:text-justify">
               <p className="text-xs 2xl:text-sm leading-relaxed text-zinc-700 whitespace-pre-wrap pb-4">
-                {about}
+                <span dangerouslySetInnerHTML={{ __html: formattedText }} />
               </p>
             </div>
           </div>
