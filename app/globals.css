@@ -57,6 +57,28 @@
 body {
   background:
     var(--hero-glow),
+    linear-gradient(155deg, #fffdf9 0%, #fff7ef 45%, #fff4ea 100%);
+  color: var(--foreground);
+  font-family: var(--font-poppins, "Segoe UI", sans-serif);
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("/images/bgimages/bg-2.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* body {
+  background:
+    var(--hero-glow),
     radial-gradient(
       circle at 88% 14%,
       rgba(190, 18, 60, 0.08),
@@ -67,7 +89,7 @@ body {
   font-family: var(--font-poppins, "Segoe UI", sans-serif);
   min-height: 100vh;
 }
-
+  
 body::before {
   content: "";
   position: fixed;
@@ -85,7 +107,7 @@ body::before {
   );
   mask-image: radial-gradient(circle at center, black 22%, transparent 100%);
   z-index: -1;
-}
+} */
 
 ::selection {
   background: color-mix(in srgb, var(--goldLight) 35%, white);
@@ -108,8 +130,8 @@ strong {
   border-radius: 1.25rem;
   background: linear-gradient(
     165deg,
-    rgba(255, 255, 255, 0.94),
-    rgba(255, 248, 240, 0.88)
+    rgba(255, 255, 255, 0.82),
+    rgba(255, 248, 240, 0.76)
   );
   box-shadow:
     0 14px 35px rgba(157, 116, 16, 0.08),
