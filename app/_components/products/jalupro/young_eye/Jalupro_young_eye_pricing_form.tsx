@@ -22,12 +22,14 @@ export default function Jalupro_young_eye_pricing_form({
         : "",
   }));
 
+  // Slovensky: Posielame serviceId do formulara, aby sa nova procedura priradila k spravnemu produktu.
   return (
     <PricingForm
       title="Jalupro Young Eye"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={jaluproYoungEye?.id || ""}
     />
   );
 }

@@ -20,12 +20,14 @@ export default function Mezoterapia_pricing_form_non_invasive({
         : "",
   }));
 
+  // Slovensky: Posielame serviceId do formulara, aby sa nova procedura ulozila pod spravnu sluzbu.
   return (
     <PricingForm
       title="Neinvazívna mezoterapia – MesojectGun"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={mezoterapiaNonInvasive?.id || ""}
     />
   );
 }

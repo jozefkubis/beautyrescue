@@ -22,12 +22,14 @@ export default function Jalupro_pricing_form({
         : "",
   }));
 
+  // Slovensky: Posielame serviceId do formulara, aby sa nova procedura priradila k spravnemu produktu.
   return (
     <PricingForm
       title="Jalupro"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={jaluproClassic?.id || ""}
     />
   );
 }

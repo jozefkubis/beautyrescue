@@ -22,12 +22,14 @@ export default function Kyselina_hyaluronova_pricing_form_lips({
         : "",
   }));
 
+  // Slovensky: Posielame serviceId do formulara, aby sa nova procedura priradila k spravnej sluzbe.
   return (
     <PricingForm
       title="Kyselina hyaluronová - Pery"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={kyselinaHyaluronovaLips?.id || ""}
     />
   );
 }

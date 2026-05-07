@@ -104,6 +104,11 @@ export async function insertTreatment(service_id: string) {
     throw new Error("Unauthorized");
   }
 
+  // Zastavime volanie skor, ak formular neposlal platne ID sluzby.
+  if (!service_id.trim()) {
+    throw new Error("Chyba pri vkladani novej procedury: chyba service_id");
+  }
+
   // Pri vkladaní novej procedúry pridáme service_id priamo do objektu.
   // Trigger v databáze automaticky nastaví order_index podľa poradia v rámci service_id.
   const { data, error } = await supabase
@@ -123,7 +128,7 @@ export async function insertTreatment(service_id: string) {
     throw new Error(`Chyba pri vkladani novej procedury: ${error.message}`);
   }
 
-   return data;
+  return data;
 }
 
 // MARK: DELETE TREATMENT

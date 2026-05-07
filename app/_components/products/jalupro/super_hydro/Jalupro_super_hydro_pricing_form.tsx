@@ -22,12 +22,14 @@ export default function Jalupro_super_hydro_pricing_form({
         : "",
   }));
 
+  // Slovensky: Posielame serviceId do formulara, aby sa nova procedura priradila k spravnemu produktu.
   return (
     <PricingForm
       title="Jalupro Super Hydro"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={jaluproSuperHydro?.id || ""}
     />
   );
 }

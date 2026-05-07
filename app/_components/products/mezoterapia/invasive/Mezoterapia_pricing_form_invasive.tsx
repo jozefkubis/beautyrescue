@@ -20,12 +20,14 @@ export default function Mezoterapia_pricing_form_invasive({
         : "",
   }));
 
+  // Slovensky: Posielame serviceId do formulara, aby sa nova procedura ulozila pod spravnu sluzbu.
   return (
     <PricingForm
       title="Invazívna mezoterapia – Vitalinjector"
       treatments={treatments}
       user={user}
       isAdmin={isAdmin}
+      serviceId={mezoterapiaInvasive?.id || ""}
     />
   );
 }

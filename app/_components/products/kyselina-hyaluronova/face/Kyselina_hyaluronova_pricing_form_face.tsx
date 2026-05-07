@@ -22,6 +22,7 @@ export default function Kyselina_hyaluronova_pricing_form_face({
         : "",
   }));
 
+  // Slovensky: Posielame serviceId do formulara, aby sa nova procedura priradila k spravnej sluzbe.
   return (
     <div className="space-y-4">
       <PricingForm
@@ -29,6 +30,7 @@ export default function Kyselina_hyaluronova_pricing_form_face({
         treatments={treatments}
         user={user}
         isAdmin={isAdmin}
+        serviceId={kyselinaHyaluronovaFace?.id || ""}
       />
     </div>
   );
