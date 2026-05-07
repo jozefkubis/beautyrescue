@@ -21,5 +21,5 @@ export function getVisibleTknCategories<
           products: category.products.filter((product) => product.is_active),
         }) as TCategory,
     )
-    .filter((category) => category.products.length > 0);
+    // .filter((category) => category.products.length > 0);
 }

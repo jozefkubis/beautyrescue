@@ -16,10 +16,12 @@ export default function Diamond_microdermabrasion_text({
   return (
     <div>
       <div className="space-y-4">
-        <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify whitespace-pre-wrap">
-          {text ? <p className="text-gray-700 leading-7">{text}</p> : null}
-          {checklistHtml ? (
-            <div dangerouslySetInnerHTML={{ __html: checklistHtml }} />
+        <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify whitespace-pre-wrap leading-7 text-gray-700">
+          {text ? (
+            <div
+              dangerouslySetInnerHTML={{ __html: checklistHtml }}
+              className="text-gray-700 leading-7 whitespace-pre-wrap text-justify"
+            />
           ) : null}
         </div>
       </div>

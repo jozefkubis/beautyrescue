@@ -20,7 +20,7 @@ export default function Profhilo_text({
   return (
     <div className="space-y-3 text-sm 2xl:text-lg [&_p]:text-justify">
       <p
-        className="text-gray-700 leading-7 whitespace-pre-wrap"
+        className="text-gray-700 leading-7 whitespace-pre-wrap text-justify"
         dangerouslySetInnerHTML={{ __html: formattedParagraph }}
       />
     </div>
