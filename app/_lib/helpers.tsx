@@ -43,3 +43,7 @@ export function wrapChecklistInUl(text: string): string {
 
   return result.join("\n");
 }
+
+export const ADDRESS = "Korzo 8707/8 010 15 Žilina";
+export const EMAIL = "info@beautyrescue.sk";
+export const PHONE = "0907 81 65 37";

@@ -1,3 +1,4 @@
+import { ADDRESS, EMAIL, PHONE } from "@/app/_lib/helpers";
 import {
   FaFacebookSquare,
   FaInstagramSquare,
@@ -9,23 +10,23 @@ export default function Contact_links() {
   const contactLinks = [
     {
       type: "Email",
-      value: "info@beautyrescue.sk",
-      href: "mailto:info@beautyrescue.sk",
+      value: EMAIL,
+      href: `mailto:${EMAIL}`,
       icon: (
         <MdEmail className="rounded-full bg-linear-to-br from-[#fff5db] to-[#ffe8c7] p-2 text-3xl text-redDark ring-1 ring-goldLight/60 xl:text-4xl" />
       ),
     },
     {
       type: "Telefón",
-      value: "0907 81 65 37",
-      href: "tel:+421907816537",
+      value: PHONE,
+      href: `tel:${PHONE.replace(/\s+/g, "")}`,
       icon: (
         <MdPhone className="rounded-full bg-linear-to-br from-[#fff5db] to-[#ffe8c7] p-2 text-3xl text-redDark ring-1 ring-goldLight/60 xl:text-4xl" />
       ),
     },
     {
       type: "Adresa",
-      value: "Korzo 8708/8 010 15 Žilina",
+      value: ADDRESS,
       href: "https://www.google.com/maps/place/Korzo+8707%2F8,+010+15+%C5%BDilina-H%C3%A1jik/@49.2114221,18.6921066,15z/data=!3m1!4b1!4m6!3m5!1s0x47145e949e06440b:0xb9e41028416cd805!8m2!3d49.2114096!4d18.7105605!16s%2Fg%2F11yfdg47mw?entry=ttu&g_ep=EgoyMDI2MDQwNS4wIKXMDSoASAFQAw%3D%3D",
       icon: (
         <FaMapMarkerAlt className="rounded-full bg-linear-to-br from-[#fff5db] to-[#ffe8c7] p-2 text-3xl text-redDark ring-1 ring-goldLight/60 xl:text-4xl" />

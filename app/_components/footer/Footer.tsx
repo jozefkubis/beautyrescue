@@ -1,5 +1,6 @@
 "use client";
 
+import { ADDRESS, EMAIL, PHONE } from "@/app/_lib/helpers";
 import { FaFacebookSquare, FaInstagramSquare } from "react-icons/fa";
 import ContactForm from "../forms/ContactForm";
 
@@ -14,13 +15,9 @@ export default function Footer() {
             Kontakt
           </h2>
 
-          <p className="text-xs opacity-85 xl:text-sm">
-            E-Mail: info@beautyrescue.sk
-          </p>
+          <p className="text-xs opacity-85 xl:text-sm">E-Mail: {EMAIL}</p>
 
-          <p className="text-xs opacity-85 xl:text-sm">
-            Telefón: +421 907 81 65 37
-          </p>
+          <p className="text-xs opacity-85 xl:text-sm">Telefón: {PHONE}</p>
 
           <div className="mt-4 flex gap-4">
             <a
@@ -57,9 +54,9 @@ export default function Footer() {
             Adresa
           </h2>
 
-          <p className="text-xs opacity-85 xl:text-sm">Korzo 8708/8</p>
+          <p className="text-xs opacity-85 xl:text-sm">{ADDRESS}</p>
 
-          <p className="text-xs opacity-85 xl:text-sm">010 15 Žilina</p>
+          {/* <p className="text-xs opacity-85 xl:text-sm">010 15 Žilina</p> */}
         </div>
 
         {/* Form */}
