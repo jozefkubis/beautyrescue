@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     description: DEFAULT_DESCRIPTION,
     images: [
       {
-        url: "https://www.beautyrescue.sk/images/og-image.png",
+        url: "https://beautyrescue.sk/images/og-image.png",
         width: 1200,
         height: 630,
         alt: "Beauty Rescue Žilina",
