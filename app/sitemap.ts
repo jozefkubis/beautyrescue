@@ -5,8 +5,12 @@ import {
 } from "./_lib/data_services_all/data_tkn";
 import { absoluteUrl, publicSeoPages } from "./_lib/seo";
 
+// Tento sitemap handler povie Next.js, ake URL ma vygenerovat do XML sitemapy.
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
+
+  // Staticke verejne stranky berieme z centralneho SEO zoznamu,
+  // aby sa nemuseli cesty vypisovat aj tu rucne.
   const staticRoutes = publicSeoPages.map((page) => ({
     url: absoluteUrl(page.path),
     lastModified,
@@ -15,6 +19,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const categories = await getTknCategories();
+
+  // Do sitemapy davame len aktivne TKN kategorie, aby sa neindexovali skryte sekcie.
   const activeCategories = categories.filter((category) => category.is_active);
   const categoryRoutes = activeCategories.map((category) => ({
     url: absoluteUrl(`/kozmetika/microneedling/tkn/${category.slug}`),
@@ -23,6 +29,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
+  // Pre kazdu aktivnu kategoriu nacitame jej produkty a do sitemapy vlozime
+  // len aktivne detailne stranky produktov.
   const productGroups = await Promise.all(
     activeCategories.map(async (category) => {
       const products = await getTknProductsByCategoryId(category.id);

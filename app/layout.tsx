@@ -43,9 +43,10 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
+    images: [`${SITE_URL}/images/og-image.png`],
   },
 };
 
