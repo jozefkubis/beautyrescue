@@ -86,11 +86,11 @@ async function requireAdmin() {
 // Pri zmene obsahu obnovime hlavne verejne a admin cesty.
 function revalidateCmsPaths() {
   revalidatePath("/", "layout");
-  revalidatePath("/about");
-  revalidatePath("/pricing");
-  revalidatePath("/promotion");
-  revalidatePath("/cosmetics/microneedling");
-  revalidatePath("/cosmetics/microneedling/tkn");
+  revalidatePath("/onas");
+  revalidatePath("/cennik");
+  revalidatePath("/novinky");
+  revalidatePath("/kozmetika/microneedling");
+  revalidatePath("/kozmetika/microneedling/tkn");
   revalidatePath("/admin");
 }
 
@@ -115,7 +115,10 @@ async function uploadImageIfProvided(
     throw new Error("Podporované sú iba formáty JPG, PNG a WEBP");
   }
 
-  const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(/\s/g, "-");
+  const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(
+    /\s/g,
+    "-",
+  );
 
   const { data: uploadData, error: uploadError } = await supabase.storage
     .from("BRImages")
@@ -190,7 +193,11 @@ export async function updateTknCategoryRecord(
     }
 
     const payload = JSON.parse(rawData) as UpdateTknCategoryPayload;
-    const uploadedImageUrl = await uploadImageIfProvided(supabase, slug, imageFile);
+    const uploadedImageUrl = await uploadImageIfProvided(
+      supabase,
+      slug,
+      imageFile,
+    );
 
     if (!normalizeText(payload.title)) {
       throw new Error("TKN kategória musí mať title");
@@ -260,7 +267,11 @@ export async function updateTknProductRecord(
     }
 
     const payload = JSON.parse(rawData) as UpdateTknProductPayload;
-    const uploadedImageUrl = await uploadImageIfProvided(supabase, slug, imageFile);
+    const uploadedImageUrl = await uploadImageIfProvided(
+      supabase,
+      slug,
+      imageFile,
+    );
     const categoryId = await resolveTknCategoryId(supabase, payload);
 
     if (!normalizeText(payload.title)) {
@@ -315,7 +326,9 @@ export async function updateTknProductRecord(
 }
 
 // Jednym server action volanim vieme prepinat viditelnost sluzieb, kategorii aj produktov.
-export async function updateAllVisibility(formData: FormData): Promise<CmsActionResult> {
+export async function updateAllVisibility(
+  formData: FormData,
+): Promise<CmsActionResult> {
   try {
     const supabase = await requireAdmin();
     const rawData = formData.get("data")?.toString();
@@ -399,7 +412,9 @@ export async function deleteTknCategoryRecord(
       .eq("category_id", category.id as string);
 
     if (productDeleteError) {
-      throw new Error(`Chyba pri mazaní TKN produktov: ${productDeleteError.message}`);
+      throw new Error(
+        `Chyba pri mazaní TKN produktov: ${productDeleteError.message}`,
+      );
     }
 
     const { error: categoryDeleteError } = await supabase
@@ -408,7 +423,9 @@ export async function deleteTknCategoryRecord(
       .eq("id", category.id as string);
 
     if (categoryDeleteError) {
-      throw new Error(`Chyba pri mazaní TKN kategórie: ${categoryDeleteError.message}`);
+      throw new Error(
+        `Chyba pri mazaní TKN kategórie: ${categoryDeleteError.message}`,
+      );
     }
 
     revalidateCmsPaths();
@@ -569,9 +586,7 @@ export async function insertTknProductRecord(
       insertData.image_url = uploadedImageUrl;
     }
 
-    const { error } = await supabase
-      .from("tkn_products")
-      .insert(insertData);
+    const { error } = await supabase.from("tkn_products").insert(insertData);
 
     if (error) {
       throw new Error(`Chyba pri pridávaní produktu: ${error.message}`);
@@ -595,8 +610,6 @@ export async function insertTknProductRecord(
 export async function insertTknCategoryRecord(
   formData: FormData,
 ): Promise<CmsActionResult> {
-
-
   try {
     const supabase = await requireAdmin();
 
@@ -613,9 +626,9 @@ export async function insertTknCategoryRecord(
       text,
       is_active: isActive,
     };
-    
+
     const { error } = await supabase.from("tkn_categories").insert(insertData);
-    
+
     if (error) {
       throw new Error(`Chyba pri pridávaní kategórie: ${error.message}`);
     }
@@ -632,7 +645,6 @@ export async function insertTknCategoryRecord(
       error: getErrorMessage(error),
     };
   }
-
 }
 
 export async function updateTknProductBySlug(
@@ -646,15 +658,18 @@ export async function updateTknProductBySlug(
     const summary = normalizeText(formData.get("summary"));
     const description = normalizeText(formData.get("description"));
     const indications = normalizeText(formData.get("indications"))
-  .split("\n")
-  .map((item) => item.trim())
-  .filter(Boolean);
+      .split("\n")
+      .map((item) => item.trim())
+      .filter(Boolean);
 
     const imageFile = formData.get("image_file") as File | null;
     let imageUrl = formData.get("image_url")?.toString().trim();
 
     if (imageFile && imageFile.size > 0) {
-      const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(/\s/g, "-");
+      const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(
+        /\s/g,
+        "-",
+      );
 
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from("BRImages")
@@ -680,21 +695,21 @@ export async function updateTknProductBySlug(
 
     // ✅ slug tu NIE JE, čiže sa nebude meniť
     const updateData: {
-  name: string;
-  summary: string;
-  description: string;
-  image_url?: string;
-  content: {
-    indications: string[];
-  };
-} = {
-  name,
-  summary,
-  description,
-  content: {
-    indications,
-  },
-};
+      name: string;
+      summary: string;
+      description: string;
+      image_url?: string;
+      content: {
+        indications: string[];
+      };
+    } = {
+      name,
+      summary,
+      description,
+      content: {
+        indications,
+      },
+    };
 
     if (imageUrl) {
       updateData.image_url = imageUrl;

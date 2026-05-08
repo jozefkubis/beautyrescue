@@ -17,10 +17,10 @@ export default function Jalupro({ jalupro, user, isAdmin }: JaluproProps) {
   const uploadedImageUrl = jalupro?.image_url?.trim();
 
   const jaluproLinks = [
-    "/medical-cosmetics/jalupro/classic",
-    "/medical-cosmetics/jalupro/hmw",
-    "/medical-cosmetics/jalupro/super_hydro",
-    "/medical-cosmetics/jalupro/young_eye",
+    "/lekarska_kozmetika/jalupro/classic",
+    "/lekarska_kozmetika/jalupro/hmw",
+    "/lekarska_kozmetika/jalupro/super_hydro",
+    "/lekarska_kozmetika/jalupro/young_eye",
   ];
 
   return (
@@ -64,7 +64,7 @@ export default function Jalupro({ jalupro, user, isAdmin }: JaluproProps) {
               ({ src, alt }: { src: string; alt?: string }, index: number) => (
                 <Link
                   href={
-                    jaluproLinks[index] ?? "/medical-cosmetics/jalupro/classic"
+                    jaluproLinks[index] ?? "/lekarska_kozmetika/jalupro/classic"
                   }
                   key={src}
                   className="relative aspect-square w-full overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"

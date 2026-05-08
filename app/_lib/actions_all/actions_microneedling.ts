@@ -1,4 +1,4 @@
- "use server";
+"use server";
 
 import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "../supabase/server";
@@ -71,7 +71,9 @@ export async function updateTknVisibility(formData: FormData) {
         .eq("slug", slug);
 
       if (error) {
-        throw new Error(`Chyba pri aktualizácii kategórie ${slug}: ${error.message}`);
+        throw new Error(
+          `Chyba pri aktualizácii kategórie ${slug}: ${error.message}`,
+        );
       }
     }),
     ...productUpdates.map(async ([slug, isActive]) => {
@@ -81,14 +83,16 @@ export async function updateTknVisibility(formData: FormData) {
         .eq("slug", slug);
 
       if (error) {
-        throw new Error(`Chyba pri aktualizácii produktu ${slug}: ${error.message}`);
+        throw new Error(
+          `Chyba pri aktualizácii produktu ${slug}: ${error.message}`,
+        );
       }
     }),
   ]);
 
   // Po uložení obnovíme verejnú aj admin stránku, aby sa nový stav hneď zobrazil.
-  revalidatePath("/cosmetics/microneedling");
-  revalidatePath("/cosmetics/microneedling/tkn");
+  revalidatePath("/kozmetika/microneedling");
+  revalidatePath("/kozmetika/microneedling/tkn");
   revalidatePath("/admin/cosmetics_settings/microneedling_settings");
 }
 
@@ -123,11 +127,11 @@ export async function deleteTknProduct(
   }
 
   // Po zmazaní obnovíme všetky stránky, kde sa tento produkt mohol zobrazovať.
-  revalidatePath("/cosmetics/microneedling");
-  revalidatePath("/cosmetics/microneedling/tkn");
-  revalidatePath(`/cosmetics/microneedling/tkn/${safeCategorySlug}`);
+  revalidatePath("/kozmetika/microneedling");
+  revalidatePath("/kozmetika/microneedling/tkn");
+  revalidatePath(`/kozmetika/microneedling/tkn/${safeCategorySlug}`);
   revalidatePath(
-    `/cosmetics/microneedling/tkn/${safeCategorySlug}/${safeProductSlug}`,
+    `/kozmetika/microneedling/tkn/${safeCategorySlug}/${safeProductSlug}`,
   );
   revalidatePath("/admin/cosmetics_settings/microneedling_settings");
 
@@ -209,9 +213,9 @@ export async function deleteTknCategory(
   }
 
   // Po úspechu obnovíme stránky, kde sa sekcia mohla zobrazovať.
-  revalidatePath("/cosmetics/microneedling");
-  revalidatePath("/cosmetics/microneedling/tkn");
-  revalidatePath(`/cosmetics/microneedling/tkn/${safeCategorySlug}`);
+  revalidatePath("/kozmetika/microneedling");
+  revalidatePath("/kozmetika/microneedling/tkn");
+  revalidatePath(`/kozmetika/microneedling/tkn/${safeCategorySlug}`);
   revalidatePath("/admin/cosmetics_settings/microneedling_settings");
 
   return {

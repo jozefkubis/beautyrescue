@@ -34,7 +34,7 @@ export default function Mezoterapia({ mezoterapia }: MezoterapiaProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 relative p-12">
           {/* vpravo hore */}
           <Link
-            href="/cosmetics/mezoterapia/invasive"
+            href="/kozmetika/mezoterapia/invazivna"
             className="md:col-start-2 md:row-start-1 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square"
           >
             <Image
@@ -51,7 +51,7 @@ export default function Mezoterapia({ mezoterapia }: MezoterapiaProps) {
 
           {/* vlavo dole */}
           <Link
-            href="/cosmetics/mezoterapia/non-invasive"
+            href="/kozmetika/mezoterapia/neinvazivna"
             className="md:col-start-1 md:row-start-2 relative overflow-hidden rounded-lg border border-goldDark/25 shadow-md shadow-goldDark/15 h-full aspect-square"
           >
             <Image

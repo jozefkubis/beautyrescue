@@ -20,45 +20,45 @@ type MobileNavItem = {
 const navigationLinks: MobileNavItem[] = [
   {
     name: "O nás",
-    href: "/about",
+    href: "/onas",
   },
   {
     name: "Kozmetika",
-    href: "/cosmetics",
+    href: "/kozmetika",
     dropdown: [
-      { name: "Chemický peeling", href: "/cosmetics/chemical-peeling" },
+      { name: "Chemický peeling", href: "/kozmetika/chemicky_peeling" },
       {
         name: "Diamantová mikrodermabrázia",
-        href: "/cosmetics/diamond-microdermabrasion",
+        href: "/kozmetika/diamantova_mikrodermabrazia",
       },
       {
         name: "Oxygeneo",
-        href: "/cosmetics/oxygeneo",
+        href: "/kozmetika/oxygeneo",
       },
-      { name: "Mezoterapia", href: "/cosmetics/mezoterapia" },
-      { name: "Microneedling/dermapen", href: "/cosmetics/microneedling" },
+      { name: "Mezoterapia", href: "/kozmetika/mezoterapia" },
+      { name: "Microneedling/dermapen", href: "/kozmetika/microneedling" },
     ],
   },
   {
     name: "Lekárska kozmetika",
-    href: "/medical-cosmetics",
+    href: "/lekarska_kozmetika",
     dropdown: [
-      { name: "Botulotoxín", href: "/medical-cosmetics/botulotoxin" },
+      { name: "Botulotoxín", href: "/lekarska_kozmetika/botulotoxin" },
       {
         name: "Kyselina hyalurónová",
-        href: "/medical-cosmetics/kyselina-hyaluronova",
+        href: "/lekarska_kozmetika/kyselina_hyaluronova",
       },
       {
         name: "Biokompatibilné nite",
-        href: "/medical-cosmetics/biokompatibilne-nite",
+        href: "/lekarska_kozmetika/biokompatibilne_nite",
       },
-      { name: "Jalupro", href: "/medical-cosmetics/jalupro" },
-      { name: "Profhilo", href: "/medical-cosmetics/profhilo" },
+      { name: "Jalupro", href: "/lekarska_kozmetika/jalupro" },
+      { name: "Profhilo", href: "/lekarska_kozmetika/profhilo" },
     ],
   },
   {
     name: "Lekárska akupunktúra",
-    href: "/acupuncture",
+    href: "/lekarska_akupunktura",
   },
   {
     name: "Masáže a Saunový detox",
@@ -66,11 +66,11 @@ const navigationLinks: MobileNavItem[] = [
   },
   {
     name: "Cenník",
-    href: "/pricing",
+    href: "/cennik",
   },
   {
-    name: "Akcia",
-    href: "/promotion",
+    name: "Novinky",
+    href: "/novinky",
   },
   {
     name: "Admin",

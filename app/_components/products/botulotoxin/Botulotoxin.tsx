@@ -72,8 +72,8 @@ export default function Botulotoxin({
                   key={src}
                   href={
                     index === 0
-                      ? "/medical-cosmetics/botulotoxin/vrasky"
-                      : "/medical-cosmetics/botulotoxin/potenie"
+                      ? "/lekarska_kozmetika/botulotoxin/vrasky"
+                      : "/lekarska_kozmetika/botulotoxin/potenie"
                   }
                   className="relative aspect-square w-1/4 overflow-hidden rounded-2xl border border-goldDark/25 shadow-md shadow-goldDark/15"
                 >

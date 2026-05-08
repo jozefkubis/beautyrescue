@@ -94,7 +94,6 @@ export async function updateAboutUs(formData: FormData) {
   const rawData = formData.get("data")?.toString();
   const imageFile = formData.get("image_file");
 
-  
   if (!rawData) {
     throw new Error("Chýbajú dáta pre stránku O nás");
   }
@@ -141,7 +140,7 @@ export async function updateAboutUs(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  revalidatePath("/about");
+  revalidatePath("/onas");
   revalidatePath("/admin/about_settings");
 
   return {

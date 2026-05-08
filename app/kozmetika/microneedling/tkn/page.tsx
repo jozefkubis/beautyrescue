@@ -1,8 +1,6 @@
 import { brandFont } from "@/app/_components/fonts";
 import { dataDashboard } from "@/app/_lib/data_services_all/data_dashboard";
-import {
-  getTknCategoriesWithProducts,
-} from "@/app/_lib/data_services_all/data_tkn";
+import { getTknCategoriesWithProducts } from "@/app/_lib/data_services_all/data_tkn";
 import { getVisibleTknCategories } from "@/app/_lib/data_services_all/tkn_visibility";
 import { createPageMetadata } from "@/app/_lib/seo";
 import Link from "next/link";
@@ -32,7 +30,7 @@ export default async function Page() {
         {visibleTknCategories.map((category) => (
           <Link
             key={category.slug}
-            href={`/cosmetics/microneedling/tkn/${category.slug}`}
+            href={`/kozmetika/microneedling/tkn/${category.slug}`}
             className="group section-shell fade-up block p-5 transition-transform duration-300 hover:-translate-y-0.5 lg:p-8"
           >
             <p className="text-xs uppercase tracking-[0.16em] text-goldDark/70">

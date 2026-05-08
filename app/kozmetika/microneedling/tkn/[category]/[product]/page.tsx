@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: ProductPageProps) {
   const title = productData?.name ?? "TKN produkt";
 
   return createDynamicPageMetadata({
-    path: `/cosmetics/microneedling/tkn/${category}/${product}`,
+    path: `/kozmetika/microneedling/tkn/${category}/${product}`,
     title,
     description: `${title} pri microneedlingu v kozmetickom salóne Beauty Rescue v Žiline na Hájiku.`,
   });
@@ -87,7 +87,7 @@ export default async function Page({ params }: ProductPageProps) {
         </h1>
         <div className="mt-3 text-sm text-greyMain/80">
           <Link
-            href={`/cosmetics/microneedling/tkn/${categoryData.slug}`}
+            href={`/kozmetika/microneedling/tkn/${categoryData.slug}`}
             className="font-medium text-redDark"
           >
             {categoryData.title}

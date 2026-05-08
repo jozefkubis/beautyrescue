@@ -73,7 +73,7 @@ export default function Microneedling({
             {visibleTknCategories.map((category) => (
               <Link
                 key={category.slug}
-                href={`/cosmetics/microneedling/tkn/${category.slug}`}
+                href={`/kozmetika/microneedling/tkn/${category.slug}`}
                 className="group relative overflow-hidden rounded-xl border border-goldDark/20 bg-linear-to-br from-white to-[#f8f1e8] p-5 shadow-sm transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-md"
               >
                 <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-goldLight/15 blur-2xl transition-opacity duration-300 group-hover:opacity-90" />

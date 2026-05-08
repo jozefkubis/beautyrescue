@@ -19,151 +19,151 @@ export const seoPages = {
     description: DEFAULT_DESCRIPTION,
   },
   about: {
-    path: "/about",
+    path: "/onas",
     title: "O nás",
     description:
       "Beauty Rescue je kozmetický salón v Žiline na Hájiku so zameraním na kozmetiku, ošetrenia pleti a individuálny prístup.",
   },
   acupuncture: {
-    path: "/acupuncture",
+    path: "/lekarska_akupunktura",
     title: "Lekárska akupunktúra",
     description:
       "Lekárska akupunktúra v Beauty Rescue Žilina na Hájiku ako doplnková služba pre individuálne potreby klientov.",
   },
   chemicalPeeling: {
-    path: "/cosmetics/chemical-peeling",
+    path: "/kozmetika/chemicky_peeling",
     title: "Chemický peeling",
     description:
       "Chemický peeling v kozmetickom salóne Beauty Rescue v Žiline na Hájiku pre profesionálne ošetrenie pleti.",
   },
   diamondMicrodermabrasion: {
-    path: "/cosmetics/diamond-microdermabrasion",
+    path: "/kozmetika/diamantova_mikrodermabrazia",
     title: "Diamantová mikrodermabrázia",
     description:
       "Diamantová mikrodermabrázia v Beauty Rescue Žilina na Hájiku pre kozmetické ošetrenie a zjemnenie pleti.",
   },
   mezoterapia: {
-    path: "/cosmetics/mezoterapia",
+    path: "/kozmetika/mezoterapia",
     title: "Mezoterapia",
     description:
       "Mezoterapia v kozmetickom salóne Beauty Rescue v Žiline na Hájiku pre starostlivosť o pleť.",
   },
   mezoterapiaInvasive: {
-    path: "/cosmetics/mezoterapia/invasive",
+    path: "/kozmetika/mezoterapia/invazivna",
     title: "Invazívna mezoterapia",
     description:
       "Invazívna mezoterapia v Beauty Rescue Žilina na Hájiku ako profesionálne kozmetické ošetrenie pleti.",
   },
   mezoterapiaNonInvasive: {
-    path: "/cosmetics/mezoterapia/non-invasive",
+    path: "/kozmetika/mezoterapia/neinvazivna",
     title: "Neinvazívna mezoterapia",
     description:
       "Neinvazívna mezoterapia v Beauty Rescue Žilina na Hájiku pre kozmetickú starostlivosť o pleť.",
   },
   microneedling: {
-    path: "/cosmetics/microneedling",
+    path: "/kozmetika/microneedling",
     title: "Microneedling",
     description:
       "Microneedling a dermapen v kozmetickom salóne Beauty Rescue v Žiline na Hájiku.",
   },
   tkn: {
-    path: "/cosmetics/microneedling/tkn",
+    path: "/kozmetika/microneedling/tkn",
     title: "TKN ošetrenia",
     description:
       "TKN ošetrenia pri microneedlingu v Beauty Rescue Žilina na Hájiku pre profesionálnu starostlivosť o pleť.",
   },
   oxygeneo: {
-    path: "/cosmetics/oxygeneo",
+    path: "/kozmetika/oxygeneo",
     title: "Oxygeneo",
     description:
       "Oxygeneo ošetrenie v kozmetickom salóne Beauty Rescue v Žiline na Hájiku.",
   },
   biokompatibilneNite: {
-    path: "/medical-cosmetics/biokompatibilne-nite",
+    path: "/lekarska_kozmetika/biokompatibilne_nite",
     title: "Biokompatibilné nite",
     description:
       "Biokompatibilné nite v Beauty Rescue Žilina na Hájiku v rámci služieb lekárskej kozmetiky.",
   },
   botulotoxin: {
-    path: "/medical-cosmetics/botulotoxin",
+    path: "/lekarska_kozmetika/botulotoxin",
     title: "Botulotoxín",
     description:
       "Botulotoxín v Beauty Rescue Žilina na Hájiku v rámci služieb lekárskej kozmetiky.",
   },
   botulotoxinPotenie: {
-    path: "/medical-cosmetics/botulotoxin/potenie",
+    path: "/lekarska_kozmetika/botulotoxin/potenie",
     title: "Botulotoxín pri nadmernom potení",
     description:
       "Botulotoxín pri nadmernom potení v Beauty Rescue Žilina na Hájiku.",
   },
   botulotoxinVrasky: {
-    path: "/medical-cosmetics/botulotoxin/vrasky",
+    path: "/lekarska_kozmetika/botulotoxin/vrasky",
     title: "Botulotoxín na vrásky",
     description:
       "Botulotoxín na vrásky v Beauty Rescue Žilina na Hájiku v rámci lekárskej kozmetiky.",
   },
   jalupro: {
-    path: "/medical-cosmetics/jalupro",
+    path: "/lekarska_kozmetika/jalupro",
     title: "Jalupro",
     description:
       "Jalupro ošetrenia v Beauty Rescue Žilina na Hájiku v rámci služieb lekárskej kozmetiky.",
   },
   jaluproClassic: {
-    path: "/medical-cosmetics/jalupro/classic",
+    path: "/lekarska_kozmetika/jalupro/classic",
     title: "Jalupro Classic",
     description:
       "Jalupro Classic v Beauty Rescue Žilina na Hájiku pre profesionálne ošetrenie pleti.",
   },
   jaluproHmw: {
-    path: "/medical-cosmetics/jalupro/hmw",
+    path: "/lekarska_kozmetika/jalupro/hmw",
     title: "Jalupro HMW",
     description:
       "Jalupro HMW v Beauty Rescue Žilina na Hájiku v rámci lekárskej kozmetiky.",
   },
   jaluproSuperHydro: {
-    path: "/medical-cosmetics/jalupro/super_hydro",
+    path: "/lekarska_kozmetika/jalupro/super_hydro",
     title: "Jalupro Super Hydro",
     description:
       "Jalupro Super Hydro v Beauty Rescue Žilina na Hájiku pre kozmetickú starostlivosť o pleť.",
   },
   jaluproYoungEye: {
-    path: "/medical-cosmetics/jalupro/young_eye",
+    path: "/lekarska_kozmetika/jalupro/young_eye",
     title: "Jalupro Young Eye",
     description:
       "Jalupro Young Eye v Beauty Rescue Žilina na Hájiku pre starostlivosť o očné okolie.",
   },
   kyselinaHyaluronova: {
-    path: "/medical-cosmetics/kyselina-hyaluronova",
+    path: "/lekarska_kozmetika/kyselina_hyaluronova",
     title: "Kyselina hyalurónová",
     description:
       "Kyselina hyalurónová v Beauty Rescue Žilina na Hájiku v rámci služieb lekárskej kozmetiky.",
   },
   kyselinaHyaluronovaFace: {
-    path: "/medical-cosmetics/kyselina-hyaluronova/face",
+    path: "/lekarska_kozmetika/kyselina_hyaluronova/tvar",
     title: "Kyselina hyalurónová na tvár",
     description:
       "Kyselina hyalurónová na tvár v Beauty Rescue Žilina na Hájiku.",
   },
   kyselinaHyaluronovaLips: {
-    path: "/medical-cosmetics/kyselina-hyaluronova/lips",
+    path: "/lekarska_kozmetika/kyselina_hyaluronova/pery",
     title: "Kyselina hyalurónová na pery",
     description:
       "Kyselina hyalurónová na pery v Beauty Rescue Žilina na Hájiku.",
   },
   profhilo: {
-    path: "/medical-cosmetics/profhilo",
+    path: "/lekarska_kozmetika/profhilo",
     title: "Profhilo",
     description:
       "Profhilo ošetrenie v Beauty Rescue Žilina na Hájiku v rámci lekárskej kozmetiky.",
   },
   pricing: {
-    path: "/pricing",
+    path: "/cennik",
     title: "Cenník",
     description:
       "Cenník kozmetických služieb Beauty Rescue v Žiline na Hájiku vrátane kozmetiky, microneedlingu a lekárskej kozmetiky.",
   },
   promotion: {
-    path: "/promotion",
+    path: "/novinky",
     title: "Novinky",
     description:
       "Novinky a aktuálne informácie kozmetického salónu Beauty Rescue v Žiline na Hájiku.",

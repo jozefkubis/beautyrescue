@@ -72,12 +72,12 @@ Preco:
 Zmenene subory:
 
 - `app/_lib/data_services_all/data_services.ts`
-- `app/pricing/page.tsx`
+- `app/cennik/page.tsx`
 
 Co sa zmenilo:
 
 - Bol pridany `getServicesBySlugs(slugs)`.
-- `app/pricing/page.tsx` uz nevola `getServiceBySlug()` 11-krat paralelne.
+- `app/cennik/page.tsx` uz nevola `getServiceBySlug()` 11-krat paralelne.
 - Cennik cita sluzby jednym Supabase query cez `.in("slug", slugs)`.
 
 Preco:
@@ -91,9 +91,9 @@ Preco:
 Zmenene subory:
 
 - `app/_lib/data_services_all/data_tkn.ts`
-- `app/cosmetics/microneedling/page.tsx`
-- `app/cosmetics/microneedling/tkn/page.tsx`
-- `app/cosmetics/microneedling/tkn/[category]/page.tsx`
+- `app/kozmetika/microneedling/page.tsx`
+- `app/kozmetika/microneedling/tkn/page.tsx`
+- `app/kozmetika/microneedling/tkn/[category]/page.tsx`
 - `app/sitemap.ts`
 
 Co sa zmenilo:
@@ -233,10 +233,10 @@ Pokus o `npm.cmd uninstall framer-motion` zlyhal na Windows `EPERM` chybe v `nod
 Po zmenach Next build ukazal, ze viacero verejnych stranok je staticky prerenderovanych:
 
 - `/`
-- `/about`
-- `/pricing`
-- `/promotion`
-- `/cosmetics/microneedling/tkn`
+- `/onas`
+- `/cennik`
+- `/novinky`
+- `/kozmetika/microneedling/tkn`
 - `/robots.txt`
 - `/sitemap.xml`
 

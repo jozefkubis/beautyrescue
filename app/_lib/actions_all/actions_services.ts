@@ -51,7 +51,10 @@ export async function updateServiceBySlug(formData: FormData, slug?: string) {
   let imageUrl = payload.image_url;
 
   if (imageFile && imageFile.size > 0) {
-    const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(/\s/g, "-");
+    const fileName = `${slug}-${Date.now()}-${imageFile.name}`.replace(
+      /\s/g,
+      "-",
+    );
 
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from("BRImages")
@@ -85,7 +88,8 @@ export async function updateServiceBySlug(formData: FormData, slug?: string) {
     ...(typeof payload.is_active === "boolean" && {
       is_active: payload.is_active,
     }),
-    ...((typeof payload.order_index === "number" || payload.order_index === null) && {
+    ...((typeof payload.order_index === "number" ||
+      payload.order_index === null) && {
       order_index: payload.order_index,
     }),
     ...(payload.image_gallery && { image_gallery: payload.image_gallery }),
@@ -107,7 +111,7 @@ export async function updateServiceBySlug(formData: FormData, slug?: string) {
   }
 
   revalidatePath("/", "layout");
-  revalidatePath("/about");
+  revalidatePath("/onas");
   revalidatePath(`/admin/${slug}`);
 
   return {

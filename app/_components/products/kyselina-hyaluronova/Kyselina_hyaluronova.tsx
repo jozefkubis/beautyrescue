@@ -58,8 +58,8 @@ export default function Kyselina_hyaluronova({
               ({ src, alt }: { src: string; alt?: string }) => {
                 const isFace = src.includes("kyselina_hyaluronova2");
                 const linkHref = isFace
-                  ? "/medical-cosmetics/kyselina-hyaluronova/face"
-                  : "/medical-cosmetics/kyselina-hyaluronova/lips";
+                  ? "/lekarska_kozmetika/kyselina_hyaluronova/tvar"
+                  : "/lekarska_kozmetika/kyselina_hyaluronova/pery";
 
                 return (
                   <Link

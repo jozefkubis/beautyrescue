@@ -1,12 +1,9 @@
 import type { MetadataRoute } from "next";
 import {
-  absoluteUrl,
-  publicSeoPages,
-} from "./_lib/seo";
-import {
   getTknCategories,
   getTknProductsByCategoryId,
 } from "./_lib/data_services_all/data_tkn";
+import { absoluteUrl, publicSeoPages } from "./_lib/seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
@@ -20,7 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const categories = await getTknCategories();
   const activeCategories = categories.filter((category) => category.is_active);
   const categoryRoutes = activeCategories.map((category) => ({
-    url: absoluteUrl(`/cosmetics/microneedling/tkn/${category.slug}`),
+    url: absoluteUrl(`/kozmetika/microneedling/tkn/${category.slug}`),
     lastModified,
     changeFrequency: "monthly" as const,
     priority: 0.6,
@@ -34,7 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         .filter((product) => product.is_active)
         .map((product) => ({
           url: absoluteUrl(
-            `/cosmetics/microneedling/tkn/${category.slug}/${product.slug}`,
+            `/kozmetika/microneedling/tkn/${category.slug}/${product.slug}`,
           ),
           lastModified,
           changeFrequency: "monthly" as const,

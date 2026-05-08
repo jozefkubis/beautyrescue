@@ -44,41 +44,41 @@ export default function Navigation() {
   };
 
   const navigationLinks = [
-    { name: "O nás", href: "/about" },
+    { name: "O nás", href: "/onas" },
     {
       name: "Kozmetika",
-      href: "/cosmetics/chemical-peeling",
+      href: "/kozmetika/chemicky_peeling",
       dropdown: [
-        { name: "Chemický peeling", href: "/cosmetics/chemical-peeling" },
+        { name: "Chemický peeling", href: "/kozmetika/chemicky_peeling" },
         {
           name: "Diamantová mikrodermabrázia",
-          href: "/cosmetics/diamond-microdermabrasion",
+          href: "/kozmetika/diamantova_mikrodermabrazia",
         },
-        { name: "Oxygeneo", href: "/cosmetics/oxygeneo" },
-        { name: "Mezoterapia", href: "/cosmetics/mezoterapia" },
-        { name: "Microneedling/dermapen", href: "/cosmetics/microneedling" },
+        { name: "Oxygeneo", href: "/kozmetika/oxygeneo" },
+        { name: "Mezoterapia", href: "/kozmetika/mezoterapia" },
+        { name: "Microneedling/dermapen", href: "/kozmetika/microneedling" },
       ],
     },
     {
       name: "Lekárska kozmetika",
-      href: "/medical-cosmetics/botulotoxin",
+      href: "/lekarska_kozmetika/botulotoxin",
       dropdown: [
-        { name: "Botulotoxín", href: "/medical-cosmetics/botulotoxin" },
+        { name: "Botulotoxín", href: "/lekarska_kozmetika/botulotoxin" },
         {
           name: "Kyselina hyalurónová",
-          href: "/medical-cosmetics/kyselina-hyaluronova",
+          href: "/lekarska_kozmetika/kyselina_hyaluronova",
         },
         {
           name: "Biokompatibilné nite",
-          href: "/medical-cosmetics/biokompatibilne-nite",
+          href: "/lekarska_kozmetika/biokompatibilne_nite",
         },
-        { name: "Jalupro", href: "/medical-cosmetics/jalupro" },
-        { name: "Profhilo", href: "/medical-cosmetics/profhilo" },
+        { name: "Jalupro", href: "/lekarska_kozmetika/jalupro" },
+        { name: "Profhilo", href: "/lekarska_kozmetika/profhilo" },
       ],
     },
-    { name: "Lekárska akupunktúra", href: "/acupuncture" },
-    { name: "Cenník", href: "/pricing" },
-    { name: "Novinky", href: "/promotion" },
+    { name: "Lekárska akupunktúra", href: "/lekarska_akupunktura" },
+    { name: "Cenník", href: "/cennik" },
+    { name: "Novinky", href: "/novinky" },
   ];
 
   return (

@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: CategoryPageProps) {
   const title = category?.title ?? "TKN kategória";
 
   return createDynamicPageMetadata({
-    path: `/cosmetics/microneedling/tkn/${categorySlug}`,
+    path: `/kozmetika/microneedling/tkn/${categorySlug}`,
     title,
     description: `${title} pri microneedlingu v kozmetickom salóne Beauty Rescue v Žiline na Hájiku.`,
   });
@@ -113,7 +113,7 @@ export default async function Page({ params }: CategoryPageProps) {
                     ))}
                   </div>
                   <Link
-                    href={`/cosmetics/microneedling/tkn/${category.slug}/${product.slug}`}
+                    href={`/kozmetika/microneedling/tkn/${category.slug}/${product.slug}`}
                     className="mt-6 inline-flex items-center rounded-full border border-goldDark/30 bg-white px-4 py-2 text-sm font-semibold text-redDark transition-colors duration-300 hover:bg-[#fff4ea]"
                   >
                     {dataDashboard.tknCategory.openProductCta}
