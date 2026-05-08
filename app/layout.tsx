@@ -29,6 +29,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Beauty Rescue Žilina",
+      },
+    ],
     url: SITE_URL,
     siteName: "Beauty Rescue Žilina",
     locale: "sk_SK",
