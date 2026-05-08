@@ -28,6 +28,11 @@ export const metadata: Metadata = {
     template: "%s | Beauty Rescue Žilina",
   },
   description: DEFAULT_DESCRIPTION,
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+    shortcut: "/logo.png",
+  },
   alternates: {
     canonical: SITE_URL,
   },
@@ -37,8 +42,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: OG_IMAGE_URL,
-        width: 1200,
-        height: 630,
+        width: 1638,
+        height: 960,
         alt: "Beauty Rescue Žilina",
       },
     ],
