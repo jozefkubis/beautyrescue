@@ -13,6 +13,7 @@ import { robotoCondensed } from "../../fonts";
 type MobileNavItem = {
   name: string;
   href: string;
+  activePrefix?: string;
   dropdown?: { name: string; href: string }[];
 };
 
@@ -25,6 +26,7 @@ const navigationLinks: MobileNavItem[] = [
   {
     name: "Kozmetika",
     href: "/kozmetika",
+    activePrefix: "/kozmetika",
     dropdown: [
       { name: "Chemický peeling", href: "/kozmetika/chemicky_peeling" },
       {
@@ -42,6 +44,7 @@ const navigationLinks: MobileNavItem[] = [
   {
     name: "Lekárska kozmetika",
     href: "/lekarska_kozmetika",
+    activePrefix: "/lekarska_kozmetika",
     dropdown: [
       { name: "Botulotoxín", href: "/lekarska_kozmetika/botulotoxin" },
       {
@@ -111,10 +114,12 @@ export default function MobileHeader() {
     setOpenDropdown((prev) => (prev === name ? null : name));
   };
 
-  // Pri sekciach s podstrankami chceme zvysraznit aktivny aj rodicovsky odkaz, nielen presnu zhodu URL.
-  const isLinkActive = (href: string, hasDropdown: boolean) => {
-    if (hasDropdown) {
-      return pathname === href || pathname.startsWith(`${href}/`);
+  // Pri sekciach s podstrankami nam staci jeden prefix, podla ktoreho vieme oznacit aktivnu kategoriu.
+  const isLinkActive = (href: string, activePrefix?: string) => {
+    if (activePrefix) {
+      return (
+        pathname === activePrefix || pathname.startsWith(`${activePrefix}/`)
+      );
     }
 
     return pathname === href;
@@ -182,7 +187,7 @@ export default function MobileHeader() {
                     <Link
                       href={link.href}
                       className={`block rounded-lg px-3 py-2.5 text-base transition-colors duration-200 hover:bg-white/8 hover:text-[#ffe09d] ${
-                        isLinkActive(link.href, false)
+                        isLinkActive(link.href)
                           ? "bg-white/8 text-[#ffe09d]"
                           : "text-background/95"
                       }`}
@@ -196,7 +201,7 @@ export default function MobileHeader() {
                       <button
                         type="button"
                         className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-base transition-colors duration-200 hover:bg-white/8 hover:text-[#ffe09d] ${
-                          isLinkActive(link.href, true)
+                          isLinkActive(link.href, link.activePrefix)
                             ? "bg-white/8 text-[#ffe09d]"
                             : "text-background/95"
                         }`}

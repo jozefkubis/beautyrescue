@@ -35,9 +35,13 @@ export default function Navigation() {
     };
   }, []);
 
-  const isLinkActive = (href: string, hasDropdown: boolean) => {
-    if (hasDropdown) {
-      return pathname === href || pathname.startsWith(`${href}/`);
+  // Slovensky: Keď má kategória svoj prefix, stačí kontrolovať začiatok URL.
+  // Je to jednoduchšie a spoľahlivé aj pre ďalšie podstránky v danej sekcii.
+  const isLinkActive = (href: string, activePrefix?: string) => {
+    if (activePrefix) {
+      return (
+        pathname === activePrefix || pathname.startsWith(`${activePrefix}/`)
+      );
     }
 
     return pathname === href;
@@ -48,6 +52,7 @@ export default function Navigation() {
     {
       name: "Kozmetika",
       href: "/kozmetika/chemicky_peeling",
+      activePrefix: "/kozmetika",
       dropdown: [
         { name: "Chemický peeling", href: "/kozmetika/chemicky_peeling" },
         {
@@ -62,6 +67,7 @@ export default function Navigation() {
     {
       name: "Lekárska kozmetika",
       href: "/lekarska_kozmetika/botulotoxin",
+      activePrefix: "/lekarska_kozmetika",
       dropdown: [
         { name: "Botulotoxín", href: "/lekarska_kozmetika/botulotoxin" },
         {
@@ -95,7 +101,7 @@ export default function Navigation() {
                   <Link
                     href={link.href}
                     className={`transition-colors duration-300 hover:text-[#ffd982] ${
-                      isLinkActive(link.href, false)
+                      isLinkActive(link.href)
                         ? "text-[#ffe09d]"
                         : "text-background/95"
                     }`}
@@ -110,7 +116,7 @@ export default function Navigation() {
                       <Link
                         href={link.href}
                         className={`transition-colors duration-300 hover:text-[#ffd982] ${
-                          isLinkActive(link.href, true)
+                          isLinkActive(link.href, link.activePrefix)
                             ? "text-[#ffe09d]"
                             : "text-background/95"
                         }`}
