@@ -26,32 +26,28 @@ export async function proxy(request: NextRequest) {
   const { supabaseUrl, supabaseAnonKey } = getSupabaseProxyConfig();
 
   // Inicializuje Supabase klienta na serveri, aby vedel získať info o userovi zo session
-  const supabase = createServerClient(
-    supabaseUrl,
-    supabaseAnonKey,
-    {
-      cookies: {
-        // Získa všetky cookies z requestu
-        getAll() {
-          return request.cookies.getAll();
-        },
-        // Nastaví cookies do odpovede (napr. po prihlásení/odhlásení)
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) => {
-            request.cookies.set(name, value);
-          });
-
-          response = NextResponse.next({
-            request,
-          });
-
-          cookiesToSet.forEach(({ name, value, options }) => {
-            response.cookies.set(name, value, options);
-          });
-        },
+  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      // Získa všetky cookies z requestu
+      getAll() {
+        return request.cookies.getAll();
       },
-    }
-  );
+      // Nastaví cookies do odpovede (napr. po prihlásení/odhlásení)
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value }) => {
+          request.cookies.set(name, value);
+        });
+
+        response = NextResponse.next({
+          request,
+        });
+
+        cookiesToSet.forEach(({ name, value, options }) => {
+          response.cookies.set(name, value, options);
+        });
+      },
+    },
+  });
 
   // Získa usera zo Supabase session (ak je prihlásený, bude tu objekt, inak null)
   const {
@@ -61,7 +57,7 @@ export async function proxy(request: NextRequest) {
   // Pre debug – vypíše do konzoly, či je user prihlásený
   if (process.env.NODE_ENV !== "production") {
     console.log(
-      user ? `Authenticated as ${user.email}` : "No authenticated user"
+      user ? `Authenticated as ${user.email}` : "No authenticated user",
     );
   }
 
@@ -83,7 +79,5 @@ export async function proxy(request: NextRequest) {
 
 // Matcher určuje, na ktoré requesty sa proxy/middleware aplikuje (ignoruje statické assety)
 export const config = {
-  matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|map)$).*)",
-  ],
+  matcher: ["/admin/:path*"],
 };
