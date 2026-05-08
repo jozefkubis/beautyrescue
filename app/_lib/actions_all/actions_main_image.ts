@@ -9,7 +9,9 @@ type ActionResult = {
   imageUrl?: string;
 };
 
-export async function updateMainImage(formData: FormData): Promise<ActionResult> {
+export async function updateMainImage(
+  formData: FormData,
+): Promise<ActionResult> {
   const supabase = await getSupabaseServerClient();
 
   // Overenie admina je hneď na začiatku, aby sa neautorizovaný upload vôbec nespracoval.
@@ -22,7 +24,10 @@ export async function updateMainImage(formData: FormData): Promise<ActionResult>
     (user.email !== process.env.ADMIN_EMAIL_1 &&
       user.email !== process.env.ADMIN_EMAIL_2)
   ) {
-    return { success: false, message: "Nemáš oprávnenie na úpravu hlavnej fotky." };
+    return {
+      success: false,
+      message: "Nemáš oprávnenie na úpravu hlavnej fotky.",
+    };
   }
 
   const imageFile = formData.get("image_file");
@@ -40,10 +45,16 @@ export async function updateMainImage(formData: FormData): Promise<ActionResult>
   }
 
   if (!allowedMimeTypes.includes(imageFile.type)) {
-    return { success: false, message: "Podporované sú iba formáty JPG, PNG a WEBP." };
+    return {
+      success: false,
+      message: "Podporované sú iba formáty JPG, PNG a WEBP.",
+    };
   }
 
-  const fileName = `home-main-${Date.now()}-${imageFile.name}`.replace(/\s/g, "-");
+  const fileName = `home-main-${Date.now()}-${imageFile.name}`.replace(
+    /\s/g,
+    "-",
+  );
 
   const { data: uploadData, error: uploadError } = await supabase.storage
     .from("BRImages")
@@ -120,7 +131,7 @@ export async function updateMainImage(formData: FormData): Promise<ActionResult>
   }
 
   revalidatePath("/", "layout");
-  revalidatePath("/admin/mainImage_settings");
+  revalidatePath("/admin/hlavny_obrazok_nastavenia");
 
   return {
     success: true,

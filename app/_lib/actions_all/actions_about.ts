@@ -141,7 +141,7 @@ export async function updateAboutUs(formData: FormData) {
 
   revalidatePath("/", "layout");
   revalidatePath("/onas");
-  revalidatePath("/admin/about_settings");
+  revalidatePath("/admin/onas_nastavenia");
 
   return {
     success: true,

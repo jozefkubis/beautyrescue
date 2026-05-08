@@ -93,7 +93,7 @@ export async function updateTknVisibility(formData: FormData) {
   // Po uložení obnovíme verejnú aj admin stránku, aby sa nový stav hneď zobrazil.
   revalidatePath("/kozmetika/microneedling");
   revalidatePath("/kozmetika/microneedling/tkn");
-  revalidatePath("/admin/cosmetics_settings/microneedling_settings");
+  revalidatePath("/admin/kozmetika_nastavenia/microneedling_nastavenia");
 }
 
 // Trvalo vymaže jeden TKN produkt podľa jeho slugu.
@@ -133,7 +133,7 @@ export async function deleteTknProduct(
   revalidatePath(
     `/kozmetika/microneedling/tkn/${safeCategorySlug}/${safeProductSlug}`,
   );
-  revalidatePath("/admin/cosmetics_settings/microneedling_settings");
+  revalidatePath("/admin/kozmetika_nastavenia/microneedling_nastavenia");
 
   return {
     ok: true,
@@ -216,7 +216,7 @@ export async function deleteTknCategory(
   revalidatePath("/kozmetika/microneedling");
   revalidatePath("/kozmetika/microneedling/tkn");
   revalidatePath(`/kozmetika/microneedling/tkn/${safeCategorySlug}`);
-  revalidatePath("/admin/cosmetics_settings/microneedling_settings");
+  revalidatePath("/admin/kozmetika_nastavenia/microneedling_nastavenia");
 
   return {
     ok: true,

@@ -414,7 +414,7 @@ export default function Microneedling_update_form({
                       </div>
                       <div className="flex items-center gap-2">
                         <Link
-                          href={`/admin/cosmetics_settings/microneedling_settings/update_category?category=${category.slug}`}
+                          href={`/admin/kozmetika_nastavenia/microneedling_nastavenia/upravit_sekciu?category=${category.slug}`}
                           className={`inline-flex h-10 items-center rounded-full border border-goldDark/30 bg-[#fff6ee] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-goldDark transition duration-200 ${
                             !isAdmin || isPendingVisibility
                               ? "cursor-not-allowed opacity-60"
@@ -476,7 +476,7 @@ export default function Microneedling_update_form({
                           {/* Flex kontajner pre Editovať a košík na mazanie vedľa seba */}
                           <div className="flex items-center gap-2">
                             <Link
-                              href={`/admin/cosmetics_settings/microneedling_settings/update_product?product=${product.slug}`}
+                              href={`/admin/kozmetika_nastavenia/microneedling_nastavenia/upravit_produkt?product=${product.slug}`}
                               className={`inline-flex h-10 items-center rounded-full border border-goldDark/30 bg-[#fff6ee] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-goldDark transition duration-200 ${
                                 !isAdmin || isPendingVisibility
                                   ? "cursor-not-allowed opacity-60"
@@ -524,7 +524,7 @@ export default function Microneedling_update_form({
 
                       <div className="flex justify-end pt-1">
                         <Link
-                          href={`/admin/cosmetics_settings/microneedling_settings/add_product?category=${category.slug}`}
+                          href={`/admin/kozmetika_nastavenia/microneedling_nastavenia/pridat_produkt?category=${category.slug}`}
                           aria-disabled={!isAdmin || isPendingVisibility}
                           onClick={(e) => {
                             if (!isAdmin || isPendingVisibility) {
@@ -550,7 +550,7 @@ export default function Microneedling_update_form({
             <div className="flex flex-col gap-3 border-t border-goldDark/10 pt-5 sm:flex-row sm:items-center sm:justify-end">
               <div className="flex justify-end pt-1">
                 <Link
-                  href="/admin/cosmetics_settings/microneedling_settings/add_category"
+                  href="/admin/kozmetika_nastavenia/microneedling_nastavenia/pridat_sekciu"
                   aria-disabled={!isAdmin || isPendingVisibility}
                   onClick={(e) => {
                     if (!isAdmin || isPendingVisibility) {

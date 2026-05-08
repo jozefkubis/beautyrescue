@@ -14,6 +14,46 @@ type UpdateServicePayload = {
   order_index?: number | null;
 };
 
+function getAdminSettingsPathForSlug(slug: string) {
+  const normalizedSlug = slug.trim();
+
+  // Viacero podstranok patri do jednej admin sekcie, preto mapujeme slug na nadradenu settings route.
+  if (normalizedSlug.startsWith("mezoterapia")) {
+    return "/admin/kozmetika_nastavenia/mezoterapia_nastavenia";
+  }
+
+  if (normalizedSlug.startsWith("botulotoxin")) {
+    return "/admin/lekarska_kozmetika_nastavenia/botulotoxin_nastavenia";
+  }
+
+  if (normalizedSlug.startsWith("jalupro")) {
+    return "/admin/lekarska_kozmetika_nastavenia/jalupro_nastavenia";
+  }
+
+  if (normalizedSlug.startsWith("kyselina-hyaluronova")) {
+    return "/admin/lekarska_kozmetika_nastavenia/kyselina_hyaluronova_nastavenia";
+  }
+
+  if (normalizedSlug.startsWith("profhilo")) {
+    return "/admin/lekarska_kozmetika_nastavenia/profhilo_nastavenia";
+  }
+
+  const directPaths: Record<string, string> = {
+    acupuncture: "/admin/lekarska_akupunktura_nastavenia",
+    "biokompatibilne-nite":
+      "/admin/lekarska_kozmetika_nastavenia/biokompatibilne_nite_nastavenia",
+    "chemical-peeling":
+      "/admin/kozmetika_nastavenia/chemicky_peeling_nastavenia",
+    "diamond-microdermabrasion":
+      "/admin/kozmetika_nastavenia/diamantova_mikrodermabrazia_nastavenia",
+    microneedling: "/admin/kozmetika_nastavenia/microneedling_nastavenia",
+    oxygeneo: "/admin/kozmetika_nastavenia/oxygeneo_nastavenia",
+    promotion: "/admin/novinky_nastavenia",
+  };
+
+  return directPaths[normalizedSlug] ?? "/admin";
+}
+
 export async function updateServiceBySlug(formData: FormData, slug?: string) {
   const supabase = await getSupabaseServerClient();
 
@@ -112,7 +152,7 @@ export async function updateServiceBySlug(formData: FormData, slug?: string) {
 
   revalidatePath("/", "layout");
   revalidatePath("/onas");
-  revalidatePath(`/admin/${slug}`);
+  revalidatePath(getAdminSettingsPathForSlug(slug));
 
   return {
     success: true,
