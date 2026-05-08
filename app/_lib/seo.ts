@@ -17,7 +17,7 @@ export function absoluteUrl(path: string) {
   return new URL(path, SITE_URL).toString();
 }
 
-export const OG_IMAGE_URL = absoluteUrl("/images/og-image.png");
+export const OG_IMAGE_URL = absoluteUrl("/images/og-image-share.png");
 
 export const seoPages = {
   home: {

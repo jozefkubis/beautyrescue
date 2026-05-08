@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     description: DEFAULT_DESCRIPTION,
     images: [
       {
-        url: `${SITE_URL}/images/og-image.png`,
+        url: `${SITE_URL}/images/og-image-share.png`,
         width: 1200,
         height: 630,
         alt: "Beauty Rescue Žilina",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: [`${SITE_URL}/images/og-image.png`],
+    images: [`${SITE_URL}/images/og-image-share.png`],
   },
 };
 
