@@ -13,7 +13,12 @@ import Header from "./_components/home/header/Header";
 import MobileHeader from "./_components/home/header/MobileHeader";
 import Navigation from "./_components/navigation/Navigation";
 import LocalBusinessJsonLd from "./_components/seo/LocalBusinessJsonLd";
-import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_URL } from "./_lib/seo";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_TITLE,
+  OG_IMAGE_URL,
+  SITE_URL,
+} from "./_lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -31,7 +36,7 @@ export const metadata: Metadata = {
     description: DEFAULT_DESCRIPTION,
     images: [
       {
-        url: `${SITE_URL}/images/og-image-share.png`,
+        url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
         alt: "Beauty Rescue Žilina",
@@ -46,7 +51,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: [`${SITE_URL}/images/og-image-share.png`],
+    images: [OG_IMAGE_URL],
   },
 };
 
