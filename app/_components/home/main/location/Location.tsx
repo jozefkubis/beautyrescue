@@ -21,12 +21,11 @@ export default function Location() {
             type="button"
             onClick={() => setOpenBox((v) => !v)}
             className="group flex w-full items-center justify-between gap-4 p-4 text-left hover:cursor-pointer sm:p-5 lg:p-6"
-            // aria-expanded={openBox}
           >
             <div>
-              <h3 className="text-sm font-semibold tracking-tight text-zinc-900 xl:text-base">
+              <h2 className="text-sm font-semibold tracking-tight text-zinc-900 xl:text-base">
                 Ako sa k nám dostanete?
-              </h3>
+              </h2>
               <p className="mt-1 text-xs text-zinc-600 xl:text-sm">
                 Presná adresa + parkovanie + fotky miesta
               </p>
@@ -71,8 +70,8 @@ export default function Location() {
                     src="/images/studio_location1.jpeg"
                     alt="Beauty Rescue Žilina Hájik exteriér štúdia"
                     fill
+                    sizes="(max-width: 1023px) 100vw, 30vw"
                     className="h-52 w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer sm:h-56 lg:h-60 xl:h-64"
-                    priority={false}
                   />
                 </div>
 
@@ -81,8 +80,8 @@ export default function Location() {
                     src="/images/studio_location2.jpeg"
                     alt="Beauty Rescue Žilina Hájik vstup k štúdiu"
                     fill
+                    sizes="(max-width: 1023px) 100vw, 30vw"
                     className="h-52 w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer sm:h-56 lg:h-60 xl:h-64"
-                    priority={false}
                   />
                 </div>
 
@@ -97,8 +96,8 @@ export default function Location() {
                       src="/images/studio_location3.jpeg"
                       alt="Beauty Rescue Žilina Hájik mapa a okolie"
                       fill
+                      sizes="(max-width: 1023px) 100vw, 30vw"
                       className="h-52 w-full object-cover transition-transform duration-300 ease-out hover:scale-105 hover:cursor-pointer sm:h-56 lg:h-60 xl:h-64"
-                      priority={false}
                     />
                   </a>
                 </div>

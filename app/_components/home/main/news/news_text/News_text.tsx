@@ -24,11 +24,11 @@ export default function News_text({ text, title, isActive }: NewsTextProps) {
     <div className="w-full justify-center flex">
       <div className="section-shell fade-up mt-10 flex w-full max-w-4xl flex-col items-center px-4 text-center py-8 sm:px-6 lg:px-12 lg:py-12 2xl:px-16">
         {/* Nadpis akcie */}
-        <h1
+        <h2
           className={`premium-title pb-3 text-4xl font-semibold tracking-tight text-goldDark sm:text-5xl lg:pb-4 2xl:text-6xl ${brandFont.className}`}
         >
           <span className="italic">{title}</span>
-        </h1>
+        </h2>
 
         {/* Dekoratívna linka pod nadpisom */}
         <span className="mb-6 block h-px w-16 bg-goldDark/40 lg:mb-8 lg:w-24" />

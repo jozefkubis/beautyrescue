@@ -46,11 +46,11 @@ async function uploadImageIfProvided(
     return null;
   }
 
-  const maxFileSize = 5 * 1024 * 1024;
+  const maxFileSize = 500 * 1024;
   const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
 
   if (imageFile.size > maxFileSize) {
-    throw new Error("Obrázok je príliš veľký (max 5 MB)");
+    throw new Error("Obrázok je príliš veľký (max 500 KB po kompresii)");
   }
 
   if (!allowedMimeTypes.includes(imageFile.type)) {
@@ -65,7 +65,7 @@ async function uploadImageIfProvided(
   const { data: uploadData, error: uploadError } = await supabase.storage
     .from("BRImages")
     .upload(fileName, imageFile, {
-      cacheControl: "3600",
+      cacheControl: "31536000",
       upsert: true,
     });
 

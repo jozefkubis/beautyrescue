@@ -37,11 +37,14 @@ export async function updateMainImage(
   }
 
   // Jednoduchá validácia vstupu, aby sa do storage neposielali príliš veľké alebo nepodporované súbory.
-  const maxFileSize = 5 * 1024 * 1024;
+  const maxFileSize = 500 * 1024;
   const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
 
   if (imageFile.size > maxFileSize) {
-    return { success: false, message: "Obrázok je príliš veľký (max 5 MB)." };
+    return {
+      success: false,
+      message: "Obrázok je príliš veľký (max 500 KB po kompresii).",
+    };
   }
 
   if (!allowedMimeTypes.includes(imageFile.type)) {
@@ -59,7 +62,7 @@ export async function updateMainImage(
   const { data: uploadData, error: uploadError } = await supabase.storage
     .from("BRImages")
     .upload(fileName, imageFile, {
-      cacheControl: "3600",
+      cacheControl: "31536000",
       upsert: true,
     });
 

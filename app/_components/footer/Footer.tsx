@@ -1,5 +1,3 @@
-"use client";
-
 import { ADDRESS, EMAIL, PHONE } from "@/app/_lib/helpers";
 import { FaFacebookSquare, FaInstagramSquare } from "react-icons/fa";
 import ContactForm from "../forms/ContactForm";

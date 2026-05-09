@@ -108,7 +108,7 @@ export default async function RootLayout({
           <Navigation />
           <Header />
         </div>
-        {children}
+        <main id="main-content">{children}</main>
 
         <Footer />
 

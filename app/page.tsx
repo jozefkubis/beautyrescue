@@ -13,6 +13,7 @@ export default async function Page() {
 
   return (
     <div className="relative">
+      <h1 className="sr-only">Beauty Rescue Žilina</h1>
       <Main promotion={promotion} homeImg={homeImg} />
     </div>
   );

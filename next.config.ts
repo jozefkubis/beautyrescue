@@ -208,6 +208,8 @@ const nextConfig: NextConfig = {
 
   // Konfigurácia pre optimalizované načítavanie obrázkov z externého Supabase storage
   images: {
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 60 * 60 * 24 * 30,
     remotePatterns: [
       {
         protocol: "https",
