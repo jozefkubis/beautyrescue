@@ -77,7 +77,7 @@ body::before {
 /* Tazke fotkove pozadie nechavame len na desktope, aby mobil netahal dalsich ~5 MB. */
 @media (min-width: 1024px) {
   body::before {
-    background-image: url("/images/bgimages/bg-2.jpg");
+    background-image: url("/images/bgimages/bg-2-desktop.webp");
     background-size: cover;
     background-position: center;
     opacity: 0.12;
