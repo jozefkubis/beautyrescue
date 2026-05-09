@@ -37,13 +37,13 @@ export async function updateMainImage(
   }
 
   // Jednoduchá validácia vstupu, aby sa do storage neposielali príliš veľké alebo nepodporované súbory.
-  const maxFileSize = 500 * 1024;
+  const maxFileSize = 1000 * 1024;
   const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
 
   if (imageFile.size > maxFileSize) {
     return {
       success: false,
-      message: "Obrázok je príliš veľký (max 500 KB po kompresii).",
+      message: "Obrázok je príliš veľký (max 1000 KB po kompresii).",
     };
   }
 

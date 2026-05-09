@@ -31,12 +31,12 @@ export default function FileField({
     // Ked admin vyberie vacsi obrazok, skusime ho zmensit este pred odoslanim,
     // aby sa do storage bezne nedostavali zbytocne tazke subory.
     if (selectedFile && selectedFile.type.startsWith("image/")) {
-      const warningLimit = 500 * 1024;
+      const warningLimit = 1000 * 1024;
 
       if (selectedFile.size > warningLimit) {
         try {
           const compressedFile = await imageCompression(selectedFile, {
-            maxSizeMB: 0.45,
+            maxSizeMB: 0.95,
             maxWidthOrHeight: 2200,
             useWebWorker: true,
             initialQuality: 0.82,
@@ -53,12 +53,12 @@ export default function FileField({
 
           setUploadHint(
             nextFile.size < selectedFile.size
-              ? `Obrázok mal viac ako 500 KB, preto sme ho pred nahraním zmenšili na ${Math.round(nextFile.size / 1024)} KB.`
-              : "Obrázok má viac ako 500 KB. Skús menší súbor, aby upload prešiel bez problémov.",
+              ? `Obrázok mal viac ako 1000 KB, preto sme ho pred nahraním zmenšili na ${Math.round(nextFile.size / 1024)} KB.`
+              : "Obrázok má viac ako 1000 KB. Skús menší súbor, aby upload prešiel bez problémov.",
           );
         } catch {
           setUploadHint(
-            "Obrázok má viac ako 500 KB a nepodarilo sa ho automaticky zmenšiť. Skús menší súbor.",
+            "Obrázok má viac ako 1000 KB a nepodarilo sa ho automaticky zmenšiť. Skús menší súbor.",
           );
         }
       }
@@ -85,7 +85,7 @@ export default function FileField({
       </div>
 
       <p className="text-xs text-greyMain/70">
-        Odporúčaná veľkosť obrázka je do 500 KB.
+        Odporúčaná veľkosť obrázka je do 1000 KB.
       </p>
 
       {value ? (

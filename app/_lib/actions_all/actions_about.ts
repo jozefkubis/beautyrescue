@@ -46,11 +46,11 @@ async function uploadImageIfProvided(
     return null;
   }
 
-  const maxFileSize = 500 * 1024;
+  const maxFileSize = 1000 * 1024;
   const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
 
   if (imageFile.size > maxFileSize) {
-    throw new Error("Obrázok je príliš veľký (max 500 KB po kompresii)");
+    throw new Error("Obrázok je príliš veľký (max 1000 KB po kompresii)");
   }
 
   if (!allowedMimeTypes.includes(imageFile.type)) {
