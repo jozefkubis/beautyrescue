@@ -36,7 +36,9 @@
   --color-goldLight: var(--goldLight);
   --color-goldDark: var(--goldDark);
   --font-sans: var(--font-poppins);
-  --font-mono: var(--font-open-sans);
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    monospace;
 }
 
 /* 3. DARK MODE
@@ -68,12 +70,18 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("/images/bgimages/bg-2.jpg");
-  background-size: cover;
-  background-position: center;
-  opacity: 0.12;
   pointer-events: none;
   z-index: -1;
+}
+
+/* Tazke fotkove pozadie nechavame len na desktope, aby mobil netahal dalsich ~5 MB. */
+@media (min-width: 1024px) {
+  body::before {
+    background-image: url("/images/bgimages/bg-2.jpg");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.12;
+  }
 }
 
 /* body {
@@ -145,12 +153,34 @@ strong {
   text-shadow: 0 2px 16px rgba(157, 116, 16, 0.2);
 }
 
-.fade-up {
-  animation: fadeUp 0.65s ease-out both;
+.fade-up,
+.slide-in-left {
+  opacity: 1;
+  transform: none;
 }
 
-.slide-in-left {
-  animation: slideInLeft 1.5s ease-out both;
+/* Na mobile vypiname vstupne animacie, aby LCP prvok nebol "neskoro viditelny" len kvoli motion efektu. */
+@media (min-width: 1024px) {
+  .fade-up {
+    animation: fadeUp 0.65s ease-out both;
+  }
+
+  .slide-in-left {
+    animation: slideInLeft 1.5s ease-out both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .slide-in-left {
+    animation: none !important;
+  }
+}
+
+/* Sekcie pod foldom nechame renderovat az ked sa k nim user priblizi. */
+.deferred-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 720px;
 }
 
 @keyframes fadeUp {

@@ -48,7 +48,6 @@ export default function News_on_image_main({
         src={uploadedImageUrl || "/images/home_main.jpg"}
         alt="Beauty Rescue kozmetický salón Žilina"
         fill
-        priority
         sizes="(max-width: 1023px) 0px, 100vw"
         className="object-cover object-right"
       />

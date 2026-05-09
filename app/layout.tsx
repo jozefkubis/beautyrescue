@@ -1,12 +1,6 @@
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
-import {
-  Open_Sans,
-  Playfair_Display_SC,
-  Poppins,
-  Roboto,
-  Roboto_Condensed,
-} from "next/font/google";
+import { Poppins } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import Footer from "./_components/footer/Footer";
 import Header from "./_components/home/header/Header";
@@ -64,30 +58,7 @@ const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
   weight: ["400", "500", "600", "700"],
-});
-
-const openSans = Open_Sans({
-  subsets: ["latin"],
-  variable: "--font-open-sans",
-  weight: ["400", "500", "600", "700"],
-});
-
-const robotoCondensed = Roboto_Condensed({
-  subsets: ["latin"],
-  variable: "--font-roboto-condensed",
-  weight: ["400", "500", "600", "700"],
-});
-
-const roboto = Roboto({
-  subsets: ["latin"],
-  variable: "--font-roboto",
-  weight: ["400", "500", "600", "700"],
-});
-
-const playfairDisplaySC = Playfair_Display_SC({
-  subsets: ["latin"],
-  variable: "--font-playfair-display-sc",
-  weight: ["400", "700", "900"],
+  display: "swap",
 });
 
 // const isMobile = typeof window !== "undefined" && window.innerWidth < 1024
@@ -99,9 +70,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="sk">
-      <body
-        className={`${poppins.variable} ${openSans.variable} ${robotoCondensed.variable} ${roboto.variable} ${playfairDisplaySC.variable}`}
-      >
+      <body className={poppins.variable}>
         <LocalBusinessJsonLd />
         <MobileHeader />
         <div className="hidden lg:block">
