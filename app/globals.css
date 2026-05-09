@@ -41,21 +41,6 @@
     monospace;
 }
 
-/* 3. DARK MODE
-   Tmavé pozadie, svetlý text
-*/
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* --background: #0a0a0a; tmavé pozadie */
-    /* --foreground: #ededed; svetlý text */
-
-    /* Ostatné farby ostávajú rovnaké */
-  }
-}
-
-/* 4. ZÁKLADNÝ ŠTÝL PRE BODY
-   Použijeme naše premenné a fallback fonty
-*/
 body {
   background:
     var(--hero-glow),
