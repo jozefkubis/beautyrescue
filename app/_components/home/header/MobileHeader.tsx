@@ -63,10 +63,11 @@ const navigationLinks: MobileNavItem[] = [
     name: "Lekárska akupunktúra",
     href: "/lekarska_akupunktura",
   },
-  {
-    name: "Masáže a Saunový detox",
-    href: "/massage-and-sauna-detox",
-  },
+  // Docasne skryte iba v mobilnom menu na poziadavku klienta.
+  // {
+  //   name: "Masáže a Saunový detox",
+  //   href: "/massage-and-sauna-detox",
+  // },
   {
     name: "Cenník",
     href: "/cennik",
