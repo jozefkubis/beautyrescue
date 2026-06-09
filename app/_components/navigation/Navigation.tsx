@@ -7,7 +7,11 @@ import { IoTriangle } from "react-icons/io5";
 import { robotoCondensed } from "../fonts";
 import AuthNavControls from "./AuthNavControls";
 
-export default function Navigation() {
+type NavigationProps = {
+  allowedAdminEmails: string[];
+};
+
+export default function Navigation({ allowedAdminEmails }: NavigationProps) {
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const navRef = useRef<HTMLDivElement | null>(null);
@@ -181,7 +185,7 @@ export default function Navigation() {
               </div>
             ))}
 
-            <AuthNavControls />
+            <AuthNavControls allowedAdminEmails={allowedAdminEmails} />
           </div>
 
           {/* Slovensky: Kontakt je teraz link, ktorý plynulo scrolluje na sekciu s kontaktným formulárom v pätičke */}

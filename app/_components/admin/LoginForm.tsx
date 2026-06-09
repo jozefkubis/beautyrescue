@@ -7,10 +7,14 @@ import { brandFont } from "../fonts";
 import handleSubmitLogin from "./handleSubmitLogin";
 
 type LoginFormProps = {
+  allowedAdminEmails: string[];
   onSuccess?: () => void;
 };
 
-export default function LoginForm({ onSuccess }: LoginFormProps) {
+export default function LoginForm({
+  allowedAdminEmails,
+  onSuccess,
+}: LoginFormProps) {
   const router = useRouter();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +25,11 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
     setIsLoading(true);
 
     try {
-      const result = await handleSubmitLogin({ e, setError });
+      const result = await handleSubmitLogin({
+        e,
+        setError,
+        allowedAdminEmails,
+      });
 
       // Po uspesnom logine obnovime layout a na samostatnej login stranke usera posleme na homepage.
       if (result.success) {

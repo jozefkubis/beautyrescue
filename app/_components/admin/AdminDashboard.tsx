@@ -9,6 +9,7 @@ import {
   RiInformationLine,
   RiScissorsLine,
   RiSyringeLine,
+  RiUserLine,
   RiWindyLine,
 } from "react-icons/ri";
 import AdminDashboardCard from "./AdminDashboardCard";
@@ -112,6 +113,12 @@ const adminSections = [
     title: "Hlavný obrázok",
     label: "Hlavný obrázok",
     icon: RiImageLine, // hlavný obrázok 🖼️
+  },
+  {
+    href: "/admin/registracia",
+    title: "Registrácia",
+    label: "Registrácia",
+    icon: RiUserLine, // registrácia 👤
   },
 ] as const;
 

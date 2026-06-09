@@ -3,27 +3,17 @@ import { logIn } from "@/app/_lib/actions_all/auth_actions";
 type Props = {
   e: React.SubmitEvent<HTMLFormElement>;
   setError: React.Dispatch<React.SetStateAction<string>>;
-  allowedAdminEmails: string[];
 };
 
-export default async function handleSubmitLogin({
+export default async function handleSubmitCustomerLogin({
   e,
   setError,
-  allowedAdminEmails,
 }: Props) {
   const form = e.currentTarget;
   const formData = new FormData(form);
 
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
-
-  if (!allowedAdminEmails.includes(email)) {
-    setError("Nemáte oprávnenie na prihlásenie.");
-    return {
-      success: false,
-      message: "Nemáte oprávnenie na prihlásenie.",
-    };
-  }
 
   if (!email?.trim() || !password?.trim()) {
     setError("Email a heslo sú povinné.");

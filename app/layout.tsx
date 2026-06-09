@@ -68,13 +68,18 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const allowedAdminEmails = [
+    process.env.ADMIN_EMAIL_1,
+    process.env.ADMIN_EMAIL_2,
+  ].filter((email): email is string => Boolean(email));
+
   return (
     <html lang="sk">
       <body className={poppins.variable}>
         <LocalBusinessJsonLd />
         <MobileHeader />
         <div className="hidden lg:block">
-          <Navigation />
+          <Navigation allowedAdminEmails={allowedAdminEmails} />
           <Header />
         </div>
         <main id="main-content">{children}</main>

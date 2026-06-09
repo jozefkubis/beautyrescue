@@ -10,7 +10,13 @@ import Modal from "../Modal";
 
 const LoginForm = dynamic(() => import("../admin/LoginForm"));
 
-export default function AuthNavControls() {
+type AuthNavControlsProps = {
+  allowedAdminEmails: string[];
+};
+
+export default function AuthNavControls({
+  allowedAdminEmails,
+}: AuthNavControlsProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -60,6 +66,7 @@ export default function AuthNavControls() {
         >
           {openModal && (
             <LoginForm
+              allowedAdminEmails={allowedAdminEmails}
               onSuccess={async () => {
                 await refreshAuthStatus();
                 setOpenModal(false);
