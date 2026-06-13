@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { brandFont } from "../fonts";
@@ -7,6 +8,7 @@ import handleSubmitRegister from "./handleSubmitRegister";
 
 // Tento komponent zobrazuje jednoduchý registračný formulár pre admin sekciu.
 export default function RegisterForm() {
+  const router = useRouter();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -20,6 +22,7 @@ export default function RegisterForm() {
 
       if (result.success) {
         toast.success(result.message);
+        router.push("/admin/pouzivatelia");
       } else {
         toast.error(result.message);
       }
@@ -41,7 +44,7 @@ export default function RegisterForm() {
             Registrovať účet
           </h1>
           <p className="mt-2 text-sm text-neutral-600">
-            Vyplň email, heslo a potvrdenie hesla.
+            Vyplň meno, email, heslo a potvrdenie hesla.
           </p>
         </div>
 
@@ -55,6 +58,25 @@ export default function RegisterForm() {
               {error}
             </div>
           )}
+
+          <div className="space-y-2">
+            <label
+              htmlFor="name"
+              className="text-sm font-medium tracking-wide text-goldDark"
+            >
+              Meno
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autoComplete="name"
+              disabled={isLoading}
+              className="w-full rounded-xl border border-goldDark/25 bg-white/90 px-4 py-3 text-greyMain shadow-sm outline-none transition duration-200 placeholder:text-neutral-400 focus:border-redMain/50 focus:ring-4 focus:ring-redMain/10 disabled:opacity-60"
+              placeholder="Meno používateľa"
+              required
+            />
+          </div>
 
           <div className="space-y-2">
             <label

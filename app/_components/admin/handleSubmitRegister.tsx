@@ -9,15 +9,21 @@ export default async function handleSubmitRegister({ e, setError }: Props) {
   const form = e.currentTarget;
   const formData = new FormData(form);
 
+  const name = formData.get("name") as string;
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const passwordConfirmation = formData.get("passwordConfirmation") as string;
 
-  if (!email?.trim() || !password?.trim() || !passwordConfirmation?.trim()) {
-    setError("Email, heslo aj potvrdenie hesla sú povinné.");
+  if (
+    !name?.trim() ||
+    !email?.trim() ||
+    !password?.trim() ||
+    !passwordConfirmation?.trim()
+  ) {
+    setError("Meno, email, heslo aj potvrdenie hesla sú povinné.");
     return {
       success: false,
-      message: "Email, heslo aj potvrdenie hesla sú povinné.",
+      message: "Meno, email, heslo aj potvrdenie hesla sú povinné.",
     };
   }
 
@@ -29,7 +35,11 @@ export default async function handleSubmitRegister({ e, setError }: Props) {
     };
   }
 
-  const result = await signUp({ email, password });
+  const result = await signUp({
+    name: name.trim(),
+    email: email.trim(),
+    password,
+  });
 
   if (result?.success) {
     return {

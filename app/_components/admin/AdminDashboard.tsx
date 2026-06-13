@@ -1,5 +1,6 @@
 import { brandFont } from "@/app/_components/fonts";
 import { BsStars } from "react-icons/bs";
+import { FaUsers } from "react-icons/fa";
 import { GiChemicalDrop } from "react-icons/gi";
 import { IoDiamondOutline } from "react-icons/io5";
 import {
@@ -119,6 +120,12 @@ const adminSections = [
     title: "Registrácia",
     label: "Registrácia",
     icon: RiUserLine, // registrácia 👤
+  },
+  {
+    href: "/admin/pouzivatelia",
+    title: "Používatelia",
+    label: "Používatelia",
+    icon: FaUsers, // používatelia 👤
   },
 ] as const;
 

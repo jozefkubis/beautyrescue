@@ -9,16 +9,22 @@ type SignInParams = {
 };
 
 type SignUpParams = {
+  name: string;
   email: string;
   password: string;
 };
 
-export async function signUp({ email, password }: SignUpParams) {
+export async function signUp({ name, email, password }: SignUpParams) {
   const supabase = await getSupabaseServerClient();
 
   const { error } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      data: {
+        name,
+      },
+    },
   });
 
   if (error) {
