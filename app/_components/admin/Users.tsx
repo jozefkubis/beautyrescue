@@ -2,7 +2,11 @@
 
 import { brandFont } from "@/app/_components/fonts";
 import type { usersProps } from "@/app/_lib/data_services_all/data_users";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { deleteUserById } from "../../_lib/actions_all/users_actions";
 
 type Props = {
   nonAdminUsers: usersProps;
@@ -10,9 +14,31 @@ type Props = {
 
 // Jednoduchý admin prehľad používateľov so základnou akciou pre budúce mazanie.
 export default function Users({ nonAdminUsers }: Props) {
-  const handleDelete = () => {
-    console.log("mazem");
-  };
+  const router = useRouter();
+  const [deletingUserId, setDeletingUserId] = useState<string | null>(null);
+
+  async function handleDelete(userId: string) {
+    if (!confirm("Naozaj chcete odstrániť tohto používateľa?")) return;
+
+    setDeletingUserId(userId);
+
+    try {
+      const result = await deleteUserById(userId);
+
+      if (!result.success) {
+        toast.error(result.message);
+        return;
+      }
+
+      toast.success(result.message);
+      router.refresh();
+    } catch (error) {
+      console.error("handleDelete error:", error);
+      toast.error("Používateľa sa nepodarilo odstrániť.");
+    } finally {
+      setDeletingUserId(null);
+    }
+  }
 
   return (
     <section className="w-full px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
@@ -81,11 +107,12 @@ export default function Users({ nonAdminUsers }: Props) {
                     <div className="flex md:justify-end">
                       <button
                         type="button"
-                        onClick={handleDelete}
+                        onClick={() => handleDelete(user.id)}
+                        disabled={deletingUserId === user.id}
                         className="inline-flex items-center gap-2 rounded-full border border-redMain/20 bg-redMain/8 px-4 py-2 text-sm font-semibold text-redDark transition-colors duration-200 hover:border-redMain/35 hover:bg-redMain/12 hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-redMain/30"
                       >
                         <RiDeleteBinLine className="text-base" />
-                        Kôš
+                        {deletingUserId === user.id ? "Mažem..." : "Kôš"}
                       </button>
                     </div>
                   </div>
