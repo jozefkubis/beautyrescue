@@ -1,4 +1,4 @@
-import { cache } from "react";
+import { unstable_noStore as noStore } from "next/cache";
 import { getSupabasePublicServerClient } from "../supabase/publicServer";
 
 export type usersProps = {
@@ -9,7 +9,9 @@ export type usersProps = {
   updated_at: string;
 }[];
 
-export const getAllUsers = cache(async () => {
+export async function getAllUsers() {
+  noStore();
+
   const supabase = getSupabasePublicServerClient();
 
   const { data, error } = await supabase.from("users").select("*");
@@ -20,4 +22,4 @@ export const getAllUsers = cache(async () => {
   }
 
   return data;
-});
+}

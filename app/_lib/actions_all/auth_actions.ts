@@ -1,6 +1,7 @@
 "use server";
 
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
+import { getSupabaseAdminClient } from "../supabase/admin";
 import { getSupabaseServerClient } from "../supabase/server";
 
 type SignInParams = {
@@ -16,6 +17,7 @@ type SignUpParams = {
 
 export async function signUp({ name, email, password }: SignUpParams) {
   const supabase = await getSupabaseServerClient();
+  const adminSupabase = getSupabaseAdminClient();
 
   const {
     data: { user },
@@ -32,13 +34,12 @@ export async function signUp({ name, email, password }: SignUpParams) {
     };
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { error } = await adminSupabase.auth.admin.createUser({
     email,
     password,
-    options: {
-      data: {
-        name,
-      },
+    email_confirm: true,
+    user_metadata: {
+      name,
     },
   });
 
@@ -48,6 +49,7 @@ export async function signUp({ name, email, password }: SignUpParams) {
   }
 
   revalidatePath("/", "layout");
+  revalidatePath("/admin/pouzivatelia");
   return { success: true, message: "Registrácia bola úspešná." };
 }
 
