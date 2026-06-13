@@ -17,6 +17,21 @@ type SignUpParams = {
 export async function signUp({ name, email, password }: SignUpParams) {
   const supabase = await getSupabaseServerClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (
+    !user ||
+    (user.email !== process.env.ADMIN_EMAIL_1 &&
+      user.email !== process.env.ADMIN_EMAIL_2)
+  ) {
+    return {
+      success: false,
+      message: "Nemáš oprávnenie registrovať používateľov.",
+    };
+  }
+
   const { error } = await supabase.auth.signUp({
     email,
     password,
