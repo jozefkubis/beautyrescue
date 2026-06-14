@@ -2,11 +2,8 @@
 
 import { brandFont } from "@/app/_components/fonts";
 import type { usersProps } from "@/app/_lib/data_services_all/data_users";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { deleteUserById } from "../../_lib/actions_all/users_actions";
+import DeleteUserButton from "./DeleteUserButton";
+import EmptyUsersList from "./EmptyUsersList";
 
 type Props = {
   nonAdminUsers: usersProps;
@@ -14,32 +11,6 @@ type Props = {
 
 // Jednoduchý admin prehľad používateľov so základnou akciou pre budúce mazanie.
 export default function Users({ nonAdminUsers }: Props) {
-  const router = useRouter();
-  const [deletingUserId, setDeletingUserId] = useState<string | null>(null);
-
-  async function handleDelete(userId: string) {
-    if (!confirm("Naozaj chcete odstrániť tohto používateľa?")) return;
-
-    setDeletingUserId(userId);
-
-    try {
-      const result = await deleteUserById(userId);
-
-      if (!result.success) {
-        toast.error(result.message);
-        return;
-      }
-
-      toast.success(result.message);
-      router.refresh();
-    } catch (error) {
-      console.error("handleDelete error:", error);
-      toast.error("Používateľa sa nepodarilo odstrániť.");
-    } finally {
-      setDeletingUserId(null);
-    }
-  }
-
   return (
     <section className="w-full px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up overflow-hidden p-6 sm:p-8 lg:p-10">
@@ -104,30 +75,13 @@ export default function Users({ nonAdminUsers }: Props) {
                       </p>
                     </div>
 
-                    <div className="flex md:justify-end">
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(user.id)}
-                        disabled={deletingUserId === user.id}
-                        className="inline-flex items-center gap-2 rounded-full border border-redMain/20 bg-redMain/8 px-4 py-2 text-sm font-semibold text-redDark transition-colors duration-200 hover:border-redMain/35 hover:bg-redMain/12 hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-redMain/30"
-                      >
-                        <RiDeleteBinLine className="text-base" />
-                        {deletingUserId === user.id ? "Mažem..." : "Kôš"}
-                      </button>
-                    </div>
+                    <DeleteUserButton userId={user.id} />
                   </div>
                 ))}
               </div>
             </div>
           ) : (
-            <div className="rounded-[28px] border border-goldDark/15 bg-[linear-gradient(180deg,rgba(255,252,247,0.94)_0%,rgba(255,245,235,0.88)_100%)] px-6 py-10 text-center shadow-[0_14px_32px_rgba(157,116,16,0.08)]">
-              <p className="text-lg font-semibold text-goldDark">
-                Zatiaľ tu nie sú žiadni používatelia.
-              </p>
-              <p className="mt-2 text-sm text-greyMain/80">
-                Keď sa niekto zaregistruje, zobrazí sa v tomto zozname.
-              </p>
-            </div>
+            <EmptyUsersList />
           )}
         </div>
       </div>

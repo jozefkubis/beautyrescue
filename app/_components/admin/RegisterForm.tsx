@@ -32,7 +32,7 @@ export default function RegisterForm() {
   }
 
   return (
-    <section className="mx-auto w-full max-w-md">
+    <section className="mx-auto w-full max-w-md md:mt-20">
       <div className="section-shell fade-up rounded-[28px] sm:p-8">
         <div className="mb-6 p-6 text-center sm:mb-8 md:p-0">
           <p className="mx-auto mb-3 inline-flex rounded-full border border-redMain/20 bg-redMain/8 px-4 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-redDark">
