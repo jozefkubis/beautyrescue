@@ -81,6 +81,15 @@ export default async function RootLayout({
     <html lang="sk">
       <body className={poppins.variable}>
         <LocalBusinessJsonLd />
+        {/* <MobileHeader />
+        <div className="hidden lg:block">
+          <Navigation allowedAdminEmails={allowedAdminEmails} />
+          <Header />
+        </div>
+        <main id="main-content">{children}</main>
+
+        <Footer /> */}
+
         {user ? (
           <>
             <MobileHeader />
