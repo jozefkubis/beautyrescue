@@ -61,6 +61,16 @@ export async function proxy(request: NextRequest) {
     );
   }
 
+  if (
+    !user ||
+    (user.email !== process.env.ADMIN_EMAIL_1 &&
+      user.email !== process.env.ADMIN_EMAIL_2)
+  ) {
+    const redirectUrl = new URL("/", request.url);
+    const redirectRes = NextResponse.redirect(redirectUrl);
+    return redirectRes;
+  }
+
   // Zistí, či ide o admin stránku
   const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
 

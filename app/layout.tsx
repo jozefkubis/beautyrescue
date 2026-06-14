@@ -2,11 +2,13 @@ import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import Customer_login from "./_components/customer_login/Customer_login";
 import Footer from "./_components/footer/Footer";
 import Header from "./_components/home/header/Header";
 import MobileHeader from "./_components/home/header/MobileHeader";
 import Navigation from "./_components/navigation/Navigation";
 import LocalBusinessJsonLd from "./_components/seo/LocalBusinessJsonLd";
+import { getCurrentUser } from "./_lib/actions_all/auth_actions";
 import {
   DEFAULT_DESCRIPTION,
   DEFAULT_TITLE,
@@ -73,18 +75,26 @@ export default async function RootLayout({
     process.env.ADMIN_EMAIL_2,
   ].filter((email): email is string => Boolean(email));
 
+  const user = await getCurrentUser();
+
   return (
     <html lang="sk">
       <body className={poppins.variable}>
         <LocalBusinessJsonLd />
-        <MobileHeader />
-        <div className="hidden lg:block">
-          <Navigation allowedAdminEmails={allowedAdminEmails} />
-          <Header />
-        </div>
-        <main id="main-content">{children}</main>
+        {user ? (
+          <>
+            <MobileHeader />
+            <div className="hidden lg:block">
+              <Navigation allowedAdminEmails={allowedAdminEmails} />
+              <Header />
+            </div>
+            <main id="main-content">{children}</main>
 
-        <Footer />
+            <Footer />
+          </>
+        ) : (
+          <Customer_login />
+        )}
 
         <Analytics />
 

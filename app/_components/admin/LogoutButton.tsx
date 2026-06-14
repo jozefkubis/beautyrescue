@@ -33,15 +33,35 @@ export default function LogoutButton() {
   }
 
   return (
-    <button
-      type="button"
-      onClick={handleLogout}
-      disabled={isLoading}
-      className="flex items-center justify-center rounded-full p-1 text-lg text-transparent ring-0 ring-[#ffd982] transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-[#ffd982] hover:ring-2 disabled:cursor-not-allowed disabled:opacity-50 font-bold"
-      aria-label="Logout"
-      title="Logout"
-    >
-      <IoMdLogOut />
-    </button>
+   <button
+  type="button"
+  onClick={handleLogout}
+  disabled={isLoading}
+  className="
+    flex items-center justify-center
+    rounded-full p-2 text-xl
+    text-[#ffd982]
+    ring-2 ring-[#ffd982]
+    transition-all duration-300 ease-in-out
+
+    hover:scale-110
+    hover:rotate-12
+    hover:shadow-[0_0_15px_rgba(255,217,130,0.6)]
+    hover:ring-4
+
+    active:scale-95
+
+    disabled:cursor-not-allowed
+    disabled:opacity-50
+    disabled:hover:scale-100
+    disabled:hover:rotate-0
+
+    cursor-pointer
+  "
+  aria-label="Logout"
+  title="Logout"
+>
+  <IoMdLogOut />
+</button>
   );
 }
