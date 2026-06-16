@@ -2,6 +2,7 @@
 
 import { brandFont } from "@/app/_components/fonts";
 import type { usersProps } from "@/app/_lib/data_services_all/data_users";
+import AddUserLink from "./AddUserLink";
 import DeleteUserButton from "./DeleteUserButton";
 import EmptyUsersList from "./EmptyUsersList";
 
@@ -34,11 +35,16 @@ export default function Users({ nonAdminUsers }: Props) {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-goldDark/15 bg-[linear-gradient(180deg,rgba(255,252,247,0.94)_0%,rgba(255,245,235,0.88)_100%)] px-5 py-4 text-sm text-greyMain shadow-[0_14px_32px_rgba(157,116,16,0.08)]">
-                Celkom používateľov:{" "}
-                <span className="font-semibold text-goldDark">
-                  {nonAdminUsers.length}
-                </span>
+              <div className="md:flex gap-3 items-center justify-center space-y-3 lg:space-y-0">
+                <div className="flex justify-center items-center">
+                  <AddUserLink />
+                </div>
+                <div className="rounded-2xl border border-goldDark/15 bg-[linear-gradient(180deg,rgba(255,252,247,0.94)_0%,rgba(255,245,235,0.88)_100%)] px-5 py-4 text-sm text-greyMain shadow-[0_14px_32px_rgba(157,116,16,0.08)]">
+                  Celkom používateľov:{" "}
+                  <span className="font-semibold text-goldDark">
+                    {nonAdminUsers.length}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
