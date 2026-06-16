@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { getSupabasePublicServerClient } from "../supabase/publicServer";
 
 export type SiteSettingsProps = {
@@ -5,6 +6,8 @@ export type SiteSettingsProps = {
 };
 
 export async function getSiteSettings(): Promise<SiteSettingsProps | null> {
+  noStore();
+
   const supabase = getSupabasePublicServerClient();
   const { data, error } = await supabase
     .from("site_access")

@@ -9,6 +9,7 @@ import MobileHeader from "./_components/home/header/MobileHeader";
 import Navigation from "./_components/navigation/Navigation";
 import LocalBusinessJsonLd from "./_components/seo/LocalBusinessJsonLd";
 import { getCurrentUser } from "./_lib/actions_all/auth_actions";
+import { getSiteSettings } from "./_lib/data_services_all/data_site_settings";
 import {
   DEFAULT_DESCRIPTION,
   DEFAULT_TITLE,
@@ -76,21 +77,16 @@ export default async function RootLayout({
   ].filter((email): email is string => Boolean(email));
 
   const user = await getCurrentUser();
+  const siteSettings = await getSiteSettings();
+  const siteLocked = siteSettings?.is_public === false;
+  const canViewSite = !siteLocked || Boolean(user);
 
   return (
     <html lang="sk">
       <body className={poppins.variable}>
-        <LocalBusinessJsonLd />
-        {/* <MobileHeader />
-        <div className="hidden lg:block">
-          <Navigation allowedAdminEmails={allowedAdminEmails} />
-          <Header />
-        </div>
-        <main id="main-content">{children}</main>
+        <LocalBusinessJsonLd />        
 
-        <Footer /> */}
-
-        {user ? (
+        {canViewSite ? (
           <>
             <MobileHeader />
             <div className="hidden lg:block">

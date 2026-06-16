@@ -2,6 +2,7 @@
 
 import { toggleSiteAccess } from "@/app/_lib/actions_all/actions_site_access";
 import { useState, useTransition } from "react";
+import toast from "react-hot-toast";
 import { RiLockLine, RiLockUnlockLine } from "react-icons/ri";
 
 type UnlockLockButtonProps = {
@@ -14,17 +15,19 @@ export default function Unlock_LockButton({
   const [isPublic, setIsPublic] = useState(initialIsPublic ?? false);
   const [isPending, startTransition] = useTransition();
 
-  const handleToggle = () => {
+  function handleToggle() {
     startTransition(async () => {
       const result = await toggleSiteAccess();
 
       if (result.success) {
         setIsPublic(result.is_public);
+        toast.success(result.message);
       } else {
+        toast.error(result.message);
         console.error(result.message);
       }
     });
-  };
+  }
 
   const Icon = isPublic ? RiLockLine : RiLockUnlockLine;
 
