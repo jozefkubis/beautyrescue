@@ -17,6 +17,21 @@ type ToggleSiteAccessResult =
 export async function toggleSiteAccess(): Promise<ToggleSiteAccessResult> {
   const supabase = await getSupabaseServerClient();
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const isAdmin =
+    user?.email === process.env.ADMIN_EMAIL_1 ||
+    user?.email === process.env.ADMIN_EMAIL_2;
+
+  if (!isAdmin) {
+    return {
+      success: false,
+      message: "Nemáš oprávnenie meniť dostupnosť webu.",
+    };
+  }
+
   const { data: currentSettings, error: fetchError } = await supabase
     .from("site_access")
     .select("is_public")
