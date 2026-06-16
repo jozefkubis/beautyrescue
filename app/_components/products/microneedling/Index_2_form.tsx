@@ -1,10 +1,15 @@
 import type { TknCategoryWithProducts } from "@/app/_lib/data_services_all/data_tkn";
-import Link from "next/link";
 import type { MouseEvent } from "react";
-import { FaPlus, FaRegTrashCan } from "react-icons/fa6";
-import CheckboxField from "../../CheckboxField";
 import SubmitButton from "../../SubmitButton";
 import UndoButton from "../../UndoButton";
+import AddNewProduct from "./AddNewProduct";
+import AddNewSection from "./AddNewSection";
+import DeleteProductButton from "./DeleteProductButton";
+import DeleteSectionButton from "./DeleteSectionButton";
+import EditProductLink from "./EditProductLink";
+import EditSectionButton from "./EditSectionButton";
+import VisibilityProductButton from "./VisibilityProductButton";
+import VisibilitySectionButton from "./VisibilitySectionButton";
 
 type VisibilityState = {
   categories: Record<string, boolean>;
@@ -94,40 +99,25 @@ export default function Index_2_form({
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <Link
-                    href={`/admin/kozmetika_nastavenia/microneedling_nastavenia/upravit_sekciu?category=${category.slug}`}
-                    aria-disabled={linksDisabled}
-                    onClick={preventDisabledLinkClick}
-                    className={`inline-flex h-10 items-center rounded-full border border-goldDark/30 bg-[#fff6ee] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-goldDark transition duration-200 ${disabledLinkClass}`}
-                  >
-                    <span>Editovať</span>
-                  </Link>
+                  <EditSectionButton
+                    linksDisabled={linksDisabled}
+                    preventDisabledLinkClick={preventDisabledLinkClick}
+                    disabledLinkClass={disabledLinkClass}
+                    category={category}
+                  />
 
-                  <button
-                    onClick={() =>
-                      deleteCategoryHandleClick(
-                        category.slug,
-                        category.products.map((product) => product.slug),
-                      )
-                    }
-                    type="button"
-                    title="Odstrániť sekciu"
-                    aria-label={`Odstrániť sekciu ${category.title}`}
-                    disabled={linksDisabled}
-                    className="inline-flex items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] p-3 text-sm font-medium text-redDark shadow-sm transition duration-200 hover:-translate-y-0.5 hover:cursor-pointer hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20 disabled:cursor-not-allowed disabled:border-red-100 disabled:bg-red-50/50 disabled:text-red-300 disabled:hover:translate-y-0"
-                  >
-                    <FaRegTrashCan className="text-[13px]" />
-                  </button>
+                  <DeleteSectionButton
+                    category={category}
+                    linksDisabled={linksDisabled}
+                    deleteCategoryHandleClick={deleteCategoryHandleClick}
+                  />
                 </div>
 
-                <CheckboxField
-                  labelActive="Aktívne"
-                  labelInactive="Neaktívne"
-                  checked={visibilityValues.categories[category.slug] ?? true}
-                  onChange={(e) =>
-                    handleCategoryToggle(category.slug, e.target.checked)
-                  }
-                  disabled={linksDisabled}
+                <VisibilitySectionButton
+                  category={category}
+                  visibilityValues={visibilityValues}
+                  handleCategoryToggle={handleCategoryToggle}
+                  linksDisabled={linksDisabled}
                 />
               </div>
 
@@ -149,56 +139,36 @@ export default function Index_2_form({
                     </p>
 
                     <div className="flex items-center gap-2">
-                      <Link
-                        href={`/admin/kozmetika_nastavenia/microneedling_nastavenia/upravit_produkt?product=${product.slug}`}
-                        aria-disabled={linksDisabled}
-                        onClick={preventDisabledLinkClick}
-                        className={`inline-flex h-10 items-center rounded-full border border-goldDark/30 bg-[#fff6ee] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-goldDark transition duration-200 ${disabledLinkClass}`}
-                      >
-                        <span>Editovať</span>
-                      </Link>
+                      <EditProductLink
+                        product={product}
+                        linksDisabled={linksDisabled}
+                        preventDisabledLinkClick={preventDisabledLinkClick}
+                        disabledLinkClass={disabledLinkClass}
+                      />
 
-                      <button
-                        onClick={() =>
-                          deleteProductHandleClick(category.slug, product.slug)
-                        }
-                        type="button"
-                        title="Odstrániť produkt"
-                        aria-label={`Odstrániť produkt ${product.name ?? product.slug}`}
-                        disabled={linksDisabled}
-                        className={`inline-flex items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] p-3 text-sm font-medium text-redDark shadow-sm transition duration-200 ${
-                          linksDisabled
-                            ? "cursor-not-allowed opacity-60"
-                            : "hover:-translate-y-0.5 hover:cursor-pointer hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20"
-                        }`}
-                      >
-                        <FaRegTrashCan className="text-[13px]" />
-                      </button>
+                      <DeleteProductButton
+                        category={category}
+                        product={product}
+                        linksDisabled={linksDisabled}
+                        deleteProductHandleClick={deleteProductHandleClick}
+                      />
                     </div>
 
-                    <CheckboxField
-                      labelActive="Aktívne"
-                      labelInactive="Neaktívne"
-                      checked={visibilityValues.products[product.slug] ?? true}
-                      onChange={(e) =>
-                        handleProductToggle(product.slug, e.target.checked)
-                      }
-                      disabled={linksDisabled}
+                    <VisibilityProductButton
+                      product={product}
+                      visibilityValues={visibilityValues}
+                      handleProductToggle={handleProductToggle}
+                      linksDisabled={linksDisabled}
                     />
                   </div>
                 ))}
 
-                <div className="flex justify-end pt-1">
-                  <Link
-                    href={`/admin/kozmetika_nastavenia/microneedling_nastavenia/pridat_produkt?category=${category.slug}`}
-                    aria-disabled={linksDisabled}
-                    onClick={preventDisabledLinkClick}
-                    className={`inline-flex h-10 items-center rounded-full border border-goldDark/30 bg-[#fff6ee] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-goldDark transition duration-200 ${disabledLinkClass}`}
-                  >
-                    <FaPlus className="mr-1 text-[11px]" />
-                    Pridať produkt
-                  </Link>
-                </div>
+                <AddNewProduct
+                  category={category}
+                  linksDisabled={linksDisabled}
+                  preventDisabledLinkClick={preventDisabledLinkClick}
+                  disabledLinkClass={disabledLinkClass}
+                />
               </div>
             </div>
           );
@@ -206,17 +176,11 @@ export default function Index_2_form({
       </div>
 
       <div className="flex flex-col gap-3 border-t border-goldDark/10 pt-5 sm:flex-row sm:items-center sm:justify-end">
-        <div className="flex justify-end pt-1">
-          <Link
-            href="/admin/kozmetika_nastavenia/microneedling_nastavenia/pridat_sekciu"
-            aria-disabled={linksDisabled}
-            onClick={preventDisabledLinkClick}
-            className={`inline-flex h-10 items-center rounded-full border border-goldDark/30 bg-[#fff6ee] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-goldDark transition duration-200 ${disabledLinkClass}`}
-          >
-            <FaPlus className="mr-1 text-[11px]" />
-            Pridať sekciu
-          </Link>
-        </div>
+        <AddNewSection
+          linksDisabled={linksDisabled}
+          preventDisabledLinkClick={preventDisabledLinkClick}
+          disabledLinkClass={disabledLinkClass}
+        />
 
         <UndoButton
           onClick={handleVisibilityUndo}
