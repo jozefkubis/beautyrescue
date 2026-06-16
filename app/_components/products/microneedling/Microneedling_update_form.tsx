@@ -1,10 +1,5 @@
 ﻿"use client";
 
-import CheckboxField from "@/app/_components/CheckboxField";
-import InputField from "@/app/_components/InputField";
-import SubmitButton from "@/app/_components/SubmitButton";
-import TextareaField from "@/app/_components/TextareaField";
-import UndoButton from "@/app/_components/UndoButton";
 import {
   deleteTknCategory,
   deleteTknProduct,
@@ -13,13 +8,11 @@ import {
 import { updateServiceBySlug } from "@/app/_lib/actions_all/actions_services";
 import type { ServiceRow } from "@/app/_lib/data_services_all/data_services";
 import type { TknCategoryWithProducts } from "@/app/_lib/data_services_all/data_tkn";
-import Link from "next/link";
 import { useMemo, useState, useTransition } from "react";
 import toast from "react-hot-toast";
-import { FaPlus, FaRegTrashCan } from "react-icons/fa6";
-import FileField from "../../FileField";
 import SectionNavigation from "../../SectionNavigation";
 import Index_1_form from "./Index_1_form";
+import Index_2_form from "./Index_2_form";
 
 type Props = {
   microneedling: ServiceRow | null | undefined;
@@ -304,224 +297,34 @@ export default function Microneedling_update_form({
           numberOfSections={numberOfSections}
         />
         {index === 1 && (
-        <Index_1_form
-          mainValues={mainValues}
-          handleMainChange={handleMainChange}
-          handleMainSubmit={handleMainSubmit}
-          selectedImageFile={selectedImageFile}
-          setSelectedImageFile={setSelectedImageFile}
-        />
+          <Index_1_form
+            mainValues={mainValues}
+            handleMainChange={handleMainChange}
+            handleMainSubmit={handleMainSubmit}
+            selectedImageFile={selectedImageFile}
+            setSelectedImageFile={setSelectedImageFile}
+            handleMainUndo={handleMainUndo}
+            hasMainChanges={hasMainChanges}
+            isPendingMain={isPendingMain}
+            isAdmin={Boolean(isAdmin)}
+          />
         )}
         {index === 2 && (
-          <form
-            action={handleVisibilitySubmit}
-            className="space-y-5 border-t border-goldDark/10 px-5 pb-6 pt-5 md:px-8"
-          >
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold italic text-goldDark sm:text-2xl">
-                TKN sekcie a produkty
-              </h2>
-              <p className="text-sm text-greyMain/80">
-                Tu sa mení iba viditeľnosť. Texty ostávajú bez zmeny.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              {tknCategories.map((category) => {
-                if (deletedCategorySlugs.includes(category.slug)) {
-                  return null;
-                }
-
-                const visibleProducts = category.products.filter(
-                  (product) => !deletedProductSlugs.includes(product.slug),
-                );
-
-                return (
-                  <div
-                    key={category.slug}
-                    className="rounded-2xl border border-goldDark/15 bg-[#fffaf5] p-4"
-                  >
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <div>
-                        <h3 className="text-base font-semibold text-greyMain">
-                          {category.title}
-                        </h3>
-                        <p className="text-xs text-goldDark/70">Sekcia</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Link
-                          href={`/admin/kozmetika_nastavenia/microneedling_nastavenia/upravit_sekciu?category=${category.slug}`}
-                          className={`inline-flex h-10 items-center rounded-full border border-goldDark/30 bg-[#fff6ee] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-goldDark transition duration-200 ${
-                            !isAdmin || isPendingVisibility
-                              ? "cursor-not-allowed opacity-60"
-                              : "hover:-translate-y-0.5 hover:bg-[#ffeedf]"
-                          }`}
-                        >
-                          <span>Editovať</span>
-                        </Link>
-
-                        <button
-                          onClick={() =>
-                            deleteCategoryHandleClick(
-                              category.slug,
-                              category.products.map((product) => product.slug),
-                            )
-                          }
-                          type="button"
-                          title="Odstrániť sekciu"
-                          aria-label={`Odstrániť sekciu ${category.title}`}
-                          disabled={!isAdmin || isPendingVisibility}
-                          className="inline-flex  items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] p-3 text-sm font-medium text-redDark shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20 disabled:cursor-not-allowed disabled:border-red-100 disabled:bg-red-50/50 disabled:text-red-300 disabled:hover:translate-y-0 hover:cursor-pointer"
-                        >
-                          <FaRegTrashCan className="text-[13px]" />
-                          {/* <span className="hidden sm:inline text-xs">
-                          Odstrániť
-                        </span> */}
-                        </button>
-                      </div>
-                      <CheckboxField
-                        labelActive="Aktívne"
-                        labelInactive="Neaktívne"
-                        checked={
-                          visibilityValues.categories[category.slug] ?? true
-                        }
-                        onChange={(e) =>
-                          handleCategoryToggle(category.slug, e.target.checked)
-                        }
-                        disabled={!isAdmin || isPendingVisibility}
-                      />
-                    </div>
-
-                    <div className="mt-4 space-y-2 border-t border-goldDark/10 pt-3">
-                      {visibleProducts.length === 0 ? (
-                        <p className="rounded-xl bg-white px-3 py-2 text-sm text-greyMain/70">
-                          V tejto sekcii už momentálne nie je žiadny viditeľný
-                          produkt.
-                        </p>
-                      ) : null}
-
-                      {visibleProducts.map((product) => (
-                        <div
-                          key={product.slug}
-                          className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-white px-3 py-2"
-                        >
-                          <p className="text-sm text-greyMain">
-                            {product.name ?? product.slug}
-                          </p>
-
-                          {/* Flex kontajner pre Editovať a košík na mazanie vedľa seba */}
-                          <div className="flex items-center gap-2">
-                            <Link
-                              href={`/admin/kozmetika_nastavenia/microneedling_nastavenia/upravit_produkt?product=${product.slug}`}
-                              className={`inline-flex h-10 items-center rounded-full border border-goldDark/30 bg-[#fff6ee] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-goldDark transition duration-200 ${
-                                !isAdmin || isPendingVisibility
-                                  ? "cursor-not-allowed opacity-60"
-                                  : "hover:-translate-y-0.5 hover:bg-[#ffeedf]"
-                              }`}
-                            >
-                              <span>Editovať</span>
-                            </Link>
-                            <button
-                              onClick={() =>
-                                deleteProductHandleClick(
-                                  category.slug,
-                                  product.slug,
-                                )
-                              }
-                              type="button"
-                              title="Odstrániť produkt"
-                              aria-label={`Odstrániť produkt ${product.name ?? product.slug}`}
-                              disabled={!isAdmin || isPendingVisibility}
-                              className={`inline-flex items-center gap-2 rounded-full border border-redDark/15 bg-[#fff4f4] p-3 text-sm font-medium text-redDark shadow-sm transition duration-200 ${
-                                !isAdmin || isPendingVisibility
-                                  ? "cursor-not-allowed opacity-60"
-                                  : "hover:-translate-y-0.5 hover:border-redDark/30 hover:bg-[#ffeaea] hover:shadow-[0_8px_18px_rgba(190,18,60,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-redMain/20 hover:cursor-pointer"
-                              }`}
-                            >
-                              <FaRegTrashCan className="text-[13px]" />
-                            </button>
-                          </div>
-                          <CheckboxField
-                            labelActive="Aktívne"
-                            labelInactive="Neaktívne"
-                            checked={
-                              visibilityValues.products[product.slug] ?? true
-                            }
-                            onChange={(e) =>
-                              handleProductToggle(
-                                product.slug,
-                                e.target.checked,
-                              )
-                            }
-                            disabled={!isAdmin || isPendingVisibility}
-                          />
-                        </div>
-                      ))}
-
-                      <div className="flex justify-end pt-1">
-                        <Link
-                          href={`/admin/kozmetika_nastavenia/microneedling_nastavenia/pridat_produkt?category=${category.slug}`}
-                          aria-disabled={!isAdmin || isPendingVisibility}
-                          onClick={(e) => {
-                            if (!isAdmin || isPendingVisibility) {
-                              e.preventDefault();
-                            }
-                          }}
-                          className={`inline-flex h-10 items-center rounded-full border border-goldDark/30 bg-[#fff6ee] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-goldDark transition duration-200 ${
-                            !isAdmin || isPendingVisibility
-                              ? "cursor-not-allowed opacity-60"
-                              : "hover:-translate-y-0.5 hover:bg-[#ffeedf]"
-                          }`}
-                        >
-                          <FaPlus className="mr-1 text-[11px]" />
-                          Pridať produkt
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="flex flex-col gap-3 border-t border-goldDark/10 pt-5 sm:flex-row sm:items-center sm:justify-end">
-              <div className="flex justify-end pt-1">
-                <Link
-                  href="/admin/kozmetika_nastavenia/microneedling_nastavenia/pridat_sekciu"
-                  aria-disabled={!isAdmin || isPendingVisibility}
-                  onClick={(e) => {
-                    if (!isAdmin || isPendingVisibility) {
-                      e.preventDefault();
-                    }
-                  }}
-                  className={`inline-flex h-10 items-center rounded-full border border-goldDark/30 bg-[#fff6ee] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-goldDark transition duration-200 ${
-                    !isAdmin || isPendingVisibility
-                      ? "cursor-not-allowed opacity-60"
-                      : "hover:-translate-y-0.5 hover:bg-[#ffeedf]"
-                  }`}
-                >
-                  <FaPlus className="mr-1 text-[11px]" />
-                  Pridať sekciu
-                </Link>
-              </div>
-
-              <UndoButton
-                onClick={handleVisibilityUndo}
-                disabled={
-                  !hasVisibilityChanges || isPendingVisibility || !isAdmin
-                }
-              >
-                Undo
-              </UndoButton>
-              <SubmitButton
-                loading={isPendingVisibility}
-                disabled={
-                  !hasVisibilityChanges || isPendingVisibility || !isAdmin
-                }
-              >
-                Uložiť zmeny
-              </SubmitButton>
-            </div>
-          </form>
+          <Index_2_form
+            tknCategories={tknCategories}
+            deletedCategorySlugs={deletedCategorySlugs}
+            deletedProductSlugs={deletedProductSlugs}
+            visibilityValues={visibilityValues}
+            handleVisibilitySubmit={handleVisibilitySubmit}
+            handleCategoryToggle={handleCategoryToggle}
+            handleProductToggle={handleProductToggle}
+            deleteCategoryHandleClick={deleteCategoryHandleClick}
+            deleteProductHandleClick={deleteProductHandleClick}
+            isAdmin={Boolean(isAdmin)}
+            isPendingVisibility={isPendingVisibility}
+            handleVisibilityUndo={handleVisibilityUndo}
+            hasVisibilityChanges={hasVisibilityChanges}
+          />
         )}
       </div>
     </section>

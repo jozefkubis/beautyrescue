@@ -5,18 +5,17 @@ import SubmitButton from "../../SubmitButton";
 import TextareaField from "../../TextareaField";
 import UndoButton from "../../UndoButton";
 
+type MainValues = {
+  title: string;
+  text: string;
+  image_url: string;
+  is_active: boolean;
+};
+
 type Index_1_formProps = {
-  mainValues:
-    | {
-        title?: string;
-        text?: string;
-        image_url?: string;
-        is_active?: boolean;
-      }
-    | undefined
-    | null;
-  handleMainChange: (field: string, value: string | boolean) => void;
-  handleMainSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  mainValues: MainValues;
+  handleMainChange: (field: keyof MainValues, value: string | boolean) => void;
+  handleMainSubmit: (formData: FormData) => void;
   selectedImageFile: File | null;
   setSelectedImageFile: (file: File | null) => void;
   handleMainUndo: () => void;
@@ -49,17 +48,17 @@ export default function Index_1_form({
         </div>
       </div>
 
-      <form onSubmit={handleMainSubmit} className="space-y-5 px-5 pb-2 md:px-8">
+      <form action={handleMainSubmit} className="space-y-5 px-5 pb-2 md:px-8">
         <div className="grid grid-cols-1 gap-4">
           <InputField
             label="Názov"
-            value={mainValues?.title ?? ""}
+            value={mainValues.title}
             onChange={(e) => handleMainChange("title", e.target.value)}
             readOnly={!isAdmin}
           />
           <TextareaField
             label="Obsah"
-            value={mainValues?.text ?? ""}
+            value={mainValues.text}
             onChange={(e) => handleMainChange("text", e.target.value)}
             readOnly={!isAdmin}
             rows={18}
@@ -67,8 +66,8 @@ export default function Index_1_form({
 
           <FileField
             type="file"
-            label="Hlavná fotka (image_url)"
-            value={mainValues?.image_url ?? ""}
+            label="Hlavná fotka"
+            value={mainValues.image_url}
             onChange={(e) => setSelectedImageFile(e.target.files?.[0] ?? null)}
             readOnly={!isAdmin}
           />
@@ -80,7 +79,7 @@ export default function Index_1_form({
           <CheckboxField
             labelActive="Aktívne"
             labelInactive="Neaktívne"
-            checked={mainValues?.is_active ?? false}
+            checked={mainValues.is_active}
             onChange={(e) => handleMainChange("is_active", e.target.checked)}
             disabled={!isAdmin}
           />
