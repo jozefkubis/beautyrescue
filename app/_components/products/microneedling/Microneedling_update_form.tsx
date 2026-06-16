@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import { FaPlus, FaRegTrashCan } from "react-icons/fa6";
 import FileField from "../../FileField";
 import SectionNavigation from "../../SectionNavigation";
+import Index_1_form from "./Index_1_form";
 
 type Props = {
   microneedling: ServiceRow | null | undefined;
@@ -303,78 +304,13 @@ export default function Microneedling_update_form({
           numberOfSections={numberOfSections}
         />
         {index === 1 && (
-          <>
-            <div className="px-6 pb-2 pt-6 md:px-8">
-              <div className="flex flex-col items-center text-center">
-                <p className="inline-flex rounded-full bg-[#fff6ee] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-goldDark">
-                  Nastavenia obsahu
-                </p>
-                <h1 className="mt-4 text-3xl font-semibold italic text-goldDark sm:text-4xl">
-                  Microneedling
-                </h1>
-              </div>
-            </div>
-
-            <form
-              action={handleMainSubmit}
-              className="space-y-5 px-5 pb-2 md:px-8"
-            >
-              <div className="grid grid-cols-1 gap-4">
-                <InputField
-                  label="Názov"
-                  value={mainValues.title}
-                  onChange={(e) => handleMainChange("title", e.target.value)}
-                  readOnly={!isAdmin}
-                />
-                <TextareaField
-                  label="Obsah"
-                  value={mainValues.text}
-                  onChange={(e) => handleMainChange("text", e.target.value)}
-                  readOnly={!isAdmin}
-                  rows={18}
-                />
-
-                <FileField
-                  type="file"
-                  label="Hlavná fotka (image_url)"
-                  value={mainValues.image_url}
-                  onChange={(e) =>
-                    setSelectedImageFile(e.target.files?.[0] ?? null)
-                  }
-                  readOnly={!isAdmin}
-                />
-                {selectedImageFile ? (
-                  <p className="text-xs text-greyMain/80">
-                    Vybraný súbor: {selectedImageFile.name}
-                  </p>
-                ) : null}
-                <CheckboxField
-                  labelActive="Aktívne"
-                  labelInactive="Neaktívne"
-                  checked={mainValues.is_active ?? false}
-                  onChange={(e) =>
-                    handleMainChange("is_active", e.target.checked)
-                  }
-                  disabled={!isAdmin}
-                />
-                <div className="flex flex-col gap-3 border-t border-goldDark/10 pt-5 sm:flex-row sm:items-center sm:justify-end">
-                  <UndoButton
-                    onClick={handleMainUndo}
-                    disabled={!hasMainChanges || isPendingMain || !isAdmin}
-                  >
-                    Undo
-                  </UndoButton>
-
-                  <SubmitButton
-                    loading={isPendingMain}
-                    disabled={!hasMainChanges || isPendingMain || !isAdmin}
-                  >
-                    Uložiť zmeny
-                  </SubmitButton>
-                </div>
-              </div>
-            </form>
-          </>
+        <Index_1_form
+          mainValues={mainValues}
+          handleMainChange={handleMainChange}
+          handleMainSubmit={handleMainSubmit}
+          selectedImageFile={selectedImageFile}
+          setSelectedImageFile={setSelectedImageFile}
+        />
         )}
         {index === 2 && (
           <form
