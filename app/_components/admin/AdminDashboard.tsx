@@ -1,4 +1,5 @@
 import { brandFont } from "@/app/_components/fonts";
+import { getSiteSettings } from "@/app/_lib/data_services_all/data_site_settings";
 import { BsStars } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
 import { GiChemicalDrop } from "react-icons/gi";
@@ -14,6 +15,7 @@ import {
   RiWindyLine,
 } from "react-icons/ri";
 import AdminDashboardCard from "./AdminDashboardCard";
+import Unlock_LockButton from "./Unlock_LockButton";
 
 const adminSections = [
   {
@@ -129,7 +131,10 @@ const adminSections = [
   },
 ] as const;
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
+  const siteSettings = await getSiteSettings();
+  const initialIsPublic = siteSettings?.is_public ?? false;
+
   return (
     <section className="w-full items-center justify-center px-6 pt-10 2xl:px-44 lg:px-20 lg:pt-20">
       <div className="section-shell fade-up overflow-hidden p-6 sm:p-8 lg:p-10">
@@ -142,12 +147,13 @@ export default function AdminDashboard() {
                 Prehľad nastavení
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4 md:flex md:items-center md:justify-between">
                 <h1
                   className={`premium-title text-3xl font-semibold italic tracking-tight sm:text-4xl lg:text-5xl ${brandFont.className}`}
                 >
                   Nastavenia a správa obsahu
                 </h1>
+                <Unlock_LockButton initialIsPublic={initialIsPublic} />
               </div>
             </div>
 
