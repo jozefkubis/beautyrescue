@@ -62,7 +62,7 @@ export default function News_on_image_main({
           <p
             className={`mb-1 text-3xl font-bold text-redDark drop-shadow-[0_6px_22px_rgba(141,10,45,0.24)] lg:text-7xl xl:text-[9rem] ${luxuriousScript.className}`}
           >
-            <span className="text-[8rem] xl:text-[15rem]">A</span>kcia
+            <span className="text-[8rem] xl:text-[13rem]">A</span>kcia
           </p>
         ) : (
           <IfNotPromotionActive />
