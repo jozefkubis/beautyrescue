@@ -57,19 +57,22 @@ export default function News_on_image_main({
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-background/95" />
       <div className="absolute inset-0 bg-linear-to-tl from-transparent via-transparent to-background/90" />
 
-      <div className="slide-in-left absolute inset-0 flex flex-col items-center justify-center px-4 text-center">
+      <div className="slide-in-left absolute inset-0 flex flex-col items-center justify-center px-4 pb-12 text-center xl:pb-16 2xl:pb-0">
         {isActive ? (
           <p
-            className={`mb-1 text-3xl font-bold text-redDark drop-shadow-[0_6px_22px_rgba(141,10,45,0.24)] lg:text-7xl xl:text-[9rem] ${luxuriousScript.className}`}
+            className={`mb-1 text-3xl font-bold text-redDark drop-shadow-[0_6px_22px_rgba(141,10,45,0.24)] lg:text-6xl xl:text-[7.5rem] 2xl:text-[9rem] ${luxuriousScript.className}`}
           >
-            <span className="text-[8rem] xl:text-[13rem]">A</span>kcia
+            <span className="text-[7rem] xl:text-[12rem] 2xl:text-[15rem]">
+              A
+            </span>
+            kcia
           </p>
         ) : (
           <IfNotPromotionActive />
         )}
 
         {isActive && (
-          <p className="mb-6 max-w-4xl whitespace-pre-wrap rounded-full border border-goldDark/20 bg-white/60 px-6 py-2 text-lg italic text-greyMain/80 shadow-sm shadow-goldDark/15 xl:text-3xl">
+          <p className="mb-6 max-w-3xl whitespace-pre-wrap rounded-full border border-goldDark/20 bg-white/60 px-5 py-2 text-base italic text-greyMain/80 shadow-sm shadow-goldDark/15 xl:max-w-4xl xl:px-6 xl:text-2xl 2xl:text-3xl">
             {promotionSummary}
           </p>
         )}
