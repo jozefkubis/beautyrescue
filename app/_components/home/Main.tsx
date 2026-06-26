@@ -16,6 +16,7 @@ export default function Main({ promotion, homeImg }: MainProps) {
   const aboutTitle = promotion?.about_title || "";
 
   const isActive = promotion?.is_active ?? false;
+  const uploadedImageUrl = promotion?.image_url?.trim();
 
   return (
     <>
@@ -27,7 +28,7 @@ export default function Main({ promotion, homeImg }: MainProps) {
         />
       </div>
       <div className="fade-up">
-        <News_text text={text} title={title} isActive={isActive} />
+        <News_text text={text} title={title} isActive={isActive} uploadedImageUrl={uploadedImageUrl} />
       </div>
       <div className="fade-up deferred-section">
         <Location />

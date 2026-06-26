@@ -1,6 +1,7 @@
 "use client";
 
 import CheckboxField from "@/app/_components/CheckboxField";
+import FileField from "@/app/_components/FileField";
 import InputField from "@/app/_components/InputField";
 import SubmitButton from "@/app/_components/SubmitButton";
 import TextareaField from "@/app/_components/TextareaField";
@@ -32,6 +33,7 @@ export default function PromotionUpdateForm({
       title: promotion?.title ?? "",
       about_title: promotion?.about_title ?? "",
       text: promotion?.text ?? "",
+      image_url: promotion?.image_url ?? "",
       is_active: promotion?.is_active ?? false,
     }),
     [promotion],
@@ -41,6 +43,7 @@ export default function PromotionUpdateForm({
   const [formValues, setFormValues] = useState(initialValues);
   // lastSavedValues = posledný stav, ktorý bol úspešne uložený do DB
   const [lastSavedValues, setLastSavedValues] = useState(initialValues);
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
 
   // Generická funkcia na aktualizáciu ľubovoľného poľa vo formulári
   function handleChange(
@@ -70,9 +73,14 @@ export default function PromotionUpdateForm({
             title: formValues.title,
             about_title: formValues.about_title,
             text: formValues.text,
+            image_url: formValues.image_url,
             is_active: formValues.is_active,
           }),
         );
+
+        if (selectedImageFile) {
+          formData.set("image_file", selectedImageFile);
+        }
 
         const result = await updateServiceBySlug(
           formData,
@@ -85,6 +93,7 @@ export default function PromotionUpdateForm({
         }
 
         setLastSavedValues(formValues);
+        setSelectedImageFile(null);
         router.refresh();
         toast.success(result.message);
       } catch (error) {
@@ -96,7 +105,8 @@ export default function PromotionUpdateForm({
 
   // Detekcia zmien vo formulári
   const hasChanges =
-    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues);
+    JSON.stringify(formValues) !== JSON.stringify(lastSavedValues) ||
+    selectedImageFile !== null;
 
   if (!promotion) {
     return (
@@ -142,6 +152,19 @@ export default function PromotionUpdateForm({
             readOnly={!isAdmin}
             rows={18}
           />
+
+          <FileField
+            type="file"
+            label="Obrázok k novinke (image_url)"
+            value={formValues.image_url}
+            onChange={(e) => setSelectedImageFile(e.target.files?.[0] ?? null)}
+            readOnly={!isAdmin}
+          />
+          {selectedImageFile ? (
+            <p className="text-xs text-greyMain/80">
+              Vybraný súbor: {selectedImageFile.name}
+            </p>
+          ) : null}
 
           <CheckboxField
             labelActive="Aktívne"

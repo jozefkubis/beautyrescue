@@ -47,6 +47,7 @@ function getAdminSettingsPathForSlug(slug: string) {
     "diamond-microdermabrasion":
       "/admin/kozmetika_nastavenia/diamantova_mikrodermabrazia_nastavenia",
     microneedling: "/admin/kozmetika_nastavenia/microneedling_nastavenia",
+    novinky: "/admin/novinky_nastavenia",
     oxygeneo: "/admin/kozmetika_nastavenia/oxygeneo_nastavenia",
     promotion: "/admin/novinky_nastavenia",
   };
